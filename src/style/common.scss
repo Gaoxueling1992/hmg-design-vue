@@ -1,0 +1,208 @@
+// 浏览器基本配置start
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow-x: auto;
+  min-width: 1280px;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+p,
+blockquote,
+pre,
+hr,
+figure,
+table,
+caption,
+th,
+td,
+form,
+fieldset,
+legend,
+input,
+textarea,
+menu,
+canvas {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header,
+footer,
+section,
+article,
+aside,
+nav,
+address,
+figure,
+figcaption,
+menu,
+details {
+  display: block;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html,
+body,
+fieldset,
+img,
+iframe,
+abbr {
+  border: 0;
+}
+
+i,
+cite,
+em,
+var,
+address,
+dfn {
+  font-style: normal;
+}
+
+li {
+  list-style: none;
+}
+
+textarea {
+  overflow: auto;
+  resize: none;
+}
+
+label,
+summary {
+  cursor: default;
+}
+
+a,
+button {
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="text"] {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  overflow-y: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  outline: none;
+}
+
+@for $i from 0 through 90 {
+  @if $i % 5==0 {
+    .paddingT#{$i} {
+      padding-top: #{$i}px
+    }
+
+    .paddingL#{$i} {
+      padding-left: #{$i}px
+    }
+
+    .paddingR#{$i} {
+      padding-right: #{$i}px
+    }
+
+    .paddingB#{$i} {
+      padding-bottom: #{$i}px
+    }
+
+    .marginT#{$i} {
+      margin-top: #{$i}px
+    }
+
+    .marginL#{$i} {
+      margin-left: #{$i}px
+    }
+
+    .marginR#{$i} {
+      margin-right: #{$i}px
+    }
+
+    .marginB#{$i} {
+      margin-bottom: #{$i}px
+    }
+
+    .padding#{$i} {
+      padding: #{$i}px
+    }
+
+    .margin#{$i} {
+      margin: #{$i}px
+    }
+  }
+}
+
+
+.el-aside {
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+}
+
+.el-main {
+  background-color: var(--background-color-base);
+  color: var(--color-text-primary);
+}
+
+.el-container {
+  height: 100%;
+}
+
+.border-l {
+  border-left: 1px solid var(--border-color-base) !important;
+}
+
+.border-r {
+  border-right: 1px solid var(--border-color-base) !important;
+}
+
+.pd-20 {
+  padding: 20px;
+}
+
+.fl {
+  float: left;
+}
+
+.title {
+  font-weight: 400;
+  display: block;
+}
