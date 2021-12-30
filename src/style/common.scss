@@ -171,19 +171,18 @@ body {
   }
 }
 
-
-.el-aside {
-  background-color: var(--color-white);
-  color: var(--color-text-primary);
-}
-
-.el-main {
-  background-color: var(--background-color-base);
-  color: var(--color-text-primary);
-}
-
-.el-container {
+.ant-layout {
   height: 100%;
+}
+
+.ant-layout-sider {
+  background: var(--background-color-main) !important;
+  overflow: auto;
+}
+
+.ant-layout-content {
+  background: var(--background-color-base) !important;
+  overflow: auto;
 }
 
 .border-l {
@@ -194,15 +193,6 @@ body {
   border-right: 1px solid var(--border-color-base) !important;
 }
 
-.pd-20 {
-  padding: 20px;
-}
-
 .fl {
   float: left;
-}
-
-.title {
-  font-weight: 400;
-  display: block;
 }

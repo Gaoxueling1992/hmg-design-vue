@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <a-tabs v-model:activeKey="activeKey" @change="changeTab">
+    <a-tabs class="header-menu" v-model:activeKey="activeKey" @change="changeTab">
       <a-tab-pane key="report" tab="报告设计器"></a-tab-pane>
       <a-tab-pane key="table" tab="表格设计器"></a-tab-pane>
       <a-tab-pane key="form" tab="表单设计器"></a-tab-pane>
@@ -53,8 +53,9 @@ export default defineComponent({
         },
       })
     }
+
     return {
-      activeKey: ref('report'),
+      activeKey: ref(route.path.split('/')[1] || 'report'),
       theme: ref('default'),
       themeList,
       handleChange,
@@ -71,6 +72,9 @@ export default defineComponent({
   height: var(--size-50);
   line-height: var(--size-50);
   text-align: center;
+  .header-menu {
+    font-weight: 500;
+  }
   .theme-choose {
     position: absolute;
     right: 10px;
