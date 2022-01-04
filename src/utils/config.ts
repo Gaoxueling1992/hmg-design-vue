@@ -1,85 +1,78 @@
-let compsList: Array<object> = [
+const compsList: Array<object> = [
   {
     elName: 'a-button',
-    title: '描述文本',
-    type: 'other'
+    title: '描述文本'
   },
   {
     elName: 'a-input',
-    title: '输入框',
-    type: 'form'
+    title: '输入框'
   },
   {
     elName: 'rad-select',
-    title: '下拉选择',
-    type: 'form'
+    title: '下拉选择'
   },
   {
     elName: 'rad-datetime',
-    title: '时间选择器',
-    type: 'form'
+    title: '时间选择器'
   },
   {
     elName: 'rad-table',
-    title: '表格',
-    type: 'table'
+    title: '表格'
   },
   {
     elName: 'rad-image',
-    title: '图片',
-    type: 'other'
+    title: '图片'
   },
   {
     elName: 'rad-mulitImagepicker',
-    title: '图片选择器',
-    type: 'image'
+    title: '图片选择器'
   },
   {
     elName: 'rad-line',
-    title: '直线',
-    type: 'other'
+    title: '直线'
   },
   {
     elName: 'rad-drcode',
-    title: '条形码/二维码',
-    type: 'image'
+    title: '条形码/二维码'
   },
   {
     elName: 'rad-editor',
-    title: '富文本',
-    type: 'editor'
+    title: '富文本'
   },
   {
     elName: 'rad-operator',
-    title: '操作人',
-    type: 'form'
+    title: '操作人'
   }
 ]
 
-let areaList: Array<Object> = [
+const tplTypeList: Array<Object> = [
   {
-    areaType: 'form',
-    name: '表单'
+    value: 'a4',
+    label: 'A4(210x297)',
+    width: '210mm',
+    height: '297mm'
   },
   {
-    areaType: 'other',
-    name: '其他'
+    value: 'a5a',
+    label: 'A5纵(148x210)',
+    width: '148mm',
+    height: '210mm'
   },
   {
-    areaType: 'editor',
-    name: '富文本'
+    value: 'a5b',
+    label: 'A5横(210x148)',
+    width: '210mm',
+    height: '148mm'
   },
   {
-    areaType: 'table',
-    name: '表格区域'
-  },
-  {
-    areaType: 'image',
-    name: '图片区域'
+    value: 'custom',
+    label: '自定义宽高',
+    width: '210mm',
+    height: '297mm'
   }
 ]
 
 export {
   compsList,
-  areaList
+  tplTypeList
 }

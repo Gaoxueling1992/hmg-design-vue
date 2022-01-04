@@ -1,37 +1,21 @@
 <template>
   <div class="canvas-area" @click="clickCanvas">
-    <div v-for="(area, index) in pdata.areas" :key="index" @click.stop="clickArea(index)">
-      {{area.type}}
-    </div>
+    {{pdata.elements}}
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
-  props: {
-    pageData: Object
-  },
-  data() {
+  props: ['pageData'],
+  setup (props, { emit }) {
+    const pdata = toRefs(props.pageData)
+    const clickCanvas = () => {
+      emit('clickCanvas')
+    }
     return {
-      pdata: Object
-    }
-  },
-  methods: {
-    clickCanvas () {
-      this.$emit('clickCanvas')
-    },
-    clickArea (index) {
-      this.$emit('clickArea', index)
-    }
-  },
-  watch: {
-    pageData: {
-      handler (val) {
-        this.pdata = val
-      },
-      deep: true,
-      immediate: true
+      pdata,
+      clickCanvas
     }
   },
 })
@@ -41,9 +25,8 @@ export default defineComponent({
 .canvas-area {
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
-  min-height: 500px;
-  .report-area {
-    border: 1px dashed var(--border-color-lighter);
-  }
+  margin: 0 auto;
+  width: calc(100% - 20px);
+  min-height: calc(100% - 20px);
 }
 </style>

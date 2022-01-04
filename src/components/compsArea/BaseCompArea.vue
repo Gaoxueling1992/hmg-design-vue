@@ -3,8 +3,8 @@
     <div class="container-item">
       <div class="title marginB15">控件</div>
       <a-row type="flex" justify="start">
-        <template v-for="item in list">
-          <a-col :key="item.elName" :span="12" v-if="acitveAreaType === item.type">
+        <template v-for="item in list" :key="item.elName">
+          <a-col :span="12">
             <a-button @click="addComp(item.elName)" size="small" class="container-item-btn" :ghost="true">
               {{ item.title }}
             </a-button>
@@ -20,14 +20,11 @@ import { compsList } from '@/utils/config';
 
 export default defineComponent({
   emits: ['addComp'],
-  props: {
-    acitveAreaType: String
-  },
-  setup (props, context) {
+  setup (props, { emit }) {
     const list: Array<object> = compsList
 
     const addComp = (value: string) => {
-      context.emit('addComp', value)
+      emit('addComp', value)
     }
 
     return {

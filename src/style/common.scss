@@ -127,6 +127,14 @@ body {
   outline: none;
 }
 
+@for $i from 300 through 600 {
+  @if $i % 100==0 {
+    .fontW#{$i} {
+      font-weight: #{$i};
+    }
+  }
+}
+
 @for $i from 0 through 90 {
   @if $i % 5==0 {
     .paddingT#{$i} {
@@ -195,4 +203,12 @@ body {
 
 .fl {
   float: left;
+}
+
+.ant-input-affix-wrapper,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: transparent !important;
+  .ant-input {
+    background: transparent !important;
+  }
 }

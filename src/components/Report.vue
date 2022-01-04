@@ -1,65 +1,45 @@
 <template>
   <a-layout>
     <a-layout-sider  width="260px" class="padding20">
-      <CompsArea @addArea="addArea" @addComp="addComp"></CompsArea>
+      <CompsArea @addComp="addComp"></CompsArea>
     </a-layout-sider>
     <a-layout-content class="border-l border-r padding10">
       <CanvasArea
         v-bind:pageData="pageData"
-        @clickArea="clickArea"
-        @clickCanvas="clickCanvas"
+        @clickCanvas="activePosi=0"
       ></CanvasArea>
     </a-layout-content>
-    <a-layout-sider  width="260px" class="padding20">
-      <PageAttr v-if="activePosi===0"></PageAttr>
-      <AreaAttr v-if="activePosi===1"></AreaAttr>
-      <CompAttr v-if="activePosi===2"></CompAttr>
+    <a-layout-sider  width="260px">
+      <PageAttr v-if="activePosi===0" @changePageConfig="changePageConfig"></PageAttr>
+      <CompAttr v-if="activePosi===1"></CompAttr>
     </a-layout-sider>
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue'
-import { pageConfig, areaConfig } from '@/utils/pageData'
-import { notification } from 'ant-design-vue'
+import { defineComponent, toRefs, ref, reactive } from 'vue'
+import { pageConfig } from '@/utils/pageData'
 
 export default defineComponent({
-  data() {
+  setup () {
+    const pageData = toRefs(reactive(pageConfig))
+
+    const activePosi = ref<number>(0)
+
+    const changePageConfig = (e: object) => {
+      const { name, value } = e
+    }
+    const addComp = (value: string) => {
+      activePosi.value = 1
+      pageData.elements.push('jdjdj')
+    }
+
     return {
-      activePosi: Number,
-      pageData: Object
+      activePosi,
+      pageData,
+      changePageConfig,
+      addComp
     }
-  },
-  created () {
-    this.pageData = reactive(pageConfig)
-    this.activePosi = ref(0)
-  },
-  methods: {
-    addArea (value: object) {
-      this.activePosi = ref(1)
-      console.log(value)
-      this.pageData.areas.push({
-        ...areaConfig,
-        type: value.areaType
-      })
-    },
-    addComp (value: string) {
-      if (this.activePosi === 1) {
-        this.activePosi = ref(2)
-      } else {
-        notification.warning({
-          message: '提示',
-          description: '添加控件前请先选择目标区域。',
-          duration: 2
-        });
-      }
-    },
-    clickArea (index: number) {
-      this.activePosi = ref(1)
-    },
-    clickCanvas () {
-      this.activePosi = ref(0)
-    }
-  },
+  }
 })
 </script>
 
