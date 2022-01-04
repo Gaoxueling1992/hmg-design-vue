@@ -1,20 +1,14 @@
 <template>
   <div class="comps-area">
-    <BaseCompArea  @addComp="addComp"></BaseCompArea>
+    <BaseCompArea></BaseCompArea>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  emits: ['addComp'],
-  setup (props, { emit }) {
-    const addComp = (value: string) => {
-      emit('addComp', value)
-    }
-
+  setup () {
     return {
-      addComp
     }
   }
 })

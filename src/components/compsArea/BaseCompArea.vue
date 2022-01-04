@@ -3,28 +3,26 @@
     <div class="container-item">
       <div class="title marginB15">控件</div>
       <a-row type="flex" justify="start">
-        <template v-for="item in list" :key="item.elName">
-          <a-col :span="12">
-            <a-button @click="addComp(item.elName)" size="small" class="container-item-btn" :ghost="true">
-              {{ item.title }}
-            </a-button>
-          </a-col>
-        </template>
+        <a-col :span="12" v-for="item in list" :key="item.elName">
+          <a-button @click="addComp(item.elName)"  class="container-item-btn" :ghost="true">
+            {{ item.title }}
+          </a-button>
+        </a-col>
       </a-row>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject } from 'vue'
 import { compsList } from '@/utils/config';
 
 export default defineComponent({
-  emits: ['addComp'],
-  setup (props, { emit }) {
+  setup () {
     const list: Array<object> = compsList
+    const addCompInject: any = inject('addComp')
 
     const addComp = (value: string) => {
-      emit('addComp', value)
+      addCompInject(value)
     }
 
     return {

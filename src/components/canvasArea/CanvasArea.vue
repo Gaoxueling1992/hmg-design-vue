@@ -1,21 +1,22 @@
 <template>
-  <div class="canvas-area" @click="clickCanvas">
+  <div class="canvas-area" @click="handlClickCanvas">
     {{pdata.elements}}
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue'
+import { defineComponent, toRefs, inject } from 'vue'
 
 export default defineComponent({
   props: ['pageData'],
-  setup (props, { emit }) {
+  setup (props) {
     const pdata = toRefs(props.pageData)
-    const clickCanvas = () => {
-      emit('clickCanvas')
+    const clickCanvas = inject('clickCanvas')
+    const handlClickCanvas = () => {
+      clickCanvas()
     }
     return {
       pdata,
-      clickCanvas
+      handlClickCanvas
     }
   },
 })

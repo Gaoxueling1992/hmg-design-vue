@@ -1,48 +1,52 @@
 const compsList: Array<object> = [
   {
-    elName: 'a-button',
-    title: '描述文本'
+    elName: 'rad-text',
+    title: '文本'
   },
   {
-    elName: 'a-input',
-    title: '输入框'
+    elName: 'rad-inputnumber',
+    title: '数值'
   },
-  {
-    elName: 'rad-select',
-    title: '下拉选择'
-  },
-  {
-    elName: 'rad-datetime',
-    title: '时间选择器'
-  },
-  {
-    elName: 'rad-table',
-    title: '表格'
-  },
-  {
-    elName: 'rad-image',
-    title: '图片'
-  },
-  {
-    elName: 'rad-mulitImagepicker',
-    title: '图片选择器'
-  },
-  {
-    elName: 'rad-line',
-    title: '直线'
-  },
-  {
-    elName: 'rad-drcode',
-    title: '条形码/二维码'
-  },
-  {
-    elName: 'rad-editor',
-    title: '富文本'
-  },
-  {
-    elName: 'rad-operator',
-    title: '操作人'
-  }
+  // {
+  //   elName: 'a-input',
+  //   title: '输入框'
+  // },
+  // {
+  //   elName: 'rad-select',
+  //   title: '下拉选择'
+  // },
+  // {
+  //   elName: 'rad-datetime',
+  //   title: '时间选择器'
+  // },
+  // {
+  //   elName: 'rad-table',
+  //   title: '表格'
+  // },
+  // {
+  //   elName: 'rad-image',
+  //   title: '图片'
+  // },
+  // {
+  //   elName: 'rad-mulitImagepicker',
+  //   title: '图片选择器'
+  // },
+  // {
+  //   elName: 'rad-line',
+  //   title: '直线'
+  // },
+  // {
+  //   elName: 'rad-drcode',
+  //   title: '条形码/二维码'
+  // },
+  // {
+  //   elName: 'rad-editor',
+  //   title: '富文本'
+  // },
+  // {
+  //   elName: 'rad-operator',
+  //   title: '操作人'
+  // }
 ]
 
 const tplTypeList: Array<Object> = [

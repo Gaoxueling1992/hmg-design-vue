@@ -1,7 +1,7 @@
 <template>
   <a-layout>
     <a-layout-sider  width="260px" class="padding20">
-      <CompsArea @addComp="addComp"></CompsArea>
+      <CompsArea></CompsArea>
     </a-layout-sider>
     <a-layout-content class="border-l border-r padding10">
       <CanvasArea
@@ -10,34 +10,48 @@
       ></CanvasArea>
     </a-layout-content>
     <a-layout-sider  width="260px">
-      <PageAttr v-if="activePosi===0" @changePageConfig="changePageConfig"></PageAttr>
+      <PageAttr v-if="activePosi===0"></PageAttr>
       <CompAttr v-if="activePosi===1"></CompAttr>
     </a-layout-sider>
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs, ref, reactive } from 'vue'
+import { defineComponent, toRefs, ref, reactive, provide } from 'vue'
 import { pageConfig } from '@/utils/pageData'
+
+// 处理主体数据
+const handlePageData = () => {
+  const pageData = toRefs(reactive(pageConfig))
+  const changePageConfig = (e: object) => {
+    const { name, value } = e
+    console.log(name, value)
+  }
+  provide('changePageConfig', changePageConfig)
+  return { pageData }
+}
 
 export default defineComponent({
   setup () {
-    const pageData = toRefs(reactive(pageConfig))
+    const { pageData } = handlePageData()
 
     const activePosi = ref<number>(0)
-
-    const changePageConfig = (e: object) => {
-      const { name, value } = e
-    }
+    
     const addComp = (value: string) => {
       activePosi.value = 1
-      pageData.elements.push('jdjdj')
+      console.log(value)
+      // pageData.elements.push(value)
     }
+
+    const clickCanvas = () => {
+      activePosi.value = 0
+    }
+
+    provide('addComp', addComp)
+    provide('clickCanvas', clickCanvas)
 
     return {
       activePosi,
-      pageData,
-      changePageConfig,
-      addComp
+      pageData
     }
   }
 })
