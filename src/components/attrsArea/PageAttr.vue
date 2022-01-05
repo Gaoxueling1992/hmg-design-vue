@@ -18,6 +18,12 @@
         </a-select-option>
       </a-select>
     </div>
+    <div class="container-item padding10">
+      <a-checkbox v-model:checked="openFixHeader">开启页眉</a-checkbox>
+    </div>
+    <div class="container-item padding10">
+      <a-checkbox v-model:checked="openFixFooter">开启页脚</a-checkbox>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -28,24 +34,27 @@ import { tplTypeList } from '@/utils/config';
 const pageDataEffet = () => {
   const tplName = ref<string>('')
   const tplType = ref<string>('a4')
+  const openFixHeader = ref<boolean>(false)
+  const openFixFooter = ref<boolean>(false)
   const changePageConfig: any = inject('changePageConfig')
 
   // 页面设置
   const handlePageChange = (name: string, value: string) => {
     changePageConfig({ name, value })
   }
-  return { tplName, tplType,  handlePageChange }
+  return { tplName, tplType,  handlePageChange, openFixHeader, openFixFooter }
 }
 
 export default defineComponent({
   setup () {
-    const { tplName, tplType,  handlePageChange } = pageDataEffet()
+    const { tplName, tplType,  handlePageChange, openFixHeader, openFixFooter } = pageDataEffet()
 
     return {
       tplName,
       tplType,
       tplTypeList,
-      handlePageChange
+      handlePageChange,
+      openFixHeader, openFixFooter
     }
   },
 })

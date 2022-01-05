@@ -1,5 +1,5 @@
 const pageConfig: Object = {
-  elements: [], // 区域
+  lines: [], // 区域
   fixedHeader: {
     openFixed: false,
     height: '50mm'

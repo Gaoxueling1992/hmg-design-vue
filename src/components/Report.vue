@@ -27,33 +27,44 @@ const handlePageData = () => {
 }
 
 // 处理控件操作
-const handleCompsOper = (pageData, activePosi) => {
+const handleCompsOper = (pageData, activePosi, activeCompId) => {
   const addComp = (value: string) => {
     activePosi.value = 1
-    pageData.elements.push({
+    const id: string = (new Date()).getTime() + ''
+    pageData.lines.push([{
       ...compBaseConfig[value],
-      id: (new Date()).getTime() + ''
-    })
+      id: id
+    }])
+    activeCompId.value = id
   }
 
-  return { addComp }
+  const activeComp = (id: string) => {
+    activePosi.value = 1
+    activeCompId.value = id
+  }
+
+  return { addComp, activeComp }
 }
 
 export default defineComponent({
   setup () {
     const pageData = reactive(pageConfig)
     const activePosi = ref<number>(0)
+    const activeCompId = ref<string>('')
     const { changePageConfig } = handlePageData()
-    const { addComp } = handleCompsOper(pageData, activePosi)
+    const { addComp, activeComp } = handleCompsOper(pageData, activePosi, activeCompId)
   
     const clickCanvas = () => {
       activePosi.value = 0
+      activeCompId.value = ''
     }
 
     provide('changePageConfig', changePageConfig)
     provide('addComp', addComp)
+    provide('activeComp', activeComp)
     provide('clickCanvas', clickCanvas)
     provide('pageData', pageData)
+    provide('activeCompId', activeCompId)
 
     return {
       activePosi,
