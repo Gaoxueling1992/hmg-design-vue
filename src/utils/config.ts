@@ -4,7 +4,11 @@ const compsList: Array<object> = [
     title: '文本'
   },
   {
-    elName: 'rad-inputnumber',
+    elName: 'rad-input',
+    title: '输入框'
+  },
+  {
+    elName: 'rad-number',
     title: '数值'
   },
   // {
@@ -49,6 +53,30 @@ const compsList: Array<object> = [
   // }
 ]
 
+const compBaseConfig: Object = {
+  'rad-text': {
+    elName: 'rad-text',
+    name: '文本',
+    eleWidth: '100%',
+    placeholder: '',
+    defaultValue: ''
+  },
+  'rad-input': {
+    elName: 'rad-input',
+    name: '输入框',
+    eleWidth: '100%',
+    placeholder: '',
+    defaultValue: ''
+  },
+  'rad-number': {
+    elName: 'rad-number',
+    name: '数值',
+    eleWidth: '100%',
+    placeholder: '请填写数值',
+    defaultValue: ''
+  }
+}
+
 const tplTypeList: Array<Object> = [
   {
     value: 'a4',
@@ -78,5 +106,6 @@ const tplTypeList: Array<Object> = [
 
 export {
   compsList,
-  tplTypeList
+  tplTypeList,
+  compBaseConfig
 }

@@ -1,22 +1,22 @@
 <template>
   <div class="canvas-area" @click="handlClickCanvas">
-    {{pdata.elements}}
+    <DesignEle v-for="ele in elements" :ele="ele" :id="ele.id" :key="ele.id"></DesignEle>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs, inject } from 'vue'
+import { defineComponent, inject, toRefs } from 'vue'
 
 export default defineComponent({
-  props: ['pageData'],
-  setup (props) {
-    const pdata = toRefs(props.pageData)
-    const clickCanvas = inject('clickCanvas')
+  setup () {
+    const clickCanvas: any = inject('clickCanvas')
+    const { elements } = toRefs(inject('pageData'))
     const handlClickCanvas = () => {
       clickCanvas()
-    }
+    } 
+
     return {
-      pdata,
-      handlClickCanvas
+      handlClickCanvas,
+      elements
     }
   },
 })

@@ -1,9 +1,3 @@
-type ele = {
-  name: string
-}
-
-const elements: Array<string> = []
-
 const pageConfig: Object = {
   elements: [], // 区域
   fixedHeader: {
