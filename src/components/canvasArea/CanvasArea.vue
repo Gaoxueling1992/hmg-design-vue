@@ -1,12 +1,14 @@
 <template>
   <div class="canvas-area" @click.self="handleClickCanvas">
-    <div v-for="(line, idx) in lines" :key="idx" :id="'line' + idx" class="margin10">
-      <draggable v-model="lines[idx]" group="line" class="canvas-area-line">
-        <transition-group>
-          <DesignEle v-for="ele in line" :ele="ele" :key="ele.id"></DesignEle>
-        </transition-group>
-      </draggable>
-    </div>
+    <draggable class="dragArea" tag="ul" :list="tasks" :group="{ name: 'g1' }">
+      <div v-for="(line, idx) in lines" :key="idx" :id="'line' + idx" class="margin10">
+        <draggable v-model="lines[idx]" group="line" class="canvas-area-line">
+          <transition-group>
+            <DesignEle v-for="ele in line" :ele="ele" :key="ele.id"></DesignEle>
+          </transition-group>
+        </draggable>
+      </div>
+    </draggable>
   </div>
 </template>
 <script lang="ts">

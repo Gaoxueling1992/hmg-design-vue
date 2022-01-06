@@ -13,12 +13,12 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs, ref, reactive, provide } from 'vue'
+import { defineComponent, toRefs, ref, reactive, provide, Ref } from 'vue'
 import { pageConfig } from '@/utils/pageData'
 import { compBaseConfig } from '@/utils/config'
 // 处理主体数据
 const handlePageData = () => {
-  const changePageConfig = (e: object) => {
+  const changePageConfig = (e: { name: string, value: string }) => {
     const { name, value } = e
     console.log(name, value)
   }
@@ -27,7 +27,7 @@ const handlePageData = () => {
 }
 
 // 处理控件操作
-const handleCompsOper = (pageData, activePosi, activeCompId) => {
+const handleCompsOper = (pageData: { lines: any[][] }, activePosi: Ref<number>, activeCompId: Ref<string>) => {
   const addComp = (value: string) => {
     activePosi.value = 1
     const id: string = (new Date()).getTime() + ''
@@ -48,9 +48,9 @@ const handleCompsOper = (pageData, activePosi, activeCompId) => {
 
 export default defineComponent({
   setup () {
-    const pageData = reactive(pageConfig)
-    const activePosi = ref<number>(0)
-    const activeCompId = ref<string>('')
+    const pageData: { lines: any[][] } = reactive(pageConfig)
+    const activePosi: Ref<number> = ref(0)
+    const activeCompId: Ref<string> = ref('')
     const { changePageConfig } = handlePageData()
     const { addComp, activeComp } = handleCompsOper(pageData, activePosi, activeCompId)
   

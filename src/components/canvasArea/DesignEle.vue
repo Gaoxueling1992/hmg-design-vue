@@ -15,7 +15,7 @@
     </template>
     <template v-else>
       <div v-if="ele.elName === 'rad-text'" style="min-height: 20px">{{ ele.value || '静态文本' }}</div>
-      <a-divider style="height: 20px" v-if="ele.elName === 'rad-line'"/>
+      <a-divider v-if="ele.elName === 'rad-line'" style="height: 20px"/>
     </template>
   </div>
 </template>
@@ -57,9 +57,4 @@ export default defineComponent({
 .ant-divider-horizontal {
   margin: 0;
 }
-// .quick-op-group {
-//   position: absolute;
-//   right: 10px;
-//   top: -10px;
-// }
 </style>
