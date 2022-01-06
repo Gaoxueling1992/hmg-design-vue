@@ -30,7 +30,7 @@ export default defineComponent({
     const activeCompId: string = inject('activeCompId')
 
     const clickEle = () => {
-      activeComp(ele.id)
+      activeComp(ele)
     }
   
     return {

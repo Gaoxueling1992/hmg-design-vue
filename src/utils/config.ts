@@ -49,10 +49,11 @@ const compsList: Array<object> = [
   }
 ]
 
-const compBaseConfig: Object = {
+const compBaseConfig = {
   'rad-text': {
     elName: 'rad-text',
     name: '文本',
+    desc: '静态文本，可编辑文字和样式。',
     // eleWidth: '50%',
     placeholder: '',
     defaultValue: '',

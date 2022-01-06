@@ -8,56 +8,93 @@
     </div>
     <div class="container-item padding10 paddingT20">
       <div class="title marginB5 fontW500">模板名称</div>
-      <a-input v-model:value="tplName" @change="handlePageChange('tplName', tplName)" allowClear placeholder="模板名称" />
+      <a-input
+        v-model:value="name"
+        @change="handlePageChange('name', name)"
+        allowClear
+        placeholder="模板名称"
+      />
     </div>
     <div class="container-item padding10">
       <div class="title marginB5 fontW500">纸张</div>
-      <a-select v-model:value="tplType" width="100%" @change="handlePageChange('tplType', tplType)">
-        <a-select-option v-for="item in tplTypeList" :key="item.value" :value="item.value">
+      <a-select
+        v-model:value="pageType"
+        width="100%"
+        @change="handlePageChange('pageType', pageType)"
+      >
+        <a-select-option
+          v-for="item in tplTypeList"
+          :key="item.value"
+          :value="item.value"
+        >
           {{item.label}}
         </a-select-option>
       </a-select>
     </div>
-    <div class="container-item padding10">
-      <a-checkbox v-model:checked="openFixHeader">开启页眉</a-checkbox>
+    <div class="container-item padding10" v-if="pageType==='custom'">
+      宽：<a-input-number
+        v-model:value="width"
+        :keyboard="true"
+        :min="10"
+        @change="handlePageSize('width', width)"
+      />mm
     </div>
-    <div class="container-item padding10">
-      <a-checkbox v-model:checked="openFixFooter">开启页脚</a-checkbox>
+    <div class="container-item padding10" v-if="pageType==='custom'">
+      高：
+      <a-input-number
+        v-model:value="minHeight"
+        :keyboard="true"
+        :min="10"
+        @change="handlePageSize('minHeight', minHeight)"
+      />mm
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, inject} from 'vue'
+import { defineComponent, ref, inject, Ref } from 'vue';
 import { tplTypeList } from '@/utils/config';
 
 // 处理pageData
 const pageDataEffet = () => {
-  const tplName = ref<string>('')
-  const tplType = ref<string>('a4')
-  const openFixHeader = ref<boolean>(false)
-  const openFixFooter = ref<boolean>(false)
-  const changePageConfig: any = inject('changePageConfig')
+  const name: Ref<string> = ref<string>('');
+  const pageType: Ref<string> = ref<string>('a4');
+  const width: Ref<number> = ref<number>(100);
+  const minHeight: Ref<number> = ref<number>(100);
+  const changePageConfig: any = inject('changePageConfig');
+  const changePageSize: any = inject('changePageSize');
 
   // 页面设置
-  const handlePageChange = (name: string, value: string) => {
-    changePageConfig({ name, value })
-  }
-  return { tplName, tplType,  handlePageChange, openFixHeader, openFixFooter }
-}
+  const handlePageChange = (key: string, value: string) => {
+    changePageConfig({ key, value });
+  };
+  const handlePageSize = (key: string, value: number) => {
+    changePageSize({ key, value });
+  };
+  return { name, pageType, width, minHeight, handlePageChange, handlePageSize };
+};
 
 export default defineComponent({
-  setup () {
-    const { tplName, tplType,  handlePageChange, openFixHeader, openFixFooter } = pageDataEffet()
+  setup() {
+    const {
+      name,
+      pageType,
+      width,
+      minHeight,
+      handlePageChange,
+      handlePageSize
+    } = pageDataEffet();
 
     return {
-      tplName,
-      tplType,
+      name,
+      pageType,
+      width,
+      minHeight,
       tplTypeList,
       handlePageChange,
-      openFixHeader, openFixFooter
-    }
-  },
-})
+      handlePageSize
+    };
+  }
+});
 </script>
 <style lang="scss" scoped>
 .page-attr {
