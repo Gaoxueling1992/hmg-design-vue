@@ -56,7 +56,7 @@ export default defineComponent({
     const activeCompId: string = inject('activeCompId') || '';
 
     const clickEle = () => {
-      activeComp({...ele});
+      activeComp(ele);
     };
 
     return {
