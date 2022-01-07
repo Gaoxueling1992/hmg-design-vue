@@ -27,7 +27,7 @@ export default defineComponent({
   setup (props) {
     const ele: any = reactive(props.ele)
     const activeComp: any = inject('activeComp')
-    const activeCompId: string = inject('activeCompId')
+    const activeCompId: string = inject('activeCompId') || ''
 
     const clickEle = () => {
       activeComp(ele)
