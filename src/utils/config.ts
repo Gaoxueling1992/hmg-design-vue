@@ -11,69 +11,95 @@ const compsList: Array<object> = [
     elName: 'rad-number',
     title: '数值'
   },
-  // {
-  //   elName: 'a-input',
-  //   title: '输入框'
-  // },
-  // {
-  //   elName: 'rad-select',
-  //   title: '下拉选择'
-  // },
-  // {
-  //   elName: 'rad-datetime',
-  //   title: '时间选择器'
-  // },
-  // {
-  //   elName: 'rad-table',
-  //   title: '表格'
-  // },
-  // {
-  //   elName: 'rad-image',
-  //   title: '图片'
-  // },
-  // {
-  //   elName: 'rad-mulitImagepicker',
-  //   title: '图片选择器'
-  // },
-  // {
-  //   elName: 'rad-line',
-  //   title: '直线'
-  // },
-  // {
-  //   elName: 'rad-drcode',
-  //   title: '条形码/二维码'
-  // },
-  // {
-  //   elName: 'rad-editor',
-  //   title: '富文本'
-  // },
-  // {
-  //   elName: 'rad-operator',
-  //   title: '操作人'
-  // }
+  {
+    elName: 'rad-datetime',
+    title: '时间'
+  },
+  {
+    elName: 'rad-table',
+    title: '表格'
+  },
+  {
+    elName: 'rad-image',
+    title: '图片'
+  },
+  {
+    elName: 'rad-mulitImagepicker',
+    title: '图片选择器'
+  },
+  {
+    elName: 'rad-line',
+    title: '分割线'
+  },
+  {
+    elName: 'rad-signalcode',
+    title: '条形码'
+  },
+  {
+    elName: 'rad-drcode',
+    title: '二维码'
+  },
+  {
+    elName: 'rad-editor',
+    title: '富文本'
+  },
+  {
+    elName: 'rad-signature',
+    title: '签名'
+  }
 ]
 
-const compBaseConfig: Object = {
+const compBaseConfig = {
   'rad-text': {
-    elName: 'rad-text',
+    elName: 'RadText',
     name: '文本',
-    eleWidth: '100%',
+    desc: '静态文本，可编辑文字和样式。',
+    // eleWidth: '50%',
+    placeholder: '',
+    defaultValue: '',
+    inline: true,
+    noLabel: true,
+    styleSheet: {
+      fontSize: '14px',
+      fontWeight: '400',
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      wrap: '',
+      underline: false,
+      fontStyle: '',
+      fontFamily: '',
+      border: ''
+    }
+  },
+  'rad-input': {
+    elName: 'RadInput',
+    name: '输入框',
+    // eleWidth: '100%',
     placeholder: '',
     defaultValue: ''
   },
-  'rad-input': {
-    elName: 'rad-input',
-    name: '输入框',
-    eleWidth: '100%',
+  'rad-datetime': {
+    elName: 'RadDatetime',
+    name: '时间',
+    // eleWidth: '100%',
     placeholder: '',
     defaultValue: ''
   },
   'rad-number': {
-    elName: 'rad-number',
+    elName: 'RadNumber',
     name: '数值',
-    eleWidth: '100%',
+    // eleWidth: '100%',
     placeholder: '请填写数值',
     defaultValue: ''
+  },
+  'rad-line': {
+    elName: 'RadLine',
+    name: '分割线',
+    eleWidth: '100%',
+    placeholder: '请填写数值',
+    defaultValue: '',
+    noLabel: true
   }
 }
 
