@@ -54,52 +54,118 @@ const compBaseConfig = {
     elName: 'RadText',
     name: '文本',
     desc: '静态文本，可编辑文字和样式。',
-    // eleWidth: '50%',
     placeholder: '',
     defaultValue: '',
+    label: '',
     inline: true,
     noLabel: true,
     styleSheet: {
-      fontSize: '14px',
+      fontFamily: 'Microsoft YaHei',
       fontWeight: '400',
+      fontSize: '14',
       color: '',
       textAlign: 'center',
       backgroundColor: '',
       wrap: '',
       underline: false,
       fontStyle: '',
-      fontFamily: '',
       border: ''
     }
   },
   'rad-input': {
     elName: 'RadInput',
     name: '输入框',
-    // eleWidth: '100%',
     placeholder: '',
-    defaultValue: ''
+    label: '',
+    defaultValue: '',
+    noLabel: false,
+    inline: true,
   },
   'rad-datetime': {
     elName: 'RadDatetime',
     name: '时间',
-    // eleWidth: '100%',
     placeholder: '',
+    label: '',
     defaultValue: ''
   },
   'rad-number': {
     elName: 'RadNumber',
     name: '数值',
-    // eleWidth: '100%',
     placeholder: '请填写数值',
+    label: '',
     defaultValue: ''
   },
   'rad-line': {
     elName: 'RadLine',
     name: '分割线',
-    eleWidth: '100%',
     placeholder: '请填写数值',
+    label: '',
     defaultValue: '',
     noLabel: true
+  }
+}
+
+const sheet2Form = {
+  fontFamily: {
+    type: 'a-select',
+    label: '字体',
+    options: [{
+      label: '宋体',
+      value: 'SimSun'
+    }, {
+      label: '新宋体',
+      value: 'NSimSun'
+    }, {
+      label: '仿宋',
+      value: 'FangSong'
+    }, {
+      label: '楷体',
+      value: 'KaiTi'
+    }, {
+      label: '黑体',
+      value: 'SimHei'
+    }, {
+      label: '微软雅黑',
+      value: 'Microsoft YaHei'
+    }, {
+      label: 'Times New Roman',
+      value: 'Times New Roman'
+    }, {
+      label: '隶书',
+      value: 'LiSu'
+    }, {
+      label: '幼圆',
+      value: 'YouYuan'
+    }]
+  },
+  fontSize: {
+    type: 'a-input-number',
+    label: '大小'
+  },
+  fontWeight: {
+    type: 'a-input-number',
+    label: '粗细'
+  },
+  color: {
+    
+  },
+  textAlign: {
+    
+  },
+  backgroundColor: {
+    
+  },
+  wrap: {
+    
+  },
+  underline: {
+    
+  },
+  fontStyle: {
+    
+  },
+  border: {
+    
   }
 }
 
@@ -133,5 +199,6 @@ const tplTypeList: Array<Object> = [
 export {
   compsList,
   tplTypeList,
-  compBaseConfig
+  compBaseConfig,
+  sheet2Form
 }

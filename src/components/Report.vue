@@ -50,11 +50,16 @@ const handleCompsOper = (
   const addComp = (value: string) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
+    pageData.lines.push([
+      {
+        ...compBaseConfig[value],
+        id: id
+      }
+    ]);
     activeCompObj.value = {
       ...compBaseConfig[value],
       id: id
     };
-    pageData.lines.push([activeCompObj.value]);
     activeCompId.value = id;
   };
 
