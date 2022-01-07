@@ -14,8 +14,8 @@
       <a-input style="flex: 1" disabled :placeholder="ele.placeholder"/>
     </template>
     <template v-else>
-      <div v-if="ele.elName === 'rad-text'" style="min-height: 20px">{{ ele.value || '静态文本' }}</div>
-      <a-divider v-if="ele.elName === 'rad-line'" style="height: 20px"/>
+      <div v-if="ele.elName === 'RadText'" style="min-height: 20px">{{ ele.defaultValue || '静态文本' }}</div>
+      <a-divider v-if="ele.elName === 'RadLine'" style="height: 20px"/>
     </template>
   </div>
 </template>

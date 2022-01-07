@@ -51,38 +51,50 @@ const compsList: Array<object> = [
 
 const compBaseConfig = {
   'rad-text': {
-    elName: 'rad-text',
+    elName: 'RadText',
     name: '文本',
     desc: '静态文本，可编辑文字和样式。',
     // eleWidth: '50%',
     placeholder: '',
     defaultValue: '',
     inline: true,
-    noLabel: true
+    noLabel: true,
+    styleSheet: {
+      fontSize: '14px',
+      fontWeight: '400',
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      wrap: '',
+      underline: false,
+      fontStyle: '',
+      fontFamily: '',
+      border: ''
+    }
   },
   'rad-input': {
-    elName: 'rad-input',
+    elName: 'RadInput',
     name: '输入框',
     // eleWidth: '100%',
     placeholder: '',
     defaultValue: ''
   },
   'rad-datetime': {
-    elName: 'rad-datetime',
+    elName: 'RadDatetime',
     name: '时间',
     // eleWidth: '100%',
     placeholder: '',
     defaultValue: ''
   },
   'rad-number': {
-    elName: 'rad-number',
+    elName: 'RadNumber',
     name: '数值',
     // eleWidth: '100%',
     placeholder: '请填写数值',
     defaultValue: ''
   },
   'rad-line': {
-    elName: 'rad-line',
+    elName: 'RadLine',
     name: '分割线',
     eleWidth: '100%',
     placeholder: '请填写数值',

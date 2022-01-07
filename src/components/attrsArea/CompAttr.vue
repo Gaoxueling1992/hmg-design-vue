@@ -3,17 +3,30 @@
     <div class="comp-attr-header">
       <div class="container-item padding10 paddingT20">
         <div class="title marginB5 fontW500">{{activeCompObj.name}}</div>
-        <div class="desc fontW400">{{activeCompObj.desc}}</div>
+        <div class="desc fontW400">{{activeCompObj.desc}} {{activeCompObj.elName}}</div>
       </div>
     </div>
+    <component class="padding10" :is="activeCompObj.elName"></component>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs } from 'vue'
+import { defineComponent, inject } from 'vue'
+import RadText from './compsAttrs/RadText.vue'
+import RadInput from './compsAttrs/RadInput.vue'
+import RadDatetime from './compsAttrs/RadDatetime.vue'
+import RadLine from './compsAttrs/RadLine.vue'
+import RadNumber from './compsAttrs/RadNumber.vue'
 
 export default defineComponent({
+  components: {
+    RadText,
+    RadInput,
+    RadDatetime,
+    RadLine,
+    RadNumber
+  },
   setup () {
-    const activeCompObj = inject('activeCompObj')
+    const activeCompObj: any = inject('activeCompObj')
     return {
       activeCompObj
     }
