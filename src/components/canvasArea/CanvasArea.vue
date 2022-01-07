@@ -43,9 +43,9 @@ export default defineComponent({
     draggable: VueDraggableNext
   },
   setup() {
-    const pageData: any = inject('pageData');
-    const { lines, styleSheet } = toRefs(pageData);
-    const { handleClickCanvas } = handleClickCanvasFn();
+    const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
+    const { lines, styleSheet } = toRefs(pageData)
+    const { handleClickCanvas } = handleClickCanvasFn() 
 
     return {
       handleClickCanvas,
