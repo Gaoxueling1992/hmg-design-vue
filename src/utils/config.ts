@@ -80,20 +80,56 @@ const compBaseConfig = {
     defaultValue: '',
     noLabel: false,
     inline: true,
+    styleSheet: {
+      fontFamily: 'Microsoft YaHei',
+      fontWeight: '400',
+      fontSize: '14',
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      wrap: '',
+      underline: false,
+      fontStyle: '',
+      border: ''
+    }
   },
   'rad-datetime': {
     elName: 'RadDatetime',
     name: '时间',
     placeholder: '',
     label: '',
-    defaultValue: ''
+    defaultValue: '',
+    styleSheet: {
+      fontFamily: 'Microsoft YaHei',
+      fontWeight: '400',
+      fontSize: '14',
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      wrap: '',
+      underline: false,
+      fontStyle: '',
+      border: ''
+    }
   },
   'rad-number': {
     elName: 'RadNumber',
     name: '数值',
     placeholder: '请填写数值',
     label: '',
-    defaultValue: ''
+    defaultValue: '',
+    styleSheet: {
+      fontFamily: 'Microsoft YaHei',
+      fontSize: '14',
+      fontWeight: '400',
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      wrap: '',
+      underline: false,
+      fontStyle: '',
+      border: ''
+    }
   },
   'rad-line': {
     elName: 'RadLine',
@@ -101,7 +137,13 @@ const compBaseConfig = {
     placeholder: '请填写数值',
     label: '',
     defaultValue: '',
-    noLabel: true
+    noLabel: true,
+    styleSheet: {
+      color: '',
+      textAlign: 'center',
+      backgroundColor: '',
+      border: ''
+    }
   }
 }
 
@@ -147,7 +189,8 @@ const sheet2Form = {
     label: '粗细'
   },
   color: {
-    
+    type: 'el-color-picker',
+    label: '颜色'
   },
   textAlign: {
     

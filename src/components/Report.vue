@@ -50,8 +50,14 @@ const handleCompsOper = (
   const addComp = (value: string) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
-    activeCompObj.value = {
+    const baseConfig = reactive({
       ...compBaseConfig[value],
+      styleSheet: {
+        ...compBaseConfig[value].styleSheet
+      }
+    })
+    activeCompObj.value = {
+      ...baseConfig,
       id: id
     };
     pageData.lines.push([activeCompObj.value]);
