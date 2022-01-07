@@ -120,8 +120,8 @@ const compBaseConfig = {
     defaultValue: '',
     styleSheet: {
       fontFamily: 'Microsoft YaHei',
-      fontWeight: '400',
       fontSize: '14',
+      fontWeight: '400',
       color: '',
       textAlign: 'center',
       backgroundColor: '',
@@ -139,15 +139,9 @@ const compBaseConfig = {
     defaultValue: '',
     noLabel: true,
     styleSheet: {
-      fontFamily: 'Microsoft YaHei',
-      fontWeight: '400',
-      fontSize: '14',
       color: '',
       textAlign: 'center',
       backgroundColor: '',
-      wrap: '',
-      underline: false,
-      fontStyle: '',
       border: ''
     }
   }
@@ -195,7 +189,8 @@ const sheet2Form = {
     label: '粗细'
   },
   color: {
-    
+    type: 'el-color-picker',
+    label: '颜色'
   },
   textAlign: {
     
