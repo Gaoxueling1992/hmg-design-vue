@@ -7,20 +7,23 @@
         :auto-size="{ minRows: 2, maxRows: 5 }"
       />
     </div>
-    <div v-for="(value, key) in activeCompObj.styleSheet" :key="key">
+    <div
+      v-for="(value, key) in activeCompObj.styleSheet"
+      :key="key"
+    >
       {{ value }} {{ key }}
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
+import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
-  setup () {
-    const activeCompObj: any = inject('activeCompObj')
+  setup() {
+    const activeCompObj: object = inject('activeCompObj') || {};
     return {
       activeCompObj
-    }
-  },
-})
+    };
+  }
+});
 </script>

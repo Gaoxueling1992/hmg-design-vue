@@ -25,9 +25,9 @@ import { defineComponent, reactive, inject } from 'vue'
 export default defineComponent({
   props: ['ele', 'index'],
   setup (props) {
-    const ele: any = reactive(props.ele)
+    const ele: object = reactive(props.ele) || {}
     const activeComp: any = inject('activeComp')
-    const activeCompId: string = inject('activeCompId')
+    const activeCompId: string = inject('activeCompId') || ''
 
     const clickEle = () => {
       activeComp(ele)

@@ -3,7 +3,7 @@
     <div class="comp-attr-header">
       <div class="container-item padding10 paddingT20">
         <div class="title marginB5 fontW500">{{activeCompObj.name}}</div>
-        <div class="desc fontW400">{{activeCompObj.desc}} {{activeCompObj.elName}}</div>
+        <div class="desc fontW400">{{activeCompObj.desc}}</div>
       </div>
     </div>
     <component class="padding10" :is="activeCompObj.elName"></component>
