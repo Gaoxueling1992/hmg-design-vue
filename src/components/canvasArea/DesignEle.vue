@@ -11,16 +11,20 @@
     class="disgn-ele padding5"
     :class="{'disgn-ele-active': activeCompId === ele.id}"
   >
-    <template
-      v-if="!ele.noLabel"
-      :style="{
-      ...ele.styleSheet,
-      fontSize: ele.styleSheet.fontSize + 'px'
-    }"
-    >
-      <div :class="ele.inline ? 'ele-label' : ''">{{ele.label || ele.name}}</div>
+    <template v-if="!ele.noLabel">
+      <div
+        :style="{
+          ...ele.styleSheet,
+          fontSize: ele.styleSheet.fontSize + 'px'
+        }"
+        :class="ele.inline ? 'ele-label' : ''"
+      >{{ele.label || ele.name}}</div>
       <a-input
         style="flex: 1"
+        :style="{
+          ...ele.styleSheet,
+          fontSize: ele.styleSheet.fontSize + 'px'
+        }"
         disabled
         :placeholder="ele.placeholder"
       />
@@ -50,7 +54,7 @@ import { defineComponent, reactive, inject } from 'vue';
 
 export default defineComponent({
   props: ['ele', 'index'],
-  setup (props) {
+  setup(props) {
     const ele: object = reactive(props.ele) || {};
     const activeComp: any = inject('activeComp');
     const activeCompId: string = inject('activeCompId') || '';
