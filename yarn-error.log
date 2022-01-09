@@ -1,0 +1,56 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Java\jdk1.8.0_161\bin;C:\Program Files\Java\jdk1.8.0_161\jre\bin;C:\Oracle\product\11.2.0\client_1\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;D:\nvm;C:\Program Files\nodejs;D:\Git\cmd;C:\Oracle\product\11.2.0\client_1\BIN;C:\Users\马睿序\AppData\Local\Microsoft\WindowsApps;D:\IntelliJ IDEA 2018.3\bin;;C:\Users\马睿序\AppData\Roaming\npm  ;D:\nvm;C:\Program Files\nodejs
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  14.15.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'E:\project\hmg-design-vue\node_modules\esbuild-windows-64\esbuild.exe'
+
+npm manifest: 
+  {
+    "version": "0.0.0",
+    "scripts": {
+      "dev": "vite",
+      "build": "vue-tsc --noEmit && vite build",
+      "serve": "vite preview"
+    },
+    "dependencies": {
+      "@zougt/vite-plugin-theme-preprocessor": "^1.4.3",
+      "ant-design-vue": "^2.2.8",
+      "css-vars-ponyfill": "^2.4.7",
+      "less": "^4.1.2",
+      "vue": "^3.0.5",
+      "vue-draggable-next": "^2.1.1",
+      "vue-router": "^4.0.12",
+      "vuex": "^4.0.2"
+    },
+    "devDependencies": {
+      "@types/node": "^17.0.5",
+      "@vitejs/plugin-vue": "^1.2.3",
+      "@vue/compiler-sfc": "^3.0.5",
+      "node-sass": "^7.0.0",
+      "sass": "^1.45.1",
+      "sass-loader": "^12.4.0",
+      "typescript": "^4.3.2",
+      "unplugin-auto-import": "^0.5.4",
+      "unplugin-vue-components": "^0.17.10",
+      "vite": "^2.3.7",
+      "vue-tsc": "^0.0.24"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

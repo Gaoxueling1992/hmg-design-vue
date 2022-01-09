@@ -32,7 +32,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { sheet2Form } from '@/utils/config.ts';
+import { sheet2Form } from '@/utils/config';
 import { Input, InputNumber, Select } from 'ant-design-vue';
 
 export default defineComponent({
