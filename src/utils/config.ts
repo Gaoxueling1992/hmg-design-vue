@@ -189,8 +189,6 @@ const sheet2Form = {
     label: '粗细'
   },
   color: {
-    type: 'el-color-picker',
-    label: '颜色'
   },
   textAlign: {
     

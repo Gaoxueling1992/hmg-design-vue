@@ -34,14 +34,12 @@
 import { defineComponent, inject } from 'vue';
 import { sheet2Form } from '@/utils/config.ts';
 import { Input, InputNumber, Select } from 'ant-design-vue';
-// import { ElColorPicker } from 'element-plus';
 
 export default defineComponent({
   components: {
     'a-input': Input,
     'a-input-number': InputNumber,
-    'a-select': Select,
-    // 'el-color-picker': ElColorPicker
+    'a-select': Select
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
