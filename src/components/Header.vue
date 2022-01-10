@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <a-tabs class="header-menu" v-model:activeKey="activeKey" @change="changeTab">
+    <a-tabs class="header-menu" v-model:activeKey="activeTab" @change="changeTab">
       <a-tab-pane key="report" tab="报告设计器"></a-tab-pane>
       <a-tab-pane key="table" tab="表格设计器"></a-tab-pane>
       <a-tab-pane key="form" tab="表单设计器"></a-tab-pane>
@@ -17,9 +17,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, inject, Ref } from 'vue'
 import { initTheme } from '../utils/theme'
-import { useRouter, useRoute } from 'vue-router'
 import { toggleTheme } from "@zougt/vite-plugin-theme-preprocessor/dist/browser-utils.js"
 
 // 处理主题
@@ -39,29 +38,22 @@ const handleTheme = () => {
 }
 
 // 处理tab切换
-const handleTabChange = () => {
-  const router = useRouter()
-  const route = useRoute()
+const handleTabChange = (activeTab: Ref<string>) => {
   const changeTab = (value: string) => {
-    router.push({
-      name: value,
-      query: {
-        ...route.query,
-      },
-    })
+    activeTab.value = value
   }
-  const activeKey = ref<string>(route.path.split('/')[1] || 'report')
-
-  return { changeTab, activeKey }
+  return { changeTab }
 }
 
 export default defineComponent({
   setup () {
+    const activeTab: Ref<string> = inject('activeTab') || ref('report')
     const { themeList, themeChange, theme } = handleTheme()
-    const { activeKey, changeTab } = handleTabChange()
+    const { changeTab } = handleTabChange(activeTab)
 
     return {
-      activeKey, changeTab,
+      changeTab,
+      activeTab,
       theme, themeList, themeChange
     }
   }

@@ -5,46 +5,36 @@
       width: ele.eleWidth,
       display: ele.inline ? 'flex' : 'inline-block;',
       'align-items': ele.inline ? 'center' : '',
-      'flex': ele.eleWidth ? 'inherit' : 1
+      'flex': ele.eleWidth ? 'inherit' : 1,
+      'max-width': '100%',
+      ...ele.styleSheet,
+      fontSize: ele.styleSheet.fontSize + 'px',
+      borderWidth: ele.styleSheet.borderWidth + 'px'
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
     :class="{'disgn-ele-active': activeCompId === ele.id}"
   >
     <template v-if="!ele.noLabel">
-      <div
-        :style="{
-          ...ele.styleSheet,
-          fontSize: ele.styleSheet.fontSize + 'px'
-        }"
-        :class="ele.inline ? 'ele-label' : ''"
-      >{{ele.label || ele.name}}</div>
+      <div class="inherit" :class="ele.inline ? 'ele-label' : ''">{{ele.label || ele.name}}</div>
       <a-input
         style="flex: 1"
-        :style="{
-          ...ele.styleSheet,
-          fontSize: ele.styleSheet.fontSize + 'px'
-        }"
         disabled
+        class="inherit"
         :placeholder="ele.placeholder"
       />
     </template>
     <template v-else>
       <div
         v-if="ele.elName === 'RadText'"
-        :style="{
-          ...ele.styleSheet,
-          fontSize: ele.styleSheet.fontSize + 'px'
-        }"
         style="min-height: 20px"
+        class="inherit"
+        :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
       >{{ ele.label || '静态文本' }}</div>
       <a-divider
         v-if="ele.elName === 'RadLine'"
-        :style="{
-          ...ele.styleSheet,
-          fontSize: ele.styleSheet.fontSize + 'px'
-        }"
         style="height: 20px"
+        class="inherit"
       />
     </template>
   </div>
@@ -86,5 +76,11 @@ export default defineComponent({
 }
 .ant-divider-horizontal {
   margin: 0;
+}
+.inherit {
+  border-color: inherit;
+  color: inherit;
+  background-color: inherit;
+  font-size: inherit;
 }
 </style>

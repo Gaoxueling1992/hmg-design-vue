@@ -4,6 +4,7 @@
       <div class="container-item padding10 paddingT20">
         <div class="title marginB5 fontW500">{{activeCompObj.name}}</div>
         <div class="desc fontW400">{{activeCompObj.desc}}</div>
+        <div class="desc fontW400">颜色支持配置为英文、十六进制、RGB和RGBA</div>
       </div>
     </div>
     <div class="padding10">
@@ -14,6 +15,19 @@
           :auto-size="{ minRows: 2, maxRows: 5 }"
         />
       </div>
+      <div class="attr-group paddingT10">
+        <a-select ref="select" v-model:value="domainType">
+          <a-select-option value="domain">数据库域值</a-select-option>
+          <a-select-option value="temp">临时显示</a-select-option>
+          <a-select-option value="prop">存储数据</a-select-option>
+        </a-select>
+        <a-select
+          v-model:value="activeCompObj.baseProps.domain"
+          label-in-value
+          :options="domainList"
+        ></a-select>
+      </div>
+      <div class="title marginT10 fontW500">基础样式</div>
       <div
         v-for="(value, key) in activeCompObj.styleSheet"
         :key="key"
@@ -31,21 +45,24 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, ref, Ref } from 'vue';
 import { sheet2Form } from '@/utils/config';
-import { Input, InputNumber, Select } from 'ant-design-vue';
+import { Input, InputNumber, RadioGroup, Select } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
     'a-input': Input,
     'a-input-number': InputNumber,
-    'a-select': Select
+    'a-select': Select,
+    'a-radio-group': RadioGroup
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    const domainType: Ref<string> = ref<string>('domain')
     return {
       activeCompObj,
-      sheet2Form
+      sheet2Form,
+      domainType
     };
   }
 });
@@ -69,6 +86,9 @@ export default defineComponent({
     align-items: center;
     .label {
       padding-right: 10px;
+      width: 66px;
+      text-align: justify;
+      text-align-last: justify;
     }
     .flex1 {
       flex: 1;
