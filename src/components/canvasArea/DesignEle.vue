@@ -2,10 +2,9 @@
   <div
     :id="ele.id"
     :style="{
-      width: ele.eleWidth,
       display: ele.inline ? 'flex' : 'inline-block;',
       'align-items': ele.inline ? 'center' : '',
-      'flex': ele.eleWidth ? 'inherit' : 1,
+      'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
       'max-width': '100%',
       ...ele.styleSheet,
       fontSize: ele.styleSheet.fontSize + 'px',
@@ -33,9 +32,8 @@
       >{{ ele.label || '静态文本' }}</div>
       <a-divider
         v-if="ele.elName === 'RadLine'"
-        style="height: 20px"
         class="inherit"
-      />
+      >{{ele.label}}</a-divider>
     </template>
   </div>
 </template>
@@ -63,7 +61,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .disgn-ele {
-  flex: 1;
   &:hover {
     background: var(--background-color-base);
   }
@@ -79,7 +76,7 @@ export default defineComponent({
 }
 .inherit {
   border-color: inherit;
-  color: inherit;
+  color: inherit !important;
   background-color: inherit;
   font-size: inherit;
 }

@@ -7,7 +7,7 @@
         <div class="desc fontW400">颜色支持配置为英文、十六进制、RGB和RGBA</div>
       </div>
     </div>
-    <div class="padding10">
+    <div class="padding10 attr-body">
       <div class="container-item">
         <div class="title marginB5 fontW500">文本内容</div>
         <a-textarea
@@ -15,7 +15,7 @@
           :auto-size="{ minRows: 2, maxRows: 5 }"
         />
       </div>
-      <div class="attr-group paddingT10">
+      <div class="attr-group paddingT10" v-if="activeCompObj.domainType">
         <a-select ref="select" v-model:value="activeCompObj.domainType" @change="handleChange">
           <a-select-option value="domain">数据库域值</a-select-option>
           <a-select-option value="temp">临时显示</a-select-option>
@@ -29,13 +29,33 @@
         ></a-select>
         <a-input style="width: 160px" v-else v-model:value="domain" allowClear/>
       </div>
+      <template v-if="activeCompObj.validate">
+        <div class="title marginT10 fontW500">验证</div>
+        <div
+        v-for="(value, key) in activeCompObj.validate"
+        :key="key"
+        class="attr-group paddingT10"
+        >
+          <a-checkbox v-model:checked="activeCompObj.baseProps[key]">{{ sheet2Form[key].label }}</a-checkbox>
+        </div>
+      </template>
+      <template v-if="activeCompObj.baseProps">
+        <div class="title marginT10 fontW500">属性</div>
+        <div
+        v-for="(value, key) in activeCompObj.baseProps"
+        :key="key"
+        class="attr-group paddingT10"
+        >
+          <a-checkbox v-model:checked="activeCompObj.baseProps[key]">{{ sheet2Form[key].label }}</a-checkbox>
+        </div>
+      </template>
       <div class="title marginT10 fontW500">基础样式</div>
       <div
         v-for="(value, key) in activeCompObj.styleSheet"
         :key="key"
         class="attr-group paddingT10"
       >
-        <div class="label">{{ sheet2Form[key].label}}</div>
+        <div class="label">{{ sheet2Form[key].label }}</div>
         <component
           class="flex1"
           :is="sheet2Form[key].type"
@@ -49,16 +69,12 @@
 <script lang="ts">
 import { defineComponent, inject, ref, Ref } from 'vue';
 import { sheet2Form } from '@/utils/config';
-import { Input, InputNumber, RadioGroup, Select } from 'ant-design-vue';
+import { Input, InputNumber, RadioGroup, Select, Checkbox } from 'ant-design-vue';
 
 // 处理域值切换逻辑
-const handleDomainChange = (domain: Ref<string>, domainList: any) => {
-  const handleChange = (value: string) => {
-    if (value === 'domain') {
-      domain.value = domainList[0].value;
-    } else {
-      domain.value = '';
-    }
+const handleDomainChange = (domain: Ref<string>) => {
+  const handleChange = () => {
+    domain.value = '';
   }
   return { handleChange }
 }
@@ -68,15 +84,15 @@ export default defineComponent({
     'a-input': Input,
     'a-input-number': InputNumber,
     'a-select': Select,
-    'a-radio-group': RadioGroup
+    'a-radio-group': RadioGroup,
+    'a-checkbox': Checkbox
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
     const domain: Ref<string> = ref<string>(activeCompObj.domain);
     const domainList: any = inject('domainList');
-    domain.value = domain.value || domainList[0].value;
 
-    const { handleChange } = handleDomainChange(domain, domainList);
+    const { handleChange } = handleDomainChange(domain);
     return {
       activeCompObj,
       sheet2Form,
@@ -89,6 +105,11 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .comp-attr {
+  overflow: auto;
+  margin-bottom: 50px;
+  .attr-body {
+    margin-bottom: 50px;
+  }
   .desc {
     color: var(--color-text-secondary);
   }

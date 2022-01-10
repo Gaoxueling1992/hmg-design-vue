@@ -61,14 +61,22 @@ const styleSheet = {
   fontStyle: 'normal',
   borderWidth: '0',
   borderColor: '#333333',
-  borderStyle: 'solid'
+  borderStyle: 'solid',
+  width: '100%'
 }
 
 const baseProps = {
   readonly: false, // 只读
   hideOnPrint: false, // 打印隐藏
-  rules: [], // 业务规则
-  script: '', // 控件脚本
+  // rules: [], // 业务规则
+  // script: '' // 控件脚本
+}
+
+const validate = {
+  require: false, // 是否必填
+  limitRule: false, // 限定输入格式
+  limitLength: false // 限定输入长度
+  // rule: ''
 }
 
 const compBaseConfig = {
@@ -82,7 +90,9 @@ const compBaseConfig = {
     inline: true,
     noLabel: true,
     styleSheet: styleSheet,
-    baseProps: baseProps,
+    baseProps: {
+      hideOnPrint: false
+    },
     domain: '',
     domainType: 'domain'
   },
@@ -96,7 +106,9 @@ const compBaseConfig = {
     inline: true,
     styleSheet: styleSheet,
     domain: '',
-    domainType: 'domain'
+    domainType: 'domain',
+    baseProps: baseProps,
+    validate: validate
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -124,8 +136,14 @@ const compBaseConfig = {
     label: '',
     defaultValue: '',
     noLabel: true,
-    styleSheet: styleSheet,
-    domain: ''
+    styleSheet: {
+      fontFamily: 'Microsoft YaHei',
+      fontWeight: '400',
+      fontSize: '14',
+      color: '#333333',
+      borderColor: '#333',
+      width: '100%'
+    }
   }
 }
 
@@ -175,7 +193,7 @@ const sheet2Form = {
     label: '颜色'
   },
   justifyContent: {
-    type: 'a-radio-group',
+    type: 'a-select',
     label: '对齐方式',
     options:  [{
       label: '左', value: 'left'
@@ -190,7 +208,7 @@ const sheet2Form = {
     label: '填充色'
   },
   wrap: {
-    type: 'a-radio-group',
+    type: 'a-select',
     label: '超出一行',
     options:  [{
       label: '隐藏', value: 'noWrap'
@@ -199,7 +217,7 @@ const sheet2Form = {
     }]
   },
   textDecoration: {
-    type: 'a-radio-group',
+    type: 'a-select',
     label: '下划线',
     options:  [{
       label: '关闭', value: 'none'
@@ -208,8 +226,8 @@ const sheet2Form = {
     }]
   },
   fontStyle: {
-    type: 'a-radio-group',
-    label: '风格',
+    type: 'a-select',
+    label: '文字风格',
     options:  [{
       label: '正常', value: 'normal'
     }, {
@@ -220,14 +238,14 @@ const sheet2Form = {
   },
   borderWidth: {
     type: 'a-input-number',
-    label: '边框'
+    label: '边框粗细'
   },
   borderColor: {
     type: 'a-input',
     label: '边框颜色'
   },
   borderStyle: {
-    type: 'a-radio-group',
+    type: 'a-select',
     label: '边框类型',
     options:  [{
       label: '实线', value: 'solid'
@@ -237,6 +255,43 @@ const sheet2Form = {
       label: '点状', value: 'dotted'
     }, {
       label: '双线', value: 'double'
+    }]
+  },
+  readonly: {
+    type: 'a-checkbox',
+    label: '只读'
+  },
+  hideOnPrint: {
+    type: 'a-checkbox',
+    label: '打印隐藏'
+  },
+  require: {
+    type: 'a-checkbox',
+    label: '必填'
+  },
+  limitLength: {
+    type: 'a-checkbox',
+    label: '限制长度'
+  },
+  limitRule: {
+    type: 'a-checkbox',
+    label: '限制格式'
+  },
+  width: {
+    type: 'a-select',
+    label: '宽度',
+    options:  [{
+      label: '1', value: '100%'
+    }, {
+      label: '3/4', value: 300/4 + '%'
+    }, {
+      label: '2/3', value: 200/3 + '%'
+    }, {
+      label: '1/2', value: '50%'
+    }, {
+      label: '1/3', value: 100/3 + '%'
+    }, {
+      label: '1/4', value: 100/4 + '%'
     }]
   }
 }
