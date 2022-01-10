@@ -15,6 +15,7 @@
           :auto-size="{ minRows: 2, maxRows: 5 }"
         />
       </div>
+      <component :is="activeCompObj.elName"></component>
       <div class="attr-group paddingT10" v-if="activeCompObj.domainType">
         <a-select ref="select" v-model:value="activeCompObj.domainType" @change="handleChange">
           <a-select-option value="domain">数据库域值</a-select-option>
@@ -70,6 +71,7 @@
 import { defineComponent, inject, ref, Ref } from 'vue';
 import { sheet2Form } from '@/utils/config';
 import { Input, InputNumber, RadioGroup, Select, Checkbox } from 'ant-design-vue';
+import RadInput from './comps/RadInput.vue';
 
 // 处理域值切换逻辑
 const handleDomainChange = (domain: Ref<string>) => {
@@ -85,7 +87,8 @@ export default defineComponent({
     'a-input-number': InputNumber,
     'a-select': Select,
     'a-radio-group': RadioGroup,
-    'a-checkbox': Checkbox
+    'a-checkbox': Checkbox,
+    'RadInput': RadInput
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');

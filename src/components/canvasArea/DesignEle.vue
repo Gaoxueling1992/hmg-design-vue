@@ -15,12 +15,22 @@
     :class="{'disgn-ele-active': activeCompId === ele.id}"
   >
     <template v-if="!ele.noLabel">
-      <div class="inherit" :class="ele.inline ? 'ele-label' : ''">{{ele.label || ele.name}}</div>
+      <div
+        class="inherit"
+        :class="ele.inline ? 'ele-label' : ''"
+      >{{ele.label || ele.name}}</div>
       <a-input
         style="flex: 1"
         disabled
         class="inherit"
+        v-if="ele.type !== 'textarea'"
         :placeholder="ele.placeholder"
+      />
+      <a-textarea
+        style="flex: 1"
+        disabled
+        class="inherit"
+        v-else
       />
     </template>
     <template v-else>

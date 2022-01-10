@@ -99,6 +99,7 @@ const compBaseConfig = {
   'rad-input': {
     elName: 'RadInput',
     name: '输入框',
+    type: 'tetx',
     placeholder: '',
     label: '',
     defaultValue: '',
