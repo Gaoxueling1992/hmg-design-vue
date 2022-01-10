@@ -5,7 +5,6 @@ import './style/common.scss'
 import { initTheme } from './utils/theme'
 import store from './store'
 import 'ant-design-vue/dist/antd.less'
-// import 'element-plus/dist/index.css'
 initTheme('default')
 
 const app = createApp(App)

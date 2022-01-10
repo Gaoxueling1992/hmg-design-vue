@@ -49,6 +49,28 @@ const compsList: Array<object> = [
   }
 ]
 
+const styleSheet = {
+  fontFamily: 'Microsoft YaHei',
+  fontWeight: '400',
+  fontSize: '14',
+  color: '#333333',
+  justifyContent: 'left',
+  backgroundColor: '',
+  wrap: 'autoWrap',
+  textDecoration: 'none',
+  fontStyle: 'normal',
+  borderWidth: '0',
+  borderColor: '#333333',
+  borderStyle: 'solid'
+}
+
+const baseProps = {
+  readonly: false, // 只读
+  hideOnPrint: false, // 打印隐藏
+  rules: [], // 业务规则
+  script: '', // 控件脚本
+}
+
 const compBaseConfig = {
   'rad-text': {
     elName: 'RadText',
@@ -59,18 +81,10 @@ const compBaseConfig = {
     label: '',
     inline: true,
     noLabel: true,
-    styleSheet: {
-      fontFamily: 'Microsoft YaHei',
-      fontWeight: '400',
-      fontSize: '14',
-      color: '',
-      textAlign: 'center',
-      backgroundColor: '',
-      wrap: '',
-      underline: false,
-      fontStyle: '',
-      border: ''
-    }
+    styleSheet: styleSheet,
+    baseProps: baseProps,
+    domain: '',
+    domainType: 'domain'
   },
   'rad-input': {
     elName: 'RadInput',
@@ -80,18 +94,9 @@ const compBaseConfig = {
     defaultValue: '',
     noLabel: false,
     inline: true,
-    styleSheet: {
-      fontFamily: 'Microsoft YaHei',
-      fontWeight: '400',
-      fontSize: '14',
-      color: '',
-      textAlign: 'center',
-      backgroundColor: '',
-      wrap: '',
-      underline: false,
-      fontStyle: '',
-      border: ''
-    }
+    styleSheet: styleSheet,
+    domain: '',
+    domainType: 'domain'
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -99,18 +104,9 @@ const compBaseConfig = {
     placeholder: '',
     label: '',
     defaultValue: '',
-    styleSheet: {
-      fontFamily: 'Microsoft YaHei',
-      fontWeight: '400',
-      fontSize: '14',
-      color: '',
-      textAlign: 'center',
-      backgroundColor: '',
-      wrap: '',
-      underline: false,
-      fontStyle: '',
-      border: ''
-    }
+    styleSheet: styleSheet,
+    domain: '',
+    domainType: 'domain'
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -118,18 +114,8 @@ const compBaseConfig = {
     placeholder: '请填写数值',
     label: '',
     defaultValue: '',
-    styleSheet: {
-      fontFamily: 'Microsoft YaHei',
-      fontSize: '14',
-      fontWeight: '400',
-      color: '',
-      textAlign: 'center',
-      backgroundColor: '',
-      wrap: '',
-      underline: false,
-      fontStyle: '',
-      border: ''
-    }
+    styleSheet: styleSheet,
+    domain: ''
   },
   'rad-line': {
     elName: 'RadLine',
@@ -138,12 +124,8 @@ const compBaseConfig = {
     label: '',
     defaultValue: '',
     noLabel: true,
-    styleSheet: {
-      color: '',
-      textAlign: 'center',
-      backgroundColor: '',
-      border: ''
-    }
+    styleSheet: styleSheet,
+    domain: ''
   }
 }
 
@@ -189,26 +171,73 @@ const sheet2Form = {
     label: '粗细'
   },
   color: {
-    type: 'el-color-picker',
+    type: 'a-input',
     label: '颜色'
   },
-  textAlign: {
-    
+  justifyContent: {
+    type: 'a-radio-group',
+    label: '对齐方式',
+    options:  [{
+      label: '左', value: 'left'
+    }, {
+      label: '中', value: 'center'
+    }, {
+      label: '右', value: 'right'
+    }]
   },
   backgroundColor: {
-    
+    type: 'a-input',
+    label: '填充色'
   },
   wrap: {
-    
+    type: 'a-radio-group',
+    label: '超出一行',
+    options:  [{
+      label: '隐藏', value: 'noWrap'
+    }, {
+      label: '自动换行', value: 'autoWrap'
+    }]
   },
-  underline: {
-    
+  textDecoration: {
+    type: 'a-radio-group',
+    label: '下划线',
+    options:  [{
+      label: '关闭', value: 'none'
+    }, {
+      label: '开启', value: 'underline'
+    }]
   },
   fontStyle: {
-    
+    type: 'a-radio-group',
+    label: '风格',
+    options:  [{
+      label: '正常', value: 'normal'
+    }, {
+      label: '斜体', value: 'italic'
+    }, {
+      label: '倾斜', value: 'oblique'
+    }]
   },
-  border: {
-    
+  borderWidth: {
+    type: 'a-input-number',
+    label: '边框'
+  },
+  borderColor: {
+    type: 'a-input',
+    label: '边框颜色'
+  },
+  borderStyle: {
+    type: 'a-radio-group',
+    label: '边框类型',
+    options:  [{
+      label: '实线', value: 'solid'
+    }, {
+      label: '虚线', value: 'dashed'
+    }, {
+      label: '点状', value: 'dotted'
+    }, {
+      label: '双线', value: 'double'
+    }]
   }
 }
 

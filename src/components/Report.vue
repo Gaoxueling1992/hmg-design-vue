@@ -16,7 +16,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, toRefs } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 // 处理主体数据
