@@ -83,7 +83,8 @@ const compBaseConfig = {
     noLabel: true,
     styleSheet: styleSheet,
     baseProps: baseProps,
-    domain: ''
+    domain: '',
+    domainType: 'domain'
   },
   'rad-input': {
     elName: 'RadInput',
@@ -94,7 +95,8 @@ const compBaseConfig = {
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: ''
+    domain: '',
+    domainType: 'domain'
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -103,7 +105,8 @@ const compBaseConfig = {
     label: '',
     defaultValue: '',
     styleSheet: styleSheet,
-    domain: ''
+    domain: '',
+    domainType: 'domain'
   },
   'rad-number': {
     elName: 'RadNumber',

@@ -138,43 +138,43 @@ body {
 @for $i from 0 through 90 {
   @if $i % 5==0 {
     .paddingT#{$i} {
-      padding-top: #{$i}px
+      padding-top: #{$i}px !important
     }
 
     .paddingL#{$i} {
-      padding-left: #{$i}px
+      padding-left: #{$i}px !important
     }
 
     .paddingR#{$i} {
-      padding-right: #{$i}px
+      padding-right: #{$i}px !important
     }
 
     .paddingB#{$i} {
-      padding-bottom: #{$i}px
+      padding-bottom: #{$i}px !important
     }
 
     .marginT#{$i} {
-      margin-top: #{$i}px
+      margin-top: #{$i}px !important
     }
 
     .marginL#{$i} {
-      margin-left: #{$i}px
+      margin-left: #{$i}px !important
     }
 
     .marginR#{$i} {
-      margin-right: #{$i}px
+      margin-right: #{$i}px !important
     }
 
     .marginB#{$i} {
-      margin-bottom: #{$i}px
+      margin-bottom: #{$i}px !important
     }
 
     .padding#{$i} {
-      padding: #{$i}px
+      padding: #{$i}px !important
     }
 
     .margin#{$i} {
-      margin: #{$i}px
+      margin: #{$i}px !important
     }
   }
 }

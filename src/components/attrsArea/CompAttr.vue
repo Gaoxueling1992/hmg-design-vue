@@ -16,16 +16,18 @@
         />
       </div>
       <div class="attr-group paddingT10">
-        <a-select ref="select" v-model:value="domainType">
+        <a-select ref="select" v-model:value="activeCompObj.domainType" @change="handleChange">
           <a-select-option value="domain">数据库域值</a-select-option>
           <a-select-option value="temp">临时显示</a-select-option>
           <a-select-option value="prop">存储数据</a-select-option>
         </a-select>
         <a-select
-          v-model:value="activeCompObj.baseProps.domain"
-          label-in-value
+          v-if="activeCompObj.domainType === 'domain'"
+          v-model:value="domain"
           :options="domainList"
+          style="width: 160px"
         ></a-select>
+        <a-input style="width: 160px" v-else v-model:value="domain" allowClear/>
       </div>
       <div class="title marginT10 fontW500">基础样式</div>
       <div
@@ -49,6 +51,18 @@ import { defineComponent, inject, ref, Ref } from 'vue';
 import { sheet2Form } from '@/utils/config';
 import { Input, InputNumber, RadioGroup, Select } from 'ant-design-vue';
 
+// 处理域值切换逻辑
+const handleDomainChange = (domain: Ref<string>, domainList: any) => {
+  const handleChange = (value: string) => {
+    if (value === 'domain') {
+      domain.value = domainList[0].value;
+    } else {
+      domain.value = '';
+    }
+  }
+  return { handleChange }
+}
+
 export default defineComponent({
   components: {
     'a-input': Input,
@@ -58,11 +72,17 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
-    const domainType: Ref<string> = ref<string>('domain')
+    const domain: Ref<string> = ref<string>(activeCompObj.domain);
+    const domainList: any = inject('domainList');
+    domain.value = domain.value || domainList[0].value;
+
+    const { handleChange } = handleDomainChange(domain, domainList);
     return {
       activeCompObj,
       sheet2Form,
-      domainType
+      domainList,
+      handleChange,
+      domain
     };
   }
 });
