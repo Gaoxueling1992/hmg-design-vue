@@ -27,7 +27,7 @@ const handlePageData = (pageData: any) => {
     if (key === 'pageType') {
       pageData.styleSheet = {
         ...pageData.styleSheet,
-        ...styleSheetObj[value]
+        ...styleSheetObj[value as keyof typeof styleSheetObj]
       };
     }
   };

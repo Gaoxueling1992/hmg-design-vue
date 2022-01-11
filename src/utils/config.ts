@@ -51,7 +51,7 @@ const compsList: Array<object> = [
 ]
 
 // 样式表属性
-const styleSheet = {
+const styleSheet: object = {
   fontFamily: 'Microsoft YaHei',
   fontWeight: '400',
   fontSize: '14',
@@ -68,7 +68,7 @@ const styleSheet = {
 }
 
 // 基础属性配置
-const baseProps = {
+const baseProps: object = {
   readonly: false, // 只读
   hideOnPrint: false, // 打印隐藏
   // rules: [], // 业务规则
@@ -76,7 +76,7 @@ const baseProps = {
 }
 
 // 校验属性
-const validate = {
+const validate: object = {
   required: false, // 是否必填
   limitLength: false, // 限定输入长度
   minLength: 0,
@@ -182,8 +182,8 @@ const compBaseConfig = {
   }
 }
 
-const pickerMap = {
-  'second': [{
+const pickerMap: object = {
+  second: [{
     label: 'YYYY-MM-DD HH:mm:ss',
     value: 'YYYY-MM-DD HH:mm:ss'
   },
@@ -198,8 +198,12 @@ const pickerMap = {
   {
     label: 'YY/MM/DD HH:mm:ss',
     value: 'YY/MM/DD HH:mm:ss'
+  },
+  {
+    label: 'HH:mm:ss',
+    value: 'HH:mm:ss'
   }],
-  'minute': [
+  minute: [
     {
       label: 'YYYY-MM-DD HH:mm',
       value: 'YYYY-MM-DD HH:mm'
@@ -217,7 +221,7 @@ const pickerMap = {
       value: 'YY/MM/DD HH:mm'
     }
   ],
-  'date': [
+  date: [
     {
       label: 'YYYY-MM-DD',
       value: 'YYYY-MM-DD'
