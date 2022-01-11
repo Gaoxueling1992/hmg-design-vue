@@ -8,6 +8,16 @@ const pageConfig: Object = {
     padding: '10px'
   }
 }
+const formPageConfig: Object = {
+  lines: [], // 区域
+  name: '',
+  pageType: 'a4',
+  styleSheet: {
+    minHeight: '100%',
+    width: '100%',
+    padding: '10px'
+  }
+}
 
 const styleSheetObj: Object = {
   'a4': {
@@ -30,5 +40,6 @@ const styleSheetObj: Object = {
 
 export {
   pageConfig,
+  formPageConfig,
   styleSheetObj
 }
