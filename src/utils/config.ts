@@ -73,9 +73,11 @@ const baseProps = {
 }
 
 const validate = {
-  require: false, // 是否必填
-  limitRule: false, // 限定输入格式
-  limitLength: false // 限定输入长度
+  required: false, // 是否必填
+  limitLength: false, // 限定输入长度
+  minLength: 0,
+  maxLength: 1000,
+  limitRule: false // 限定输入格式
   // rule: ''
 }
 
@@ -99,7 +101,8 @@ const compBaseConfig = {
   'rad-input': {
     elName: 'RadInput',
     name: '输入框',
-    type: 'tetx',
+    desc: '可设置为单行或多行。',
+    type: 'text',
     placeholder: '',
     label: '',
     defaultValue: '',
@@ -116,10 +119,17 @@ const compBaseConfig = {
     name: '时间',
     placeholder: '',
     label: '',
+    inline: true,
     defaultValue: '',
     styleSheet: styleSheet,
     domain: '',
-    domainType: 'domain'
+    domainType: 'domain',
+    baseProps: {
+      readonly: false
+    },
+    validate: {
+      require: false
+    }
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -127,8 +137,16 @@ const compBaseConfig = {
     placeholder: '请填写数值',
     label: '',
     defaultValue: '',
+    noLabel: false,
+    inline: true,
     styleSheet: styleSheet,
-    domain: ''
+    domain: '',
+    domainType: 'domain',
+    baseProps: baseProps,
+    validate: {
+      require: false, // 是否必填
+      limitLength: false // 限定输入长度
+    }
   },
   'rad-line': {
     elName: 'RadLine',
@@ -266,7 +284,7 @@ const sheet2Form = {
     type: 'a-checkbox',
     label: '打印隐藏'
   },
-  require: {
+  required: {
     type: 'a-checkbox',
     label: '必填'
   },

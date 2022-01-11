@@ -2,13 +2,13 @@
   <div
     :id="ele.id"
     :style="{
-      display: ele.inline ? 'flex' : 'inline-block;',
       'align-items': ele.inline ? 'center' : '',
       'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
       'max-width': '100%',
       ...ele.styleSheet,
       fontSize: ele.styleSheet.fontSize + 'px',
-      borderWidth: ele.styleSheet.borderWidth + 'px'
+      borderWidth: ele.styleSheet.borderWidth + 'px',
+      display: ele.inline ? 'flex' : 'inline-block'
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"

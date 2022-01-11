@@ -1,4 +1,6 @@
 <template>
+  <div class="title marginT10 marginB5 fontW500">引导文字</div>
+  <a-textarea v-model:value="activeCompObj.placeholder" :auto-size="{ minRows: 2, maxRows: 2 }"/>
   <a-radio-group class="marginT10 marginB5" v-model:value="activeCompObj.type" name="radioGroup">
     <a-radio value="text">单行</a-radio>
     <a-radio value="textarea">多行</a-radio>
