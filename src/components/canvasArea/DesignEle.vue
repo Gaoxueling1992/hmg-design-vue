@@ -25,7 +25,14 @@
         class="inherit"
         v-if="ele.type !== 'textarea'"
         :placeholder="ele.placeholder"
-      />
+      >
+        <template #prefix>
+          {{ ele.prefix }}
+        </template>
+        <template #suffix>
+          {{ ele.suffix }}
+        </template>
+      </a-input>
       <a-textarea
         style="flex: 1"
         disabled

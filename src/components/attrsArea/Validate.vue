@@ -12,29 +12,58 @@
         {{ sheet2Form[key].label }}
       </a-checkbox>
     </div>
-    <template v-if="key ==='limitLength' && activeCompObj.validate[key]">
-      <a-input
+    <template v-if="key === 'limitLength' && activeCompObj.validate[key]">
+      <a-input-number
         class="limit-input marginR10 marginT5"
         v-model:value="activeCompObj.validate.minLength"
+        min="0"
+        :max="activeCompObj.validate.maxLength"
       />-
-      <a-input
+      <a-input-number
         class="limit-input marginL10"
         v-model:value="activeCompObj.validate.maxLength"
+        :min="activeCompObj.validate.minLength"
       />
     </template>
+    <div
+      class="flex"
+      v-if="key === 'limitRule' && activeCompObj.validate[key]"
+    >
+      <a-select
+        v-model:value="activeCompObj.validate.rule"
+        :options="ruleList"
+        class="marginT5"
+        style="width: 100px"
+      ></a-select>
+      <a-input
+        v-if="activeCompObj.validate.rule === 'custom'"
+        class="flex1"
+        allowClear
+        v-model:value="activeCompObj.validate.customRule"
+      />
+    </div>
   </template>
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { sheet2Form } from '@/utils/config';
+import { sheet2Form, ruleList } from '@/utils/config';
 
 export default defineComponent({
-  setup () {
+  setup() {
     const activeCompObj: any = inject('activeCompObj');
     return {
       activeCompObj,
-      sheet2Form
+      sheet2Form,
+      ruleList
     };
-  },
-})
+  }
+});
 </script>
+<style lang="scss" scoped>
+.flex {
+  display: flex;
+  .flex1 {
+    flex: 1;
+  }
+}
+</style>

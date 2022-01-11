@@ -1,3 +1,4 @@
+// 报告设计器组件列表
 const compsList: Array<object> = [
   {
     elName: 'rad-text',
@@ -49,6 +50,7 @@ const compsList: Array<object> = [
   }
 ]
 
+// 样式表属性
 const styleSheet = {
   fontFamily: 'Microsoft YaHei',
   fontWeight: '400',
@@ -65,6 +67,7 @@ const styleSheet = {
   width: '100%'
 }
 
+// 基础属性配置
 const baseProps = {
   readonly: false, // 只读
   hideOnPrint: false, // 打印隐藏
@@ -72,15 +75,18 @@ const baseProps = {
   // script: '' // 控件脚本
 }
 
+// 校验属性
 const validate = {
   required: false, // 是否必填
   limitLength: false, // 限定输入长度
   minLength: 0,
   maxLength: 1000,
-  limitRule: false // 限定输入格式
-  // rule: ''
+  limitRule: false, // 限定输入格式
+  rule: '', // 选择的格式
+  customRule: '' // 自定义格式，正则
 }
 
+// 组件预设属性
 const compBaseConfig = {
   'rad-text': {
     elName: 'RadText',
@@ -112,11 +118,14 @@ const compBaseConfig = {
     domain: '',
     domainType: 'domain',
     baseProps: baseProps,
-    validate: validate
+    validate: validate,
+    prefix: '',
+    suffix: ''
   },
   'rad-datetime': {
     elName: 'RadDatetime',
     name: '时间',
+    desc: '可设置日期、日期+时间、时间范围。',
     placeholder: '',
     label: '',
     inline: true,
@@ -128,12 +137,16 @@ const compBaseConfig = {
       readonly: false
     },
     validate: {
-      require: false
-    }
+      required: false
+    },
+    format: 'YYYY-MM-DD',
+    picker: 'date',
+    rangeOpen: false
   },
   'rad-number': {
     elName: 'RadNumber',
     name: '数值',
+    desc: '支持输入整数、小数。',
     placeholder: '请填写数值',
     label: '',
     defaultValue: '',
@@ -144,9 +157,12 @@ const compBaseConfig = {
     domainType: 'domain',
     baseProps: baseProps,
     validate: {
-      require: false, // 是否必填
-      limitLength: false // 限定输入长度
-    }
+      required: false, // 是否必填
+    },
+    prefix: '',
+    suffix: '',
+    min: 0,
+    max: 1000
   },
   'rad-line': {
     elName: 'RadLine',
@@ -166,38 +182,165 @@ const compBaseConfig = {
   }
 }
 
+const pickerMap = {
+  'second': [{
+    label: 'YYYY-MM-DD HH:mm:ss',
+    value: 'YYYY-MM-DD HH:mm:ss'
+  },
+  {
+    label: 'YY-MM-DD HH:mm:ss',
+    value: 'YY-MM-DD HH:mm:ss'
+  },
+  {
+    label: 'YYYY/MM/DD HH:mm:ss',
+    value: 'YYYY/MM/DD HH:mm:ss'
+  },
+  {
+    label: 'YY/MM/DD HH:mm:ss',
+    value: 'YY/MM/DD HH:mm:ss'
+  }],
+  'minute': [
+    {
+      label: 'YYYY-MM-DD HH:mm',
+      value: 'YYYY-MM-DD HH:mm'
+    },
+    {
+      label: 'YY-MM-DD HH:mm',
+      value: 'YY-MM-DD HH:mm'
+    },
+    {
+      label: 'YYYY/MM/DD HH:mm',
+      value: 'YYYY/MM/DD HH:mm'
+    },
+    {
+      label: 'YY/MM/DD HH:mm',
+      value: 'YY/MM/DD HH:mm'
+    }
+  ],
+  'date': [
+    {
+      label: 'YYYY-MM-DD',
+      value: 'YYYY-MM-DD'
+    }, {
+      label: 'YY-MM-DD',
+      value: 'YY-MM-DD'
+    }, {
+      label: 'YYYY/MM/DD',
+      value: 'YYYY/MM/DD'
+    }, {
+      label: 'YY/MM/DD',
+      value: 'YY/MM/DD'
+    }, {
+      label: 'DD/MM/YYYY',
+      value: 'DD/MM/YYYY'
+    }, {
+      label: 'DD/MM/YY',
+      value: 'DD/MM/YY'
+    }
+  ]
+}
+
+// 可选时间选择器类型
+const pickerList = [
+  {
+    label: '秒',
+    value: 'second'
+  },
+  {
+    label: '分',
+    value: 'minute'
+  },
+  {
+    label: '日期',
+    value: 'date'
+  },
+  {
+    label: '周',
+    value: 'month'
+  },
+  {
+    label: '季度',
+    value: 'quarter'
+  },
+  {
+    label: '年',
+    value: 'year'
+  }
+]
+
+// 字体列表
+const fontFamilyList = [
+  {
+    label: '宋体',
+    value: 'SimSun'
+  }, {
+    label: '新宋体',
+    value: 'NSimSun'
+  }, {
+    label: '仿宋',
+    value: 'FangSong'
+  }, {
+    label: '楷体',
+    value: 'KaiTi'
+  }, {
+    label: '黑体',
+    value: 'SimHei'
+  }, {
+    label: '微软雅黑',
+    value: 'Microsoft YaHei'
+  }, {
+    label: 'Times New Roman',
+    value: 'Times New Roman'
+  }, {
+    label: '隶书',
+    value: 'LiSu'
+  }, {
+    label: '幼圆',
+    value: 'YouYuan'
+  }
+];
+
+// 规则列表
+const ruleList = [
+  {
+    label: '字母',
+    value: 'wordsOnly'
+  }, {
+    label: '字母数字',
+    value: 'wordsOrNum'
+  }, {
+    label: '数字',
+    value: 'number'
+  }, {
+    label: '大写字母',
+    value: 'capital'
+  }, {
+    label: '小写字母',
+    value: 'lowercase'
+  }, {
+    label: '6个字母',
+    value: 'sixWords'
+  }, {
+    label: '6个数字',
+    value: 'sixNums'
+  }, {
+    label: '邮政编码',
+    value: 'postNum'
+  }, {
+    label: '身份证号',
+    value: 'idNum'
+  }, {
+    label: '其他',
+    value: 'custom'
+  }
+]
+
+// 样式表转表单映射规则
 const sheet2Form = {
   fontFamily: {
     type: 'a-select',
     label: '字体',
-    options: [{
-      label: '宋体',
-      value: 'SimSun'
-    }, {
-      label: '新宋体',
-      value: 'NSimSun'
-    }, {
-      label: '仿宋',
-      value: 'FangSong'
-    }, {
-      label: '楷体',
-      value: 'KaiTi'
-    }, {
-      label: '黑体',
-      value: 'SimHei'
-    }, {
-      label: '微软雅黑',
-      value: 'Microsoft YaHei'
-    }, {
-      label: 'Times New Roman',
-      value: 'Times New Roman'
-    }, {
-      label: '隶书',
-      value: 'LiSu'
-    }, {
-      label: '幼圆',
-      value: 'YouYuan'
-    }]
+    options: fontFamilyList
   },
   fontSize: {
     type: 'a-input-number',
@@ -214,7 +357,7 @@ const sheet2Form = {
   justifyContent: {
     type: 'a-select',
     label: '对齐方式',
-    options:  [{
+    options: [{
       label: '左', value: 'left'
     }, {
       label: '中', value: 'center'
@@ -229,7 +372,7 @@ const sheet2Form = {
   wrap: {
     type: 'a-select',
     label: '超出一行',
-    options:  [{
+    options: [{
       label: '隐藏', value: 'noWrap'
     }, {
       label: '自动换行', value: 'autoWrap'
@@ -238,7 +381,7 @@ const sheet2Form = {
   textDecoration: {
     type: 'a-select',
     label: '下划线',
-    options:  [{
+    options: [{
       label: '关闭', value: 'none'
     }, {
       label: '开启', value: 'underline'
@@ -247,7 +390,7 @@ const sheet2Form = {
   fontStyle: {
     type: 'a-select',
     label: '文字风格',
-    options:  [{
+    options: [{
       label: '正常', value: 'normal'
     }, {
       label: '斜体', value: 'italic'
@@ -266,7 +409,7 @@ const sheet2Form = {
   borderStyle: {
     type: 'a-select',
     label: '边框类型',
-    options:  [{
+    options: [{
       label: '实线', value: 'solid'
     }, {
       label: '虚线', value: 'dashed'
@@ -299,22 +442,23 @@ const sheet2Form = {
   width: {
     type: 'a-select',
     label: '宽度',
-    options:  [{
+    options: [{
       label: '1', value: '100%'
     }, {
-      label: '3/4', value: 300/4 + '%'
+      label: '3/4', value: 300 / 4 + '%'
     }, {
-      label: '2/3', value: 200/3 + '%'
+      label: '2/3', value: 200 / 3 + '%'
     }, {
       label: '1/2', value: '50%'
     }, {
-      label: '1/3', value: 100/3 + '%'
+      label: '1/3', value: 100 / 3 + '%'
     }, {
-      label: '1/4', value: 100/4 + '%'
+      label: '1/4', value: 100 / 4 + '%'
     }]
   }
 }
 
+// 可选纸张
 const tplTypeList: Array<Object> = [
   {
     value: 'a4',
@@ -346,5 +490,8 @@ export {
   compsList,
   tplTypeList,
   compBaseConfig,
-  sheet2Form
+  sheet2Form,
+  ruleList,
+  pickerList,
+  pickerMap
 }
