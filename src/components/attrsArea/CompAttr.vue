@@ -12,6 +12,7 @@
         <div class="title marginB5 fontW500">文本内容</div>
         <a-textarea
           v-model:value="activeCompObj.label"
+          allowClear
           :auto-size="{ minRows: 2, maxRows: 2 }"
         />
       </div>
@@ -32,10 +33,14 @@
 import { defineComponent, inject, ref, Ref } from 'vue';
 import { sheet2Form } from '@/utils/config';
 import RadInput from './comps/RadInput.vue';
+import RadNumber from './comps/RadNumber.vue';
+import RadDatetime from './comps/RadDatetime.vue';
 
 export default defineComponent({
   components: {
-    RadInput: RadInput
+    RadInput: RadInput,
+    RadNumber: RadNumber,
+    RadDatetime: RadDatetime
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');

@@ -1,5 +1,6 @@
 <template>
-  <div class="attr-group paddingT10">
+  <div class="title marginT10 marginB5 fontW500">域值</div>
+  <div class="attr-group">
     <a-select
       ref="select"
       v-model:value="activeCompObj.domainType"
