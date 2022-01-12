@@ -12,12 +12,12 @@
       v-model:value="activeCompObj.format"
       :options="pickerMap[activeCompObj.picker]"
     />
-    <a-checkbox v-model:checked="activeCompObj.rangeOpen">时间范围</a-checkbox>
   </div>
+  <a-checkbox class="marginT5" v-model:checked="activeCompObj.rangeOpen">时间范围</a-checkbox>
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { pickerList, pickerMap } from '@/utils/config.ts';
+import { pickerList, pickerMap } from '@/utils/config';
 
 export default defineComponent({
   setup () {
