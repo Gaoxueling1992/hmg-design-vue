@@ -2,7 +2,6 @@
   <div
     class="canvas-area"
     :style="styleSheet"
-    @click.self.prevent="handleClickCanvas"
   >
     <div
       v-for="(line, idx) in lines"
@@ -22,7 +21,7 @@
           ></DesignEle>
         </transition-group>
       </draggable>
-    </div>
+    </div> 
   </div>
 </template>
 <script lang="ts">
@@ -56,12 +55,11 @@ export default defineComponent({
   }
 });
 </script>
-
 <style lang="scss" scoped>
 .canvas-area {
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
-  margin: 0 auto 0 auto;
+  margin: 0 auto;
   width: calc(100% - 20px);
   .canvas-area-line {
     display: flex;
