@@ -5,6 +5,7 @@
       'align-items': ele.inline ? 'center' : '',
       'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
       'max-width': '100%',
+      'overflow': 'hidden',
       ...ele.styleSheet,
       fontSize: ele.styleSheet.fontSize + 'px',
       borderWidth: ele.styleSheet.borderWidth + 'px',
@@ -97,6 +98,37 @@
           v-else
         >请上传要展示的图片</div>
       </div>
+      <div v-if="ele.elName === 'RadTable'">
+        <table
+          border="1"
+          :style="{
+            marginTop: ele.styleSheet.paddingTop + 'px',
+            marginBottom: ele.styleSheet.paddingBottom + 'px',
+            marginLeft: ele.styleSheet.paddingLeft + 'px',
+            marginRight: ele.styleSheet.paddingRight + 'px',
+            height: ele.imgHeight+ 'px'
+          }"
+        >
+          <tr>
+            <th>表头1</th>
+            <th>表头2</th>
+          </tr>
+          <tr>
+            <td>数据1</td>
+            <td>数据2</td>
+          </tr>
+        </table>
+      </div>
+      <div v-if="ele.elName === 'RadMulitImagepicker'">
+        <div
+          :style="{
+            width: ele.imgWidth + 'px',
+            height: ele.imgHeight + 'px',
+            border: '1px solid grey'
+          }"
+        >
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -142,5 +174,8 @@ export default defineComponent({
   color: inherit !important;
   background-color: inherit;
   font-size: inherit;
+}
+table {
+  width: 100%;
 }
 </style>

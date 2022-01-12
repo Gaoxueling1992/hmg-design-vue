@@ -234,11 +234,8 @@ const compBaseConfig = {
     elName: 'RadImage',
     name: '图片',
     desc: '',
-    placeholder: '',
     defaultValue: '',
     src: '',
-    label: '',
-    inline: true,
     noLabel: true,
     baseProps: {
       hideOnPrint: false
@@ -254,6 +251,50 @@ const compBaseConfig = {
     },
     imgHeight: '100',
     imgWidth: '100',
+  },
+  'rad-table': {
+    elName: 'RadTable',
+    name: '表格',
+    desc: '支持选择和样式设置的表格组件。',
+    defaultValue: '',
+    src: '',
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      fontFamily: 'Microsoft YaHei',
+      fontSize: '14',
+      color: '#333333',
+      backgroundColor: '',
+      textDecoration: 'none',
+      fontStyle: 'normal',
+      width: '100%'
+    }
+  },
+  'rad-mulitImagepicker': {
+    elName: 'RadMulitImagepicker',
+    name: '图片选择器',
+    desc: '',
+    defaultValue: '',
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
+    },
+    imgHeight: '100',
+    imgWidth: '100',
+    layoutType: '1'
   }
 }
 

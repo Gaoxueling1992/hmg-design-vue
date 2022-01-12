@@ -38,6 +38,7 @@ import RadDatetime from './comps/RadDatetime.vue';
 import RadImage from './comps/RadImage.vue';
 import RadSingleSelect from './comps/RadSingleSelect.vue';
 import RadMulSelect from './comps/RadMulSelect.vue';
+import RadMulitImagepicker from './comps/RadMulitImagepicker.vue';
 
 export default defineComponent({
   components: {
@@ -46,7 +47,8 @@ export default defineComponent({
     RadDatetime: RadDatetime,
     RadImage: RadImage,
     RadSingleSelect: RadSingleSelect,
-    RadMulSelect: RadMulSelect
+    RadMulSelect: RadMulSelect,
+    RadMulitImagepicker: RadMulitImagepicker
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
