@@ -30,17 +30,23 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref, Ref } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { sheet2Form } from '@/utils/config';
 import RadInput from './comps/RadInput.vue';
 import RadNumber from './comps/RadNumber.vue';
 import RadDatetime from './comps/RadDatetime.vue';
+import RadImage from './comps/RadImage.vue';
+import RadSingleSelect from './comps/RadSingleSelect.vue';
+import RadMulSelect from './comps/RadMulSelect.vue';
 
 export default defineComponent({
   components: {
     RadInput: RadInput,
     RadNumber: RadNumber,
-    RadDatetime: RadDatetime
+    RadDatetime: RadDatetime,
+    RadImage: RadImage,
+    RadSingleSelect: RadSingleSelect,
+    RadMulSelect: RadMulSelect
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');

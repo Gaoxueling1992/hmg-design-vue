@@ -9,12 +9,20 @@ const compsList: Array<object> = [
     title: '输入框'
   },
   {
+    elName: 'rad-datetime',
+    title: '时间'
+  },
+  {
     elName: 'rad-number',
     title: '数值'
   },
   {
-    elName: 'rad-datetime',
-    title: '时间'
+    elName: 'rad-single-select',
+    title: '单选'
+  },
+  {
+    elName: 'rad-mul-select',
+    title: '多选'
   },
   {
     elName: 'rad-table',
@@ -64,7 +72,11 @@ const styleSheet: object = {
   borderWidth: '0',
   borderColor: '#333333',
   borderStyle: 'solid',
-  width: '100%'
+  width: '100%',
+  paddingTop: '0',
+  paddingBottom: '0',
+  paddingLeft: '0',
+  paddingRight: '0'
 }
 
 // 基础属性配置
@@ -143,6 +155,42 @@ const compBaseConfig = {
     picker: 'date',
     rangeOpen: false
   },
+  'rad-single-select': {
+    elName: 'RadSingleSelect',
+    name: '单选',
+    type: 'select',
+    desc: '从预设的下拉菜单中选择一项，可设为将选项平铺。',
+    placeholder: '',
+    label: '',
+    defaultValue: '',
+    noLabel: false,
+    inline: true,
+    styleSheet: styleSheet,
+    domain: '',
+    domainType: 'domain',
+    baseProps: baseProps,
+    prefix: '',
+    suffix: '',
+    layout: 'crosswise'
+  },
+  'rad-mul-select': {
+    elName: 'RadMulSelect',
+    name: '多选',
+    type: 'select',
+    desc: '从预设的选项中选择一项或者多项。',
+    placeholder: '',
+    label: '',
+    defaultValue: '',
+    noLabel: false,
+    inline: true,
+    styleSheet: styleSheet,
+    domain: '',
+    domainType: 'domain',
+    baseProps: baseProps,
+    prefix: '',
+    suffix: '',
+    layout: 'crosswise'
+  },
   'rad-number': {
     elName: 'RadNumber',
     name: '数值',
@@ -177,8 +225,35 @@ const compBaseConfig = {
       fontSize: '14',
       color: '#333333',
       borderColor: '#333',
-      width: '100%'
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0'
     }
+  },
+  'rad-image': {
+    elName: 'RadImage',
+    name: '图片',
+    desc: '',
+    placeholder: '',
+    defaultValue: '',
+    src: '',
+    label: '',
+    inline: true,
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
+    },
+    imgHeight: '100',
+    imgWidth: '100',
   }
 }
 
@@ -240,6 +315,44 @@ const pickerMap: object = {
     }, {
       label: 'DD/MM/YY',
       value: 'DD/MM/YY'
+    }
+  ],
+  month: [
+    {
+      label: 'YYYY-MM',
+      value: 'YYYY-MM'
+    },
+    {
+      label: 'YY-MM',
+      value: 'YY-MM'
+    },
+    {
+      label: 'YYYY/MM',
+      value: 'YYYY/MM'
+    },
+    {
+      label: 'YY/MM',
+      value: 'YY/MM'
+    }
+  ],
+  quarter: [
+    {
+      label: 'YYYY年 第Q季度',
+      value: 'YYYY年 第Q季度'
+    },
+    {
+      label: 'YY年 第Q季度',
+      value: 'YY年 第Q季度'
+    }
+  ],
+  year: [
+    {
+      label: 'YYYY',
+      value: 'YYYY'
+    },
+    {
+      label: 'YY',
+      value: 'YY'
     }
   ]
 }
@@ -459,6 +572,22 @@ const sheet2Form = {
     }, {
       label: '1/4', value: 100 / 4 + '%'
     }]
+  },
+  paddingTop: {
+    type: 'a-input-number',
+    label: '上边距'
+  },
+  paddingBottom: {
+    type: 'a-input-number',
+    label: '下边距'
+  },
+  paddingLeft: {
+    type: 'a-input-number',
+    label: '左边距'
+  },
+  paddingRight: {
+    type: 'a-input-number',
+    label: '右边距'
   }
 }
 

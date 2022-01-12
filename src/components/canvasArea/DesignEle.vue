@@ -38,19 +38,65 @@
         disabled
         class="inherit"
         v-else
-      />
+      >
+        <template #prefix>
+          {{ ele.prefix }}
+        </template>
+        <template #suffix>
+          {{ ele.suffix }}
+        </template>
+      </a-textarea>
     </template>
     <template v-else>
       <div
         v-if="ele.elName === 'RadText'"
         style="min-height: 20px"
         class="inherit"
+        :style="{
+          marginTop: ele.styleSheet.paddingTop + 'px',
+          marginBottom: ele.styleSheet.paddingBottom + 'px',
+          marginLeft: ele.styleSheet.paddingLeft + 'px',
+          marginRight: ele.styleSheet.paddingRight + 'px',
+        }"
         :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
       >{{ ele.label || '静态文本' }}</div>
       <a-divider
         v-if="ele.elName === 'RadLine'"
         class="inherit"
+        :style="{
+          marginTop: ele.styleSheet.paddingTop + 'px',
+          marginBottom: ele.styleSheet.paddingBottom + 'px',
+          marginLeft: ele.styleSheet.paddingLeft + 'px',
+          marginRight: ele.styleSheet.paddingRight + 'px',
+        }"
       >{{ele.label}}</a-divider>
+      <div v-if="ele.elName === 'RadImage'">
+        <a-image
+          v-if="ele.src"
+          class="img"
+          :height="ele.imgHeight"
+          :width="ele.imgWidth"
+          :src="ele.src"
+          :style="{
+            marginTop: ele.styleSheet.paddingTop + 'px',
+            marginBottom: ele.styleSheet.paddingBottom + 'px',
+            marginLeft: ele.styleSheet.paddingLeft + 'px',
+            marginRight: ele.styleSheet.paddingRight + 'px',
+            height: ele.imgHeight+ 'px',
+            width: ele.imgWidth + 'px'
+          }"
+        />
+        <div
+          :style="{
+            marginTop: ele.styleSheet.paddingTop + 'px',
+            marginBottom: ele.styleSheet.paddingBottom + 'px',
+            marginLeft: ele.styleSheet.paddingLeft + 'px',
+            marginRight: ele.styleSheet.paddingRight + 'px',
+            height: ele.imgHeight+ 'px'
+          }"
+          v-else
+        >请上传要展示的图片</div>
+      </div>
     </template>
   </div>
 </template>

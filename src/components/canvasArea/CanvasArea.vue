@@ -2,7 +2,7 @@
   <div
     class="canvas-area"
     :style="styleSheet"
-    @click.self="handleClickCanvas"
+    @click.self.prevent="handleClickCanvas"
   >
     <div
       v-for="(line, idx) in lines"
