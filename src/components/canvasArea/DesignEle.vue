@@ -102,6 +102,13 @@
             :height="ele.codeHeight"
             :margin="0"
           />
+          <qrcode-vue
+            v-else
+            :value="ele.src"
+            :size="ele.codeHeight"
+            :background="ele.background"
+            :foreground="ele.lineColor"
+          />
         </template>
         <div
           :style="{
@@ -162,11 +169,13 @@
 <script lang="ts">
 import { defineComponent, reactive, inject, watch } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
+import QrcodeVue from 'qrcode.vue';
 
 export default defineComponent({
   props: ['ele', 'index'],
   components: {
-    Vue3Barcode
+    Vue3Barcode,
+    QrcodeVue
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};

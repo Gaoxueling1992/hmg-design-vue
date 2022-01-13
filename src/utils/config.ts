@@ -314,14 +314,8 @@ const compBaseConfig = {
     domain: '',
     domainType: 'domain',
     styleSheet: {
-      width: '100%',
-      paddingTop: '0',
-      paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+      width: '100%'
     },
-    imgHeight: '100',
-    imgWidth: '100',
     background: 'transparent',
     displayValue: false,
     text: '',
@@ -344,15 +338,15 @@ const compBaseConfig = {
     domain: '',
     domainType: 'domain',
     styleSheet: {
-      width: '100%',
-      paddingTop: '0',
-      paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+      width: '100%'
     },
-    imgHeight: '100',
-    imgWidth: '100',
-    srcUrl: ''
+    background: 'transparent',
+    displayValue: false,
+    text: '',
+    textAlign: 'center',
+    textPosition: 'bottom',
+    textSize: 20,
+    codeHeight: 50
   },
   'rad-signature': {
     elName: 'RadSignature',
