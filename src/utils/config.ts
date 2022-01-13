@@ -233,7 +233,7 @@ const compBaseConfig = {
   'rad-image': {
     elName: 'RadImage',
     name: '图片',
-    desc: '',
+    desc: '支持上传.png，.jpeg，.jpg格式的图片。',
     defaultValue: '',
     src: '',
     noLabel: true,
@@ -300,7 +300,82 @@ const compBaseConfig = {
     verSpacing: 10,
     perNum: 6,
     testTotalNum: 10
-  }
+  },
+  'rad-signalcode': {
+    elName: 'RadSignalcode',
+    name: '条形码',
+    desc: '根据输入自动生成条形码，每个页面仅可配置一个。',
+    defaultValue: '',
+    src: '',
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
+    },
+    imgHeight: '100',
+    imgWidth: '100',
+    background: 'transparent',
+    displayValue: false,
+    text: '',
+    textAlign: 'center',
+    textPosition: 'bottom',
+    textSize: 20,
+    codeWidth: 2,
+    codeHeight: 50
+  },
+  'rad-drcode': {
+    elName: 'RadDrcode',
+    name: '二维码',
+    desc: '',
+    defaultValue: '',
+    src: '',
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
+    },
+    imgHeight: '100',
+    imgWidth: '100',
+    srcUrl: ''
+  },
+  'rad-signature': {
+    elName: 'RadSignature',
+    name: '签名',
+    desc: '',
+    defaultValue: '',
+    src: '',
+    noLabel: true,
+    baseProps: {
+      hideOnPrint: false
+    },
+    domain: '',
+    domainType: 'domain',
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
+    },
+    imgHeight: '100',
+    imgWidth: '100',
+  },
 }
 
 const pickerMap: object = {

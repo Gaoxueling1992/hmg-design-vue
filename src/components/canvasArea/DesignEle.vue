@@ -71,22 +71,38 @@
           marginRight: ele.styleSheet.paddingRight + 'px',
         }"
       >{{ele.label}}</a-divider>
-      <div v-if="ele.elName === 'RadImage'">
-        <a-image
-          v-if="ele.src"
-          class="img"
-          :height="ele.imgHeight"
-          :width="ele.imgWidth"
-          :src="ele.src"
-          :style="{
-            marginTop: ele.styleSheet.paddingTop + 'px',
-            marginBottom: ele.styleSheet.paddingBottom + 'px',
-            marginLeft: ele.styleSheet.paddingLeft + 'px',
-            marginRight: ele.styleSheet.paddingRight + 'px',
-            height: ele.imgHeight+ 'px',
-            width: ele.imgWidth + 'px'
-          }"
-        />
+      <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'">
+        <template v-if="ele.src">
+          <a-image
+            v-if="ele.elName === 'RadImage'"
+            class="img"
+            :height="ele.imgHeight"
+            :width="ele.imgWidth"
+            :src="ele.src"
+            :style="{
+              marginTop: ele.styleSheet.paddingTop + 'px',
+              marginBottom: ele.styleSheet.paddingBottom + 'px',
+              marginLeft: ele.styleSheet.paddingLeft + 'px',
+              marginRight: ele.styleSheet.paddingRight + 'px',
+              height: ele.imgHeight+ 'px',
+              width: ele.imgWidth + 'px'
+            }"
+          />
+          <Vue3Barcode
+            v-else-if="ele.elName === 'RadSignalcode'"
+            :value="ele.src"
+            :background="ele.background"
+            :lineColor="ele.lineColor"
+            :displayValue="ele.displayValue"
+            :text="ele.text"
+            :textAlign="ele.textAlign"
+            :textPosition="ele.textPosition"
+            :fontSize="ele.textSize"
+            :width="ele.codeWidth"
+            :height="ele.codeHeight"
+            :margin="0"
+          />
+        </template>
         <div
           :style="{
             marginTop: ele.styleSheet.paddingTop + 'px',
@@ -96,7 +112,7 @@
             height: ele.imgHeight+ 'px'
           }"
           v-else
-        >请上传要展示的图片</div>
+        >请上传要展示的{{ele.name}}</div>
       </div>
       <div v-if="ele.elName === 'RadTable'">
         <table
@@ -144,12 +160,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, inject } from 'vue';
+import { defineComponent, reactive, inject, watch } from 'vue';
+import Vue3Barcode from 'vue3-barcode';
 
 export default defineComponent({
   props: ['ele', 'index'],
+  components: {
+    Vue3Barcode
+  },
   setup(props) {
-    const ele: object = reactive(props.ele) || {};
+    const ele: any = reactive(props.ele) || {};
     const activeComp: any = inject('activeComp');
     const activeCompId: string = inject('activeCompId') || '';
 
@@ -165,7 +185,7 @@ export default defineComponent({
         if (ele.testTotalNum === 3) {
           span = 24 / +ele.testTotalNum;
         } else {
-          span = (24 / Math.ceil(Math.sqrt(ele.testTotalNum)))
+          span = 24 / Math.ceil(Math.sqrt(ele.testTotalNum));
         }
       }
       return span;

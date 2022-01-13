@@ -7,7 +7,6 @@
     class="avatar-uploader"
     :show-upload-list="false"
     :before-upload="beforeUpload"
-    accept="image/png, image/jpeg, image/jpg"
   >
     <img height="100" width="100" v-if="activeCompObj.src" :src="activeCompObj.src"/>
     <div v-else>
