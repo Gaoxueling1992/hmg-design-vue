@@ -19,7 +19,7 @@
       <div
         class="inherit"
         :class="ele.inline ? 'ele-label' : ''"
-      >{{ele.label || ele.name}}</div>
+      >{{ ele.label || ele.name }}</div>
       <a-input
         style="flex: 1"
         disabled

@@ -52,10 +52,10 @@ const compsList: Array<object> = [
     elName: 'rad-editor',
     title: '富文本'
   },
-  {
-    elName: 'rad-signature',
-    title: '签名'
-  }
+  // {
+  //   elName: 'rad-signature',
+  //   title: '签名'
+  // }
 ]
 
 // 样式表属性
@@ -348,27 +348,25 @@ const compBaseConfig = {
     textSize: 20,
     codeHeight: 50
   },
-  'rad-signature': {
-    elName: 'RadSignature',
-    name: '签名',
-    desc: '',
-    defaultValue: '',
-    src: '',
-    noLabel: true,
-    baseProps: {
-      hideOnPrint: false
-    },
+  'rad-editor': {
+    elName: 'RadEditor',
+    name: '富文本',
+    desc: '可控制文本样式，添加图片。',
+    type: 'textarea',
+    placeholder: '',
+    label: '',
+    defaultValue: '1111',
+    noLabel: false,
+    inline: false,
+    styleSheet: styleSheet,
     domain: '',
     domainType: 'domain',
-    styleSheet: {
-      width: '100%',
-      paddingTop: '0',
-      paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+    baseProps: baseProps,
+    validate: {
+      required: false
     },
-    imgHeight: '100',
-    imgWidth: '100',
+    prefix: '',
+    suffix: ''
   },
 }
 
