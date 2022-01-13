@@ -1,9 +1,9 @@
 <template>
   <div class="header">
     <a-tabs class="header-menu" v-model:activeKey="activeTab" @change="changeTab">
-      <a-tab-pane key="report" tab="报告设计器"></a-tab-pane>
-      <a-tab-pane key="table" tab="表格设计器"></a-tab-pane>
-      <a-tab-pane key="form" tab="表单设计器"></a-tab-pane>
+      <a-tab-pane key="ReportContainer" tab="报告设计器"></a-tab-pane>
+      <a-tab-pane key="TableContainer" tab="表格设计器"></a-tab-pane>
+      <a-tab-pane key="FormContainer" tab="表单设计器"></a-tab-pane>
     </a-tabs>
     <a-select
       v-model:value="theme"
@@ -45,7 +45,7 @@ const handleTabChange = (activeTab: Ref<string>) => {
 
 export default defineComponent({
   setup () {
-    const activeTab: Ref<string> = inject('activeTab') || ref('report')
+    const activeTab: Ref<string> = inject('activeTab') || ref('reportContainer')
     const { themeList, themeChange, theme } = handleTheme()
     const { changeTab } = handleTabChange(activeTab)
 

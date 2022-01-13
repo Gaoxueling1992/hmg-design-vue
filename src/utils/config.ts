@@ -294,7 +294,12 @@ const compBaseConfig = {
     },
     imgHeight: '100',
     imgWidth: '100',
-    layoutType: '1'
+    layoutType: '1',
+    layout: '1',
+    horSpacing: 10,
+    verSpacing: 10,
+    perNum: 6,
+    testTotalNum: 10
   }
 }
 

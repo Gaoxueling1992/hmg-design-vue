@@ -16,7 +16,7 @@
       <a-input-number
         class="limit-input marginR10 marginT5"
         v-model:value="activeCompObj.validate.minLength"
-        min="0"
+        :min="0"
         :max="activeCompObj.validate.maxLength"
       />-
       <a-input-number

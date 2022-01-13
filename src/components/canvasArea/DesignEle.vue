@@ -119,15 +119,26 @@
           </tr>
         </table>
       </div>
-      <div v-if="ele.elName === 'RadMulitImagepicker'">
-        <div
-          :style="{
-            width: ele.imgWidth + 'px',
-            height: ele.imgHeight + 'px',
-            border: '1px solid grey'
-          }"
-        >
-        </div>
+      <div
+        v-if="ele.elName === 'RadMulitImagepicker'"
+        class="picker-flex"
+      >
+        <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
+          <a-col
+            v-for="item in +ele.testTotalNum"
+            :key="item"
+            :span="calSpan(ele)"
+          >
+            <div :style="{
+              width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
+              height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
+              border: '1px solid grey',
+              margin: '0 auto',
+              textAlign: 'center'
+            }">图片
+            </div>
+          </a-col>
+        </a-row>
       </div>
     </template>
   </div>
@@ -146,10 +157,25 @@ export default defineComponent({
       activeComp(ele);
     };
 
+    const calSpan = (ele: any) => {
+      let span;
+      if (ele.layout === '1') {
+        span = 24 / +ele.perNum;
+      } else {
+        if (ele.testTotalNum === 3) {
+          span = 24 / +ele.testTotalNum;
+        } else {
+          span = (24 / Math.ceil(Math.sqrt(ele.testTotalNum)))
+        }
+      }
+      return span;
+    };
+
     return {
       ele,
       clickEle,
-      activeCompId
+      activeCompId,
+      calSpan
     };
   }
 });
@@ -177,5 +203,12 @@ export default defineComponent({
 }
 table {
   width: 100%;
+}
+.picker-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.picker-flex-item {
 }
 </style>

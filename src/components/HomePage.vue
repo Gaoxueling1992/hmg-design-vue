@@ -4,18 +4,18 @@
 </template>
 <script lang="ts">
 import { defineComponent, provide, ref, Ref, reactive } from 'vue';
-import Report from './Report.vue';
-import Form from './Form.vue';
-import Table from './Table.vue';
+import ReportContainer from './ReportContainer.vue';
+import FormContainer from './FormContainer.vue';
+import TableContainer from './TableContainer.vue';
 
 export default defineComponent({
   components: {
-    report: Report,
-    table: Table,
-    form: Form
+    ReportContainer: ReportContainer,
+    TableContainer: TableContainer,
+    FormContainer: FormContainer
   },
   setup() {
-    const activeTab: Ref<string> = ref<string>('report');
+    const activeTab: Ref<string> = ref<string>('ReportContainer');
     const domainList = reactive([
       {
         label: '111',
