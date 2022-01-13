@@ -11,6 +11,7 @@
       :is="sheet2Form[key].type"
       v-model:value="activeCompObj.styleSheet[key]"
       :options="sheet2Form[key].options"
+      :num="0"
     ></component>
   </div>
 </template>

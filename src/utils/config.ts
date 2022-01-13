@@ -365,8 +365,11 @@ const compBaseConfig = {
     validate: {
       required: false
     },
-    prefix: '',
-    suffix: ''
+    fontColor: '#333',
+    fontSize: 12,
+    fontWeight: 400,
+    fontStyle: 'normal',
+    textDecoration: 'none'
   },
 }
 

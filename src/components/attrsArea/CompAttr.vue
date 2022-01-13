@@ -41,6 +41,7 @@ import RadMulSelect from './comps/RadMulSelect.vue';
 import RadMulitImagepicker from './comps/RadMulitImagepicker.vue';
 import RadSignalcode from './comps/RadSignalcode.vue';
 import RadDrcode from './comps/RadDrcode.vue';
+import RadEditor from './comps/RadEditor.vue';
 
 export default defineComponent({
   components: {
@@ -52,7 +53,8 @@ export default defineComponent({
     RadMulSelect: RadMulSelect,
     RadMulitImagepicker: RadMulitImagepicker,
     RadSignalcode: RadSignalcode,
-    RadDrcode: RadDrcode
+    RadDrcode: RadDrcode,
+    RadEditor: RadEditor
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
