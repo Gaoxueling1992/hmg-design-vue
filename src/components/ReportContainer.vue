@@ -64,13 +64,34 @@ const handleCompsOper = (
     activeCompId.value = id;
   };
 
+  const deleteComp = (idx: any, index: any) => {
+    pageData.lines[+idx > 0 ? idx : 0].splice(+index > 0 ? index : 0, 1);
+    if (pageData.lines[+idx > 0 ? idx : 0].length === 0) {
+      pageData.lines.splice(+idx > 0 ? idx : 0, 1);
+    }
+  };
+
+  const copyComp = (ele: any) => {
+    const id: string = new Date().getTime() + '';
+    activeCompObj.value = {
+      ...ele,
+      id: id,
+      styleSheet: {
+        ...ele.styleSheet
+      }
+    };
+    pageData.lines.push([activeCompObj.value]);
+    activeCompId.value = id;
+    activePosi.value = 1;
+  };
+
   const activeComp = (ele: any) => {
     activePosi.value = 1;
     activeCompId.value = ele.id;
     activeCompObj.value = ele;
   };
 
-  return { addComp, activeComp };
+  return { addComp, activeComp, copyComp, deleteComp };
 };
 
 export default defineComponent({
@@ -80,7 +101,7 @@ export default defineComponent({
     const activeCompObj: Ref<object> = ref({});
     const activeCompId: Ref<string> = ref('');
     const { changePageConfig, changePageSize } = handlePageData(pageData);
-    const { addComp, activeComp } = handleCompsOper(
+    const { addComp, activeComp, copyComp, deleteComp } = handleCompsOper(
       pageData,
       activePosi,
       activeCompId,
@@ -101,6 +122,8 @@ export default defineComponent({
     provide('pageData', pageData);
     provide('activeCompId', activeCompId);
     provide('activeCompObj', activeCompObj);
+    provide('copyComp', copyComp);
+    provide('deleteComp', deleteComp);
 
     return {
       activePosi,

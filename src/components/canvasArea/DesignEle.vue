@@ -6,6 +6,7 @@
       'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
       'max-width': '100%',
       'overflow': 'hidden',
+      'position': 'relative',
       ...ele.styleSheet,
       fontSize: ele.styleSheet.fontSize + 'px',
       borderWidth: ele.styleSheet.borderWidth + 'px',
@@ -164,47 +165,86 @@
         </a-row>
       </div>
     </template>
+    <div
+      class="oper"
+      v-if="activeCompId === ele.id"
+    >
+      <span
+        class="delete-item"
+        @click="copyEle"
+      >
+        <i class="iconfont iconcopy"></i>
+      </span>
+      <span
+        class="delete-item"
+        @click="deleteEle"
+      >
+        <i class="iconfont icondelete-border"></i>
+      </span>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, inject, watch } from 'vue';
+import { defineComponent, reactive, inject } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 import QrcodeVue from 'qrcode.vue';
 
+// 图片选择器 计算布局
+const calSpan = (ele: any) => {
+  let span;
+  if (ele.layout === '1') {
+    span = 24 / +ele.perNum;
+  } else {
+    if (ele.testTotalNum === 3) {
+      span = 24 / +ele.testTotalNum;
+    } else {
+      span = 24 / Math.ceil(Math.sqrt(ele.testTotalNum));
+    }
+  }
+  return span;
+};
+
+const handleEleOperate = (deleteComp: any, copyComp: any, ele: any, idx: any, index: any) => {
+  const deleteEle = () => {
+    console.log(idx, index)
+    deleteComp(idx, index);
+  };
+  const copyEle = () => {
+    copyComp(ele);
+  };
+  return {
+    deleteEle,
+    copyEle
+  }
+}
+
 export default defineComponent({
-  props: ['ele', 'index'],
+  props: ['ele', 'index', 'idx'],
   components: {
     Vue3Barcode,
     QrcodeVue
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
+    const index: any = reactive(props.index) || {};
+    const idx: any = reactive(props.idx) || {};
     const activeComp: any = inject('activeComp');
+    const copyComp: any = inject('copyComp');
+    const deleteComp: any = inject('deleteComp');
     const activeCompId: string = inject('activeCompId') || '';
 
     const clickEle = () => {
       activeComp(ele);
     };
 
-    const calSpan = (ele: any) => {
-      let span;
-      if (ele.layout === '1') {
-        span = 24 / +ele.perNum;
-      } else {
-        if (ele.testTotalNum === 3) {
-          span = 24 / +ele.testTotalNum;
-        } else {
-          span = 24 / Math.ceil(Math.sqrt(ele.testTotalNum));
-        }
-      }
-      return span;
-    };
+    const { deleteEle, copyEle } = handleEleOperate(deleteComp, copyComp, ele, idx, index);
 
     return {
       ele,
       clickEle,
       activeCompId,
-      calSpan
+      calSpan,
+      deleteEle, copyEle
     };
   }
 });
@@ -238,6 +278,21 @@ table {
   flex-wrap: wrap;
   justify-content: center;
 }
-.picker-flex-item {
+.oper {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  .delete-item {
+    margin-left: 5px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-white1);
+    border-radius: 10px;
+    .iconfont {
+      padding-left: 4px;
+      font-size: 12px;
+    }
+  }
 }
 </style>

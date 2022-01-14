@@ -1,5 +1,5 @@
 <template>
-  <div class="title marginT10 marginB5 fontW500">预设富文本样式</div>
+  <div class="title marginT10 marginB5 fontW500">预设富文本内部样式</div>
   <div class="flex marginT10">
     <div class="flex-title3 marginR5">颜色</div>
     <a-input

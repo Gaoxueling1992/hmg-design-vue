@@ -16,9 +16,11 @@
       >
         <transition-group>
           <DesignEle
-            v-for="ele in line"
+            v-for="(ele, index) in line"
             :ele="ele"
             :key="ele.id"
+            :idx="idx"
+            :index="index"
           ></DesignEle>
         </transition-group>
       </draggable>
