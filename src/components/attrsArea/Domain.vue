@@ -14,6 +14,7 @@
       v-if="activeCompObj.domainType === 'domain'"
       v-model:value="domain"
       :options="domainList"
+      allowClear
       style="width: 160px"
     ></a-select>
     <a-input

@@ -25,6 +25,7 @@ import {
 } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
+import { Modal } from 'ant-design-vue';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -101,7 +102,7 @@ const handleCompsOper = (
 };
 
 export default defineComponent({
-  setup() {
+  setup ( props, { emit }) {
     const pageData: any = reactive(pageConfig);
     const activePosi: Ref<number> = ref(0);
     const activeCompObj: Ref<object> = ref({});
@@ -122,15 +123,28 @@ export default defineComponent({
 
     // 保存模版
     const saveTpl = () => {
-      console.log('-----1');
+      emit('saveTpl', pageData);
     };
 
     // 新建模版
     const newTpl = () => {
-      pageData.lines = [];
-      activePosi.value = 0;
-      activeCompObj.value = {};
-      activeCompId.value = '';
+      if(pageData.lines.length) {
+        Modal.confirm({
+          title: '提示',
+          content: '检测到您有未保存的模版，是否保存模版？',
+          cancelText: '丢弃',
+          okText: '保存',
+          onOk () {
+            saveTpl();
+          },
+          onCancel () {
+            pageData.lines = [];
+            activePosi.value = 0;
+            activeCompObj.value = {};
+            activeCompId.value = '';  
+          }
+        });
+      }
     };
 
     provide('changePageConfig', changePageConfig);
