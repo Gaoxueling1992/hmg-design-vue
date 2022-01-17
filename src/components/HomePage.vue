@@ -1,21 +1,25 @@
 <template>
-  <Header></Header>
-  <component :is="activeTab"></component>
+  <Header
+    @saveTpl="saveTpl"
+    @newTpl="newTpl"
+  ></Header>
+  <component :is="activeTab" :ref="activeTab"></component>
 </template>
 <script lang="ts">
-import { defineComponent, provide, ref, Ref, reactive } from 'vue';
-import ReportContainer from './ReportContainer.vue';
-import FormContainer from './FormContainer.vue';
-import TableContainer from './TableContainer.vue';
+import { defineComponent, provide, ref, Ref, reactive, getCurrentInstance } from 'vue';
+import Report from './ReportContainer.vue';
+import Form from './FormContainer.vue';
+import Table from './TableContainer.vue';
 
 export default defineComponent({
   components: {
-    ReportContainer: ReportContainer,
-    TableContainer: TableContainer,
-    FormContainer: FormContainer
+    ReportContainer: Report,
+    TableContainer: Table,
+    FormContainer: Form
   },
   setup() {
     const activeTab: Ref<string> = ref<string>('ReportContainer');
+    const instance: any = getCurrentInstance()
     const domainList = reactive([
       {
         label: '111',
@@ -25,11 +29,22 @@ export default defineComponent({
         label: '222',
         value: 'bbb'
       }
-    ])
+    ]);
+
+    const saveTpl = () => {
+      if (activeTab.value === 'ReportContainer') {
+        instance.ctx.$refs[activeTab.value].saveTpl()
+      }
+    };
+    const newTpl = () => {
+      console.log('new');
+    };
+
     provide('activeTab', activeTab);
-    provide('domainList',domainList)
+    provide('domainList', domainList);
     return {
-      activeTab
+      activeTab,
+      saveTpl, newTpl
     };
   }
 });

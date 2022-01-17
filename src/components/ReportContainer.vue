@@ -16,7 +16,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, defineExpose } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 // 处理主体数据
@@ -114,6 +114,10 @@ export default defineComponent({
       activeCompObj.value = {};
     };
 
+    const saveTpl = () => {
+      console.log('-----')
+    }
+
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);
     provide('addComp', addComp);
@@ -127,7 +131,8 @@ export default defineComponent({
 
     return {
       activePosi,
-      pageData
+      pageData,
+      saveTpl
     };
   }
 });
