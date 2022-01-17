@@ -185,7 +185,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, inject } from 'vue';
+import { defineComponent, reactive, inject, ref } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 import QrcodeVue from 'qrcode.vue';
 
@@ -226,8 +226,8 @@ export default defineComponent({
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
-    const index: any = reactive(props.index) || {};
-    const idx: any = reactive(props.idx) || {};
+    const index: any = ref(props.index) || {};
+    const idx: any = ref(props.idx) || {};
     const activeComp: any = inject('activeComp');
     const copyComp: any = inject('copyComp');
     const deleteComp: any = inject('deleteComp');

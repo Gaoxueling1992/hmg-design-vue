@@ -16,7 +16,13 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, defineExpose } from 'vue';
+import {
+  defineComponent,
+  ref,
+  reactive,
+  provide,
+  Ref
+} from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 // 处理主体数据
@@ -55,7 +61,7 @@ const handleCompsOper = (
       styleSheet: {
         ...compBaseConfig[value].styleSheet
       }
-    })
+    });
     activeCompObj.value = {
       ...baseConfig,
       id: id
@@ -114,9 +120,18 @@ export default defineComponent({
       activeCompObj.value = {};
     };
 
+    // 保存模版
     const saveTpl = () => {
-      console.log('-----')
-    }
+      console.log('-----1');
+    };
+
+    // 新建模版
+    const newTpl = () => {
+      pageData.lines = [];
+      activePosi.value = 0;
+      activeCompObj.value = {};
+      activeCompId.value = '';
+    };
 
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);
@@ -132,7 +147,8 @@ export default defineComponent({
     return {
       activePosi,
       pageData,
-      saveTpl
+      saveTpl,
+      newTpl
     };
   }
 });

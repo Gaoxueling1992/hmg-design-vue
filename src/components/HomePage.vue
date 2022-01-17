@@ -32,12 +32,10 @@ export default defineComponent({
     ]);
 
     const saveTpl = () => {
-      if (activeTab.value === 'ReportContainer') {
-        instance.ctx.$refs[activeTab.value].saveTpl()
-      }
+      instance.ctx.$refs[activeTab.value].saveTpl()
     };
     const newTpl = () => {
-      console.log('new');
+      instance.ctx.$refs[activeTab.value].newTpl()
     };
 
     provide('activeTab', activeTab);
