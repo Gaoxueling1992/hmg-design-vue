@@ -26,7 +26,17 @@
     title="选择模版"
     @ok="handleOk"
   >
-    111
+    <a-list size="small" bordered :data-source="tplList">
+      <template #renderItem="{ item }">
+        <a-list-item>
+          {{ item.name }}
+          <template #actions>
+            <a @click="editTpl(item)">编辑</a>
+            <a @click="deleteTpl(item)">删除</a>
+          </template>
+        </a-list-item>
+      </template>
+    </a-list>
   </a-modal>
 </template>
 <script lang="ts">
@@ -41,7 +51,7 @@ import {
 import Report from './ReportContainer.vue';
 import Form from './FormContainer.vue';
 import Table from './TableContainer.vue';
-import { Modal } from 'ant-design-vue';
+import { Modal, message } from 'ant-design-vue';
 
 // 模版操作
 const handelTpl = (
@@ -52,6 +62,7 @@ const handelTpl = (
   const visible1: Ref<boolean> = ref<boolean>(false);
   const tplName: Ref<string> = ref<string>('');
   const savePageData: Ref<any> = ref<any>({});
+  let tplList: any = reactive([]);
   // 触发保存
   const saveTpl = () => {
     instance.ctx.$refs[activeTab.value].saveTpl();
@@ -93,16 +104,41 @@ const handelTpl = (
       };
       localStorage.setItem('tplsList', JSON.stringify(list));
 
+      message.success('保存成功');
       newTpl(0);
     }
   };
   // 选择模版
   const chooseTpl = () => {
     visible1.value = true;
+    const ls = localStorage.getItem('tplsList');
+    const list: any = ls === null ? {} : JSON.parse(ls);
+    tplList.length = 0;
+    for (let key in list) {
+      tplList.push(list[key]);
+    }
+  };
+  // 编辑模版
+  const editTpl = (item: any) => {
+
+  };
+  // 删除模版
+  const deleteTpl = (item: any) => {
+    const ls = localStorage.getItem('tplsList');
+    let list: any = ls === null ? reactive({}) : reactive(JSON.parse(ls));
+    delete list[item.id];
+    localStorage.setItem('tplsList', JSON.stringify(list));
+
+    message.success('删除成功');
+    tplList.length = 0;
+    for (let key in list) {
+      tplList.push(list[key]);
+    }
   };
   return {
     saveTpl, newTpl, doSave, handleOk, chooseTpl,
-    visible, visible1, tplName
+    visible, visible1, tplName, tplList,
+    editTpl, deleteTpl
   };
 };
 
@@ -128,7 +164,8 @@ export default defineComponent({
     
     const {
       saveTpl, newTpl, doSave, handleOk, chooseTpl,
-      visible, tplName, visible1
+      visible, tplName, visible1, tplList,
+      editTpl, deleteTpl
     } = handelTpl(instance, activeTab);
 
     provide('activeTab', activeTab);
@@ -138,7 +175,8 @@ export default defineComponent({
       activeTab,
       saveTpl, newTpl, doSave, chooseTpl, handleOk,
       visible, visible1,
-      tplName
+      tplName, tplList,
+      editTpl, deleteTpl
     };
   }
 });
