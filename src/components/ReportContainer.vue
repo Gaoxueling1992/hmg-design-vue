@@ -16,13 +16,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  reactive,
-  provide,
-  Ref
-} from 'vue';
+import { defineComponent, ref, reactive, provide, Ref } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -101,8 +95,62 @@ const handleCompsOper = (
   return { addComp, activeComp, copyComp, deleteComp };
 };
 
+// 模版操作
+const handleTpl = (
+  emit:
+    | ((event: string, ...args: any[]) => void)
+    | ((event: string, ...args: any[]) => void),
+  pageData: { lines: string | any[] },
+  activePosi: Ref<number>,
+  activeCompObj: Ref<object>,
+  activeCompId: Ref<string>
+) => {
+  // 保存模版
+  const saveTpl = () => {
+    if (pageData.lines.length) {
+      emit('saveTpl', pageData);
+    } else {
+      Modal.warning({
+        title: '提示',
+        content: '检测到模版上没有控件，无法保存。',
+        okText: '确定'
+      });
+    }
+  };
+
+  // 新建模版
+  const newTpl = (checkSave: number) => {
+    if (pageData.lines.length && checkSave === 1) {
+      Modal.confirm({
+        title: '提示',
+        content: '检测到您有未保存的模版，是否保存模版？',
+        cancelText: '丢弃',
+        okText: '保存',
+        onOk() {
+          saveTpl();
+        },
+        onCancel() {
+          pageData.lines = [];
+          activePosi.value = 0;
+          activeCompObj.value = {};
+          activeCompId.value = '';
+        }
+      });
+    } else {
+      pageData.lines = [];
+      activePosi.value = 0;
+      activeCompObj.value = {};
+      activeCompId.value = '';
+    }
+  };
+  return {
+    saveTpl,
+    newTpl
+  };
+};
+
 export default defineComponent({
-  setup ( props, { emit }) {
+  setup(props, { emit }) {
     const pageData: any = reactive(pageConfig);
     const activePosi: Ref<number> = ref(0);
     const activeCompObj: Ref<object> = ref({});
@@ -121,31 +169,13 @@ export default defineComponent({
       activeCompObj.value = {};
     };
 
-    // 保存模版
-    const saveTpl = () => {
-      emit('saveTpl', pageData);
-    };
-
-    // 新建模版
-    const newTpl = () => {
-      if(pageData.lines.length) {
-        Modal.confirm({
-          title: '提示',
-          content: '检测到您有未保存的模版，是否保存模版？',
-          cancelText: '丢弃',
-          okText: '保存',
-          onOk () {
-            saveTpl();
-          },
-          onCancel () {
-            pageData.lines = [];
-            activePosi.value = 0;
-            activeCompObj.value = {};
-            activeCompId.value = '';  
-          }
-        });
-      }
-    };
+    const { saveTpl, newTpl } = handleTpl(
+      emit,
+      pageData,
+      activePosi,
+      activeCompObj,
+      activeCompId
+    );
 
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);
