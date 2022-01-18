@@ -290,6 +290,7 @@ table {
     .iconfont {
       padding-left: 4px;
       font-size: 12px;
+      color: var(--color-black)
     }
   }
 }
