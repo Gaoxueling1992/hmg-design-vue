@@ -16,7 +16,7 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, toRef } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -101,7 +101,7 @@ const handleTpl = (
   emit:
     | ((event: string, ...args: any[]) => void)
     | ((event: string, ...args: any[]) => void),
-  pageData: { lines: string | any[] },
+  pageData: { lines: string|any[]; name: string; pageType: string; styleSheet: { minHeight: string; width: string; padding: string; }; },
   activePosi: Ref<number>,
   activeCompObj: Ref<object>,
   activeCompId: Ref<string>
@@ -119,6 +119,20 @@ const handleTpl = (
     }
   };
 
+  const resetData = () => {
+    pageData.lines = [];
+    pageData.name = '';
+    pageData.pageType = 'a4';
+    pageData.styleSheet = {
+      minHeight: '297mm',
+      width: '210mm',
+      padding: '10px'
+    };
+    activePosi.value = 0;
+    activeCompObj.value = {};
+    activeCompId.value = '';
+  };
+
   // 新建模版
   const newTpl = (checkSave: number) => {
     if (pageData.lines.length && checkSave === 1) {
@@ -131,28 +145,35 @@ const handleTpl = (
           saveTpl();
         },
         onCancel() {
-          pageData.lines = [];
-          activePosi.value = 0;
-          activeCompObj.value = {};
-          activeCompId.value = '';
+          resetData();
         }
       });
     } else {
-      pageData.lines = [];
-      activePosi.value = 0;
-      activeCompObj.value = {};
-      activeCompId.value = '';
+      resetData();
     }
   };
+
+  // 解析外部传入的模版详情，用于渲染
+  const editTpl = (item: any) => {
+    pageData.lines = item.lines;
+    pageData.name = item.name;
+    pageData.pageType = item.pageType;
+    pageData.styleSheet = item.styleSheet;
+    activePosi.value = 0;
+    activeCompObj.value = {};
+    activeCompId.value = '';
+  };
+
   return {
     saveTpl,
-    newTpl
+    newTpl,
+    editTpl
   };
 };
 
 export default defineComponent({
   setup(props, { emit }) {
-    const pageData: any = reactive(pageConfig);
+    let pageData: any = reactive(pageConfig);
     const activePosi: Ref<number> = ref(0);
     const activeCompObj: Ref<object> = ref({});
     const activeCompId: Ref<string> = ref('');
@@ -170,7 +191,7 @@ export default defineComponent({
       activeCompObj.value = {};
     };
 
-    const { saveTpl, newTpl } = handleTpl(
+    const { saveTpl, newTpl, editTpl } = handleTpl(
       emit,
       pageData,
       activePosi,
@@ -193,7 +214,8 @@ export default defineComponent({
       activePosi,
       pageData,
       saveTpl,
-      newTpl
+      newTpl,
+      editTpl
     };
   }
 });

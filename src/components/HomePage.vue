@@ -21,10 +21,8 @@
   </a-modal>
   <a-modal
     v-model:visible="visible1"
-    okText="确定"
-    cancelText="取消"
+    :footer="null"
     title="选择模版"
-    @ok="handleOk"
   >
     <a-list size="small" bordered :data-source="tplList">
       <template #renderItem="{ item }">
@@ -81,6 +79,9 @@ const handelTpl = (
       };
     } else {
       tplName.value = val.name;
+      savePageData.value = {
+        ...val
+      };
       handleOk();
     }
   };
@@ -120,7 +121,8 @@ const handelTpl = (
   };
   // 编辑模版
   const editTpl = (item: any) => {
-
+    visible1.value = false;
+    instance.ctx.$refs[activeTab.value].editTpl(item);
   };
   // 删除模版
   const deleteTpl = (item: any) => {

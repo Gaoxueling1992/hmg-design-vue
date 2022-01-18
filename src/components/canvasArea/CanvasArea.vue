@@ -63,7 +63,7 @@ export default defineComponent({
 .canvas-area {
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
-  margin: 0 auto 0 auto;
+  margin: 0 auto 20px auto;
   width: calc(100% - 20px);
   .canvas-area-line {
     display: flex;

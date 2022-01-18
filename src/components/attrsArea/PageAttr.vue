@@ -51,15 +51,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, inject, Ref } from 'vue';
+import { defineComponent, inject, toRefs } from 'vue';
 import { tplTypeList } from '@/utils/config';
 
 // 处理pageData
 const pageDataEffet = () => {
-  const name: Ref<string> = ref<string>('');
-  const pageType: Ref<string> = ref<string>('a4');
-  const width: Ref<number> = ref<number>(100);
-  const minHeight: Ref<number> = ref<number>(100);
+  const pageData: any = inject('pageData');
+  const { name, pageType, width, minHeight } = toRefs(pageData);
   const changePageConfig: any = inject('changePageConfig');
   const changePageSize: any = inject('changePageSize');
 
