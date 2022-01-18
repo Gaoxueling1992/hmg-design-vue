@@ -2,6 +2,7 @@
   <Header
     @saveTpl="saveTpl"
     @newTpl="newTpl(1)"
+    @chooseTpl="chooseTpl"
   ></Header>
   <component
     :is="activeTab"
@@ -17,6 +18,15 @@
   >
     <div class="marginB10">模版名称：</div>
     <a-input v-model:value="tplName"/>
+  </a-modal>
+  <a-modal
+    v-model:visible="visible1"
+    okText="确定"
+    cancelText="取消"
+    title="选择模版"
+    @ok="handleOk"
+  >
+    111
   </a-modal>
 </template>
 <script lang="ts">
@@ -36,24 +46,34 @@ import { Modal } from 'ant-design-vue';
 // 模版操作
 const handelTpl = (
   instance: any,
-  activeTab: Ref<string>,
-  visible: Ref<boolean>,
-  tplName: Ref<string>,
-  savePageData: Ref<any>
+  activeTab: Ref<string>
 ) => {
+  const visible: Ref<boolean> = ref<boolean>(false);
+  const visible1: Ref<boolean> = ref<boolean>(false);
+  const tplName: Ref<string> = ref<string>('');
+  const savePageData: Ref<any> = ref<any>({});
+  // 触发保存
   const saveTpl = () => {
     instance.ctx.$refs[activeTab.value].saveTpl();
   };
+  // 新建
   const newTpl = (checkSave: number) => {
     instance.ctx.$refs[activeTab.value].newTpl(checkSave);
   };
+  // 保存确认
   const doSave = (val: any) => {
-    visible.value = true;
-    tplName.value = val.name;
-    savePageData.value = {
-      ...val
-    };
+    if (!val.name) {
+      visible.value = true;
+      tplName.value = val.name;
+      savePageData.value = {
+        ...val
+      };
+    } else {
+      tplName.value = val.name;
+      handleOk();
+    }
   };
+  // 保存写库
   const handleOk = () => {
     if (!tplName.value) {
       Modal.warning({
@@ -75,12 +95,14 @@ const handelTpl = (
 
       newTpl(0);
     }
-  }
+  };
+  // 选择模版
+  const chooseTpl = () => {
+    visible1.value = true;
+  };
   return {
-    saveTpl,
-    newTpl,
-    doSave,
-    handleOk
+    saveTpl, newTpl, doSave, handleOk, chooseTpl,
+    visible, visible1, tplName
   };
 };
 
@@ -91,10 +113,8 @@ export default defineComponent({
     FormContainer: Form
   },
   setup() {
+    const instance: any = getCurrentInstance(); 
     const activeTab: Ref<string> = ref<string>('ReportContainer');
-    const instance: any = getCurrentInstance();
-    const visible: Ref<boolean> = ref<boolean>(false);
-    const tplName: Ref<string> = ref<string>('');
     const domainList = reactive([
       {
         label: '111',
@@ -105,20 +125,20 @@ export default defineComponent({
         value: 'bbb'
       }
     ]);
-    const savePageData: Ref<any> = ref<any>({});
-
-    const { saveTpl, newTpl, doSave, handleOk } = handelTpl(instance, activeTab, visible, tplName, savePageData);
+    
+    const {
+      saveTpl, newTpl, doSave, handleOk, chooseTpl,
+      visible, tplName, visible1
+    } = handelTpl(instance, activeTab);
 
     provide('activeTab', activeTab);
     provide('domainList', domainList);
+
     return {
       activeTab,
-      saveTpl,
-      newTpl,
-      doSave,
-      visible,
-      tplName,
-      handleOk
+      saveTpl, newTpl, doSave, chooseTpl, handleOk,
+      visible, visible1,
+      tplName
     };
   }
 });

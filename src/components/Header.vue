@@ -28,6 +28,10 @@
         class="marginR10"
         @click="newTpl"
       >新建</a-button>
+      <a-button
+        class="marginR10"
+        @click="chooseTpl"
+      >选择模板</a-button>
       <a-select
         v-model:value="theme"
         @change="themeChange"
@@ -73,16 +77,23 @@ const handleTabChange = (activeTab: Ref<string>) => {
 };
 
 // 操作模版
-const handelTpl = (emit) => {
+const handelTpl = (emit: ((event: string, ...args: any[]) => void)|((event: string, ...args: any[]) => void)) => {
+  // 保存
   const saveTpl = () => {
     emit('saveTpl');
   };
+  // 新建
   const newTpl = () => {
     emit('newTpl');
   };
+  // 选择
+  const chooseTpl = () => {
+    emit('chooseTpl');
+  };
   return {
     saveTpl,
-    newTpl
+    newTpl,
+    chooseTpl
   };
 };
 
@@ -92,15 +103,12 @@ export default defineComponent({
       inject('activeTab') || ref('reportContainer');
     const { themeList, themeChange, theme } = handleTheme();
     const { changeTab } = handleTabChange(activeTab);
-    const { saveTpl, newTpl } = handelTpl(emit);
+    const { saveTpl, newTpl, chooseTpl } = handelTpl(emit);
 
     return {
-      changeTab,
-      activeTab,
-      theme,
-      themeList,
-      themeChange,
-      saveTpl, newTpl
+      activeTab, changeTab,
+      theme, themeList, themeChange,
+      saveTpl, newTpl, chooseTpl
     };
   }
 });

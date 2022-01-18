@@ -48,6 +48,7 @@ const handleCompsOper = (
   activeCompId: Ref<string>,
   activeCompObj: Ref<object>
 ) => {
+  // 新增控件
   const addComp = (value: string) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
@@ -64,14 +65,14 @@ const handleCompsOper = (
     pageData.lines.push([activeCompObj.value]);
     activeCompId.value = id;
   };
-
+  // 删除控件
   const deleteComp = (idx: any, index: any) => {
     pageData.lines[+idx > 0 ? idx : 0].splice(+index > 0 ? index : 0, 1);
     if (pageData.lines[+idx > 0 ? idx : 0].length === 0) {
       pageData.lines.splice(+idx > 0 ? idx : 0, 1);
     }
   };
-
+  // 复制控件
   const copyComp = (ele: any) => {
     const id: string = new Date().getTime() + '';
     activeCompObj.value = {
@@ -85,7 +86,7 @@ const handleCompsOper = (
     activeCompId.value = id;
     activePosi.value = 1;
   };
-
+  // 激活控件
   const activeComp = (ele: any) => {
     activePosi.value = 1;
     activeCompId.value = ele.id;

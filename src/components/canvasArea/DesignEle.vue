@@ -204,17 +204,25 @@ const calSpan = (ele: any) => {
   return span;
 };
 
-const handleEleOperate = (deleteComp: any, copyComp: any, ele: any, idx: any, index: any) => {
+const handleEleOperate = (ele: any, props: Readonly<{ [x: string&`on${string}`]: undefined; ele: any; index: any; idx: any; }>) => {
+  const index: any = ref(props.index) || {};
+  const idx: any = ref(props.idx) || {};
+  const activeComp: any = inject('activeComp');
+  const copyComp: any = inject('copyComp');
+  const deleteComp: any = inject('deleteComp');
   const deleteEle = () => {
-    console.log(idx, index)
     deleteComp(idx, index);
   };
   const copyEle = () => {
     copyComp(ele);
   };
+  const clickEle = () => {
+    activeComp(ele);
+  };
   return {
     deleteEle,
-    copyEle
+    copyEle,
+    clickEle
   }
 }
 
@@ -226,25 +234,15 @@ export default defineComponent({
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
-    const index: any = ref(props.index) || {};
-    const idx: any = ref(props.idx) || {};
-    const activeComp: any = inject('activeComp');
-    const copyComp: any = inject('copyComp');
-    const deleteComp: any = inject('deleteComp');
     const activeCompId: string = inject('activeCompId') || '';
 
-    const clickEle = () => {
-      activeComp(ele);
-    };
-
-    const { deleteEle, copyEle } = handleEleOperate(deleteComp, copyComp, ele, idx, index);
+    const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
 
     return {
       ele,
-      clickEle,
       activeCompId,
       calSpan,
-      deleteEle, copyEle
+      deleteEle, copyEle, clickEle
     };
   }
 });
