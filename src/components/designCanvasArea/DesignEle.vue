@@ -204,6 +204,7 @@ const calSpan = (ele: any) => {
   return span;
 };
 
+// 操作控件
 const handleEleOperate = (ele: any, props: Readonly<{ [x: string&`on${string}`]: undefined; ele: any; index: any; idx: any; }>) => {
   const index: any = ref(props.index) || {};
   const idx: any = ref(props.idx) || {};
@@ -280,6 +281,7 @@ table {
   position: absolute;
   top: 2px;
   right: 10px;
+  font-size: 13px;
   .delete-item {
     margin-left: 5px;
     display: inline-block;

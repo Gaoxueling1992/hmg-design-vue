@@ -6,14 +6,32 @@
     >
       <CompsArea></CompsArea>
     </a-layout-sider>
-    <a-layout-content class="border-l border-r padding10 marginB30">
+    <a-layout-content class="edit-canvas-container border-l border-r padding10 marginB30">
       <CanvasArea @clickCanvas="activePosi=0"></CanvasArea>
+      <a-tooltip placement="left">
+        <template #title>
+          <span>预览</span>
+        </template>
+        <a-button class="edit-canvas-preview" shape="circle" @click="visible=true">
+          <template #icon>
+            <i class="iconfont iconpreview_border"></i>
+          </template>
+        </a-button>
+      </a-tooltip>
     </a-layout-content>
     <a-layout-sider width="260px">
       <PageAttr v-if="activePosi===0"></PageAttr>
       <CompAttr v-if="activePosi===1"></CompAttr>
     </a-layout-sider>
   </a-layout>
+  <a-modal
+    v-model:visible="visible"
+    width="100%"
+    wrap-class-name="full-modal"
+    :footer="null"
+  >
+    <EditCanvas class="edit-canvas"></EditCanvas>
+  </a-modal>
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, provide, Ref, toRef } from 'vue';
@@ -177,6 +195,7 @@ export default defineComponent({
     const activePosi: Ref<number> = ref(0);
     const activeCompObj: Ref<object> = ref({});
     const activeCompId: Ref<string> = ref('');
+    const visible: Ref<boolean> = ref(false);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
     const { addComp, activeComp, copyComp, deleteComp } = handleCompsOper(
       pageData,
@@ -215,9 +234,41 @@ export default defineComponent({
       pageData,
       saveTpl,
       newTpl,
-      editTpl
+      editTpl,
+      visible
     };
   }
 });
 </script>
+<style lang="scss">
+.edit-canvas {
+  margin: 0 auto;
+}
+.edit-canvas-preview {
+  position: fixed;
+  right: 280px;
+  bottom: 30px;
+}
+.edit-canvas-container {
+  position: relative;
+}
+.full-modal {
+  height: 100%;
+  overflow-x: auto;
+  .ant-modal {
+    max-width: 100%;
+    top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+  .ant-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .ant-modal-body {
+    flex: 1;
+  }
+}
+</style>
 

@@ -5,7 +5,7 @@
   </a-radio-group>
   <div class="title marginT10 marginB5 fontW500">引导文字</div>
   <a-textarea v-model:value="activeCompObj.placeholder" allowClear :auto-size="{ minRows: 2, maxRows: 2 }"/>
-  <div class="flex marginT10">
+  <div class="flex marginT10" v-if="activeCompObj.type === 'text'">
     <div class="flex-title">前缀</div>
     <a-input class="flex1 marginR5" allowClear v-model:value="activeCompObj.prefix"/>
     <div class="flex-title">后缀</div>

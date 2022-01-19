@@ -98,6 +98,11 @@ const handelTpl = (
       const ls = localStorage.getItem('tplsList');
       let list: any = ls === null ? reactive({}) : reactive(JSON.parse(ls));
       let id = savePageData.value.id || (new Date()).getTime() + '';
+      for (let i = savePageData.value.lines.length - 1; i >= 0; i--) {
+        if (savePageData.value.lines[i].length === 0) {
+          savePageData.value.lines.splice(i, 1);
+        }
+      }
       list[id] = {
         ...savePageData.value,
         id: id,
