@@ -10,10 +10,10 @@
     "ant-design-vue": "^2.2.8",
     "css-vars-ponyfill": "^2.4.7",
     "less": "^4.1.2",
-    "qrcode.vue": "^3.3.3",
     "vue": "^3.0.5",
     "vue-draggable-next": "^2.1.1",
     "vue-router": "^4.0.12",
+    "vue3-qrcode": "0.0.2",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -21,6 +21,7 @@
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",
     "node-sass": "^7.0.0",
+    "qrcode.vue": "^3.3.3",
     "sass": "^1.45.1",
     "sass-loader": "^12.4.0",
     "typescript": "^4.3.2",
@@ -28,6 +29,7 @@
     "unplugin-vue-components": "^0.17.10",
     "vite": "^2.3.7",
     "vue-tsc": "^0.0.24",
-    "vue3-qrcode": "0.0.2"
+    "vue3-barcode": "^1.0.1",
+    "wangeditor": "^4.7.11"
   }
 }
