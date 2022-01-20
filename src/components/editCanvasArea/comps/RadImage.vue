@@ -1,6 +1,5 @@
 <template>
   <a-image
-    v-if="ele.elName === 'RadImage'"
     class="img"
     :height="ele.imgHeight"
     :width="ele.imgWidth"

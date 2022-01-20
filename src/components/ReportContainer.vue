@@ -85,9 +85,10 @@ const handleCompsOper = (
   };
   // 删除控件
   const deleteComp = (idx: any, index: any) => {
-    pageData.lines[+idx > 0 ? idx : 0].splice(+index > 0 ? index : 0, 1);
-    if (pageData.lines[+idx > 0 ? idx : 0].length === 0) {
-      pageData.lines.splice(+idx > 0 ? idx : 0, 1);
+    console.log(idx.value, index.value);
+    pageData.lines[+idx.value > 0 ? idx.value : 0].splice(+index.value > 0 ? index.value : 0, 1);
+    if (pageData.lines[+idx.value > 0 ? idx.value : 0].length === 0) {
+      pageData.lines.splice(+idx.value > 0 ? idx.value : 0, 1);
     }
   };
   // 复制控件

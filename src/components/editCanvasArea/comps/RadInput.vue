@@ -1,8 +1,9 @@
 <template>
   <div
     class="inherit"
+    v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
-  >{{ ele.label || ele.name }}</div>
+  >{{ ele.label }}</div>
   <a-input
     style="flex: 1"
     :disabled="ele.baseProps.readonly"

@@ -13,7 +13,7 @@
           v-for="ele in line"
           :key="ele.id"
           :style="{
-            'align-items': ele.inline ? 'center' : '',
+            'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
             'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
             'max-width': '100%',
             'overflow': 'hidden',
@@ -37,13 +37,19 @@ import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
 import RadInput from './comps/RadInput.vue';
+import RadEditor from './comps/RadEditor.vue';
+import RadSignalcode from './comps/RadSignalcode.vue';
+import RadDrcode from './comps/RadDrcode.vue';
 
 export default defineComponent({
   components: {
     RadText: RadText,
     RadImage: RadImage,
     RadLine: RadLine,
-    RadInput: RadInput
+    RadInput: RadInput,
+    RadEditor: RadEditor,
+    RadSignalcode: RadSignalcode,
+    RadDrcode: RadDrcode
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
@@ -58,7 +64,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .edit-canvas {
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
@@ -67,6 +73,9 @@ export default defineComponent({
   .edit-canvas-line {
     display: flex;
     position: relative;
+  }
+  .ql-container {
+    height: auto;
   }
 }
 </style>

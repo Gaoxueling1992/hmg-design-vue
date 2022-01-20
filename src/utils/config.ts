@@ -735,6 +735,49 @@ const tplTypeList: Array<Object> = [
   }
 ]
 
+const editorMenus = [
+  'undo', // 撤销
+  'redo', // 重复
+  'head', // 标题
+  'bold', // 粗体
+  'fontSize', // 字号
+  'fontName', // 字体
+  'italic', // 斜体
+  'underline', // 下划线
+  'strikeThrough', // 删除线
+  'foreColor', // 文字颜色
+  'backColor', // 背景颜色
+  'list', // 列表
+  'justify' // 对齐方式
+];
+
+const editorFontSizes = {
+  'small': {
+    name: '13px',
+    value: '2'
+  },
+  'normal': {
+    name: '16px',
+    value: '3'
+  },
+  'large': {
+    name: '18px',
+    value: '4'
+  },
+  'x-largr': {
+    name: '24px',
+    value: '5'
+  },
+  'xx-large': {
+    name: '32px',
+    value: '6'
+  },
+  'xxx-large': {
+    name: '48px',
+    value: '7'
+  }
+}
+
 export {
   compsList,
   tplTypeList,
@@ -742,5 +785,7 @@ export {
   sheet2Form,
   ruleList,
   pickerList,
-  pickerMap
+  pickerMap,
+  editorMenus,
+  editorFontSizes
 }
