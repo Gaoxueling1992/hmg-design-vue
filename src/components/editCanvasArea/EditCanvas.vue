@@ -40,6 +40,7 @@ import RadInput from './comps/RadInput.vue';
 import RadEditor from './comps/RadEditor.vue';
 import RadSignalcode from './comps/RadSignalcode.vue';
 import RadDrcode from './comps/RadDrcode.vue';
+import RadMulitImagepicker from './comps/RadMulitImagepicker.vue';
 
 export default defineComponent({
   components: {
@@ -49,7 +50,8 @@ export default defineComponent({
     RadInput: RadInput,
     RadEditor: RadEditor,
     RadSignalcode: RadSignalcode,
-    RadDrcode: RadDrcode
+    RadDrcode: RadDrcode,
+    RadMulitImagepicker: RadMulitImagepicker
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}

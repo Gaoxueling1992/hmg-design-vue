@@ -36,6 +36,11 @@ export default defineComponent({
   height: fit-content !important;
 }
 .w-e-text {
-  min-height: 200px !important;
+  min-height: 20px !important;
+}
+.w-e-toolbar .w-e-droplist {
+  height: 80px;
+  overflow: auto;
+  padding-bottom: 30px;
 }
 </style>

@@ -13,7 +13,7 @@
     <div v-else>
       <loading-outlined v-if="loading"></loading-outlined>
       <plus-outlined v-else></plus-outlined>
-      <div class="ant-upload-text">Upload</div>
+      <div class="ant-upload-text">上传</div>
     </div>
   </a-upload>
   <div class="title marginT10 marginB5 fontW500">图片大小</div>

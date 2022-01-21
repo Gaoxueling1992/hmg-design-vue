@@ -299,7 +299,8 @@ const compBaseConfig = {
     horSpacing: 10,
     verSpacing: 10,
     perNum: 6,
-    testTotalNum: 10
+    testTotalNum: 10,
+    imgList: []
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',
