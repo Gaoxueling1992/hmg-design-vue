@@ -81,7 +81,6 @@ export default defineComponent({
 
       if (isJpgOrPng && isLt2M) {
         getBase64(file, (base64Url: string) => {
-          console.log(base64Url);
           ele.value.imgList.push({
             url: base64Url,
             id: Math.random() + ''

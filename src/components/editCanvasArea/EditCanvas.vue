@@ -43,6 +43,8 @@ import RadDrcode from './comps/RadDrcode.vue';
 import RadMulitImagepicker from './comps/RadMulitImagepicker.vue';
 import RadDatetime from './comps/RadDatetime.vue';
 import RadNumber from './comps/RadNumber.vue';
+import RadSingleSelect from './comps/RadSingleSelect.vue';
+import RadMulSelect from './comps/RadMulSelect.vue';
 
 export default defineComponent({
   components: {
@@ -55,7 +57,9 @@ export default defineComponent({
     RadDrcode: RadDrcode,
     RadMulitImagepicker: RadMulitImagepicker,
     RadDatetime: RadDatetime,
-    RadNumber: RadNumber
+    RadNumber: RadNumber,
+    RadSingleSelect: RadSingleSelect,
+    RadMulSelect: RadMulSelect
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}

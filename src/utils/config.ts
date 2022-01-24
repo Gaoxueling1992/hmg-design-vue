@@ -169,9 +169,8 @@ const compBaseConfig = {
     domain: '',
     domainType: 'domain',
     baseProps: baseProps,
-    prefix: '',
-    suffix: '',
-    layout: 'crosswise'
+    layout: 'crosswise',
+    options: []
   },
   'rad-mul-select': {
     elName: 'RadMulSelect',
@@ -180,16 +179,15 @@ const compBaseConfig = {
     desc: '从预设的选项中选择一项或者多项。',
     placeholder: '',
     label: '',
-    defaultValue: '',
+    defaultValue: [],
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
     domain: '',
     domainType: 'domain',
     baseProps: baseProps,
-    prefix: '',
-    suffix: '',
-    layout: 'crosswise'
+    layout: 'crosswise',
+    options: []
   },
   'rad-number': {
     elName: 'RadNumber',
