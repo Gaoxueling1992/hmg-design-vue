@@ -489,7 +489,7 @@ const pickerList = [
     value: 'date'
   },
   {
-    label: '周',
+    label: '月',
     value: 'month'
   },
   {

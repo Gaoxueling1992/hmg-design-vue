@@ -4,11 +4,12 @@
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
   >{{ ele.label }}</div>
-  <a-input
+  <a-input-number
     style="flex: 1"
     :disabled="ele.baseProps.readonly"
+    :min="ele.min"
+    :max="ele.max"
     class="inherit"
-    v-if="ele.type !== 'textarea'"
     v-model:value="ele.defaultValue"
     :placeholder="ele.placeholder"
   >
@@ -18,22 +19,7 @@
     <template #suffix>
       {{ ele.suffix }}
     </template>
-  </a-input>
-  <a-textarea
-    style="flex: 1"
-    :disabled="ele.baseProps.readonly"
-    v-model:value="ele.defaultValue"
-    :placeholder="ele.placeholder"
-    class="inherit"
-    v-else
-  >
-    <template #prefix>
-      {{ ele.prefix }}
-    </template>
-    <template #suffix>
-      {{ ele.suffix }}
-    </template>
-  </a-textarea>
+  </a-input-number>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

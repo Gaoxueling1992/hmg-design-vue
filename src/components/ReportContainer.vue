@@ -7,7 +7,7 @@
       <CompsArea></CompsArea>
     </a-layout-sider>
     <a-layout-content class="edit-canvas-container border-l border-r padding10 marginB30">
-      <CanvasArea @clickCanvas="activePosi=0"></CanvasArea>
+      <CanvasArea @clickCanvas="clickCanvas"></CanvasArea>
       <a-tooltip placement="left">
         <template #title>
           <span>预览</span>
@@ -61,11 +61,12 @@ const handlePageData = (pageData: any) => {
 
 // 处理控件操作
 const handleCompsOper = (
-  pageData: any,
-  activePosi: Ref<number>,
-  activeCompId: Ref<string>,
-  activeCompObj: Ref<object>
+  emit: ((event: string, ...args: any[]) => void)|((event: string, ...args: any[]) => void),
+  pageData: any
 ) => {
+  const activePosi: Ref<number> = ref(0);
+  const activeCompObj: Ref<object> = ref({});
+  const activeCompId: Ref<string> = ref('');
   // 新增控件
   const addComp = (value: string) => {
     activePosi.value = 1;
@@ -85,7 +86,7 @@ const handleCompsOper = (
   };
   // 删除控件
   const deleteComp = (idx: any, index: any) => {
-    console.log(idx.value, index.value);
+    clickCanvas();
     pageData.lines[+idx.value > 0 ? idx.value : 0].splice(+index.value > 0 ? index.value : 0, 1);
     if (pageData.lines[+idx.value > 0 ? idx.value : 0].length === 0) {
       pageData.lines.splice(+idx.value > 0 ? idx.value : 0, 1);
@@ -111,20 +112,6 @@ const handleCompsOper = (
     activeCompId.value = ele.id;
     activeCompObj.value = ele;
   };
-
-  return { addComp, activeComp, copyComp, deleteComp };
-};
-
-// 模版操作
-const handleTpl = (
-  emit:
-    | ((event: string, ...args: any[]) => void)
-    | ((event: string, ...args: any[]) => void),
-  pageData: { lines: string|any[]; name: string; pageType: string; styleSheet: { minHeight: string; width: string; padding: string; }; },
-  activePosi: Ref<number>,
-  activeCompObj: Ref<object>,
-  activeCompId: Ref<string>
-) => {
   // 保存模版
   const saveTpl = () => {
     if (pageData.lines.length) {
@@ -138,6 +125,7 @@ const handleTpl = (
     }
   };
 
+  // 重置模版数据
   const resetData = () => {
     pageData.lines = [];
     pageData.name = '';
@@ -183,40 +171,33 @@ const handleTpl = (
     activeCompId.value = '';
   };
 
+  const clickCanvas = () => {
+    activePosi.value = 0;
+    activeCompId.value = '';
+    activeCompObj.value = {};
+  };
+
   return {
-    saveTpl,
-    newTpl,
-    editTpl
+    saveTpl, newTpl, editTpl,
+    addComp, activeComp, copyComp, deleteComp,
+    activePosi, activeCompId, activeCompObj,
+    clickCanvas
   };
 };
 
 export default defineComponent({
   setup(props, { emit }) {
     let pageData: any = reactive(pageConfig);
-    const activePosi: Ref<number> = ref(0);
-    const activeCompObj: Ref<object> = ref({});
-    const activeCompId: Ref<string> = ref('');
     const visible: Ref<boolean> = ref(false);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
-    const { addComp, activeComp, copyComp, deleteComp } = handleCompsOper(
-      pageData,
-      activePosi,
-      activeCompId,
-      activeCompObj
-    );
-
-    const clickCanvas = () => {
-      activePosi.value = 0;
-      activeCompId.value = '';
-      activeCompObj.value = {};
-    };
-
-    const { saveTpl, newTpl, editTpl } = handleTpl(
+    const { 
+      addComp, activeComp, copyComp, deleteComp,
+      saveTpl, newTpl, editTpl,
+      activePosi, activeCompId, activeCompObj,
+      clickCanvas
+    } = handleCompsOper(
       emit,
-      pageData,
-      activePosi,
-      activeCompObj,
-      activeCompId
+      pageData
     );
 
     provide('changePageConfig', changePageConfig);
