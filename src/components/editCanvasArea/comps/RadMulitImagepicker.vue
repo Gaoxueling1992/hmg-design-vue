@@ -1,25 +1,30 @@
 <template>
-  <div class="picker-flex" v-if="ele.imgList && ele.imgList.length">
+  <div
+    class="picker-flex-edit"
+    v-if="ele.imgList && ele.imgList.length"
+  >
     <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
       <a-col
-        v-for="item in +ele.imgList"
+        v-for="item in ele.imgList"
         :key="item.id"
-        :span="calSpan(ele)"
+        :span="calSpan(ele, ele.imgList.length)"
       >
         <div :style="{
           width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
           height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
-          border: '1px solid grey',
           margin: '0 auto',
           textAlign: 'center'
-        }">图片
+        }">
+          <a-image :src="item.url" />
         </div>
       </a-col>
     </a-row>
   </div>
-  <div class="picker-flex-text" v-else>可上传本地图片或直接应用图片</div>
+  <div
+    class="picker-flex-text"
+    v-else
+  >可上传本地图片或直接应用图片</div>
   <a-upload
-    v-model:file-list="fileList"
     name="pic"
     class="pic-uploader"
     :show-upload-list="false"
@@ -33,19 +38,19 @@
   </a-upload>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, toRefs } from 'vue';
 import { message } from 'ant-design-vue';
 
 // 图片选择器 计算布局
-const calSpan = (ele: any) => {
+const calSpan = (ele: any, length: number) => {
   let span;
   if (ele.layout === '1') {
     span = 24 / +ele.perNum;
   } else {
-    if (ele.testTotalNum === 3) {
-      span = 24 / +ele.testTotalNum;
+    if (length === 3) {
+      span = 24 / +length;
     } else {
-      span = 24 / Math.ceil(Math.sqrt(ele.testTotalNum));
+      span = 24 / Math.ceil(Math.sqrt(length));
     }
   }
   return span;
@@ -59,14 +64,13 @@ function getBase64(img: Blob, callback: (base64Url: string) => void) {
 
 export default defineComponent({
   props: ['ele'],
-  setup (props) {
-    // const ele = toRefs(props);
-    const fileList = ref([]);
+  setup(props) {
+    const { ele } = toRefs(props);
     const loading = ref<boolean>(false);
 
     const beforeUpload = (file: any) => {
-      console.log(file)
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      const isJpgOrPng =
+        file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
         message.error('You can only upload JPG file!');
       }
@@ -76,34 +80,50 @@ export default defineComponent({
       }
 
       if (isJpgOrPng && isLt2M) {
-        // ele.src = getBase64(file, (base64Url: string) => {
-        //   ele.src = base64Url;
-        // });
+        getBase64(file, (base64Url: string) => {
+          console.log(base64Url);
+          ele.value.imgList.push({
+            url: base64Url,
+            id: Math.random() + ''
+          });
+        });
       }
 
       return false;
     };
     return {
       calSpan,
-      fileList,
-      loading
-    }
-  },
-})
+      loading,
+      beforeUpload
+    };
+  }
+});
 </script>
-<style lang="scss" scoped>
-.picker-flex, .picker-flex-text {
+<style lang="scss">
+.picker-flex-edit,
+.picker-flex-text {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.picker-flex-edit {
+  .ant-image {
+    height: 100%;
+    width: 100%;
+  }
+  .ant-image-img {
+    height: 100%;
+    width: 100%;
+  }
 }
 .picker-flex-text {
   border: 1px solid var(--border-color-lighter);
   padding: 20px;
 }
 .pic-uploader {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  float: right;
+}
+.w-e-dp-title {
+  display: none !important;
 }
 </style>
