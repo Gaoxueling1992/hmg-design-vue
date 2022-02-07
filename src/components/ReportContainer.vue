@@ -115,7 +115,7 @@ const handleCompsOper = (
   // 保存模版
   const saveTpl = () => {
     if (pageData.lines.length) {
-      emit('saveTpl', pageData);
+      emit('saveTpl', { pageData, type: 0 });
     } else {
       Modal.warning({
         title: '提示',

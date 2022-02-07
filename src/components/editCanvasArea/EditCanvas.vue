@@ -45,6 +45,7 @@ import RadDatetime from './comps/RadDatetime.vue';
 import RadNumber from './comps/RadNumber.vue';
 import RadSingleSelect from './comps/RadSingleSelect.vue';
 import RadMulSelect from './comps/RadMulSelect.vue';
+import RadTable from './comps/RadTable.vue';
 
 export default defineComponent({
   components: {
@@ -59,7 +60,8 @@ export default defineComponent({
     RadDatetime: RadDatetime,
     RadNumber: RadNumber,
     RadSingleSelect: RadSingleSelect,
-    RadMulSelect: RadMulSelect
+    RadMulSelect: RadMulSelect,
+    RadTable: RadTable
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}

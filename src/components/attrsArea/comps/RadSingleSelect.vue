@@ -31,7 +31,7 @@
       class="paddingT5"
     >
       <i class="iconfont icondrag"></i>
-      {{ option.label }}
+      <a-input size="small" class="input-width" v-model:value="option.label"/>
       <div class="option-op">
         <a-radio
           @click="activeCompObj.defaultValue=option.value"
@@ -109,5 +109,8 @@ export default defineComponent({
 }
 .icondelete-border {
   font-size: var(--size-f3);
+}
+.input-width {
+  width: 160px;
 }
 </style>
