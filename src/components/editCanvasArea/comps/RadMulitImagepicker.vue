@@ -5,17 +5,31 @@
   >
     <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
       <a-col
-        v-for="item in ele.imgList"
+        v-for="(item, index) in ele.imgList"
         :key="item.id"
         :span="calSpan(ele, ele.imgList.length)"
       >
-        <div :style="{
+        <div
+          :style="{
           width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
           height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
           margin: '0 auto',
-          textAlign: 'center'
-        }">
+          textAlign: 'center',
+          position: 'relative'
+        }"
+          @mouseover.native="mouseEnter=+index"
+          @mouseleave.native="mouseEnter=-1"
+        >
           <a-image :src="item.url" />
+          <!-- <div
+            v-if="mouseEnter === +index"
+            class="image-modal"
+          ></div> -->
+          <div
+            v-if="mouseEnter === +index"
+            class="iconfont iconclose1"
+            @click="deleteImg(index)"
+          ></div>
         </div>
       </a-col>
     </a-row>
@@ -23,7 +37,7 @@
   <div
     class="picker-flex-text"
     v-else
-  >可上传本地图片或直接应用图片</div>
+  >上传图片</div>
   <a-upload
     name="pic"
     class="pic-uploader"
@@ -67,6 +81,7 @@ export default defineComponent({
   setup(props) {
     const { ele } = toRefs(props);
     const loading = ref<boolean>(false);
+    const mouseEnter = ref<number>(-1);
 
     const beforeUpload = (file: any) => {
       const isJpgOrPng =
@@ -90,16 +105,22 @@ export default defineComponent({
 
       return false;
     };
+
+    const deleteImg = (index: any) => {
+      ele.value.imgList.splice(index, 1);
+      mouseEnter.value = -1;
+    };
     return {
       calSpan,
       loading,
-      beforeUpload
+      beforeUpload,
+      mouseEnter,
+      deleteImg
     };
   }
 });
 </script>
 <style lang="scss">
-.picker-flex-edit,
 .picker-flex-text {
   display: flex;
   flex-wrap: wrap;
@@ -109,10 +130,37 @@ export default defineComponent({
   .ant-image {
     height: 100%;
     width: 100%;
+    position: relative;
+    z-index: 1;
+    img {
+      pointer-events: none;
+    }
+  }
+  .image-modal {
+    display: block;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    background: var(--background-color-base);
+    opacity: 0.7;
+    position: absolute;
+    z-index: 2;
   }
   .ant-image-img {
     height: 100%;
     width: 100%;
+  }
+  .iconclose1 {
+    font-size: 18px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 3;
+    color: var(--color-white);
+    line-height: 18px;
+    &:hover {
+      color: var(--color-primary);
+    }
   }
 }
 .picker-flex-text {

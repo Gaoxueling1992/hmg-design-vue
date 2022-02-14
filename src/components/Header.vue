@@ -27,6 +27,7 @@
       <a-button
         class="marginR10"
         @click="newTpl"
+        v-if="activeTab!=='TableContainer'"
       >新建</a-button>
       <a-button
         class="marginR10"
@@ -72,6 +73,9 @@ const handleTheme = () => {
 const handleTabChange = (activeTab: Ref<string>) => {
   const changeTab = (value: string) => {
     activeTab.value = value;
+    if (activeTab.value !== 'TableContainer') {
+      luckysheet.destroy();
+    }
   };
   return { changeTab };
 };
@@ -100,7 +104,7 @@ const handelTpl = (emit: ((event: string, ...args: any[]) => void)|((event: stri
 export default defineComponent({
   setup(props, { emit }) {
     const activeTab: Ref<string> =
-      inject('activeTab') || ref('reportContainer');
+      inject('activeTab') || ref('ReportContainer');
     const { themeList, themeChange, theme } = handleTheme();
     const { changeTab } = handleTabChange(activeTab);
     const { saveTpl, newTpl, chooseTpl } = handelTpl(emit);

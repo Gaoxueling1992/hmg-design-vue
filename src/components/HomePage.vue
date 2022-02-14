@@ -8,6 +8,7 @@
     :is="activeTab"
     :ref="activeTab"
     @saveTpl="doSave"
+    @chooseTable="chooseTable"
   ></component>
   <a-modal
     v-model:visible="visible"
@@ -31,6 +32,22 @@
           <template #actions>
             <a @click="editTpl(item)">编辑</a>
             <a @click="deleteTpl(item)">删除</a>
+          </template>
+        </a-list-item>
+      </template>
+    </a-list>
+  </a-modal>
+  <a-modal
+    v-model:visible="chooseTableOpen"
+    :footer="null"
+    title="选择模版"
+  >
+    <a-list size="small" bordered :data-source="tableList">
+      <template #renderItem="{ item }">
+        <a-list-item>
+          {{ item.name }}
+          <template #actions>
+            <a @click="applyTpl(item)">应用</a>
           </template>
         </a-list-item>
       </template>
@@ -71,17 +88,18 @@ const handelTpl = (
   };
   // 保存确认
   const doSave = (val: any) => {
-    if (!val.name) {
+    if (!val.pageData.name) {
       visible.value = true;
-      tplName.value = val.name;
+      tplName.value = val.pageData.name;
       savePageData.value = {
-        ...val
+        ...val.pageData
       };
     } else {
-      tplName.value = val.name;
+      tplName.value = val.pageData.name;
       savePageData.value = {
-        ...val
+        ...val.pageData
       };
+      console.log(savePageData);
       handleOk();
     }
   };
@@ -95,29 +113,41 @@ const handelTpl = (
       });
     } else {
       visible.value = false;
-      const ls = localStorage.getItem('tplsList');
+      const ls = localStorage.getItem(activeTab.value === 'ReportContainer' ? 'tplsList' : 'tablesList');
       let list: any = ls === null ? reactive({}) : reactive(JSON.parse(ls));
       let id = savePageData.value.id || (new Date()).getTime() + '';
-      for (let i = savePageData.value.lines.length - 1; i >= 0; i--) {
-        if (savePageData.value.lines[i].length === 0) {
-          savePageData.value.lines.splice(i, 1);
+      if (activeTab.value === 'ReportContainer') {
+        for (let i = savePageData.value.lines.length - 1; i >= 0; i--) {
+          if (savePageData.value.lines[i].length === 0) {
+            savePageData.value.lines.splice(i, 1);
+          }
         }
       }
-      list[id] = {
-        ...savePageData.value,
-        id: id,
-        name: tplName.value
-      };
-      localStorage.setItem('tplsList', JSON.stringify(list));
+      if (activeTab.value === 'TableContainer') {
+        list[id] = {
+          list: savePageData.value,
+          id: id,
+          name: tplName.value
+        };
+      } else {
+        list[id] = {
+          ...savePageData.value,
+          id: id,
+          name: tplName.value
+        };
+      }
+      localStorage.setItem(activeTab.value === 'ReportContainer' ? 'tplsList' : 'tablesList', JSON.stringify(list));
 
       message.success('保存成功');
-      newTpl(0);
+      if (activeTab.value !== 'TableContainer') {
+        newTpl(0);
+      }
     }
   };
   // 选择模版
   const chooseTpl = () => {
     visible1.value = true;
-    const ls = localStorage.getItem('tplsList');
+    const ls = localStorage.getItem(activeTab.value === 'ReportContainer' ? 'tplsList' : 'tablesList');
     const list: any = ls === null ? {} : JSON.parse(ls);
     tplList.length = 0;
     for (let key in list) {
@@ -131,10 +161,10 @@ const handelTpl = (
   };
   // 删除模版
   const deleteTpl = (item: any) => {
-    const ls = localStorage.getItem('tplsList');
+    const ls = localStorage.getItem(activeTab.value === 'ReportContainer' ? 'tplsList' : 'tablesList');
     let list: any = ls === null ? reactive({}) : reactive(JSON.parse(ls));
     delete list[item.id];
-    localStorage.setItem('tplsList', JSON.stringify(list));
+    localStorage.setItem(activeTab.value === 'ReportContainer' ? 'tplsList' : 'tablesList', JSON.stringify(list));
 
     message.success('删除成功');
     tplList.length = 0;
@@ -158,6 +188,9 @@ export default defineComponent({
   setup() {
     const instance: any = getCurrentInstance(); 
     const activeTab: Ref<string> = ref<string>('ReportContainer');
+    const chooseTableOpen: Ref<boolean> = ref<boolean>(false);
+    let tableList: any = reactive([]);
+    let tableTpl: Ref<object> = ref<object>({});
     const domainList = reactive([
       {
         label: '111',
@@ -177,13 +210,30 @@ export default defineComponent({
 
     provide('activeTab', activeTab);
     provide('domainList', domainList);
+    provide('chooseTableOpen', chooseTableOpen);
+    provide('tableTpl', tableTpl);
+
+    const ls = localStorage.getItem('tablesList');
+    const list: any = ls === null ? {} : JSON.parse(ls);
+    tableList.length = 0;
+    for (let key in list) {
+      tableList.push(list[key]);
+    }
+
+    // 应用表格模版
+    const applyTpl = (item: any) => {
+      tableTpl.value = item;
+      chooseTableOpen.value = false;
+    };
 
     return {
       activeTab,
       saveTpl, newTpl, doSave, chooseTpl, handleOk,
       visible, visible1,
       tplName, tplList,
-      editTpl, deleteTpl
+      editTpl, deleteTpl,
+      chooseTableOpen, tableList,
+      applyTpl
     };
   }
 });
