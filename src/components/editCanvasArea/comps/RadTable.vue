@@ -6,7 +6,7 @@
         <template v-for="(item, idx) in line" :key="idx">
           <td :style="item ? item.style : {}" :colspan="item && item.mc && item.mc.cs || 1" :rowspan="item && item.mc && item.mc.rs || 1">
             <span v-if="item && item.m">{{ item.m }}</span>
-            <span v-else>{{'-'}}</span>
+            <span v-else><a-input/></span>
           </td>
         </template>
       </tr>
