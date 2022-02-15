@@ -354,7 +354,7 @@ const compBaseConfig = {
     type: 'textarea',
     placeholder: '',
     label: '',
-    defaultValue: '1111',
+    defaultValue: '',
     noLabel: false,
     inline: false,
     styleSheet: styleSheet,

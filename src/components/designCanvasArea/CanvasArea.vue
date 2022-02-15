@@ -1,7 +1,10 @@
 <template>
   <div
     class="canvas-area"
-    :style="styleSheet"
+    :style="{
+      ...styleSheet,
+      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)'
+    }"
     @click.self.prevent="handleClickCanvas"
   >
     <div
