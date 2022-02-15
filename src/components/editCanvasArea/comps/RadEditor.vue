@@ -21,6 +21,10 @@ export default defineComponent({
       editor.config.fontSizes = editorFontSizes;
       editor.config.fontNames = ["宋体", "新宋体", "仿宋", "楷体", "黑体", "微软雅黑", "Times New Roman", "隶书", "幼圆"];
       editor.create();
+      editor.txt.html(props.ele.defaultValue);
+      editor.config.onchange = (newHtml) => {
+        props.ele.defaultValue = newHtml;
+      }
     });
   }
 });

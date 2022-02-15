@@ -100,7 +100,6 @@ const dealWithKeyup = () => {
     list2.sort((a, b) => {
       return a.split('_')[1] - b.split('_')[1];
     });
-    console.log(list2);
   };
   const up = (r, i) => {
     rlList2();

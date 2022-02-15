@@ -52,10 +52,10 @@ const compsList: Array<object> = [
     elName: 'rad-editor',
     title: '富文本'
   },
-  // {
-  //   elName: 'rad-signature',
-  //   title: '签名'
-  // }
+  {
+    elName: 'rad-signature',
+    title: '操作人'
+  }
 ]
 
 // 样式表属性
@@ -370,6 +370,25 @@ const compBaseConfig = {
     fontStyle: 'normal',
     textDecoration: 'none'
   },
+  'rad-signature': {
+    elName: 'RadSignature',
+    name: '操作人',
+    desc: '可设置为单行或多行。',
+    type: 'input',
+    placeholder: '',
+    label: '',
+    defaultValue: '',
+    noLabel: false,
+    inline: true,
+    styleSheet: styleSheet,
+    domain: '',
+    domainType: 'domain',
+    baseProps: baseProps,
+    validate: validate,
+    imagePosi: 'right',
+    imgHeight: '32',
+    imgWidth: '50'
+  }
 }
 
 const pickerMap: object = {
@@ -741,6 +760,7 @@ const editorMenus = [
   'bold', // 粗体
   'fontSize', // 字号
   'fontName', // 字体
+  'lineHeight',// 
   'italic', // 斜体
   'underline', // 下划线
   'strikeThrough', // 删除线

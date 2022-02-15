@@ -1,7 +1,10 @@
 <template>
   <div
     class="edit-canvas"
-    :style="styleSheet"
+    :style="{
+      ...styleSheet,
+      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)'
+    }"
   >
     <div
       v-for="(line, idx) in lines"
@@ -46,6 +49,7 @@ import RadNumber from './comps/RadNumber.vue';
 import RadSingleSelect from './comps/RadSingleSelect.vue';
 import RadMulSelect from './comps/RadMulSelect.vue';
 import RadTable from './comps/RadTable.vue';
+import RadSignature from './comps/RadSignature.vue';
 
 export default defineComponent({
   components: {
@@ -61,7 +65,8 @@ export default defineComponent({
     RadNumber: RadNumber,
     RadSingleSelect: RadSingleSelect,
     RadMulSelect: RadMulSelect,
-    RadTable: RadTable
+    RadTable: RadTable,
+    RadSignature: RadSignature
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
@@ -90,4 +95,10 @@ export default defineComponent({
     height: auto;
   }
 }
+// .ruler {
+//   width: 10px;
+//   height: calc(100%);
+//   margin-left: -10px;
+//   background-image: repeating-linear-gradient(black, black 1px, transparent 0, transparent 1cm);
+// }
 </style>

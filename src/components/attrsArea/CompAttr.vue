@@ -43,6 +43,7 @@ import RadSignalcode from './comps/RadSignalcode.vue';
 import RadDrcode from './comps/RadDrcode.vue';
 import RadEditor from './comps/RadEditor.vue';
 import RadTable from './comps/RadTable.vue';
+import RadSignature from './comps/RadSignature.vue';
 
 export default defineComponent({
   components: {
@@ -56,7 +57,8 @@ export default defineComponent({
     RadSignalcode: RadSignalcode,
     RadDrcode: RadDrcode,
     RadEditor: RadEditor,
-    RadTable: RadTable
+    RadTable: RadTable,
+    RadSignature: RadSignature
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
