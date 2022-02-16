@@ -63,7 +63,7 @@ const handleTheme = () => {
 
   const themeChange = (value: string) => {
     initTheme(value);
-    toggleTheme({ scopeName: 'theme-' + value });
+    // toggleTheme({ scopeName: 'theme-' + value });
   };
 
   return { themeList, themeChange, theme };

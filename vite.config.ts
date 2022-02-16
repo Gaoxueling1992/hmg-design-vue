@@ -50,5 +50,10 @@ export default defineConfig({
         javascriptEnabled: true
       }
     }
-  }
+  },
+  server: {
+    open: true,
+    port: 5001,
+    host: '0.0.0.0'
+  },
 })

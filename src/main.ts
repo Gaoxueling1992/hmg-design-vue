@@ -5,6 +5,7 @@ import './style/common.scss'
 import { initTheme } from './utils/theme'
 import store from './store'
 import 'ant-design-vue/dist/antd.less'
+import './assets/iconfont/iconfont.css'
 
 initTheme('default')
 
