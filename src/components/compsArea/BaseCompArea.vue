@@ -3,8 +3,8 @@
     <div class="container-item">
       <div class="title marginB15">控件</div>
       <a-row type="flex" justify="start">
-        <a-col :span="12" v-for="item in list" :key="item.elName">
-          <a-button @click="handleAddComp(item.elName)"  class="container-item-btn" :ghost="true">
+        <a-col :span="12" v-for="(item, index) in list" :key="index">
+          <a-button @click="handleAddComp(item)"  class="container-item-btn" :ghost="true">
             {{ item.title }}
           </a-button>
         </a-col>
@@ -18,11 +18,11 @@ import { compsList } from '@/utils/config';
 
 export default defineComponent({
   setup () {
-    const list: Array<object> = compsList
+    const list: Array<any> = compsList
     const addComp: any = inject('addComp')
 
-    const handleAddComp = (value: string) => {
-      addComp(value)
+    const handleAddComp = (value) => {
+      addComp(value.elName)
     }
 
     return {

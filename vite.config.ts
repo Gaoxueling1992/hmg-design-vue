@@ -21,16 +21,17 @@ export default defineConfig({
         multipleScopeVars: [
           {
             scopeName: 'theme-default',
-            path: resolve('src/style/theme/default.less'),
+            path: resolve('./src/style/theme/default.less'),
           },
           {
             scopeName: "theme-green",
-            path: resolve('src/style/theme/green.less'),
+            path: resolve('./src/style/theme/green.less'),
           },
         ],
       },
     })
   ],
+  base: './',
   resolve: {
     alias: [
       {

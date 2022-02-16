@@ -2,16 +2,18 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/types": "^7.17.0",
     "@surely-vue/table": "^2.0.10",
     "@zougt/vite-plugin-theme-preprocessor": "^1.4.3",
     "ant-design-vue": "^2.2.8",
     "css-vars-ponyfill": "^2.4.7",
     "less": "^4.1.2",
     "luckyexcel": "^1.0.1",
+    "sortablejs": "^1.14.0",
     "vue": "^3.0.5",
     "vue-draggable-next": "^2.1.1",
     "vue-router": "^4.0.12",

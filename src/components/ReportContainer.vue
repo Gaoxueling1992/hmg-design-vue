@@ -217,7 +217,8 @@ export default defineComponent({
       saveTpl,
       newTpl,
       editTpl,
-      visible
+      visible,
+      clickCanvas
     };
   }
 });

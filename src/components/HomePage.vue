@@ -8,7 +8,6 @@
     :is="activeTab"
     :ref="activeTab"
     @saveTpl="doSave"
-    @chooseTable="chooseTable"
   ></component>
   <a-modal
     v-model:visible="visible"

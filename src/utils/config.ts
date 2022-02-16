@@ -726,7 +726,7 @@ const sheet2Form = {
 }
 
 // 可选纸张
-const tplTypeList: Array<Object> = [
+const tplTypeList: Array<any> = [
   {
     value: 'a4',
     label: 'A4(210x297)',

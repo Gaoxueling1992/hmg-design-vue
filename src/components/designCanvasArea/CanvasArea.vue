@@ -10,7 +10,7 @@
     <div
       v-for="(line, idx) in lines"
       :key="idx"
-      :id="'line' + idx"
+      :id="'line' + String(idx)"
     >
       <draggable
         v-model="lines[idx]"

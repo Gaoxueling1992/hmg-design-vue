@@ -17,7 +17,7 @@
           textAlign: 'center',
           position: 'relative'
         }"
-          @mouseover.native="mouseEnter=+index"
+          @mouseover.native="mouseEnter=+String(index)"
           @mouseleave.native="mouseEnter=-1"
         >
           <a-image :src="item.url" />
@@ -26,7 +26,7 @@
             class="image-modal"
           ></div> -->
           <div
-            v-if="mouseEnter === +index"
+            v-if="mouseEnter === +String(index)"
             class="iconfont iconclose1"
             @click="deleteImg(index)"
           ></div>

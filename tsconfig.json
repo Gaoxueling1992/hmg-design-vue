@@ -3,19 +3,19 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "strict": true,
+    "strict": false,
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
-    "noImplicitAny": true, // 隐式推断类型为any的变量发出错误
+    "noImplicitAny": false, // 隐式推断类型为any的变量发出错误
     // "outDir": "./build", // 编译打包后生成文件的地址
     // "rootDir": "./src" // 指定输入文件的地址
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "suppressImplicitAnyIndexErrors": true,

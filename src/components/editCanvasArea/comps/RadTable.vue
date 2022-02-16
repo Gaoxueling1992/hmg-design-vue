@@ -21,7 +21,7 @@
             <span v-else>
               <a-input
                 class="table-cell"
-                :id="'cell' + index + '_' + idx"
+                :id="'cell' + String(index) + '_' + String(idx)"
                 @keyup.up="up(index, idx)"
                 @keyup.down="down(index, idx)"
                 @keyup.left="left(index, idx)"

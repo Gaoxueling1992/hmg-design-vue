@@ -205,7 +205,7 @@ const calSpan = (ele: any) => {
 };
 
 // 操作控件
-const handleEleOperate = (ele: any, props: Readonly<{ [x: string&`on${string}`]: undefined; ele: any; index: any; idx: any; }>) => {
+const handleEleOperate = (ele: any, props: any) => {
   const index: any = ref(props.index) || {};
   const idx: any = ref(props.idx) || {};
   const activeComp: any = inject('activeComp');

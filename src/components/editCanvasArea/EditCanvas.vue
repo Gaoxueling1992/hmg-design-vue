@@ -9,7 +9,7 @@
     <div
       v-for="(line, idx) in lines"
       :key="idx"
-      :id="'line' + idx"
+      :id="'line' + String(idx)"
     >
       <div class="edit-canvas-line">
         <div
