@@ -236,3 +236,7 @@ body {
 .ant-btn-primary {
   color: var(--color-white1) !important;
 }
+
+.ant-input:focus {
+  border-color: var(--color-primary) !important;
+}

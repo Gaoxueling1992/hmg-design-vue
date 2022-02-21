@@ -12,7 +12,11 @@
         <template #title>
           <span>预览</span>
         </template>
-        <a-button class="edit-canvas-preview" shape="circle" @click="visible=true">
+        <a-button
+          class="edit-canvas-preview"
+          shape="circle"
+          @click="visible=true"
+        >
           <template #icon>
             <i class="iconfont iconpreview_border"></i>
           </template>
@@ -30,6 +34,11 @@
     wrap-class-name="full-modal"
     :footer="null"
   >
+    <a-button
+      class="print-preview"
+      type="primary"
+      @click="checkStatus"
+    >{{ isReadonlyStatus === true ? '编辑效果' : '打印效果'}}</a-button>
     <EditCanvas class="edit-canvas"></EditCanvas>
   </a-modal>
 </template>
@@ -61,7 +70,9 @@ const handlePageData = (pageData: any) => {
 
 // 处理控件操作
 const handleCompsOper = (
-  emit: ((event: string, ...args: any[]) => void)|((event: string, ...args: any[]) => void),
+  emit:
+    | ((event: string, ...args: any[]) => void)
+    | ((event: string, ...args: any[]) => void),
   pageData: any
 ) => {
   const activePosi: Ref<number> = ref(0);
@@ -87,7 +98,10 @@ const handleCompsOper = (
   // 删除控件
   const deleteComp = (idx: any, index: any) => {
     clickCanvas();
-    pageData.lines[+idx.value > 0 ? idx.value : 0].splice(+index.value > 0 ? index.value : 0, 1);
+    pageData.lines[+idx.value > 0 ? idx.value : 0].splice(
+      +index.value > 0 ? index.value : 0,
+      1
+    );
     if (pageData.lines[+idx.value > 0 ? idx.value : 0].length === 0) {
       pageData.lines.splice(+idx.value > 0 ? idx.value : 0, 1);
     }
@@ -178,9 +192,16 @@ const handleCompsOper = (
   };
 
   return {
-    saveTpl, newTpl, editTpl,
-    addComp, activeComp, copyComp, deleteComp,
-    activePosi, activeCompId, activeCompObj,
+    saveTpl,
+    newTpl,
+    editTpl,
+    addComp,
+    activeComp,
+    copyComp,
+    deleteComp,
+    activePosi,
+    activeCompId,
+    activeCompObj,
     clickCanvas
   };
 };
@@ -189,16 +210,25 @@ export default defineComponent({
   setup(props, { emit }) {
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);
+    const isReadonlyStatus: Ref<boolean> = ref(false);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
-    const { 
-      addComp, activeComp, copyComp, deleteComp,
-      saveTpl, newTpl, editTpl,
-      activePosi, activeCompId, activeCompObj,
+    const {
+      addComp,
+      activeComp,
+      copyComp,
+      deleteComp,
+      saveTpl,
+      newTpl,
+      editTpl,
+      activePosi,
+      activeCompId,
+      activeCompObj,
       clickCanvas
-    } = handleCompsOper(
-      emit,
-      pageData
-    );
+    } = handleCompsOper(emit, pageData);
+
+    const checkStatus = () => {
+      isReadonlyStatus.value = !isReadonlyStatus.value;
+    };
 
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);
@@ -210,6 +240,7 @@ export default defineComponent({
     provide('activeCompObj', activeCompObj);
     provide('copyComp', copyComp);
     provide('deleteComp', deleteComp);
+    provide('isReadonlyStatus', isReadonlyStatus);
 
     return {
       activePosi,
@@ -218,7 +249,9 @@ export default defineComponent({
       newTpl,
       editTpl,
       visible,
-      clickCanvas
+      clickCanvas,
+      checkStatus,
+      isReadonlyStatus
     };
   }
 });
@@ -251,6 +284,10 @@ export default defineComponent({
   }
   .ant-modal-body {
     flex: 1;
+  }
+  .print-preview {
+    position: absolute;
+    right: 100px;
   }
 }
 </style>

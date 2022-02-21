@@ -79,11 +79,19 @@ const handelTpl = (
   let tplList: any = reactive([]);
   // 触发保存
   const saveTpl = () => {
-    instance.ctx.$refs[activeTab.value].saveTpl();
+    if (instance.ctx.$refs) {
+      instance.ctx.$refs[activeTab.value].saveTpl();
+    } else if (instance.ctx._.refs) {
+      instance.ctx._.refs[activeTab.value].saveTpl();
+    }
   };
   // 新建
   const newTpl = (checkSave: number) => {
-    instance.ctx.$refs[activeTab.value].newTpl(checkSave);
+    if (instance.ctx.$refs) {
+      instance.ctx.$refs[activeTab.value].newTpl(checkSave);
+    } else if (instance.ctx._.refs) {
+      instance.ctx._.refs[activeTab.value].newTpl(checkSave);
+    }
   };
   // 保存确认
   const doSave = (val: any) => {
@@ -98,7 +106,6 @@ const handelTpl = (
       savePageData.value = {
         ...val.pageData
       };
-      console.log(savePageData);
       handleOk();
     }
   };
@@ -119,9 +126,14 @@ const handelTpl = (
         for (let i = savePageData.value.lines.length - 1; i >= 0; i--) {
           if (savePageData.value.lines[i].length === 0) {
             savePageData.value.lines.splice(i, 1);
+          } else {
+            for(let j = 0; j < savePageData.value.lines[i].length; j++) {
+              savePageData.value.lines[i][j].defaultValue = savePageData.value.lines[i][j].defaultType;
+            }
           }
         }
       }
+      console.log(JSON.stringify(savePageData.value));
       if (activeTab.value === 'TableContainer') {
         list[id] = {
           list: savePageData.value,
@@ -156,7 +168,11 @@ const handelTpl = (
   // 编辑模版
   const editTpl = (item: any) => {
     visible1.value = false;
-    instance.ctx.$refs[activeTab.value].editTpl(item);
+    if (instance.ctx.$refs) {
+      instance.ctx.$refs[activeTab.value].editTpl(item);
+    } else if (instance.ctx._.refs) {
+      instance.ctx._.refs[activeTab.value].editTpl(item);
+    }
   };
   // 删除模版
   const deleteTpl = (item: any) => {

@@ -4,7 +4,8 @@
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
   >{{ ele.label }}</div>
-  <div style="flex: 1" :id="'editor' + ele.id"></div>
+  <div :id="'toolbar' + ele.id" class="toolbar"></div>
+  <div class="container" style="flex: 1" :id="'editor' + ele.id"></div>
 </template>
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
@@ -16,7 +17,8 @@ export default defineComponent({
   setup(props) {
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
-      const editor = new E(id);
+      const toolbarid = `#toolbar${props.ele.id}`;
+      const editor = new E(toolbarid, id);
       editor.config.menus = editorMenus;
       editor.config.fontSizes = editorFontSizes;
       editor.config.fontNames = ["宋体", "新宋体", "仿宋", "楷体", "黑体", "微软雅黑", "Times New Roman", "隶书", "幼圆"];
@@ -25,6 +27,13 @@ export default defineComponent({
       editor.config.onchange = (newHtml) => {
         props.ele.defaultValue = newHtml;
       }
+      editor.config.onfocus = function () {
+        document.getElementById(`toolbar${props.ele.id}`).style.display = '';
+      }
+      editor.config.onblur = function (newHtml) {
+        document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
+      }
+      document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
     });
   }
 });
@@ -46,5 +55,12 @@ export default defineComponent({
   height: 80px;
   overflow: auto;
   padding-bottom: 30px;
+}
+.container {
+  border: 1px solid var(--border-color-lighter);
+  &:hover {
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 0 2px rgb(10 104 179 / 20%);
+  }
 }
 </style>

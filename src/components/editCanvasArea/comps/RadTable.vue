@@ -50,7 +50,7 @@
   >选择表格</div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, computed } from 'vue';
+import { defineComponent, inject, computed, watch } from 'vue';
 
 // 字体转换方法
 const transFamily = (ff) => {
@@ -143,7 +143,7 @@ const dealWithKeyup = () => {
 
 export default defineComponent({
   props: ['ele'],
-  setup() {
+  setup(props) {
     const chooseTableOpen: any = inject('chooseTableOpen');
     const tableTpl: any = inject('tableTpl');
     const chooseTable = () => {

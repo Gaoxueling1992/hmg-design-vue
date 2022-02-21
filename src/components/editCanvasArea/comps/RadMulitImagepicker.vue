@@ -1,13 +1,13 @@
 <template>
   <div
     class="picker-flex-edit"
-    v-if="ele.imgList && ele.imgList.length"
+    v-if="ele.defaultValue && ele.defaultValue.length"
   >
     <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
       <a-col
-        v-for="(item, index) in ele.imgList"
+        v-for="(item, index) in ele.defaultValue"
         :key="item.id"
-        :span="calSpan(ele, ele.imgList.length)"
+        :span="calSpan(ele, ele.defaultValue.length)"
       >
         <div
           :style="{
@@ -96,7 +96,7 @@ export default defineComponent({
 
       if (isJpgOrPng && isLt2M) {
         getBase64(file, (base64Url: string) => {
-          ele.value.imgList.push({
+          ele.value.defaultValue.push({
             url: base64Url,
             id: Math.random() + ''
           });
@@ -107,7 +107,7 @@ export default defineComponent({
     };
 
     const deleteImg = (index: any) => {
-      ele.value.imgList.splice(index, 1);
+      ele.value.defaultValue.splice(index, 1);
       mouseEnter.value = -1;
     };
     return {

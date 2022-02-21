@@ -18,7 +18,7 @@ const createLink = (() => {
 export const initTheme = (theme: string) => {
   document.documentElement.setAttribute('data-theme', theme)
   const $link = createLink()
-  $link.href = `./${theme}.css`
+  $link.href = `./default-${theme}.css`
   cssVars({
     watch: true,
     variables: themes[theme + 'Theme'],

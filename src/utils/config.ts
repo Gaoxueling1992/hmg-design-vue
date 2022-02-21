@@ -187,7 +187,8 @@ const compBaseConfig = {
     domainType: 'domain',
     baseProps: baseProps,
     layout: 'crosswise',
-    options: []
+    options: [],
+    defaultType: []
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -254,7 +255,7 @@ const compBaseConfig = {
     elName: 'RadTable',
     name: '表格',
     desc: '支持选择和样式设置的表格组件。',
-    defaultValue: '',
+    defaultValue: {},
     src: '',
     noLabel: true,
     baseProps: {
@@ -270,13 +271,14 @@ const compBaseConfig = {
       textDecoration: 'none',
       fontStyle: 'normal',
       width: '100%'
-    }
+    },
+    defaultType: {}
   },
   'rad-mulitImagepicker': {
     elName: 'RadMulitImagepicker',
     name: '图片选择器',
     desc: '',
-    defaultValue: '',
+    defaultValue: [],
     noLabel: true,
     baseProps: {
       hideOnPrint: false
@@ -298,7 +300,8 @@ const compBaseConfig = {
     verSpacing: 10,
     perNum: 6,
     testTotalNum: 10,
-    imgList: []
+    imgList: [],
+    defaultType: []
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',
@@ -705,6 +708,10 @@ const sheet2Form = {
       label: '1/3', value: 100 / 3 + '%'
     }, {
       label: '1/4', value: 100 / 4 + '%'
+    }, {
+      label: '1/6', value: 100 / 6 + '%'
+    }, {
+      label: '1/8', value: 100 / 8 + '%'
     }]
   },
   paddingTop: {
