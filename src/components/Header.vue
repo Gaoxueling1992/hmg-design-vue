@@ -51,7 +51,6 @@
 <script lang="ts">
 import { defineComponent, ref, inject, Ref } from 'vue';
 import { initTheme } from '../utils/theme';
-import { toggleTheme } from '@zougt/vite-plugin-theme-preprocessor/dist/browser-utils.js';
 
 // 处理主题
 const handleTheme = () => {
@@ -63,7 +62,6 @@ const handleTheme = () => {
 
   const themeChange = (value: string) => {
     initTheme(value);
-    // toggleTheme({ scopeName: 'theme-' + value });
   };
 
   return { themeList, themeChange, theme };

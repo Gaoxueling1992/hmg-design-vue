@@ -783,7 +783,7 @@ const editorFontSizes = {
     value: '2'
   },
   'normal': {
-    name: '16px',
+    name: '14px',
     value: '3'
   },
   'large': {

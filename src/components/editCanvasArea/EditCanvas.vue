@@ -24,8 +24,7 @@
             ...ele.styleSheet,
             fontSize: ele.styleSheet.fontSize + 'px',
             borderWidth: ele.styleSheet.borderWidth + 'px',
-            display: ele.inline ? 'flex' : 'inline-block',
-            'padding': '5px'
+            display: ele.inline ? 'flex' : 'inline-block'
           }"
         >
           <component :is="ele.elName" :ele="ele"></component>
@@ -94,11 +93,13 @@ export default defineComponent({
   .ql-container {
     height: auto;
   }
+  .ant-input, .ant-input-number-input, .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    padding-left: 0 !important;
+  }
+  .display-text {
+    line-height: 30px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
 }
-// .ruler {
-//   width: 10px;
-//   height: calc(100%);
-//   margin-left: -10px;
-//   background-image: repeating-linear-gradient(black, black 1px, transparent 0, transparent 1cm);
-// }
 </style>

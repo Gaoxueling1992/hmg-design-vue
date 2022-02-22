@@ -21,10 +21,6 @@
           @mouseleave.native="mouseEnter=-1"
         >
           <a-image :src="item.url" />
-          <!-- <div
-            v-if="mouseEnter === +index"
-            class="image-modal"
-          ></div> -->
           <div
             v-if="mouseEnter === +String(index)"
             class="iconfont iconclose1"
@@ -44,6 +40,7 @@
     :show-upload-list="false"
     :before-upload="beforeUpload"
     accept="image/png, image/jpeg, image/jpg"
+    v-if="!isReadonlyStatus"
   >
     <a-button>
       <upload-outlined></upload-outlined>
@@ -52,7 +49,7 @@
   </a-upload>
 </template>
 <script lang="ts">
-import { defineComponent, ref, toRefs } from 'vue';
+import { defineComponent, ref, toRefs, Ref, inject } from 'vue';
 import { message } from 'ant-design-vue';
 
 // 图片选择器 计算布局
@@ -110,12 +107,15 @@ export default defineComponent({
       ele.value.defaultValue.splice(index, 1);
       mouseEnter.value = -1;
     };
+
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {
       calSpan,
       loading,
       beforeUpload,
       mouseEnter,
-      deleteImg
+      deleteImg,
+      isReadonlyStatus
     };
   }
 });

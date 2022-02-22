@@ -10,16 +10,25 @@
       flexDirection: ele.imagePosi === 'right' ? 'row' : (ele.imagePosi === 'left' ? 'row-reverse' : (ele.imagePosi === 'up' ? 'column-reverse' : 'column'))
     }"
   >
-    <a-input
-      style="flex: 1"
-      :disabled="ele.baseProps.readonly"
-      class="inherit"
-      v-if="ele.type !== 'image'"
-      v-model:value="ele.defaultValue"
-      :placeholder="ele.placeholder"
-    >
-    </a-input>
-    <template v-if="ele.type !== 'input'">
+    <template v-if="ele.type !== 'image'">
+      <a-input
+        style="flex: 1"
+        :disabled="ele.baseProps.readonly"
+        class="inherit"
+        v-if="!isReadonlyStatus"
+        v-model:value="ele.defaultValue"
+        :placeholder="ele.placeholder"
+      >
+      </a-input>
+      <div
+        v-else
+        style="flex: 1"
+        class="inherit display-text"
+      >
+        {{ ele.defaultValue }}&nbsp;
+      </div>
+    </template>
+    <template v-if="ele.type !== 'input' && ((ele.src && isReadonlyStatus) || !isReadonlyStatus)">
       <a-image
         class="img"
         :height="ele.imgHeight"
@@ -48,11 +57,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
 
 export default defineComponent({
   props: ['ele'],
   setup() {
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    return {
+      isReadonlyStatus
+    };
   }
 });
 </script>

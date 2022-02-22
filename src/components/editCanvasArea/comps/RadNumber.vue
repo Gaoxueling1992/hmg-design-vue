@@ -12,6 +12,7 @@
     class="inherit"
     v-model:value="ele.defaultValue"
     :placeholder="ele.placeholder"
+    v-if="!isReadonlyStatus"
   >
     <template #prefix>
       {{ ele.prefix }}
@@ -20,14 +21,20 @@
       {{ ele.suffix }}
     </template>
   </a-input-number>
+  <div v-else style="flex: 1" class="inherit display-text">
+    {{ ele.prefix }} {{ ele.defaultValue }} {{ ele.suffix }}&nbsp;
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, Ref, inject } from 'vue'
 
 export default defineComponent({
   props: ['ele'],
   setup () {
-    
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    return {
+      isReadonlyStatus
+    };
   },
 })
 </script>

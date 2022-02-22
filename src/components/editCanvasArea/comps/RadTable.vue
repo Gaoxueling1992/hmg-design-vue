@@ -20,19 +20,22 @@
             <span v-if="item && item.m">{{ item.m }}</span>
             <span v-else>
               <a-input
+                v-if="!isReadonlyStatus"
                 class="table-cell"
                 :id="'cell' + String(index) + '_' + String(idx)"
                 @keyup.up="up(index, idx)"
                 @keyup.down="down(index, idx)"
                 @keyup.left="left(index, idx)"
                 @keyup.right="right(index, idx)"
+                v-model:value="inputs[index + '' + idx]"
               />
+              <span v-else class="table-display-text">{{inputs[index + '' + idx]}}&nbsp;</span>
             </span>
           </td>
         </template>
       </tr>
     </table>
-    <div class="op">
+    <div class="op" v-if="!isReadonlyStatus">
       当前模版：{{tableTpl.name}}
       <a-button
         class="fr"
@@ -50,7 +53,7 @@
   >选择表格</div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, computed, watch } from 'vue';
+import { defineComponent, inject, computed, Ref, ref } from 'vue';
 
 // 字体转换方法
 const transFamily = (ff) => {
@@ -143,9 +146,11 @@ const dealWithKeyup = () => {
 
 export default defineComponent({
   props: ['ele'],
-  setup(props) {
+  setup() {
     const chooseTableOpen: any = inject('chooseTableOpen');
     const tableTpl: any = inject('tableTpl');
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    const inputs: Ref<object> = ref<object>({})
     const chooseTable = () => {
       chooseTableOpen.value = true;
     };
@@ -218,7 +223,9 @@ export default defineComponent({
       chooseTable,
       tableTpl,
       tbList,
-      up, down, left, right
+      up, down, left, right,
+      isReadonlyStatus,
+      inputs
     };
   }
 });
@@ -245,6 +252,12 @@ export default defineComponent({
       padding: 2px;
       flex: 1;
     }
+  }
+  .ant-input {
+    padding: 0;
+  }
+  .table-display-text {
+    line-height: 24px;
   }
 }
 </style>

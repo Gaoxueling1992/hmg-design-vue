@@ -5,6 +5,7 @@
     :class="ele.inline ? 'ele-label' : ''"
   >{{ ele.label }}</div>
   <a-date-picker
+    v-if="!isReadonlyStatus"
     style="flex: 1"
     :disabled="ele.baseProps.readonly"
     class="inherit"
@@ -12,13 +13,25 @@
     :picker="ele.picker"
     :format="ele.format"
   />
+  <div
+    v-else
+    style="flex: 1"
+    class="inherit display-text"
+  >{{moment(ele.defaultValue).format(ele.format)}}</div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, inject, Ref } from 'vue';
+import moment from 'moment';
 
 export default defineComponent({
   props: ['ele'],
-  setup() {}
+  setup() {
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    return {
+      isReadonlyStatus,
+      moment
+    };
+  }
 });
 </script>
 <style lang="scss" scoped>

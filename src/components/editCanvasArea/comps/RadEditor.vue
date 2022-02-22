@@ -1,20 +1,26 @@
 <template>
-  <div
-    class="inherit"
-    v-if="ele.label"
-    :class="ele.inline ? 'ele-editor-label' : ''"
-  >{{ ele.label }}</div>
-  <div :id="'toolbar' + ele.id" class="toolbar"></div>
-  <div class="container" style="flex: 1" :id="'editor' + ele.id"></div>
+  <div class="rad-editor">
+    <div
+      class="inherit"
+      v-if="ele.label"
+      :class="ele.inline ? 'ele-editor-label' : ''"
+    >{{ ele.label }}</div>
+    <div :id="'toolbar' + ele.id" class="toolbar"></div>
+    <div v-show="!isReadonlyStatus" class="container" style="flex: 1" :id="'editor' + ele.id"></div>
+    <div v-show="isReadonlyStatus" style="flex: 1" class="inherit editor-display-text">
+      <div v-html="ele.defaultValue"></div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, Ref, inject } from 'vue';
 import E from 'wangeditor';
 import { editorMenus, editorFontSizes } from '@/utils/config';
 
 export default defineComponent({
   props: ['ele'],
   setup(props) {
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
@@ -35,32 +41,51 @@ export default defineComponent({
       }
       document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
     });
+    return {
+      isReadonlyStatus
+    };
   }
 });
 </script>
 <style lang="scss">
-.ele-editor-label {
-  padding-right: 10px;
-}
-.w-e-toolbar, .w-e-text-container, .w-e-menu-panel {
-  background-color: transparent !important;
-}
-.w-e-text-container, .w-e-text {
-  height: fit-content !important;
-}
-.w-e-text {
-  min-height: 20px !important;
-}
-.w-e-toolbar .w-e-droplist {
-  height: 80px;
-  overflow: auto;
-  padding-bottom: 30px;
-}
-.container {
-  border: 1px solid var(--border-color-lighter);
-  &:hover {
-    border: 1px solid var(--color-primary);
-    box-shadow: 0 0 0 2px rgb(10 104 179 / 20%);
+.rad-editor {
+  .ele-editor-label {
+    padding-right: 10px;
+  }
+  .w-e-toolbar, .w-e-text-container, .w-e-menu-panel {
+    background-color: transparent !important;
+  }
+  .w-e-text-container, .w-e-text {
+    height: fit-content !important;
+  }
+  .w-e-text {
+    min-height: 32px !important;
+    padding: 4px 0;
+  }
+  .w-e-toolbar .w-e-droplist {
+    height: 80px;
+    overflow: auto;
+    padding-bottom: 30px;
+  }
+  .container {
+    border: 1px solid var(--border-color-lighter);
+    &:hover {
+      border: 1px solid var(--color-primary);
+      box-shadow: 0 0 0 2px rgb(10 104 179 / 20%);
+    }
+  }
+  .w-e-toolbar h1, .w-e-text-container h1, .w-e-menu-panel h1 {
+    font-size: inherit;
+  }
+  .w-e-text p, .w-e-text h1, .w-e-text h2, .w-e-text h3, .w-e-text h4, .w-e-text h5, .w-e-text table, .w-e-text pre {
+    margin: 0;
+  }
+  font[size="3"] {
+    font-size: 14px;
+  }
+  .editor-display-text {
+    line-height: 1 !important;
+    padding: 4px 0;
   }
 }
 </style>
