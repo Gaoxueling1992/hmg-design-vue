@@ -32,7 +32,7 @@
   </div>
   <div
     class="picker-flex-text"
-    v-else
+    v-else-if="!isReadonlyStatus"
   >上传图片</div>
   <a-upload
     name="pic"

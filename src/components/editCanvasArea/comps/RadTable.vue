@@ -47,7 +47,7 @@
     </div>
   </div>
   <div
-    v-else
+    v-else-if="!isReadonlyStatus"
     class="picker-flex-text"
     @click="chooseTable"
   >选择表格</div>
