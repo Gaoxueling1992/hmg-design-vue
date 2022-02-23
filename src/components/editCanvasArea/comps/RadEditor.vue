@@ -86,6 +86,7 @@ export default defineComponent({
   .editor-display-text {
     line-height: 1 !important;
     padding: 4px 0;
+    font-size: 16px;
   }
 }
 </style>

@@ -15,7 +15,7 @@
         <a-button
           class="edit-canvas-preview"
           shape="circle"
-          @click="visible=true"
+          @click="visible=true;isReadonlyStatus=false"
         >
           <template #icon>
             <i class="iconfont iconpreview_border"></i>
@@ -207,6 +207,7 @@ const handleCompsOper = (
 };
 
 export default defineComponent({
+  emits: ['saveTpl'],
   setup(props, { emit }) {
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);

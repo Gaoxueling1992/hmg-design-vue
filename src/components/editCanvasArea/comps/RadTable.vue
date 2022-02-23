@@ -23,10 +23,10 @@
                 v-if="!isReadonlyStatus"
                 class="table-cell"
                 :id="'cell' + String(index) + '_' + String(idx)"
-                @keyup.up="up(index, idx)"
-                @keyup.down="down(index, idx)"
-                @keyup.left="left(index, idx)"
-                @keyup.right="right(index, idx)"
+                @keyup.up="toup(index, idx)"
+                @keyup.down="todown(index, idx)"
+                @keyup.left="toleft(index, idx)"
+                @keyup.right="toright(index, idx)"
                 v-model:value="inputs[index + '' + idx]"
               />
               <span v-else class="table-display-text">{{inputs[index + '' + idx]}}&nbsp;</span>
@@ -104,7 +104,7 @@ const dealWithKeyup = () => {
       return a.split('_')[1] - b.split('_')[1];
     });
   };
-  const up = (r, i) => {
+  const toup = (r, i) => {
     rlList2();
     let idx = list2.indexOf('cell' + r + '_' + i);
     if (idx - 1 < 0) {
@@ -112,7 +112,7 @@ const dealWithKeyup = () => {
     }
     document.getElementById(list2[idx - 1]).focus();
   };
-  const down = (r, i) => {
+  const todown = (r, i) => {
     rlList2();
     let idx = list2.indexOf('cell' + r + '_' + i);
     if (idx + 1 >= list2.length) {
@@ -120,7 +120,7 @@ const dealWithKeyup = () => {
     }
     document.getElementById(list2[idx + 1]).focus();
   };
-  const left = (r, i) => {
+  const toleft = (r, i) => {
     rlList();
     let idx = list.indexOf('cell' + r + '_' + i);
     if (idx - 1 < 0) {
@@ -128,7 +128,7 @@ const dealWithKeyup = () => {
     }
     document.getElementById(list[idx - 1]).focus();
   };
-  const right = (r, i) => {
+  const toright = (r, i) => {
     rlList();
     let idx = list.indexOf('cell' + r + '_' + i);
     if (idx + 1 >= list.length) {
@@ -137,10 +137,10 @@ const dealWithKeyup = () => {
     document.getElementById(list[idx + 1]).focus();
   };
   return {
-    up,
-    down,
-    left,
-    right
+    toup,
+    todown,
+    toleft,
+    toright
   };
 };
 
@@ -217,13 +217,13 @@ export default defineComponent({
       return list;
     });
 
-    const { up, down, left, right } = dealWithKeyup();
+    const { toup, todown, toleft, toright } = dealWithKeyup();
 
     return {
       chooseTable,
       tableTpl,
       tbList,
-      up, down, left, right,
+      toup, todown, toleft, toright,
       isReadonlyStatus,
       inputs
     };

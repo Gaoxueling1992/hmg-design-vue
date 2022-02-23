@@ -43,7 +43,6 @@
     v-if="!isReadonlyStatus"
   >
     <a-button>
-      <upload-outlined></upload-outlined>
       点击上传
     </a-button>
   </a-upload>
