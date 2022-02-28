@@ -3,7 +3,8 @@
     class="edit-canvas"
     :style="{
       ...styleSheet,
-      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)'
+      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
+      padding: styleSheet.padding
     }"
   >
     <div
@@ -11,20 +12,20 @@
       :key="idx"
       :id="'line' + String(idx)"
     >
-      <div class="edit-canvas-line">
+      <div class="edit-canvas-line" :style="{display: isReadonlyStatus ? '' : 'flex'}">
         <div
-          v-for="ele in line"
+          v-for="(ele, index) in line"
           :key="ele.id"
           :style="{
             'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-            'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
             'max-width': '100%',
             'overflow': 'hidden',
             'position': 'relative',
             ...ele.styleSheet,
             fontSize: ele.styleSheet.fontSize + 'px',
             borderWidth: ele.styleSheet.borderWidth + 'px',
-            display: ele.inline ? 'flex' : 'inline-block'
+            display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
+            width: eleWidth(line, index)
           }"
         >
           <component :is="ele.elName" :ele="ele"></component>
@@ -34,7 +35,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs } from 'vue';
+import { defineComponent, inject, toRefs, Ref, computed } from 'vue';
 import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
@@ -68,13 +69,35 @@ export default defineComponent({
     RadSignature: RadSignature
   },
   setup() {
-    const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
-    const { lines, styleSheet } = toRefs(pageData)
+    const pageData: any = inject('pageData') || { line: [], styleSheet: {}};
+    const { lines, styleSheet } = toRefs(pageData);
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+
+    const eleWidth = computed(() => {
+      return (line, idx) => {
+        console.log(line[idx], idx)
+        if (line[idx].styleSheet.width !== '100%') {
+          return line[idx].styleSheet.width;
+        } else {
+          let totalWidth = 0;
+          let count = 0;
+          for (let i = 0; i < line.length; i++) {
+            if (line[i].styleSheet.width !== '100%') {
+              totalWidth += parseInt(line[i].styleSheet.width);
+              count ++;
+            }
+          }
+          return Math.floor((100 - totalWidth) / (line.length - count)) + '%'
+        }
+      }
+    });
 
     return {
       pageData,
       lines,
-      styleSheet
+      styleSheet,
+      isReadonlyStatus,
+      eleWidth
     };
   }
 });
@@ -87,8 +110,9 @@ export default defineComponent({
   margin: 0 auto 20px auto;
   width: calc(100% - 20px);
   .edit-canvas-line {
-    display: flex;
     position: relative;
+    width: 100%;
+    line-height: 1;
   }
   .ql-container {
     height: auto;

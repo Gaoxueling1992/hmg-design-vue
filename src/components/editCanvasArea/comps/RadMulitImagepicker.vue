@@ -8,6 +8,10 @@
         v-for="(item, index) in ele.defaultValue"
         :key="item.id"
         :span="calSpan(ele, ele.defaultValue.length)"
+        :style="{
+          width: calSpan(ele, ele.defaultValue.length)/24*100 + '%',
+          float: 'left'
+        }"
       >
         <div
           :style="{
@@ -160,6 +164,9 @@ export default defineComponent({
     &:hover {
       color: var(--color-primary);
     }
+  }
+  .ant-row {
+    width: 100%;
   }
 }
 .picker-flex-text {

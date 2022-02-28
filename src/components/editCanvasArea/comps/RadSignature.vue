@@ -3,11 +3,17 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
+    :style="{
+      lineHeight: ele.imgHeight+ 'px',
+      height: ele.imgHeight+ 'px',
+      'vertical-align': 'top'
+    }"
   >{{ ele.label }}</div>
   <div
     class="flex1 flex"
     :style="{
-      flexDirection: ele.imagePosi === 'right' ? 'row' : (ele.imagePosi === 'left' ? 'row-reverse' : (ele.imagePosi === 'up' ? 'column-reverse' : 'column'))
+      flexDirection: ele.imagePosi === 'right' ? 'row' : (ele.imagePosi === 'left' ? 'row-reverse' : (ele.imagePosi === 'up' ? 'column-reverse' : 'column')),
+      display: isReadonlyStatus ? 'inline-block' : ''
     }"
   >
     <template v-if="ele.type !== 'image'">
@@ -28,7 +34,7 @@
         {{ ele.defaultValue }}&nbsp;
       </div>
     </template>
-    <template v-if="ele.type !== 'input' && ((ele.src && isReadonlyStatus) || !isReadonlyStatus)">
+    <template v-if="ele.type !== 'input' && (( isReadonlyStatus) || !isReadonlyStatus)">
       <a-image
         class="img"
         :height="ele.imgHeight"
@@ -50,7 +56,8 @@
         :style="{
         height: ele.imgHeight+ 'px',
         lineHeight: ele.imgHeight+ 'px',
-        width: ele.imgWidth + 'px'
+        width: ele.imgWidth + 'px',
+        float: isReadonlyStatus ? 'left' : ''
       }"
       >签名</span>
     </template>
@@ -72,10 +79,15 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ele-label {
   padding-right: 10px;
+  display: inline-block;
 }
 .default-img {
   display: block;
   border: 1px solid;
   text-align: center;
+}
+.display-text {
+  display: inline-block;
+  float: left;
 }
 </style>

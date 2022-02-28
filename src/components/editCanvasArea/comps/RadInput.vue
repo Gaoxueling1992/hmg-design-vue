@@ -56,5 +56,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ele-label {
   padding-right: 10px;
+  display: inline-block;
+}
+.display-text {
+  display: inline-block;
 }
 </style>

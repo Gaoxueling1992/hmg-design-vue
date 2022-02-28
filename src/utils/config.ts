@@ -701,15 +701,15 @@ const sheet2Form = {
     }, {
       label: '3/4', value: 300 / 4 + '%'
     }, {
-      label: '2/3', value: 200 / 3 + '%'
+      label: '2/3', value: 66 + '%'
     }, {
       label: '1/2', value: '50%'
     }, {
-      label: '1/3', value: 100 / 3 + '%'
+      label: '1/3', value: 33 + '%'
     }, {
       label: '1/4', value: 100 / 4 + '%'
     }, {
-      label: '1/6', value: 100 / 6 + '%'
+      label: '1/6', value: 16 + '%'
     }, {
       label: '1/8', value: 100 / 8 + '%'
     }]

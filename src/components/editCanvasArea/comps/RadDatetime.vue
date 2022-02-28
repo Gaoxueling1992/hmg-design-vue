@@ -15,7 +15,6 @@
   />
   <div
     v-else
-    style="flex: 1"
     class="inherit display-text"
   >{{moment(ele.defaultValue).format(ele.format)}}</div>
 </template>
@@ -37,5 +36,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ele-label {
   padding-right: 10px;
+  display: inline-block;
+}
+.display-text {
+  display: inline-block;
 }
 </style>
