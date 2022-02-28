@@ -1,6 +1,7 @@
 const pageConfig: Object = {
   lines: [], // 区域
   name: '',
+  version: '2.0',
   pageType: 'a4',
   styleSheet: {
     minHeight: '297mm',
