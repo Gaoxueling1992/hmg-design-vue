@@ -17,6 +17,7 @@
             :colspan="item && item.mc && item.mc.cs || 1"
             :rowspan="item && item.mc && item.mc.rs || 1"
             :width="(item && item.mc && item.mc.cs || 1)/tds * 100 + '%'"
+            :height="(item && item.mc && item.mc.rs || 1) * 30 + 'px'"
           >
             <span v-if="item && item.m">{{ item.m }}</span>
             <span v-else>
@@ -175,7 +176,7 @@ export default defineComponent({
             row[i].mc.cs > 1 &&
             row[i].mc.rs > 1
           ) {
-            row.splice(i + 1, row[i].mc.cs - 1);
+            row.splice(+i + 1, row[i].mc.cs - 1);
             for (let index = 1; index < row[i].mc.rs; index++) {
               list[+key + index + ''].splice(i, row[i].mc.cs);
             }
