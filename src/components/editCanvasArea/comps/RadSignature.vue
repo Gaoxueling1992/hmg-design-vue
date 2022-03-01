@@ -10,7 +10,9 @@
     }"
   >{{ ele.label }}</div>
   <div
-    class="flex1 flex"
+    :class="{
+      'flex flex1': !isReadonlyStatus
+    }"
     :style="{
       flexDirection: ele.imagePosi === 'right' ? 'row' : (ele.imagePosi === 'left' ? 'row-reverse' : (ele.imagePosi === 'up' ? 'column-reverse' : 'column')),
       display: isReadonlyStatus ? 'inline-block' : ''
@@ -30,6 +32,9 @@
         v-else
         style="flex: 1"
         class="inherit display-text"
+        :style="{
+          float: isReadonlyStatus ? '' : 'left'
+        }"
       >
         {{ ele.defaultValue }}&nbsp;
       </div>
@@ -47,7 +52,8 @@
           lineHeight: ele.imgHeight+ 'px',
           width: ele.imgWidth + 'px',
           display: 'block',
-          border: '1px solid'
+          border: '1px solid',
+          float: isReadonlyStatus ? 'left' : ''
         }"
       />
       <span
@@ -88,6 +94,5 @@ export default defineComponent({
 }
 .display-text {
   display: inline-block;
-  float: left;
 }
 </style>

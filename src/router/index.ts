@@ -5,7 +5,7 @@ const history = createWebHashHistory()
 const routes:Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: () => import('@comps/HomePage.vue')
+    component: () => import('@/demo/HomePage.vue')
   }
 ]
 
