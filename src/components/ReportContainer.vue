@@ -39,12 +39,6 @@
       type="primary"
       @click="checkStatus"
     >{{ isReadonlyStatus === true ? '编辑效果' : '打印效果'}}</a-button>
-    <a-button
-      class="print-btn"
-      type="primary"
-      v-if="isReadonlyStatus"
-      @click="generatePdf"
-    >生成pdf</a-button>
     <EditCanvas
       class="edit-canvas"
       id="editCanvas"
@@ -262,54 +256,6 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
-    // const generatePdf = () => {
-    //   const editCanvas = document.getElementById('editCanvas');
-    //   let contentWidth =
-    //     (parseInt(pageData.styleSheet.width) / 25.4) * conversion_getDPI()[0];
-    //   let contentHeight = editCanvas.clientHeight;
-    //   html2canvas(editCanvas, {
-    //     logging: true,
-    //     allowTaint: true,
-    //     width: contentWidth,
-    //     height: contentHeight,
-    //     scrollY: 0,
-    //     scrollX: 0,
-    //     useCORS: true,
-    //     backgroundColor: '#ffffff'
-    //   }).then(function (canvas) {
-    //     let pdfWidth = contentWidth;
-    //     let pdfHeight =
-    //       (parseInt(pageData.styleSheet.minHeight) / 25.4) *
-    //       conversion_getDPI()[0]; // 500为底部留白
-    //     let padding = parseInt(pageData.styleSheet.padding);
-    //     let imgWidth = contentWidth;
-    //     let imgHeight = contentHeight; // 内容图片这里不需要留白的距离
-    //     let position = 0;
-    //     let page = canvas.toDataURL('image/jpeg', 1.0);
-    //     let pdf = new JsPDF('p', 'px', [pdfWidth, pdfHeight]);
-    //     console.log(pdf)
-
-    //     console.log(pdfHeight, contentHeight);
-    //     if (pdfHeight >= contentHeight - padding) {
-    //       pdf.addImage(page, 'jpeg', 0, 0, imgWidth, imgHeight);
-    //     } else {
-    //       while (contentHeight > 0) {
-    //         pdf.addImage(page, 'jpeg', 0, position, imgWidth, imgHeight);
-    //         contentHeight -= pdfHeight;
-    //         position -= pdfHeight;
-    //         if (contentHeight > 0) {
-    //           pdf.addPage();
-    //         }
-    //       }
-    //     }
-    //     pdf.save(new Date().getTime() + '.pdf');
-    //   });
-    // };
-
-    const generatePdf = () => {
-
-    };
-
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);
     provide('addComp', addComp);
@@ -331,8 +277,7 @@ export default defineComponent({
       visible,
       clickCanvas,
       checkStatus,
-      isReadonlyStatus,
-      generatePdf
+      isReadonlyStatus
     };
   }
 });

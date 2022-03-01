@@ -118,7 +118,7 @@ font[size='3'] {
   font-size: 14px;
 }
 .editor-display-text {
-  line-height: 1 !important;
+  line-height: 1.5 !important;
   padding: 4px 0;
   font-size: 16px;
   display: inline-block;

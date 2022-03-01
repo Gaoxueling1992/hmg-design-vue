@@ -75,7 +75,6 @@ export default defineComponent({
 
     const eleWidth = computed(() => {
       return (line, idx) => {
-        console.log(line[idx], idx)
         if (line[idx].styleSheet.width !== '100%') {
           return line[idx].styleSheet.width;
         } else {

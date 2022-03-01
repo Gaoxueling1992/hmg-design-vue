@@ -4,7 +4,8 @@ import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
-import themePreprocessorPlugin from "@zougt/vite-plugin-theme-preprocessor"
+import themePreprocessorPlugin from '@zougt/vite-plugin-theme-preprocessor'
+const path = require('path')
 
 export default defineConfig({
   plugins: [
@@ -55,5 +56,5 @@ export default defineConfig({
     open: true,
     port: 5001,
     host: '0.0.0.0'
-  },
+  }
 })

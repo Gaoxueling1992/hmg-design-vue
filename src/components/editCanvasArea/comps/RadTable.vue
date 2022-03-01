@@ -16,6 +16,7 @@
             :style="item ? item.style : {}"
             :colspan="item && item.mc && item.mc.cs || 1"
             :rowspan="item && item.mc && item.mc.rs || 1"
+            :width="(item && item.mc && item.mc.cs || 1)/tds * 100 + '%'"
           >
             <span v-if="item && item.m">{{ item.m }}</span>
             <span v-else>
@@ -150,7 +151,8 @@ export default defineComponent({
     const chooseTableOpen: any = inject('chooseTableOpen');
     const tableTpl: any = inject('tableTpl');
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
-    const inputs: Ref<object> = ref<object>({})
+    const inputs: Ref<object> = ref<object>({});
+    const tds: Ref<number> = ref<number>(0);
     const chooseTable = () => {
       chooseTableOpen.value = true;
     };
@@ -160,6 +162,7 @@ export default defineComponent({
       if (tableTpl.value.list) {
         list = JSON.parse(JSON.stringify(tableTpl.value.list));
       }
+      tds.value = list['0'].length;
       for (let key in list) {
         const row = list[key];
         for (let i in row) {
@@ -225,7 +228,8 @@ export default defineComponent({
       tbList,
       toup, todown, toleft, toright,
       isReadonlyStatus,
-      inputs
+      inputs,
+      tds
     };
   }
 });
@@ -246,11 +250,11 @@ export default defineComponent({
   table {
     width: 100%;
     tr {
-      display: flex;
+      // display: flex;
     }
     td {
       padding: 2px;
-      flex: 1;
+      // flex: 1;
     }
   }
   .ant-input {
