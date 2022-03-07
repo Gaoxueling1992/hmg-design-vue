@@ -233,6 +233,7 @@ const conversion_getDPI = () => {
 
 export default defineComponent({
   emits: ['saveTpl'],
+  name: 'ReportContainer',
   setup(props, { emit }) {
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);

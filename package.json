@@ -9,24 +9,9 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "main": "./dist/reseditor2.umd.js",
-  "module": "./dist/reseditor2.es.js",
-  "types": "./dist/reseditor2.d.ts",
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": {
-      "import": "./dist/reseditor2.es.js",
-      "require": "./dist/reseditor2.umd.js",
-      "types": "./dist/reseditor2.d.ts"
-    },
-    "./dist/*": {
-      "import": "./dist/reseditor2.es.js",
-      "require": "./dist/reseditor2.umd.js",
-      "types": "./dist/reseditor2.d.ts"
-    }
-  },
   "dependencies": {
     "@babel/types": "^7.17.0",
     "@rollup/plugin-node-resolve": "^13.1.3",
