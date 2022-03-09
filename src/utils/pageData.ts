@@ -3,6 +3,8 @@ const pageConfig: Object = {
   name: '',
   version: '2.0',
   pageType: 'a4',
+  newPage: false,
+  id: '',
   styleSheet: {
     minHeight: '297mm',
     width: '210mm',
@@ -13,6 +15,8 @@ const formPageConfig: Object = {
   lines: [], // 区域
   name: '',
   pageType: 'a4',
+  newPage: false,
+  id: '',
   styleSheet: {
     minHeight: '100%',
     width: '100%',

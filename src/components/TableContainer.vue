@@ -17,7 +17,9 @@ export default defineComponent({
     return { saveTpl, editTpl };
   },
   mounted() {
-    luckysheet.create(config);
+    this.$nextTick(() => {
+      luckysheet.create(config);
+    });
   }
 });
 </script>

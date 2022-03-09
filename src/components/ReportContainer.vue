@@ -53,8 +53,6 @@ import { defineComponent, ref, reactive, provide, Ref, toRef } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
-// import html2canvas from 'html2canvas';
-// import JsPDF from 'jspdf';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -138,6 +136,7 @@ const handleCompsOper = (
   const saveTpl = () => {
     if (pageData.lines.length) {
       emit('saveTpl', { pageData, type: 0 });
+      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(pageData) }, '*');
     } else {
       Modal.warning({
         title: '提示',
@@ -151,6 +150,7 @@ const handleCompsOper = (
   const resetData = () => {
     pageData.lines = [];
     pageData.name = '';
+    pageData.id = '';
     pageData.pageType = 'a4';
     pageData.styleSheet = {
       minHeight: '297mm',
@@ -186,6 +186,7 @@ const handleCompsOper = (
   const editTpl = (item: any) => {
     pageData.lines = item.lines;
     pageData.name = item.name;
+    pageData.id = item.id;
     pageData.pageType = item.pageType;
     pageData.styleSheet = item.styleSheet;
     activePosi.value = 0;
@@ -214,23 +215,6 @@ const handleCompsOper = (
   };
 };
 
-const conversion_getDPI = () => {
-  let arrDPI = new Array();
-  if (window.screen.deviceXDPI) {
-    arrDPI[0] = window.screen.deviceXDPI;
-    arrDPI[1] = window.screen.deviceYDPI;
-  } else {
-    let tmpNode = document.createElement('DIV');
-    tmpNode.style.cssText =
-      'width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden';
-    document.body.appendChild(tmpNode);
-    arrDPI[0] = parseInt(tmpNode.offsetWidth);
-    arrDPI[1] = parseInt(tmpNode.offsetHeight);
-    tmpNode.parentNode.removeChild(tmpNode);
-  }
-  return arrDPI;
-};
-
 export default defineComponent({
   emits: ['saveTpl'],
   name: 'ReportContainer',
@@ -256,6 +240,23 @@ export default defineComponent({
     const checkStatus = () => {
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
+
+    window.addEventListener('message', (e) => {
+      // event.origin --发送者的源
+      // event.source --发送者的window对象
+      // event.data --数据
+      switch(e.data.type) {
+        case 'newTpl':
+          newTpl(1);
+          break;
+        case 'saveDesinger':
+          saveTpl();
+          break;
+        case 'resetData':
+          const data = JSON.parse(e.data.data);
+          editTpl(data);
+      }
+    });
 
     provide('changePageConfig', changePageConfig);
     provide('changePageSize', changePageSize);

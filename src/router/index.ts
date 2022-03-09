@@ -5,7 +5,23 @@ const history = createWebHashHistory()
 const routes:Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: () => import('@/demo/HomePage.vue')
+    name: 'HemoPage',
+    component: () => import('@/components/HomePage.vue')
+  },
+  {
+    path: '/ReportContainer',
+    name: 'ReportContainer',
+    component: () => import('@/components/ReportContainer.vue')
+  },
+  {
+    path: '/TableContainer',
+    name: 'TableContainer',
+    component: () => import('@/components/TableContainer.vue')
+  },
+  {
+    path: '/EditCanvas',
+    name: 'EditCanvas',
+    component: () => import('@/components/editCanvasArea/EditCanvas.vue')
   }
 ]
 

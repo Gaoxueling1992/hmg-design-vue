@@ -62,9 +62,9 @@ import {
   reactive,
   getCurrentInstance
 } from 'vue';
-import Report from '../components/ReportContainer.vue';
-import Form from '../components/FormContainer.vue';
-import Table from '../components/TableContainer.vue';
+import Report from './ReportContainer.vue';
+import Form from './FormContainer.vue';
+import Table from './TableContainer.vue';
 import { Modal, message } from 'ant-design-vue';
 
 // 模版操作
