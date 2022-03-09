@@ -18,7 +18,7 @@ export default defineComponent({
 
     window.addEventListener('message', (e) => {
       switch(e.data.type) {
-        case 'saveDesinger':
+        case 'saveTableDesinger':
           saveTpl();
           break;
       }
