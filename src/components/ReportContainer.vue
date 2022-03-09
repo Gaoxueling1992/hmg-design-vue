@@ -49,7 +49,7 @@
   </a-modal>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, toRef } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, onMounted } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -220,6 +220,7 @@ export default defineComponent({
   name: 'ReportContainer',
   setup(props, { emit }) {
     let pageData: any = reactive(pageConfig);
+    console.log(document)
     const visible: Ref<boolean> = ref(false);
     const isReadonlyStatus: Ref<boolean> = ref(false);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
@@ -242,9 +243,6 @@ export default defineComponent({
     };
 
     window.addEventListener('message', (e) => {
-      // event.origin --发送者的源
-      // event.source --发送者的window对象
-      // event.data --数据
       switch(e.data.type) {
         case 'newTpl':
           newTpl(1);

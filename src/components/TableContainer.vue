@@ -10,10 +10,19 @@ export default defineComponent({
   setup(props, { emit }) {
     const saveTpl = () => {
       emit('saveTpl', { pageData: luckysheet.getRangeValue(), type: 1 });
+      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()) }, '*');
     };
     const editTpl = (item: any) => {
       console.log(item);
     };
+
+    window.addEventListener('message', (e) => {
+      switch(e.data.type) {
+        case 'saveDesinger':
+          saveTpl();
+          break;
+      }
+    });
     return { saveTpl, editTpl };
   },
   mounted() {
@@ -26,7 +35,7 @@ export default defineComponent({
 <style lang="scss">
 #luckysheet {
   width: 100%;
-  height: calc(100% - 50px);
+  height: 100vh;
   position: relative;
   .luckysheet_info_detail,
   .luckysheet-sheet-area {
