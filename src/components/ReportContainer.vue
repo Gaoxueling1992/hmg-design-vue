@@ -219,10 +219,10 @@ export default defineComponent({
   emits: ['saveTpl'],
   name: 'ReportContainer',
   setup(props, { emit }) {
-    console.log('22222');
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);
     const isReadonlyStatus: Ref<boolean> = ref(false);
+    let tableList: any = reactive([]);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
     const {
       addComp,
@@ -253,6 +253,13 @@ export default defineComponent({
         case 'resetData':
           const data = JSON.parse(e.data.data);
           editTpl(data);
+          break;
+        case 'resetTableList':
+          const data1 = JSON.parse(e.data.data);
+          data1.forEach(tpl => {
+            tableList.push(tpl);
+          });
+          console.log(tableList)
       }
     });
 
@@ -267,6 +274,7 @@ export default defineComponent({
     provide('copyComp', copyComp);
     provide('deleteComp', deleteComp);
     provide('isReadonlyStatus', isReadonlyStatus);
+    provide('tableList', tableList);
 
     return {
       activePosi,

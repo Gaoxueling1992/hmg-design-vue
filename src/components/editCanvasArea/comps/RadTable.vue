@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="tableTpl.id"
+    v-if="tableTpl && tableTpl.id"
     class="rad-table"
   >
     <table border="1">
@@ -53,9 +53,25 @@
     class="picker-flex-text"
     @click="chooseTable"
   >选择表格</div>
+  <a-modal
+    v-model:visible="chooseTableInner"
+    :footer="null"
+    title="选择模版"
+  >
+    <a-list size="small" bordered :data-source="tableList">
+      <template #renderItem="{ item }">
+        <a-list-item>
+          {{ item.title }}
+          <template #actions>
+            <a @click="applyTpl(item)">应用</a>
+          </template>
+        </a-list-item>
+      </template>
+    </a-list>
+  </a-modal>
 </template>
 <script lang="ts">
-import { defineComponent, inject, computed, Ref, ref } from 'vue';
+import { defineComponent, inject, computed, Ref, ref, reactive } from 'vue';
 
 // 字体转换方法
 const transFamily = (ff) => {
@@ -149,20 +165,43 @@ const dealWithKeyup = () => {
 export default defineComponent({
   props: ['ele'],
   setup() {
-    const chooseTableOpen: any = inject('chooseTableOpen');
-    const tableTpl: any = inject('tableTpl');
+    const tableTpl: any = inject('tableTpl') || ref<object>({});
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const inputs: Ref<object> = ref<object>({});
     const tds: Ref<number> = ref<number>(0);
+    const chooseTableInner: Ref<boolean> = ref<boolean>(false);
+    const chooseTableOpen: any = inject('chooseTableOpen') || 'null';
+    let tableList: any = inject('tableList');
+
+    window.addEventListener('message', (e) => {
+      console.log('table', e)
+      if (e.data.type === 'tableDetail') {
+        tableTpl.value = JSON.parse(e.data.data);
+      }
+    });
+
     const chooseTable = () => {
-      chooseTableOpen.value = true;
+      if (chooseTableOpen && (chooseTableOpen.value === true || chooseTableOpen.value === false)) {
+        chooseTableOpen.value = true;
+      } else {
+        chooseTableInner.value = true;
+      }
+    };
+
+    const applyTpl = (item) => {
+      window.parent.postMessage({ type: 'fetchTableDetail', id: item.id }, '*');
+      chooseTableInner.value = false;
     };
 
     const tbList = computed(() => {
       let list = [];
+      console.log('---', tableTpl.value.content)
       if (tableTpl.value.list) {
         list = JSON.parse(JSON.stringify(tableTpl.value.list));
+      } else {
+        list = JSON.parse(tableTpl.value.content);
       }
+      console.log(list)
       tds.value = list['0'].length;
       for (let key in list) {
         const row = list[key];
@@ -230,7 +269,9 @@ export default defineComponent({
       toup, todown, toleft, toright,
       isReadonlyStatus,
       inputs,
-      tds
+      tds,
+      chooseTableInner,
+      tableList, applyTpl
     };
   }
 });
