@@ -259,7 +259,6 @@ export default defineComponent({
           data1.forEach(tpl => {
             tableList.push(tpl);
           });
-          console.log(tableList)
       }
     });
 
