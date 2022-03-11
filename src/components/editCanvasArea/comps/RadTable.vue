@@ -3,7 +3,7 @@
     v-if="tableTpl && tableTpl.id"
     class="rad-table"
   >
-    <table border="1">
+    <table border="1" @contextmenu.prevent.stop="chooseTable">
       <tr
         v-for="(line, index) in tbList"
         :key="index"
@@ -37,16 +37,6 @@
         </template>
       </tr>
     </table>
-    <div class="op" v-if="!isReadonlyStatus">
-      当前模版：{{tableTpl.name}}
-      <a-button
-        class="fr"
-        type="primary"
-        @click="chooseTable"
-      >
-        重新选择
-      </a-button>
-    </div>
   </div>
   <div
     v-else-if="!isReadonlyStatus"
@@ -195,7 +185,6 @@ export default defineComponent({
 
     const tbList = computed(() => {
       let list = [];
-      console.log('---', tableTpl.value.content)
       if (tableTpl.value.list) {
         list = JSON.parse(JSON.stringify(tableTpl.value.list));
       } else {

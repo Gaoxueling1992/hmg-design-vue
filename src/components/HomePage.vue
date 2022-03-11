@@ -128,7 +128,7 @@ const handelTpl = (
             savePageData.value.lines.splice(i, 1);
           } else {
             for(let j = 0; j < savePageData.value.lines[i].length; j++) {
-              savePageData.value.lines[i][j].defaultValue = savePageData.value.lines[i][j].defaultType;
+              savePageData.value.lines[i][j].value = savePageData.value.lines[i][j].value;
             }
           }
         }

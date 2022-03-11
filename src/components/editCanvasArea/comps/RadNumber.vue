@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-01-24 11:18:20
+ * @LastEditTime: 2022-03-11 11:28:31
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /web-ris-front/Users/xuelinggao/Documents/develop/hmg-design-vue/src/components/editCanvasArea/comps/RadNumber.vue
+-->
 <template>
   <div
     class="inherit"
@@ -10,7 +18,7 @@
     :min="ele.min"
     :max="ele.max"
     class="inherit"
-    v-model:value="ele.defaultValue"
+    v-model:value="ele.value"
     :placeholder="ele.placeholder"
     v-if="!isReadonlyStatus"
   >
@@ -22,7 +30,7 @@
     </template>
   </a-input-number>
   <div v-else style="flex: 1" class="inherit display-text">
-    {{ ele.prefix }} {{ ele.defaultValue }} {{ ele.suffix }}&nbsp;
+    {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
   </div>
 </template>
 <script lang="ts">

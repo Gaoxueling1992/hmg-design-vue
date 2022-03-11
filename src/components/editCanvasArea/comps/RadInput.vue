@@ -10,7 +10,7 @@
       :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type !== 'textarea'"
-      v-model:value="ele.defaultValue"
+      v-model:value="ele.value"
       :placeholder="ele.placeholder"
     >
       <template #prefix>
@@ -23,7 +23,7 @@
     <a-textarea
       style="flex: 1"
       :disabled="ele.baseProps.readonly"
-      v-model:value="ele.defaultValue"
+      v-model:value="ele.value"
       :placeholder="ele.placeholder"
       class="inherit"
       v-else
@@ -37,7 +37,7 @@
     </a-textarea>
   </template>
   <div v-else style="flex: 1" class="inherit display-text">
-    {{ ele.prefix }} {{ ele.defaultValue }} {{ ele.suffix }}&nbsp;
+    {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
   </div>
 </template>
 <script lang="ts">

@@ -34,8 +34,8 @@
       <a-input size="small" class="input-width" v-model:value="option.label"/>
       <div class="option-op">
         <a-radio
-          @click="activeCompObj.defaultValue=option.value"
-          :checked="option.value===activeCompObj.defaultValue"
+          @click="activeCompObj.value=option.value"
+          :checked="option.value===activeCompObj.value"
         ></a-radio>
         <i
           class="iconfont icondelete-border"
@@ -71,13 +71,13 @@ export default defineComponent({
           (index === 0 ? 0 : activeCompObj.value.options[index - 1].value + 1)
       });
       if (index === 0) {
-        activeCompObj.value.defaultValue = 0;
+        activeCompObj.value.value = 0;
       }
     };
     const deleteOption = (index: any, option: any) => {
       activeCompObj.value.options.splice(index, 1);
-      if (option.value === activeCompObj.value.defaultValue) {
-        activeCompObj.value.defaultValue = activeCompObj.value.options[0].value;
+      if (option.value === activeCompObj.value.value) {
+        activeCompObj.value.value = activeCompObj.value.options[0].value;
       }
     };
     return {

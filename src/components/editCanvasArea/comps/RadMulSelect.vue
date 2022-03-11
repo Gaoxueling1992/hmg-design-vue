@@ -10,21 +10,21 @@
       :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type === 'select'"
-      v-model:value="ele.defaultValue"
+      v-model:value="ele.value"
       :options="ele.options"
       mode="multiple"
     >
     </a-select>
     <a-checkbox-group
       v-else-if="ele.layout === 'crosswise'"
-      v-model:value="ele.defaultValue"
+      v-model:value="ele.value"
       :options="ele.options"
     />
     <div v-else>
       <a-checkbox
         v-for="(item, index) in ele.options"
         :key="item.value"
-        :checked="ele.defaultValue.indexOf(item.value) > -1"
+        :checked="ele.value.indexOf(item.value) > -1"
         @change="changeStatus(item.value, index)"
         class="option"
       >{{item.label}}</a-checkbox>
@@ -38,7 +38,7 @@
     <template v-for="item in ele.options">
       <span
         :key="item.value"
-        v-if="ele.defaultValue.indexOf(item.value) > -1"
+        v-if="ele.value.indexOf(item.value) > -1"
       >
         {{item.label}}&nbsp;
       </span>
@@ -54,10 +54,10 @@ export default defineComponent({
   setup(props) {
     const { ele } = toRefs(props);
     const changeStatus = (value: any, index: any) => {
-      if (ele.value.defaultValue.indexOf(value) > -1) {
-        ele.value.defaultValue.splice(ele.value.defaultValue.indexOf(value), 1);
+      if (ele.value.value.indexOf(value) > -1) {
+        ele.value.value.splice(ele.value.value.indexOf(value), 1);
       } else {
-        ele.value.defaultValue.push(value);
+        ele.value.value.push(value);
       }
     };
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');

@@ -105,7 +105,7 @@ const compBaseConfig = {
     name: '文本',
     desc: '静态文本，可编辑文字和样式。',
     placeholder: '',
-    defaultValue: '',
+    value: '',
     label: '',
     inline: true,
     noLabel: true,
@@ -113,7 +113,7 @@ const compBaseConfig = {
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain'
   },
   'rad-input': {
@@ -123,11 +123,11 @@ const compBaseConfig = {
     type: 'text',
     placeholder: '',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     validate: validate,
@@ -141,9 +141,9 @@ const compBaseConfig = {
     placeholder: '',
     label: '',
     inline: true,
-    defaultValue: '',
+    value: '',
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: {
       readonly: false
@@ -162,11 +162,11 @@ const compBaseConfig = {
     desc: '从预设的下拉菜单中选择一项，可设为将选项平铺。',
     placeholder: '',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     layout: 'crosswise',
@@ -179,11 +179,11 @@ const compBaseConfig = {
     desc: '从预设的选项中选择一项或者多项。',
     placeholder: '',
     label: '',
-    defaultValue: [],
+    value: [],
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     layout: 'crosswise',
@@ -196,11 +196,11 @@ const compBaseConfig = {
     desc: '支持输入整数、小数。',
     placeholder: '请填写数值',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     validate: {
@@ -216,7 +216,7 @@ const compBaseConfig = {
     name: '分割线',
     placeholder: '请填写数值',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: true,
     styleSheet: {
       fontFamily: 'Microsoft YaHei',
@@ -233,13 +233,13 @@ const compBaseConfig = {
     elName: 'RadImage',
     name: '图片',
     desc: '支持上传.png，.jpeg，.jpg格式的图片。',
-    defaultValue: '',
+    value: '',
     src: '',
     noLabel: true,
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     styleSheet: {
       width: '100%',
@@ -255,13 +255,13 @@ const compBaseConfig = {
     elName: 'RadTable',
     name: '表格',
     desc: '支持选择和样式设置的表格组件。',
-    defaultValue: {},
+    value: {},
     src: '',
     noLabel: true,
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     styleSheet: {
       fontFamily: 'Microsoft YaHei',
@@ -278,12 +278,12 @@ const compBaseConfig = {
     elName: 'RadMulitImagepicker',
     name: '图片选择器',
     desc: '',
-    defaultValue: [],
+    value: [],
     noLabel: true,
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     styleSheet: {
       width: '100%',
@@ -307,16 +307,20 @@ const compBaseConfig = {
     elName: 'RadSignalcode',
     name: '条形码',
     desc: '根据输入自动生成条形码，每个页面仅可配置一个。',
-    defaultValue: '',
+    value: '',
     src: '',
     noLabel: true,
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     styleSheet: {
-      width: '100%'
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
     },
     background: 'transparent',
     displayValue: false,
@@ -331,16 +335,20 @@ const compBaseConfig = {
     elName: 'RadDrcode',
     name: '二维码',
     desc: '',
-    defaultValue: '',
+    value: '',
     src: '',
     noLabel: true,
     baseProps: {
       hideOnPrint: false
     },
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     styleSheet: {
-      width: '100%'
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0',
+      paddingRight: '0'
     },
     background: 'transparent',
     displayValue: false,
@@ -357,11 +365,11 @@ const compBaseConfig = {
     type: 'textarea',
     placeholder: '',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: false,
     inline: false,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     validate: {
@@ -380,11 +388,11 @@ const compBaseConfig = {
     type: 'input',
     placeholder: '',
     label: '',
-    defaultValue: '',
+    value: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
-    domain: '',
+    threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
     validate: validate,

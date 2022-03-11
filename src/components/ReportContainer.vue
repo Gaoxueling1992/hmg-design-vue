@@ -1,5 +1,13 @@
 <template>
-  <a-layout>
+  <EditCanvas
+    v-if="isEditor"
+    class="edit-canvas"
+    id="editCanvas"
+    :style="{
+      'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE'
+    }"
+  ></EditCanvas>
+  <a-layout v-else>
     <a-layout-sider
       width="260px"
       class="padding20"
@@ -190,6 +198,7 @@ const handleCompsOper = (
     pageData.pageType = item.pageType;
     pageData.styleSheet = item.styleSheet;
     activePosi.value = 0;
+    debugger
     activeCompObj.value = {};
     activeCompId.value = '';
   };
@@ -222,7 +231,9 @@ export default defineComponent({
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);
     const isReadonlyStatus: Ref<boolean> = ref(false);
+    const isEditor = location.href.indexOf('isEditor') > -1 ? true : false;
     let tableList: any = reactive([]);
+    const domainList = reactive([]);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
     const {
       addComp,
@@ -252,6 +263,7 @@ export default defineComponent({
           break;
         case 'resetData':
           const data = JSON.parse(e.data.data);
+          console.log('kjkkk', data)
           editTpl(data);
           break;
         case 'resetTableList':
@@ -259,6 +271,16 @@ export default defineComponent({
           data1.forEach(tpl => {
             tableList.push(tpl);
           });
+          break;
+        case 'resetDomainList':
+          const data2 = JSON.parse(e.data.data);
+          data2.forEach(domain => {
+            domainList.push({
+              value: domain.option,
+              label: domain.name
+            });
+          });
+          break;
       }
     });
 
@@ -274,6 +296,7 @@ export default defineComponent({
     provide('deleteComp', deleteComp);
     provide('isReadonlyStatus', isReadonlyStatus);
     provide('tableList', tableList);
+    provide('domainList', domainList);
 
     return {
       activePosi,
@@ -284,7 +307,8 @@ export default defineComponent({
       visible,
       clickCanvas,
       checkStatus,
-      isReadonlyStatus
+      isReadonlyStatus,
+      isEditor
     };
   }
 });

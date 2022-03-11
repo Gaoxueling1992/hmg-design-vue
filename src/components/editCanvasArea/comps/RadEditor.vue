@@ -18,7 +18,7 @@
     v-show="isReadonlyStatus"
     class="inherit editor-display-text"
   >
-    <div v-html="ele.defaultValue"></div>
+    <div v-html="ele.value"></div>
   </div>
 </template>
 <script lang="ts">
@@ -48,9 +48,9 @@ export default defineComponent({
         '幼圆'
       ];
       editor.create();
-      editor.txt.html(props.ele.defaultValue);
+      editor.txt.html(props.ele.value);
       editor.config.onchange = (newHtml) => {
-        props.ele.defaultValue = newHtml;
+        props.ele.value = newHtml;
       };
       editor.config.onfocus = function () {
         document.getElementById(`toolbar${props.ele.id}`).style.display = '';

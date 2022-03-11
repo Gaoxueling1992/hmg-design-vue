@@ -1,15 +1,15 @@
 <template>
   <div
     class="picker-flex-edit"
-    v-if="ele.defaultValue && ele.defaultValue.length"
+    v-if="ele.value && ele.value.length"
   >
     <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
       <a-col
-        v-for="(item, index) in ele.defaultValue"
+        v-for="(item, index) in ele.value"
         :key="item.id"
-        :span="calSpan(ele, ele.defaultValue.length)"
+        :span="calSpan(ele, ele.value.length)"
         :style="{
-          width: calSpan(ele, ele.defaultValue.length)/24*100 + '%',
+          width: calSpan(ele, ele.value.length)/24*100 + '%',
           float: 'left'
         }"
       >
@@ -96,7 +96,7 @@ export default defineComponent({
 
       if (isJpgOrPng && isLt2M) {
         getBase64(file, (base64Url: string) => {
-          ele.value.defaultValue.push({
+          ele.value.value.push({
             url: base64Url,
             id: Math.random() + ''
           });
@@ -107,7 +107,7 @@ export default defineComponent({
     };
 
     const deleteImg = (index: any) => {
-      ele.value.defaultValue.splice(index, 1);
+      ele.value.value.splice(index, 1);
       mouseEnter.value = -1;
     };
 

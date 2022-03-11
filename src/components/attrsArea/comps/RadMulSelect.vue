@@ -19,7 +19,7 @@
     </a-radio-group>
   </template>
   <a-checkbox-group
-    v-model:value="activeCompObj.defaultValue"
+    v-model:value="activeCompObj.value"
     style="width: 100%"
     v-if="activeCompObj.options && activeCompObj.options.length"
   >

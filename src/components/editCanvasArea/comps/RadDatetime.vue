@@ -9,14 +9,14 @@
     style="flex: 1"
     :disabled="ele.baseProps.readonly"
     class="inherit"
-    v-model:value="ele.defaultValue"
+    v-model:value="ele.value"
     :picker="ele.picker"
     :format="ele.format"
   />
   <div
     v-else
     class="inherit display-text"
-  >{{moment(ele.defaultValue).format(ele.format)}}</div>
+  >{{moment(ele.value).format(ele.format)}}</div>
 </template>
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';
