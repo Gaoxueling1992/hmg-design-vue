@@ -17,6 +17,7 @@
   <div
     v-show="isReadonlyStatus"
     class="inherit editor-display-text"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;"
   >
     <div v-html="ele.value"></div>
   </div>

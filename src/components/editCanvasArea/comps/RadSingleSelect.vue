@@ -1,16 +1,13 @@
-<!--
- * @Author: your name
- * @Date: 2022-01-24 14:03:26
- * @LastEditTime: 2022-03-11 11:28:46
- * @LastEditors: your name
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /web-ris-front/Users/xuelinggao/Documents/develop/hmg-design-vue/src/components/editCanvasArea/comps/RadSingleSelect.vue
--->
 <template>
   <div
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    :style="{
+      'padding-right': ele.inline ? '10px' : 0,
+      'display': ele.inline ? 'inline-block' : ''
+    }"
   >{{ ele.label }}</div>
   <template v-if="!isReadonlyStatus">
     <a-select
@@ -36,7 +33,9 @@
       >{{item.label}}</a-radio>
     </div>
   </template>
-  <div v-else style="flex: 1" class="inherit display-text">
+  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;" class="inherit display-text">
     <template v-for="item in ele.options">
       <span :key="item.value" v-if="item.value === ele.value">
         {{item.label}}&nbsp;

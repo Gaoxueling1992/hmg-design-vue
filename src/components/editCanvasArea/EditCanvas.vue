@@ -11,8 +11,9 @@
       v-for="(line, idx) in lines"
       :key="idx"
       :id="'line' + String(idx)"
+      style="padding: 2px 0"
     >
-      <div class="edit-canvas-line" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+      <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
         <div
           v-for="(ele, index) in line"
           :key="ele.id"
@@ -108,11 +109,6 @@ export default defineComponent({
   border: 1px dashed var(--color-primary);
   margin: 0 auto 20px auto;
   width: calc(100% - 20px);
-  .edit-canvas-line {
-    position: relative;
-    width: 100%;
-    line-height: 1;
-  }
   .ql-container {
     height: auto;
   }

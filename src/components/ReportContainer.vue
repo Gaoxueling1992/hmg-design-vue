@@ -61,6 +61,7 @@ import { defineComponent, ref, reactive, provide, Ref, onMounted } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
+import { headStr, footStr } from '@/utils/tpl-config';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -198,7 +199,6 @@ const handleCompsOper = (
     pageData.pageType = item.pageType;
     pageData.styleSheet = item.styleSheet;
     activePosi.value = 0;
-    debugger
     activeCompObj.value = {};
     activeCompId.value = '';
   };
@@ -263,24 +263,36 @@ export default defineComponent({
           break;
         case 'resetData':
           const data = JSON.parse(e.data.data);
-          console.log('kjkkk', data)
           editTpl(data);
           break;
         case 'resetTableList':
           const data1 = JSON.parse(e.data.data);
+          tableList.length = 0;
           data1.forEach(tpl => {
             tableList.push(tpl);
           });
           break;
         case 'resetDomainList':
           const data2 = JSON.parse(e.data.data);
+          domainList.length = 0;
           data2.forEach(domain => {
             domainList.push({
               value: domain.option,
-              label: domain.name
+              label: domain.name + ' #' + domain.option
             });
           });
           break;
+        case 'saveEditor': 
+          isReadonlyStatus.value = true;
+          setTimeout(() => {
+            const canvas = document.getElementById('editCanvas');
+            pageData.html = headStr + `<div style="padding:${pageData.styleSheet.padding}">` + canvas.innerHTML + '</div>' + footStr;
+            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData) }, '*');
+
+            setTimeout(() => {
+              isReadonlyStatus.value = false;
+            });
+          });
       }
     });
 

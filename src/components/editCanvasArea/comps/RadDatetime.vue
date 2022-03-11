@@ -1,8 +1,13 @@
 <template>
   <div
     class="inherit"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
+    :style="{
+      'padding-right': ele.inline ? '10px' : 0,
+      'display': ele.inline ? 'inline-block' : ''
+    }"
   >{{ ele.label }}</div>
   <a-date-picker
     v-if="!isReadonlyStatus"
@@ -16,6 +21,9 @@
   <div
     v-else
     class="inherit display-text"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;"
   >{{moment(ele.value).format(ele.format)}}</div>
 </template>
 <script lang="ts">

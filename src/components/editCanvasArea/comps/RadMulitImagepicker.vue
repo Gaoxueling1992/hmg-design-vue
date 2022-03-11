@@ -24,7 +24,12 @@
           @mouseover.native="mouseEnter=+String(index)"
           @mouseleave.native="mouseEnter=-1"
         >
-          <a-image :src="item.url" />
+          <div>
+            <img
+              style="height:100%;width:100%;"
+              :src="item.url"
+            >
+          </div>
           <div
             v-if="mouseEnter === +String(index)"
             class="iconfont iconclose1"

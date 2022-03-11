@@ -3,6 +3,11 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
+    :style="{
+      'padding-right': ele.inline ? '10px' : 0,
+      'display': ele.inline ? 'inline-block' : ''
+    }"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
   <template v-if="!isReadonlyStatus">
     <a-select
@@ -32,8 +37,10 @@
   </template>
   <div
     v-else
-    style="flex: 1"
     class="inherit display-text"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;"
   >
     <template v-for="item in ele.options">
       <span

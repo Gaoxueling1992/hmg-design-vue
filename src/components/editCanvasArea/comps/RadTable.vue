@@ -3,7 +3,7 @@
     v-if="tableTpl && tableTpl.id"
     class="rad-table"
   >
-    <table border="1" @contextmenu.prevent.stop="chooseTable">
+    <table border="1" style="width: 100%;border-collapse: collapse !important;" @contextmenu.prevent.stop="chooseTable">
       <tr
         v-for="(line, index) in tbList"
         :key="index"
@@ -14,6 +14,7 @@
         >
           <td
             :style="item ? item.style : {}"
+            style="padding: 2px;"
             :colspan="item && item.mc && item.mc.cs || 1"
             :rowspan="item && item.mc && item.mc.rs || 1"
             :width="(item && item.mc && item.mc.cs || 1)/tds * 100 + '%'"
@@ -31,7 +32,9 @@
                 @keyup.right="toright(index, idx)"
                 v-model:value="inputs[index + '' + idx]"
               />
-              <span v-else class="table-display-text">{{inputs[index + '' + idx]}}&nbsp;</span>
+              <span v-else style="line-height: 24px;line-height: 30px !important;
+    padding-top: 1px;
+    padding-bottom: 1px;" class="table-display-text">{{inputs[index + '' + idx]}}&nbsp;</span>
             </span>
           </td>
         </template>
