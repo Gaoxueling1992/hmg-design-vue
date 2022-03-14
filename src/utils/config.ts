@@ -357,7 +357,9 @@ const compBaseConfig = {
     textAlign: 'center',
     textPosition: 'bottom',
     textSize: 20,
-    codeHeight: 50
+    imgHeight: '100',
+    imgWidth: '100',
+    img: ''
   },
   'rad-editor': {
     elName: 'RadEditor',

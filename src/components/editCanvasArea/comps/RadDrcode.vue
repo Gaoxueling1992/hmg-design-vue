@@ -1,19 +1,25 @@
 <template>
-  <qrcode-vue
-    :value="ele.src"
-    :size="ele.codeHeight"
-    :background="ele.background"
-    :foreground="ele.lineColor"
+  <a-image
+    class="img"
+    :height="ele.imgHeight"
+    :width="ele.imgWidth"
+    :src="ele.img"
+    :style="{
+      marginTop: ele.styleSheet.paddingTop + 'px',
+      marginBottom: ele.styleSheet.paddingBottom + 'px',
+      marginLeft: ele.styleSheet.paddingLeft + 'px',
+      marginRight: ele.styleSheet.paddingRight + 'px',
+      height: ele.imgHeight+ 'px',
+      width: ele.imgWidth + 'px'
+    }"
   />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import QrcodeVue from 'qrcode.vue';
 
 export default defineComponent({
   props: ['ele'],
   components: {
-    QrcodeVue
   },
   setup () {
     
