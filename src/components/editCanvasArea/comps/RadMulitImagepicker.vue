@@ -49,7 +49,7 @@
     :show-upload-list="false"
     :before-upload="beforeUpload"
     accept="image/png, image/jpeg, image/jpg"
-    v-if="!isReadonlyStatus"
+    v-if="!isReadonlyStatus && !ele.hideSelectBtn"
   >
     <a-button>
       点击上传

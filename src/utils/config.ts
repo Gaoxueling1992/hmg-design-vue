@@ -301,7 +301,8 @@ const compBaseConfig = {
     perNum: 6,
     testTotalNum: 10,
     imgList: [],
-    defaultType: []
+    defaultType: [],
+    hideSelectBtn: true
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',

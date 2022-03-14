@@ -66,6 +66,9 @@
       />
     </template>
   </div>
+  <div class="flex marginT10">
+    <a-checkbox v-model:checked="activeCompObj.hideSelectBtn">隐藏按钮</a-checkbox>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
