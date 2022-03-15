@@ -3,7 +3,11 @@
     v-if="tableTpl && tableTpl.id"
     class="rad-table"
   >
-    <table border="1" style="width: 100%;border-collapse: collapse !important;" @contextmenu.prevent.stop="chooseTable">
+    <table
+      border="1"
+      style="width: 100%;border-collapse: collapse !important;"
+      @contextmenu.prevent.stop="chooseTable"
+    >
       <tr
         v-for="(line, index) in tbList"
         :key="index"
@@ -32,9 +36,11 @@
                 @keyup.right="toright(index, idx)"
                 v-model:value="inputs[index + '' + idx]"
               />
-              <span v-else style="line-height: 24px;line-height: 30px !important;
-    padding-top: 1px;
-    padding-bottom: 1px;" class="table-display-text">{{inputs[index + '' + idx]}}&nbsp;</span>
+              <span
+                v-else
+                style="line-height: 24px;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+                class="table-display-text"
+              >{{inputs[index + '' + idx]}}&nbsp;</span>
             </span>
           </td>
         </template>
@@ -51,7 +57,11 @@
     :footer="null"
     title="选择模版"
   >
-    <a-list size="small" bordered :data-source="tableList">
+    <a-list
+      size="small"
+      bordered
+      :data-source="tableList"
+    >
       <template #renderItem="{ item }">
         <a-list-item>
           {{ item.title }}
@@ -157,8 +167,8 @@ const dealWithKeyup = () => {
 
 export default defineComponent({
   props: ['ele'],
-  setup() {
-    const tableTpl: any = inject('tableTpl') || ref<object>({});
+  setup(props) {
+    const tableTpl: any = ref(props.ele.value) || ref<object>({});
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const inputs: Ref<object> = ref<object>({});
     const tds: Ref<number> = ref<number>(0);
@@ -169,11 +179,15 @@ export default defineComponent({
     window.addEventListener('message', (e) => {
       if (e.data.type === 'tableDetail') {
         tableTpl.value = JSON.parse(e.data.data);
+        props.ele.value = JSON.parse(e.data.data);
       }
     });
 
     const chooseTable = () => {
-      if (chooseTableOpen && (chooseTableOpen.value === true || chooseTableOpen.value === false)) {
+      if (
+        chooseTableOpen &&
+        (chooseTableOpen.value === true || chooseTableOpen.value === false)
+      ) {
         chooseTableOpen.value = true;
       } else {
         chooseTableInner.value = true;
@@ -192,7 +206,6 @@ export default defineComponent({
       } else {
         list = JSON.parse(tableTpl.value.content);
       }
-      console.log(list)
       tds.value = list['0'].length;
       for (let key in list) {
         const row = list[key];
@@ -257,12 +270,16 @@ export default defineComponent({
       chooseTable,
       tableTpl,
       tbList,
-      toup, todown, toleft, toright,
+      toup,
+      todown,
+      toleft,
+      toright,
       isReadonlyStatus,
       inputs,
       tds,
       chooseTableInner,
-      tableList, applyTpl
+      tableList,
+      applyTpl
     };
   }
 });
