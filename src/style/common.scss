@@ -184,9 +184,9 @@ p {
   }
 }
 
-// .ant-layout {
-//   height: calc(100% - 50px);
-// }
+.ant-modal-wrap {
+  z-index: 10004 !important;
+}
 
 .ant-layout-sider {
   background: var(--background-color-main) !important;

@@ -309,6 +309,9 @@ export default defineComponent({
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold]
                 })
               } else {
+                if (line[j].elName === 'RadTable') {
+                  console.log('dsakjhf', line[j].value)
+                }
                 newLine.push({
                   ...line[j]
                 });
