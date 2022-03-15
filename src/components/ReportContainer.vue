@@ -55,6 +55,7 @@
       }"
     ></EditCanvas>
   </a-modal>
+  <div id="context-menu"></div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, reactive, provide, Ref, onMounted } from 'vue';
@@ -253,7 +254,7 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
-    window.addEventListener('message', (e) => {
+    window.addEventListener('message', async (e) => {
       switch(e.data.type) {
         case 'newTpl':
           newTpl(1);
@@ -285,13 +286,39 @@ export default defineComponent({
         case 'saveEditor': 
           isReadonlyStatus.value = true;
           setTimeout(() => {
-            const canvas = document.getElementById('editCanvas');
-            pageData.html = headStr + `<div style="padding:${pageData.styleSheet.padding}">` + canvas.innerHTML + '</div>' + footStr;
+            let canvas = document.getElementById('editCanvas').innerHTML;
+
+            pageData.html = headStr + `<div style="padding:${pageData.styleSheet.padding}">` + canvas + '</div>' + footStr;
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData) }, '*');
 
             setTimeout(() => {
               isReadonlyStatus.value = false;
             });
+          });
+          break;
+        case 'resetEditor':
+          const data3 = JSON.parse(e.data.data);
+          const lines = [];
+          for (let i = 0; i < pageData.lines.length; i++) {
+            const line = pageData.lines[i];
+            const newLine = [];
+            for (let j = 0; j < line.length; j++) {
+              if (line[j].threshold && data3[line[j].threshold]) {
+                newLine.push({
+                  ...line[j],
+                  value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold]
+                })
+              } else {
+                newLine.push({
+                  ...line[j]
+                });
+              }
+            }
+            lines.push(newLine);
+          }
+          pageData.lines = [];
+          setTimeout(() => {
+            pageData.lines = lines;
           });
       }
     });

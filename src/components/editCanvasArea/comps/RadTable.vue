@@ -167,7 +167,6 @@ export default defineComponent({
     let tableList: any = inject('tableList');
 
     window.addEventListener('message', (e) => {
-      console.log('table', e)
       if (e.data.type === 'tableDetail') {
         tableTpl.value = JSON.parse(e.data.data);
       }

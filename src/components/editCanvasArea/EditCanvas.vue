@@ -20,7 +20,8 @@
           :style="{
             'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
             'max-width': '100%',
-            'overflow': 'hidden',
+            'overflow-x': 'hidden',
+            'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
             'position': 'relative',
             ...ele.styleSheet,
             fontSize: ele.styleSheet.fontSize + 'px',
