@@ -1,6 +1,7 @@
 <template>
   <div class="comps-area">
     <BaseCompArea></BaseCompArea>
+    <CompsBlockArea class="marginT10"></CompsBlockArea>
   </div>
 </template>
 <script lang="ts">

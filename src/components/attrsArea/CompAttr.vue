@@ -44,6 +44,7 @@ import RadDrcode from './comps/RadDrcode.vue';
 import RadEditor from './comps/RadEditor.vue';
 import RadTable from './comps/RadTable.vue';
 import RadSignature from './comps/RadSignature.vue';
+import CombinationArea from './comps/CombinationArea.vue';
 
 export default defineComponent({
   components: {
@@ -58,7 +59,8 @@ export default defineComponent({
     RadDrcode: RadDrcode,
     RadEditor: RadEditor,
     RadTable: RadTable,
-    RadSignature: RadSignature
+    RadSignature: RadSignature,
+    CombinationArea: CombinationArea
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
@@ -73,12 +75,10 @@ export default defineComponent({
 <style lang="scss">
 .comp-attr {
   overflow: auto;
-  margin-bottom: 50px;
+  // margin-bottom: 50px;
+  height: 100vh;
   .limit-input {
     width: calc(50% - 20px);
-  }
-  .attr-body {
-    margin-bottom: 50px;
   }
   .desc {
     color: var(--color-text-secondary);

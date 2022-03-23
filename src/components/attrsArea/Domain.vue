@@ -26,7 +26,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, Ref, ref, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
   setup () {

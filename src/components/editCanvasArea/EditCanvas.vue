@@ -52,6 +52,7 @@ import RadSingleSelect from './comps/RadSingleSelect.vue';
 import RadMulSelect from './comps/RadMulSelect.vue';
 import RadTable from './comps/RadTable.vue';
 import RadSignature from './comps/RadSignature.vue';
+import CombinationArea from './comps/CombinationArea.vue';
 
 export default defineComponent({
   components: {
@@ -68,7 +69,8 @@ export default defineComponent({
     RadSingleSelect: RadSingleSelect,
     RadMulSelect: RadMulSelect,
     RadTable: RadTable,
-    RadSignature: RadSignature
+    RadSignature: RadSignature,
+    CombinationArea: CombinationArea
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}};

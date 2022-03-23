@@ -2,19 +2,23 @@
 const compsList: Array<object> = [
   {
     elName: 'rad-text',
-    title: '文本'
+    title: '文本',
+    isForm: true
   },
   {
     elName: 'rad-input',
-    title: '输入框'
+    title: '输入框',
+    isForm: true
   },
   {
     elName: 'rad-datetime',
-    title: '时间'
+    title: '时间',
+    isForm: true
   },
   {
     elName: 'rad-number',
-    title: '数值'
+    title: '数值',
+    isForm: true
   },
   {
     elName: 'rad-single-select',
@@ -55,6 +59,21 @@ const compsList: Array<object> = [
   {
     elName: 'rad-signature',
     title: '操作人'
+  }
+]
+
+const areaList: Array<object> = [
+  {
+    title: '页头',
+    elName: 'page-header'
+  },
+  {
+    title: '页尾',
+    elName: 'page-footer'
+  },
+  {
+    title: '复合组件',
+    elName: 'combination-area'
   }
 ]
 
@@ -272,7 +291,8 @@ const compBaseConfig = {
       fontStyle: 'normal',
       width: '100%'
     },
-    defaultType: {}
+    defaultType: {},
+    inputs: {}
   },
   'rad-mulitImagepicker': {
     elName: 'RadMulitImagepicker',
@@ -402,6 +422,18 @@ const compBaseConfig = {
     imagePosi: 'right',
     imgHeight: '32',
     imgWidth: '50'
+  },
+  'combination-area': {
+    elName: 'CombinationArea',
+    name: '复合组件',
+    desc: '表单复合组件，可将多个表单控件聚合成一体',
+    type: 'comb',
+    label: '',
+    inline: false,
+    styleSheet: styleSheet,
+    compsList: [],
+    align: 'left',
+    layout: 'top'
   }
 }
 
@@ -824,5 +856,6 @@ export {
   pickerList,
   pickerMap,
   editorMenus,
-  editorFontSizes
+  editorFontSizes,
+  areaList
 }

@@ -13,7 +13,6 @@
       :options="pickerMap[activeCompObj.picker]"
     />
   </div>
-  <!-- <a-checkbox class="marginT5" v-model:checked="activeCompObj.rangeOpen">时间范围</a-checkbox> -->
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';

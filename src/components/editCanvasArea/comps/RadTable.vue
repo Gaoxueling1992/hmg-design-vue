@@ -170,7 +170,7 @@ export default defineComponent({
   setup(props) {
     const tableTpl: any = ref(props.ele.value) || ref<object>({});
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
-    const inputs: Ref<object> = ref<object>({});
+    const inputs: Ref<object> = ref(props.ele.inputs) || ref<object>({});
     const tds: Ref<number> = ref<number>(0);
     const chooseTableInner: Ref<boolean> = ref<boolean>(false);
     const chooseTableOpen: any = inject('chooseTableOpen') || 'null';

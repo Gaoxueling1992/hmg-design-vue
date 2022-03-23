@@ -108,6 +108,9 @@ const handleCompsOper = (
       ...baseConfig,
       id: id
     };
+    if (value === 'combination-area') {
+      activeCompObj.value.compsList = [];
+    }
     pageData.lines.push([activeCompObj.value]);
     activeCompId.value = id;
   };

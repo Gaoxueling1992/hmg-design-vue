@@ -10,13 +10,52 @@
       ...ele.styleSheet,
       fontSize: ele.styleSheet.fontSize + 'px',
       borderWidth: ele.styleSheet.borderWidth + 'px',
-      display: ele.inline ? 'flex' : 'inline-block'
+      display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block'
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
     :class="{'disgn-ele-active': activeCompId === ele.id}"
   >
-    <template v-if="!ele.noLabel">
+    <template v-if="ele.type === 'comb'">
+      <div class="inherit">{{ ele.label || ele.name }}
+        <i
+          class="iconfont iconplus"
+          v-if="activeCompId === ele.id"
+          @click="addComp=true"
+        >
+        </i>
+      </div>
+      <div v-if="ele.compsList && ele.compsList.length && addComp===false" class="flex-row"
+        :style="{
+          'text-align': ele.align,
+          height: 'calc(100% - 25px)'
+        }">
+        <div
+          v-for="(item, idx) in ele.compsList"
+          :key="idx"
+          :style="{
+            display: 'block',
+            height: ele.layout === 'top' ? 'auto' : (100/ele.compsList.length + '%')
+          }"
+        >
+          <div :style="{
+            display: ele.inline ? 'flex' : 'inline-block'
+          }">
+            <div
+              class="inherit"
+              :class="ele.inline ? 'ele-label' : ''"
+            >{{ item.title }}</div>
+            <a-input
+              style="flex: 1"
+              disabled
+              class="inherit"
+            >
+            </a-input>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template v-else-if="!ele.noLabel">
       <div
         class="inherit"
         :class="ele.inline ? 'ele-label' : ''"
@@ -103,7 +142,8 @@
             :height="ele.codeHeight"
             :margin="0"
           />
-          <a-image v-if="ele.img"
+          <a-image
+            v-if="ele.img"
             class="img"
             :height="ele.imgHeight"
             :width="ele.imgWidth"
@@ -172,6 +212,7 @@
         </a-row>
       </div>
     </template>
+    <!-- 操作区域 -->
     <div
       class="oper"
       v-if="activeCompId === ele.id"
@@ -189,12 +230,55 @@
         <i class="iconfont icondelete-border"></i>
       </span>
     </div>
+    <a-modal
+      title="添加控件(拖拽排序)"
+      :visible="addComp"
+      cancelText="关闭"
+      okText="确定"
+      @cancel="addComp=false"
+      @ok="addComp=false"
+    >
+      <template v-for="(item, index) in list">
+        <button
+          :key="index"
+          v-if="item.isForm===true"
+          class="comb-comp"
+          @click="addComp2Comb(item)"
+        >
+          {{item.title}}
+        </button>
+      </template>
+      <div
+        class="comp-canvas"
+        v-if="ele.compsList && ele.compsList.length"
+      >
+        <draggable v-model="ele.compsList">
+          <div
+            v-for="(item, idx) in ele.compsList"
+            :key="idx"
+            class="comb-comp-selected"
+          >
+            <i class="iconfont icondrag paddingR10"></i>
+            <a-input v-model:value="item.title" style="width:120px"></a-input>
+            <i class="fr iconfont iconclose1 paddingL10 delete-comp" @click="deleteIt(idx)"></i>
+            <a-select
+              v-model:value="item.threshold"
+              :options="domainList"
+              style="width:150px;"
+              class="fr"
+            ></a-select>
+          </div>
+        </draggable>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, inject, ref } from 'vue';
+import { defineComponent, reactive, inject, ref, Ref } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 import QrcodeVue from 'qrcode.vue';
+import { compsList, compBaseConfig } from '@/utils/config';
+import { VueDraggableNext } from 'vue-draggable-next';
 
 // 图片选择器 计算布局
 const calSpan = (ele: any) => {
@@ -231,31 +315,58 @@ const handleEleOperate = (ele: any, props: any) => {
     deleteEle,
     copyEle,
     clickEle
-  }
-}
+  };
+};
 
 export default defineComponent({
   props: ['ele', 'index', 'idx'],
   components: {
     Vue3Barcode,
-    QrcodeVue
+    QrcodeVue,
+    draggable: VueDraggableNext
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
     const activeCompId: string = inject('activeCompId') || '';
+    const addComp: Ref<boolean> = ref<boolean>(false);
+    const list: Array<any> = compsList;
+    const domainList: any = inject('domainList');
 
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
+
+    const addComp2Comb = (item) => {
+      item.threshold = '';
+      item.id = (new Date()).getTime() + '';
+      const baseConfig = reactive({
+        ...compBaseConfig[item.elName],
+        styleSheet: {}
+      });
+      ele.compsList.push({
+        ...baseConfig,
+        ...item
+      });
+    };
+    const deleteIt = (index) => {
+      ele.compsList.splice(index, 1);
+    };
 
     return {
       ele,
       activeCompId,
       calSpan,
-      deleteEle, copyEle, clickEle
+      deleteEle,
+      copyEle,
+      clickEle,
+      addComp,
+      list,
+      addComp2Comb,
+      domainList,
+      deleteIt
     };
   }
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .disgn-ele {
   &:hover {
     background: var(--background-color-base);
@@ -263,44 +374,65 @@ export default defineComponent({
   .ele-label {
     padding-right: 10px;
   }
-}
-.disgn-ele-active {
-  background: var(--color-btn-bglight);
-}
-.ant-divider-horizontal {
-  margin: 0;
-}
-.inherit {
-  border-color: inherit;
-  color: inherit !important;
-  background-color: inherit;
-  font-size: inherit;
-}
-table {
-  width: 100%;
-}
-.picker-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.oper {
-  position: absolute;
-  top: 2px;
-  right: 10px;
-  font-size: 13px;
-  .delete-item {
-    margin-left: 5px;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: var(--color-white1);
-    border-radius: 10px;
-    .iconfont {
-      padding-left: 4px;
-      font-size: 12px;
-      color: var(--color-black)
+  .disgn-ele-active {
+    background: var(--color-btn-bglight);
+  }
+  .ant-divider-horizontal {
+    margin: 0;
+  }
+  .inherit {
+    border-color: inherit;
+    color: inherit !important;
+    background-color: inherit;
+    font-size: inherit;
+    text-align: left;
+  }
+  table {
+    width: 100%;
+  }
+  .picker-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .oper {
+    position: absolute;
+    top: 2px;
+    right: 10px;
+    font-size: 13px;
+    .delete-item {
+      margin-left: 5px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: var(--color-white1);
+      border-radius: 10px;
+      .iconfont {
+        padding-left: 4px;
+        font-size: 12px;
+        color: var(--color-black);
+      }
     }
   }
+}
+.flex-row {
+  width: 100%;
+}
+.comb-comp {
+  margin: 5px;
+}
+.comp-canvas {
+  border: 1px solid var(--border-color-base);
+  padding: 5px;
+  .comb-comp-selected {
+    padding: 5px;
+  }
+}
+.ant-select-dropdown {
+  z-index: 10005;
+}
+.delete-comp {
+  line-height: 32px;
+  height: 32px;
 }
 </style>
