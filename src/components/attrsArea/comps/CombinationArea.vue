@@ -23,7 +23,6 @@
       :key="comp.id"
       :header="'组件' + index + '-' + comp.name"
     >
-      {{comp}}
       <div class="container-item">
         <div class="title marginB5">文本内容</div>
         <a-textarea
