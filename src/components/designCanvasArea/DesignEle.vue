@@ -25,11 +25,14 @@
         >
         </i>
       </div>
-      <div v-if="ele.compsList && ele.compsList.length && addComp===false" class="flex-row"
+      <div
+        v-if="ele.compsList && ele.compsList.length && addComp===false"
+        class="flex-row"
         :style="{
           'text-align': ele.align,
           height: 'calc(100% - 25px)'
-        }">
+        }"
+      >
         <div
           v-for="(item, idx) in ele.compsList"
           :key="idx"
@@ -39,18 +42,53 @@
           }"
         >
           <div :style="{
-            display: ele.inline ? 'flex' : 'inline-block'
+            display: ele.inline ? 'flex' : 'inline-block',
+            ...item.styleSheet,
+            fontSize: item.styleSheet.fontSize + 'px',
           }">
             <div
+              v-if="item.elName === 'RadText'"
+              style="min-height: 20px"
+              :style="{
+                marginTop: item.styleSheet.paddingTop + 'px',
+                marginBottom: item.styleSheet.paddingBottom + 'px',
+                marginLeft: item.styleSheet.paddingLeft + 'px',
+                marginRight: item.styleSheet.paddingRight + 'px'
+              }"
+              :class="{'ellipsis': item.styleSheet.wrap === 'noWrap'}"
+            >{{ item.label || '静态文本' }}</div>
+            <div
+              v-if="item.elName !== 'RadText'"
               class="inherit"
               :class="ele.inline ? 'ele-label' : ''"
-            >{{ item.title }}</div>
+            >{{ item.label || item.name }}</div>
             <a-input
               style="flex: 1"
               disabled
               class="inherit"
+              v-if="item.type !== 'textarea' && item.elName !== 'RadText'"
+              :placeholder="item.placeholder"
             >
+              <template #prefix>
+                {{ item.prefix }}
+              </template>
+              <template #suffix>
+                {{ item.suffix }}
+              </template>
             </a-input>
+            <a-textarea
+              style="flex: 1"
+              disabled
+              class="inherit"
+              v-else-if="item.elName !== 'RadText'"
+            >
+              <template #prefix>
+                {{ item.prefix }}
+              </template>
+              <template #suffix>
+                {{ item.suffix }}
+              </template>
+            </a-textarea>
           </div>
         </div>
       </div>
@@ -259,8 +297,11 @@
             class="comb-comp-selected"
           >
             <i class="iconfont icondrag paddingR10"></i>
-            <a-input v-model:value="item.title" style="width:120px"></a-input>
-            <i class="fr iconfont iconclose1 paddingL10 delete-comp" @click="deleteIt(idx)"></i>
+            {{item.name}}
+            <i
+              class="fr iconfont iconclose1 paddingL10 delete-comp"
+              @click="deleteIt(idx)"
+            ></i>
             <a-select
               v-model:value="item.threshold"
               :options="domainList"
@@ -335,15 +376,17 @@ export default defineComponent({
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
 
     const addComp2Comb = (item) => {
-      item.threshold = '';
-      item.id = (new Date()).getTime() + '';
+      const id: string = new Date().getTime() + '';
       const baseConfig = reactive({
         ...compBaseConfig[item.elName],
-        styleSheet: {}
+        styleSheet: {
+          ...compBaseConfig[item.elName].styleSheet
+        }
       });
+      console.log(JSON.stringify(baseConfig))
       ele.compsList.push({
         ...baseConfig,
-        ...item
+        id
       });
     };
     const deleteIt = (index) => {

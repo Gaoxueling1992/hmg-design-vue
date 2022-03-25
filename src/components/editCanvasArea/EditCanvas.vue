@@ -110,8 +110,8 @@ export default defineComponent({
 .edit-canvas {
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
-  margin: 0 auto 20px auto;
   width: calc(100% - 20px);
+  margin: 0 auto 20px auto;
   .ql-container {
     height: auto;
   }

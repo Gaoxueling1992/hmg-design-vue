@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="ele.elName === 'RadText'"
     style="min-height: 20px"
     class="inherit"
     :style="{
