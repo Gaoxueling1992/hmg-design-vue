@@ -62,7 +62,7 @@ import { defineComponent, ref, reactive, provide, Ref } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
-import { headStr, footStr, openFixedAreaStr, pageStr1, pageStrStyle } from '@/utils/tpl-config';
+import { headStr, footStr, openFixedAreaStr, pageStr1, pageStr2, pageStrStyle } from '@/utils/tpl-config';
 import { getOneMmsPx } from '@/utils/util';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
@@ -224,6 +224,7 @@ const handleCompsOper = (
     pageData.headerLine = -1;
     pageData.footerLine = 9999;
     pageData.pageType = 'a4';
+    pageData.pageNumType = 0;
     pageData.styleSheet = {
       minHeight: '297mm',
       width: '210mm',
@@ -267,6 +268,7 @@ const handleCompsOper = (
     pageData.pageHeaderId = item.pageHeaderId;
     pageData.headerLine = item.headerLine;
     pageData.footerLine = item.footerLine;
+    pageData.pageNumType = item.pageNumType;
     activePosi.value = 0;
     activeCompObj.value = {};
     activeCompId.value = '';
@@ -363,7 +365,7 @@ export default defineComponent({
             let headercanvas = document.getElementById('edit-canvas-header').innerHTML;
             let footercanvas = document.getElementById('edit-canvas-footer').innerHTML;
             let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
-            pageData.headerHtml = pageData.pageHeaderId ? (openFixedAreaStr + pageStrStyle + pageStr1 + `<div style="padding:0 ${pageData.styleSheet.padding};">` + headercanvas + '</div>' + footStr) : '';
+            pageData.headerHtml = pageData.pageHeaderId ? (openFixedAreaStr + (pageData.pageNumType ? (+pageData.pageNumType === 1 ? pageStrStyle + pageStr1 : pageStrStyle + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + headercanvas + '</div>' + footStr) : '';
             pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;

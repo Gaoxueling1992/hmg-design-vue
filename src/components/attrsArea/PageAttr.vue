@@ -48,6 +48,14 @@
         @change="handlePageSize('minHeight', minHeight)"
       />mm
     </div>
+    <div class="container-item padding10">
+      <div class="title marginB5 fontW500">分页</div>
+       <a-radio-group v-model:value="pageNumType" name="pageNumType" @change="handlePageChange('pageNumType', pageNumType)">
+        <a-radio :value="0">不展示</a-radio>
+        <a-radio :value="1">第 x 页</a-radio>
+        <a-radio :value="2">第 x/n 页</a-radio>
+      </a-radio-group>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -57,7 +65,7 @@ import { tplTypeList } from '@/utils/config';
 // 处理pageData
 const pageDataEffet = () => {
   const pageData: any = inject('pageData');
-  const { name, pageType, width, minHeight } = toRefs(pageData);
+  const { name, pageType, width, minHeight, pageNumType } = toRefs(pageData);
   const changePageConfig: any = inject('changePageConfig');
   const changePageSize: any = inject('changePageSize');
 
@@ -68,7 +76,7 @@ const pageDataEffet = () => {
   const handlePageSize = (key: string, value: number) => {
     changePageSize({ key, value });
   };
-  return { name, pageType, width, minHeight, handlePageChange, handlePageSize };
+  return { name, pageType, width, minHeight, pageNumType, handlePageChange, handlePageSize };
 };
 
 export default defineComponent({
@@ -78,6 +86,7 @@ export default defineComponent({
       pageType,
       width,
       minHeight,
+      pageNumType,
       handlePageChange,
       handlePageSize
     } = pageDataEffet();
@@ -87,6 +96,7 @@ export default defineComponent({
       pageType,
       width,
       minHeight,
+      pageNumType,
       tplTypeList,
       handlePageChange,
       handlePageSize
