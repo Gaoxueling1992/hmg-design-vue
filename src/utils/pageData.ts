@@ -9,7 +9,11 @@ const pageConfig: Object = {
     minHeight: '297mm',
     width: '210mm',
     padding: '10px'
-  }
+  },
+  pageHeaderId: '',
+  pageFooterId: '',
+  headerLine: -1,
+  footerLine: 9999
 }
 const formPageConfig: Object = {
   lines: [], // 区域

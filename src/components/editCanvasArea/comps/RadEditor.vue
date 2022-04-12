@@ -56,16 +56,24 @@ export default defineComponent({
       editor.txt.html(props.ele.value);
       editor.config.onchange = (newHtml) => {
         props.ele.value = newHtml;
-        document.getElementById(`toolbar${props.ele.id}`).style.display = '';
+        if (document.getElementById(`toolbar${props.ele.id}`)) {
+          document.getElementById(`toolbar${props.ele.id}`).style.display = '';
+        }
       };
       editor.config.onfocus = function () {
-        document.getElementById(`toolbar${props.ele.id}`).style.display = '';
+        if (document.getElementById(`toolbar${props.ele.id}`)) {
+          document.getElementById(`toolbar${props.ele.id}`).style.display = '';
+        }
       };
       editor.config.onblur = function () {
-        document.getElementById(`toolbar${props.ele.id}`).style.display =
-          'none';
+        if (document.getElementById(`toolbar${props.ele.id}`)) {
+          document.getElementById(`toolbar${props.ele.id}`).style.display =
+            'none';
+        }
       };
-      document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
+      if (document.getElementById(`toolbar${props.ele.id}`)) {
+        document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
+      }
     });
     const clickEditor = (e) => {
       if (e.target.classList && e.target.classList[0] === 'aspan') {

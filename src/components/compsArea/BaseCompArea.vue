@@ -35,7 +35,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container-item {
-  margin-bottom: 20px;
+  padding: 5px;
   .container-item-btn {
     width: 100px !important;
     margin-bottom: 10px;

@@ -63,14 +63,14 @@ const compsList: Array<object> = [
 ]
 
 const areaList: Array<object> = [
-  {
-    title: '页头',
-    elName: 'page-header'
-  },
-  {
-    title: '页尾',
-    elName: 'page-footer'
-  },
+  // {
+  //   title: '页头',
+  //   elName: 'page-header'
+  // },
+  // {
+  //   title: '页尾',
+  //   elName: 'page-footer'
+  // },
   {
     title: '复合组件',
     elName: 'combination-area'

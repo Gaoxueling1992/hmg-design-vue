@@ -7,37 +7,104 @@
       padding: styleSheet.padding
     }"
   >
-    <div
-      v-for="(line, idx) in lines"
-      :key="idx"
-      :id="'line' + String(idx)"
-      style="padding: 2px 0"
-    >
-      <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
-        <div
-          v-for="(ele, index) in line"
-          :key="ele.id"
-          :style="{
-            'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-            'max-width': '100%',
-            'overflow-x': 'hidden',
-            'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
-            'position': 'relative',
-            ...ele.styleSheet,
-            fontSize: ele.styleSheet.fontSize + 'px',
-            borderWidth: ele.styleSheet.borderWidth + 'px',
-            display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
-            width: eleWidth(line, index)
-          }"
-        >
-          <component :is="ele.elName" :ele="ele"></component>
+    <div id="edit-canvas-header">
+      <div
+        v-for="(line, idx) in headerLines"
+        :key="idx"
+        :id="'line' + String(idx)"
+      >
+        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+          <div
+            v-for="(ele, index) in line"
+            :key="ele.id"
+            :style="{
+              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+              'max-width': '100%',
+              'overflow-x': 'hidden',
+              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+              'position': 'relative',
+              ...ele.styleSheet,
+              fontSize: ele.styleSheet.fontSize + 'px',
+              borderWidth: ele.styleSheet.borderWidth + 'px',
+              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
+              width: eleWidth(line, index),
+              'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
+              'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important'
+            }"
+          >
+            <component :is="ele.elName" :ele="ele"></component>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="edit-canvas-body">
+      <div
+        v-for="(line, idx) in bodyLines"
+        :key="idx"
+        :id="'line' + String(idx)"
+      >
+        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+          <div
+            v-for="(ele, index) in line"
+            :key="ele.id"
+            class="padding5"
+            :style="{
+              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+              'max-width': '100%',
+              'overflow-x': 'hidden',
+              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+              'position': 'relative',
+              ...ele.styleSheet,
+              fontSize: ele.styleSheet.fontSize + 'px',
+              borderWidth: ele.styleSheet.borderWidth + 'px',
+              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
+              width: eleWidth(line, index)
+            }"
+            :class="{
+              'paddingT10 paddingB10': ele.elName === 'RadLine'
+            }"
+          >
+            <component :is="ele.elName" :ele="ele"></component>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="edit-canvas-footer">
+      <div
+        v-for="(line, idx) in footerLines"
+        :key="idx"
+        :id="'line' + String(idx)"
+      >
+        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+          <div
+            v-for="(ele, index) in line"
+            :key="ele.id"
+            class="padding5"
+            :style="{
+              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+              'max-width': '100%',
+              'overflow-x': 'hidden',
+              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+              'position': 'relative',
+              ...ele.styleSheet,
+              fontSize: ele.styleSheet.fontSize + 'px',
+              borderWidth: ele.styleSheet.borderWidth + 'px',
+              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
+              width: eleWidth(line, index)
+            }"
+            :class="{
+              'paddingT10 paddingB10': ele.elName === 'RadLine'
+            }"
+          >
+            <component :is="ele.elName" :ele="ele"></component>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs, Ref, computed } from 'vue';
+import { defineComponent, inject, toRefs, Ref, computed, ref } from 'vue';
 import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
@@ -74,7 +141,7 @@ export default defineComponent({
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}};
-    const { lines, styleSheet } = toRefs(pageData);
+    const { lines, styleSheet, pageHeaderId, pageFooterId, headerLine, footerLine } = toRefs(pageData);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
 
     const eleWidth = computed(() => {
@@ -95,12 +162,66 @@ export default defineComponent({
       }
     });
 
+    for (let i = 0; i < lines.value.length; i++) {
+      for (let j = 0; j < lines.value[i].length; j++) {
+        if (+pageHeaderId.value === +lines.value[i][j].id) {
+          headerLine.value = i;
+          break;
+        }
+      }
+      if (headerLine.value === i) {
+        break;
+      }
+    }
+
+    for (let i = 0; i < lines.value.length; i++) {
+      for (let j = 0; j < lines.value[i].length; j++) {
+        if (+pageFooterId.value === +lines.value[i][j].id) {
+          footerLine.value = i;
+          break;
+        }
+      }
+      if (footerLine.value === i) {
+        break;
+      }
+    }
+
+    const headerLines = computed(() => {
+      if (headerLine.value > -1) {
+        return lines.value.slice(0, headerLine.value + 1);
+      } else {
+        return [];
+      }
+    });
+
+    const footerLines = computed(() => {
+      if (footerLine.value < 9999 ) {
+        return lines.value.slice(footerLine.value, lines.value.length)
+      } else {
+        return [];
+      }
+    });
+
+    const bodyLines = computed(() => {
+      if (headerLine.value > -1 && footerLine.value < 9999) {
+        return lines.value.slice(headerLine.value + 1, footerLine.value);
+      } else if (headerLine.value > -1 && footerLine.value === 9999) {
+        return lines.value.slice(headerLine.value + 1, lines.length);
+      } else if (headerLine.value === -1 && footerLine.value < 9999) {
+        return lines.value.slice(0, footerLine.value);
+      } else {
+        return lines.value;
+      }
+    });
+
     return {
       pageData,
       lines,
       styleSheet,
       isReadonlyStatus,
-      eleWidth
+      eleWidth,
+      headerLine, footerLine,
+      headerLines, footerLines, bodyLines
     };
   }
 });
@@ -111,7 +232,7 @@ export default defineComponent({
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
   width: calc(100% - 20px);
-  margin: 0 auto 20px auto;
+  // margin: 0 auto 20px auto;
   .ql-container {
     height: auto;
   }

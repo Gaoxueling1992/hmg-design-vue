@@ -14,7 +14,10 @@
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
-    :class="{'disgn-ele-active': activeCompId === ele.id}"
+    :class="{
+      'disgn-ele-active': activeCompId === ele.id,
+      'paddingT10 paddingB10': ele.elName === 'RadLine'
+    }"
   >
     <template v-if="ele.type === 'comb'">
       <div class="inherit">{{ ele.label || ele.name }}
@@ -259,13 +262,47 @@
         class="delete-item"
         @click="copyEle"
       >
-        <i class="iconfont iconcopy"></i>
+        <a-tooltip placement="top" :mouseEnterDelay="0.5">
+          <template #title>
+            <span>复制</span>
+          </template>
+          <i class="iconfont iconcopy"></i>
+        </a-tooltip>
       </span>
       <span
         class="delete-item"
         @click="deleteEle"
       >
-        <i class="iconfont icondelete-border"></i>
+        <a-tooltip placement="top" :mouseEnterDelay="0.5">
+          <template #title>
+            <span>删除</span>
+          </template>
+          <i class="iconfont icondelete-border"></i>
+        </a-tooltip>
+      </span>
+      <span
+        class="delete-item"
+        :class="{'active-bg': pageHeaderId === ele.id}"
+        @click="setFixedArea(ele, 'header', idx)"
+      >
+        <a-tooltip placement="top" :mouseEnterDelay="0.5">
+          <template #title>
+            <span>{{pageHeaderId === ele.id ? '取消设为页眉' : '设为页眉'}}</span>
+          </template>
+          <i class="iconfont iconup_top"></i>
+        </a-tooltip>
+      </span>
+      <span
+        class="delete-item"
+        :class="{'active-bg': pageFooterId === ele.id}"
+        @click="setFixedArea(ele, 'footer', idx)"
+      >
+        <a-tooltip placement="top" :mouseEnterDelay="0.5">
+          <template #title>
+            <span>{{pageFooterId === ele.id ? '取消设为页脚' : '设为页脚'}}</span>
+          </template>
+          <i class="iconfont icondown_btm"></i>
+        </a-tooltip>
       </span>
     </div>
     <a-modal
@@ -292,15 +329,15 @@
       >
         <draggable v-model="ele.compsList">
           <div
-            v-for="(item, idx) in ele.compsList"
-            :key="idx"
+            v-for="(item, ix) in ele.compsList"
+            :key="ix"
             class="comb-comp-selected"
           >
             <i class="iconfont icondrag paddingR10"></i>
             {{item.name}}
             <i
               class="fr iconfont iconclose1 paddingL10 delete-comp"
-              @click="deleteIt(idx)"
+              @click="deleteIt(ix)"
             ></i>
             <a-select
               v-model:value="item.threshold"
@@ -368,10 +405,14 @@ export default defineComponent({
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
+    const idx: any = reactive(props.idx);
     const activeCompId: string = inject('activeCompId') || '';
     const addComp: Ref<boolean> = ref<boolean>(false);
     const list: Array<any> = compsList;
     const domainList: any = inject('domainList');
+    const setFixedArea: any = inject('setFixedArea');
+    const pageFooterId: Ref<string> = inject('pageFooterId');
+    const pageHeaderId: Ref<string> = inject('pageHeaderId');
 
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
 
@@ -404,7 +445,8 @@ export default defineComponent({
       list,
       addComp2Comb,
       domainList,
-      deleteIt
+      deleteIt,
+      setFixedArea, pageFooterId, pageHeaderId
     };
   }
 });
@@ -456,6 +498,12 @@ export default defineComponent({
         color: var(--color-black);
       }
     }
+    .active-bg {
+      background-color: var(--color-primary);
+      .iconfont {
+        color: var(--color-white1);
+      }
+    }
   }
 }
 .flex-row {
@@ -477,5 +525,10 @@ export default defineComponent({
 .delete-comp {
   line-height: 32px;
   height: 32px;
+}
+.icontext {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
 }
 </style>

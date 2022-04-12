@@ -58,11 +58,12 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, onMounted } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
-import { headStr, footStr } from '@/utils/tpl-config';
+import { headStr, footStr, openFixedAreaStr, pageStr1, pageStrStyle } from '@/utils/tpl-config';
+import { getOneMmsPx } from '@/utils/util';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -94,6 +95,8 @@ const handleCompsOper = (
   const activePosi: Ref<number> = ref(0);
   const activeCompObj: Ref<object> = ref({});
   const activeCompId: Ref<string> = ref('');
+  const pageHeaderId: Ref<string> = ref(pageData.pageHeaderId);
+  const pageFooterId: Ref<string> = ref(pageData.pageFooterId);
   // 新增控件
   const addComp = (value: string) => {
     activePosi.value = 1;
@@ -145,6 +148,58 @@ const handleCompsOper = (
     activeCompId.value = ele.id;
     activeCompObj.value = ele;
   };
+  // 设置页眉页脚
+  const setFixedArea = (ele: any, typeStr: string, idx) => {
+    let content = '';
+    if (typeStr === 'footer') {
+      if (pageData.pageHeaderId === ele.id) {
+        content = '页脚不能和页眉设置为同一控件。';
+      }
+      if (pageData.headerLine > idx) {
+        content = '页脚控件不能在页眉上方。';
+      }
+    }
+    if (typeStr === 'header') {
+      if (pageData.pageFooterId === ele.id) {
+        content = '页眉不能和页脚设置为同一控件。';
+      }
+      if (pageData.footerLine < idx) {
+        content = '页眉控件不能在页尾下方。';
+      }
+    }
+    if (content) {
+      Modal.confirm({
+        title: '提示',
+        content,
+        okText: '我知道了',
+        cancelText: '取消',
+        onOk() {},
+        onCancel() {},
+      });
+      return;
+    }
+    if (typeStr === 'header') {
+      if (ele.id !== pageData.pageHeaderId) {
+        pageHeaderId.value = ele.id;
+        pageData.pageHeaderId = ele.id;
+        pageData.headerLine = idx;
+      } else {
+        pageHeaderId.value = '';
+        pageData.pageHeaderId = '';
+        pageData.headerLine = -1;
+      }
+    } else {
+      if (ele.id !== pageData.pageFooterId) {
+        pageFooterId.value = ele.id;
+        pageData.pageFooterId = ele.id;
+        pageData.footerLine = idx;
+      } else {
+        pageFooterId.value = '';
+        pageData.pageFooterId = '';
+        pageData.footerLine = 9999;
+      }
+    }
+  };
   // 保存模版
   const saveTpl = () => {
     if (pageData.lines.length) {
@@ -164,6 +219,10 @@ const handleCompsOper = (
     pageData.lines = [];
     pageData.name = '';
     pageData.id = '';
+    pageData.pageHeaderId = '';
+    pageData.pageFooterId = '';
+    pageData.headerLine = -1;
+    pageData.footerLine = 9999;
     pageData.pageType = 'a4';
     pageData.styleSheet = {
       minHeight: '297mm',
@@ -173,6 +232,8 @@ const handleCompsOper = (
     activePosi.value = 0;
     activeCompObj.value = {};
     activeCompId.value = '';
+    pageHeaderId.value = '';
+    pageFooterId.value = '';
   };
 
   // 新建模版
@@ -202,6 +263,10 @@ const handleCompsOper = (
     pageData.id = item.id;
     pageData.pageType = item.pageType;
     pageData.styleSheet = item.styleSheet;
+    pageData.pageFooterId = item.pageFooterId;
+    pageData.pageHeaderId = item.pageHeaderId;
+    pageData.headerLine = item.headerLine;
+    pageData.footerLine = item.footerLine;
     activePosi.value = 0;
     activeCompObj.value = {};
     activeCompId.value = '';
@@ -224,7 +289,10 @@ const handleCompsOper = (
     activePosi,
     activeCompId,
     activeCompObj,
-    clickCanvas
+    clickCanvas,
+    setFixedArea,
+    pageHeaderId,
+    pageFooterId
   };
 };
 
@@ -250,7 +318,10 @@ export default defineComponent({
       activePosi,
       activeCompId,
       activeCompObj,
-      clickCanvas
+      clickCanvas,
+      setFixedArea,
+      pageHeaderId,
+      pageFooterId
     } = handleCompsOper(emit, pageData);
 
     const checkStatus = () => {
@@ -289,9 +360,14 @@ export default defineComponent({
         case 'saveEditor': 
           isReadonlyStatus.value = true;
           setTimeout(() => {
-            let canvas = document.getElementById('editCanvas').innerHTML;
-
-            pageData.html = headStr + `<div style="padding:${pageData.styleSheet.padding}">` + canvas + '</div>' + footStr;
+            let headercanvas = document.getElementById('edit-canvas-header').innerHTML;
+            let footercanvas = document.getElementById('edit-canvas-footer').innerHTML;
+            let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
+            pageData.headerHtml = pageData.pageHeaderId ? (openFixedAreaStr + pageStrStyle + pageStr1 + `<div style="padding:0 ${pageData.styleSheet.padding};">` + headercanvas + '</div>' + footStr) : '';
+            pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
+            pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
+            pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
+            pageData.html = headStr + `<div style="padding:${pageData.pageHeaderId ? 0 : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData) }, '*');
 
             setTimeout(() => {
@@ -312,9 +388,6 @@ export default defineComponent({
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold]
                 })
               } else {
-                if (line[j].elName === 'RadTable') {
-                  console.log('dsakjhf', line[j].value)
-                }
                 newLine.push({
                   ...line[j]
                 });
@@ -342,6 +415,9 @@ export default defineComponent({
     provide('isReadonlyStatus', isReadonlyStatus);
     provide('tableList', tableList);
     provide('domainList', domainList);
+    provide('setFixedArea', setFixedArea);
+    provide('pageHeaderId', pageHeaderId);
+    provide('pageFooterId', pageFooterId);
 
     return {
       activePosi,
@@ -360,7 +436,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .edit-canvas {
-  margin: 0 auto;
+  // margin: 0 auto;
 }
 .edit-canvas-preview {
   position: fixed;

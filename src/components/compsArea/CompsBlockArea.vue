@@ -22,7 +22,9 @@ export default defineComponent({
     const addComp: any = inject('addComp')
 
     const handleAddComp = (value) => {
-      addComp(value.elName)
+      if (value.elName === 'combination-area') {
+        addComp(value.elName)
+      }
     }
 
     return {
@@ -35,7 +37,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .container-item {
-  margin-bottom: 20px;
+  padding: 5px;
   .container-item-btn {
     width: 100px !important;
     margin-bottom: 10px;

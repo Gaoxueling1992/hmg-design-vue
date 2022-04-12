@@ -133,7 +133,6 @@ const handelTpl = (
           }
         }
       }
-      console.log(JSON.stringify(savePageData.value));
       if (activeTab.value === 'TableContainer') {
         list[id] = {
           list: savePageData.value,
