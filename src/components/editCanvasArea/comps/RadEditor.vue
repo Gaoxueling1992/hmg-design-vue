@@ -3,6 +3,7 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
   <div
     class="flex1"

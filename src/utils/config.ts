@@ -81,7 +81,7 @@ const areaList: Array<object> = [
 const styleSheet: object = {
   fontFamily: 'Microsoft YaHei',
   fontWeight: '400',
-  fontSize: '14',
+  fontSize: '18',
   color: '#333333',
   justifyContent: 'left',
   backgroundColor: '',
@@ -240,7 +240,7 @@ const compBaseConfig = {
     styleSheet: {
       fontFamily: 'Microsoft YaHei',
       fontWeight: '400',
-      fontSize: '14',
+      fontSize: '18',
       color: '#333333',
       borderColor: '#333',
       width: '100%',
@@ -284,7 +284,7 @@ const compBaseConfig = {
     domainType: 'domain',
     styleSheet: {
       fontFamily: 'Microsoft YaHei',
-      fontSize: '14',
+      fontSize: '18',
       color: '#333333',
       backgroundColor: '',
       textDecoration: 'none',
@@ -399,7 +399,7 @@ const compBaseConfig = {
       required: false
     },
     fontColor: '#333',
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: 400,
     fontStyle: 'normal',
     textDecoration: 'none'

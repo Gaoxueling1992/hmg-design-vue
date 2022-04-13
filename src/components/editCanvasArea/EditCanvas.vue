@@ -12,8 +12,12 @@
         v-for="(line, idx) in headerLines"
         :key="idx"
         :id="'line' + String(idx)"
+        :style="{
+          'display': isReadonlyStatus ? 'table' : '',
+          'width': '100%'
+        }"
       >
-        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
           <div
             v-for="(ele, index) in line"
             :key="ele.id"
@@ -26,10 +30,11 @@
               ...ele.styleSheet,
               fontSize: ele.styleSheet.fontSize + 'px',
               borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
+              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
               width: eleWidth(line, index),
               'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
-              'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important'
+              'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
+              'vertical-align': 'middle'
             }"
           >
             <component :is="ele.elName" :ele="ele"></component>
@@ -42,8 +47,12 @@
         v-for="(line, idx) in bodyLines"
         :key="idx"
         :id="'line' + String(idx)"
+        :style="{
+          'display': isReadonlyStatus ? 'table' : '',
+          'width': '100%'
+        }"
       >
-        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
           <div
             v-for="(ele, index) in line"
             :key="ele.id"
@@ -57,8 +66,9 @@
               ...ele.styleSheet,
               fontSize: ele.styleSheet.fontSize + 'px',
               borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
-              width: eleWidth(line, index)
+              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+              width: eleWidth(line, index),
+              'vertical-align': 'middle'
             }"
             :class="{
               'paddingT10 paddingB10': ele.elName === 'RadLine'
@@ -74,8 +84,14 @@
         v-for="(line, idx) in footerLines"
         :key="idx"
         :id="'line' + String(idx)"
+        :style="{
+          'display': isReadonlyStatus ? 'table' : '',
+          'width': '100%'
+        }"
       >
-        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+        <div
+          style="position:relative;width:100%;line-height:1"
+          :style="{'display': isReadonlyStatus ? 'table-row' : 'flex'}">
           <div
             v-for="(ele, index) in line"
             :key="ele.id"
@@ -89,8 +105,9 @@
               ...ele.styleSheet,
               fontSize: ele.styleSheet.fontSize + 'px',
               borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'inline-block' : 'flex') : 'inline-block',
-              width: eleWidth(line, index)
+              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+              width: eleWidth(line, index),
+              'vertical-align': 'middle'
             }"
             :class="{
               'paddingT10 paddingB10': ele.elName === 'RadLine'

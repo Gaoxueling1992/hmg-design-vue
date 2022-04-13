@@ -388,7 +388,7 @@ export default defineComponent({
                 newLine.push({
                   ...line[j],
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold]
-                })
+                });
               } else {
                 newLine.push({
                   ...line[j]

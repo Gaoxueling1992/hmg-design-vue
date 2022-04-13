@@ -7,6 +7,10 @@
       marginBottom: ele.styleSheet.paddingBottom + 'px',
       marginLeft: ele.styleSheet.paddingLeft + 'px',
       marginRight: ele.styleSheet.paddingRight + 'px',
+      'border-color': 'inherit',
+      color: 'inherit !important',
+      'background-color': 'inherit',
+      'font-size': 'inherit'
     }"
     :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
   >{{ ele.label || '静态文本' }}</div>
