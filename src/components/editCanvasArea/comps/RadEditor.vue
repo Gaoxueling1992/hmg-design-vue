@@ -22,7 +22,7 @@
         textDecoration: ele.textDecoration
       }"
       :id="'editor' + ele.id"
-      @click="clickEditor"
+      @contextmenu.prevent="clickEditor"
     ></div>
   </div>
   <div
@@ -90,7 +90,6 @@ export default defineComponent({
     });
     const clickEditor = (e) => {
       if (e.target.classList && e.target.classList[0] === 'aspan') {
-        console.log(e, e.target.classList);
         //获取我们自定义的右键菜单
         let menu: any = document.getElementById('context-menu');
         menu.removeEventListener('click', () => {});
@@ -116,9 +115,16 @@ export default defineComponent({
         menu.style.top = e.clientY + 'px';
 
         menu.onclick = (event: any) => {
-          console.log('fsjkafh', e);
           if (event.target.id && event.target.id.indexOf('menu-item') > -1) {
             e.target.innerHTML = event.target.innerHTML;
+            setTimeout(() => {
+              menu.style.width = '0';
+              menu.style.padding = '0';
+            });
+          }
+        }
+        window.onclick = (event: any) => {
+          if (event.target.id.indexOf('menu-item') === -1) {
             setTimeout(() => {
               menu.style.width = '0';
               menu.style.padding = '0';

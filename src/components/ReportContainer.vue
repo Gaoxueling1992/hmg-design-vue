@@ -382,14 +382,17 @@ export default defineComponent({
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
           const lines = [];
+          let flag = 0;
           for (let i = 0; i < pageData.lines.length; i++) {
             const line = pageData.lines[i];
             const newLine = [];
             for (let j = 0; j < line.length; j++) {
               if (line[j].threshold && data3[line[j].threshold]) {
+                flag = 1;
                 newLine.push({
                   ...line[j],
-                  value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold]
+                  value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold],
+                  src: data3.src || ''
                 });
               } else {
                 newLine.push({
@@ -399,10 +402,12 @@ export default defineComponent({
             }
             lines.push(newLine);
           }
-          pageData.lines = [];
-          setTimeout(() => {
-            pageData.lines = lines;
-          });
+          if (flag === 1) {
+            pageData.lines = [];
+            setTimeout(() => {
+              pageData.lines = lines;
+            });
+          }
           break;
       }
     });

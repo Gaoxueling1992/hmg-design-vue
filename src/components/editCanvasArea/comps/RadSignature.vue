@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-02-14 17:44:05
+ * @LastEditTime: 2022-04-19 16:10:58
+ * @LastEditors: your name
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadSignature.vue
+-->
 <template>
   <div
     class="inherit"
@@ -44,7 +52,7 @@
         {{ ele.value }}&nbsp;
       </div>
     </template>
-    <template v-if="ele.type !== 'input' && (( isReadonlyStatus) || !isReadonlyStatus)">
+    <template v-if="ele.type !== 'input'">
       <a-image
         class="img"
         :height="ele.imgHeight"
@@ -61,16 +69,6 @@
           float: isReadonlyStatus ? 'left' : ''
         }"
       />
-      <span
-        v-else
-        class="default-img"
-        :style="{
-        height: ele.imgHeight+ 'px',
-        lineHeight: ele.imgHeight+ 'px',
-        width: ele.imgWidth + 'px',
-        float: isReadonlyStatus ? 'left' : ''
-      }"
-      >签名</span>
     </template>
   </div>
 </template>

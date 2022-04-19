@@ -441,7 +441,8 @@ const compBaseConfig = {
     imgHeight: '32',
     imgWidth: '50',
     elType: 'other',
-    rules: []
+    rules: [],
+    src: ''
   },
   'combination-area': {
     elName: 'CombinationArea',
