@@ -5,7 +5,7 @@
   >
     <table
       border="1"
-      style="width: 100%;border-collapse: collapse !important;"
+      style="width: 100%;border-collapse: collapse !important;margin-top:5px;margin-bottom:5px;"
       @contextmenu.prevent.stop="chooseTable"
     >
       <tr
@@ -178,8 +178,11 @@ export default defineComponent({
 
     window.addEventListener('message', (e) => {
       if (e.data.type === 'tableDetail') {
-        tableTpl.value = JSON.parse(e.data.data);
-        props.ele.value = JSON.parse(e.data.data);
+        let data = JSON.parse(e.data.data);
+        if (data.eleId === props.ele.id) {
+          tableTpl.value = JSON.parse(e.data.data);
+          props.ele.value = JSON.parse(e.data.data);
+        }
       }
     });
 
@@ -195,7 +198,7 @@ export default defineComponent({
     };
 
     const applyTpl = (item) => {
-      window.parent.postMessage({ type: 'fetchTableDetail', id: item.id }, '*');
+      window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id }, '*');
       chooseTableInner.value = false;
     };
 

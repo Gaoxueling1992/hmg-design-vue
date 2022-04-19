@@ -58,7 +58,6 @@
           <div
             v-for="(ele, index) in line"
             :key="ele.id"
-            class="padding5"
             :style="{
               'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
               'max-width': '100%',
@@ -96,7 +95,6 @@
           <div
             v-for="(ele, index) in line"
             :key="ele.id"
-            class="padding5"
             :style="{
               'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
               'max-width': '100%',

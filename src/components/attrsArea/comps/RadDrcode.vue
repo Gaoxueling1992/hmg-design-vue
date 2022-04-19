@@ -14,12 +14,6 @@
       :foreground="activeCompObj.lineColor"
       :id="'canvas' + activeCompObj.id"
     />
-    <a-button
-      type="primary"
-      v-if="activeCompObj.src"
-      class="apply-btn"
-      @click="applyDr"
-    >生成图片</a-button>
   </div>
   <div class="flex marginT10">
     <div class="flex-title3">底色</div>
@@ -46,6 +40,12 @@
       v-model:value="activeCompObj.imgHeight"
     />
   </div>
+  <a-button
+    type="primary"
+    class="marginT5"
+    v-if="activeCompObj.src"
+    @click="applyDr"
+  >生成图片</a-button>
   <div class="title marginT10 marginB5 fontW500">内边距</div>
   <div class="flex marginT10">
     <div class="flex-title">上</div>

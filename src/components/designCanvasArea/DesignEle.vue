@@ -153,7 +153,7 @@
         }"
       >{{ele.label}}</a-divider>
       <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'">
-        <template v-if="ele.src">
+        <template v-if="(ele.elName === 'RadDrcode' && ele.img) || (ele.src && ele.elName !== 'RadDrcode') ">
           <a-image
             v-if="ele.elName === 'RadImage'"
             class="img"

@@ -260,6 +260,7 @@ const handleCompsOper = (
 
   // 解析外部传入的模版详情，用于渲染
   const editTpl = (item: any) => {
+    pageData.lines = [];
     pageData.lines = item.lines;
     pageData.name = item.name;
     pageData.id = item.id;
@@ -402,6 +403,7 @@ export default defineComponent({
           setTimeout(() => {
             pageData.lines = lines;
           });
+          break;
       }
     });
 

@@ -66,7 +66,7 @@ export default defineComponent({
         '幼圆'
       ];
       editor.create();
-      // editor.txt.html(props.ele.value);
+      editor.txt.html(props.ele.value);
       editor.config.onchange = (newHtml) => {
         props.ele.value = newHtml;
         if (document.getElementById(`toolbar${props.ele.id}`)) {
