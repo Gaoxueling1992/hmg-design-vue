@@ -63,14 +63,6 @@ const compsList: Array<object> = [
 ]
 
 const areaList: Array<object> = [
-  // {
-  //   title: '页头',
-  //   elName: 'page-header'
-  // },
-  // {
-  //   title: '页尾',
-  //   elName: 'page-footer'
-  // },
   {
     title: '复合组件',
     elName: 'combination-area'
@@ -133,7 +125,9 @@ const compBaseConfig = {
       hideOnPrint: false
     },
     threshold: '',
-    domainType: 'domain'
+    domainType: 'domain',
+    elType: 'text',
+    rules: []
   },
   'rad-input': {
     elName: 'RadInput',
@@ -151,7 +145,9 @@ const compBaseConfig = {
     baseProps: baseProps,
     validate: validate,
     prefix: '',
-    suffix: ''
+    suffix: '',
+    elType: 'text',
+    rules: []
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -172,7 +168,9 @@ const compBaseConfig = {
     },
     format: 'YYYY-MM-DD',
     picker: 'date',
-    rangeOpen: false
+    rangeOpen: false,
+    elType: 'date',
+    rules: []
   },
   'rad-single-select': {
     elName: 'RadSingleSelect',
@@ -189,7 +187,9 @@ const compBaseConfig = {
     domainType: 'domain',
     baseProps: baseProps,
     layout: 'crosswise',
-    options: []
+    options: [],
+    elType: 'singles',
+    rules: []
   },
   'rad-mul-select': {
     elName: 'RadMulSelect',
@@ -207,7 +207,9 @@ const compBaseConfig = {
     baseProps: baseProps,
     layout: 'crosswise',
     options: [],
-    defaultType: []
+    defaultType: [],
+    elType: 'muls',
+    rules: []
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -228,7 +230,9 @@ const compBaseConfig = {
     prefix: '',
     suffix: '',
     min: 0,
-    max: 1000
+    max: 1000,
+    elType: 'number',
+    rules: []
   },
   'rad-line': {
     elName: 'RadLine',
@@ -246,7 +250,9 @@ const compBaseConfig = {
       width: '100%',
       paddingTop: '0',
       paddingBottom: '0'
-    }
+    },
+    elType: 'other',
+    rules: []
   },
   'rad-image': {
     elName: 'RadImage',
@@ -269,6 +275,8 @@ const compBaseConfig = {
     },
     imgHeight: '100',
     imgWidth: '100',
+    elType: 'other',
+    rules: []
   },
   'rad-table': {
     elName: 'RadTable',
@@ -292,7 +300,9 @@ const compBaseConfig = {
       width: '100%'
     },
     defaultType: {},
-    inputs: {}
+    inputs: {},
+    elType: 'table',
+    rules: []
   },
   'rad-mulitImagepicker': {
     elName: 'RadMulitImagepicker',
@@ -322,7 +332,9 @@ const compBaseConfig = {
     testTotalNum: 10,
     imgList: [],
     defaultType: [],
-    hideSelectBtn: true
+    hideSelectBtn: true,
+    elType: 'imgp',
+    rules: []
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',
@@ -350,7 +362,9 @@ const compBaseConfig = {
     textPosition: 'bottom',
     textSize: 20,
     codeWidth: 2,
-    codeHeight: 50
+    codeHeight: 50,
+    elType: 'other',
+    rules: []
   },
   'rad-drcode': {
     elName: 'RadDrcode',
@@ -379,7 +393,9 @@ const compBaseConfig = {
     textSize: 20,
     imgHeight: '100',
     imgWidth: '100',
-    img: ''
+    img: '',
+    elType: 'other',
+    rules: []
   },
   'rad-editor': {
     elName: 'RadEditor',
@@ -402,7 +418,9 @@ const compBaseConfig = {
     fontSize: 18,
     fontWeight: 400,
     fontStyle: 'normal',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    elType: 'text',
+    rules: []
   },
   'rad-signature': {
     elName: 'RadSignature',
@@ -421,7 +439,9 @@ const compBaseConfig = {
     validate: validate,
     imagePosi: 'right',
     imgHeight: '32',
-    imgWidth: '50'
+    imgWidth: '50',
+    elType: 'other',
+    rules: []
   },
   'combination-area': {
     elName: 'CombinationArea',
@@ -433,9 +453,124 @@ const compBaseConfig = {
     styleSheet: styleSheet,
     compsList: [],
     align: 'left',
-    layout: 'top'
+    layout: 'top',
+    elType: 'other',
+    rules: []
   }
 }
+
+const ruleMap: object = {
+  'other': {
+    n: '其他'
+  },
+  'text': {
+    n: '文本',
+    conditionList: {
+      0:  '包含',
+      1: '不包含',
+      2: '是',
+      3: '不是',
+      4: '开头为',
+      5: '结尾为',
+      6: '为空',
+      7: '不为空'
+    }
+  },
+  'imgp': {
+    n: '图片选择器',
+    conditionList: {
+      0: '在范围内',
+      1: '不在范围内',
+      2: '不等于',
+      3: '大于',
+      4: '大于等于',
+      5: '小于',
+      6: '小于等于',
+      7: '等于'
+    }
+  },
+  'number': {
+    n: '数值',
+    conditionList: {
+      0: '在范围内',
+      1: '不在范围内',
+      2: '不等于',
+      3: '大于',
+      4: '大于等于',
+      5: '小于',
+      6: '小于等于',
+      7: '等于'
+    }
+  },
+  'table': {
+    n: '表格',
+    conditionList: {
+      0: '有空白',
+      1: '无空白'
+    }
+  },
+  'muls': {
+    n: '多选',
+    conditionList: {
+      0: '包含', 
+      1: '不包含',
+      6: '为空',
+      7: '不为空'
+    } 
+  },
+  'singles': {
+    n: '单选',
+    conditionList: {
+      0: '是',
+      1: '不是',
+      6: '为空',
+      7: '不为空'
+    }
+  },
+  'date': {
+    n: '时间',
+    conditionList: {
+      4: '是',
+      5: '不是',
+      2: '早于',
+      3: '晚于',
+      0: '在范围内',
+      1: '不在范围内',
+      6: '为空',
+      7: '不为空'
+    }
+  }
+};
+
+const actionList: any = {
+  0: '隐藏',
+  1: '显示',
+  2: '可编辑',
+  3: '只读',
+  4: '必填',
+  // {
+  //   id: 5,
+  //   value: '样式变化'
+  // },
+  6: '拼接',
+  // {
+  //   id: 7,
+  //   value: '计算（域值用${xx}）'
+  // },
+  8: '提示'
+  // {
+  //   id: 9,
+  //   value: '基础属性'
+  // }
+};
+
+const opportunityMap: any = {
+  'init': '初始化',
+  'change': '值变化时',
+  'click': '单击时',
+  'dbclick': '双击时',
+  'submit': '提交'
+};
 
 const pickerMap: object = {
   second: [{
@@ -857,5 +992,8 @@ export {
   pickerMap,
   editorMenus,
   editorFontSizes,
-  areaList
+  areaList,
+  ruleMap,
+  actionList,
+  opportunityMap
 }

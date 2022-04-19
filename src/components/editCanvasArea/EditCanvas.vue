@@ -34,7 +34,9 @@
               width: eleWidth(line, index),
               'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
               'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
-              'vertical-align': 'middle'
+              'vertical-align': 'middle',
+              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
             }"
           >
             <component :is="ele.elName" :ele="ele"></component>
@@ -68,10 +70,9 @@
               borderWidth: ele.styleSheet.borderWidth + 'px',
               display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
               width: eleWidth(line, index),
-              'vertical-align': 'middle'
-            }"
-            :class="{
-              'paddingT10 paddingB10': ele.elName === 'RadLine'
+              'vertical-align': 'middle',
+              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
             }"
           >
             <component :is="ele.elName" :ele="ele"></component>
@@ -107,10 +108,9 @@
               borderWidth: ele.styleSheet.borderWidth + 'px',
               display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
               width: eleWidth(line, index),
-              'vertical-align': 'middle'
-            }"
-            :class="{
-              'paddingT10 paddingB10': ele.elName === 'RadLine'
+              'vertical-align': 'middle',
+              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
             }"
           >
             <component :is="ele.elName" :ele="ele"></component>
@@ -249,7 +249,7 @@ export default defineComponent({
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
   width: calc(100% - 20px);
-  // margin: 0 auto 20px auto;
+  // margin: 0 auto;
   .ql-container {
     height: auto;
   }

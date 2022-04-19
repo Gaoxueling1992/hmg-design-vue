@@ -3,7 +3,7 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;line-height:1.5;margin-top:10px;"
   >{{ ele.label }}</div>
   <div
     class="flex1"
@@ -15,6 +15,12 @@
     ></div>
     <div
       class="container container-editor"
+      :style="{
+        fontSize: ele.fontSize + 'px',
+        fontWeight: ele.fontWeight,
+        fontStyle: ele.fontStyle,
+        textDecoration: ele.textDecoration
+      }"
       :id="'editor' + ele.id"
       @click="clickEditor"
     ></div>
@@ -22,7 +28,13 @@
   <div
     v-show="isReadonlyStatus"
     class="inherit editor-display-text"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 1.5"
+    :style="{
+      fontSize: ele.fontSize + 'px',
+      fontWeight: ele.fontWeight,
+      fontStyle: ele.fontStyle,
+      textDecoration: ele.textDecoration,
+      'line-height': 1.2
+    }"
   >
     <div v-html="ele.value"></div>
   </div>
@@ -54,7 +66,7 @@ export default defineComponent({
         '幼圆'
       ];
       editor.create();
-      editor.txt.html(props.ele.value);
+      // editor.txt.html(props.ele.value);
       editor.config.onchange = (newHtml) => {
         props.ele.value = newHtml;
         if (document.getElementById(`toolbar${props.ele.id}`)) {
@@ -202,5 +214,11 @@ font[size='3'] {
     line-height: 25px;
     white-space: nowrap;
   }
+}
+.w-e-text-container p, .w-e-menu-panel p {
+  font-size: unset !important;
+}
+.w-e-text p {
+  line-height: 1.2;
 }
 </style>

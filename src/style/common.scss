@@ -140,6 +140,12 @@ p {
   }
 }
 
+@for $i from 12 through 30 {
+  .fontS#{$i} {
+    font-size: #{$i}px;
+  }
+}
+
 @for $i from 0 through 90 {
   @if $i % 5==0 {
     .paddingT#{$i} {

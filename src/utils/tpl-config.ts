@@ -13,6 +13,7 @@ const headStr = `
     @font-face{font-family: "Times New Roman";src:url('{fontPath}/times.ttf') format('truetype');}
     @font-face{font-family: "LiSu";src:url('{fontPath}/simli.ttf') format('truetype');}
     @font-face{font-family: "YouYuan";src:url('{fontPath}/simyou.ttf') format('truetype');}
+    .w-e-text-container p{margin-top:0; margin-bottom:0;}
   </style>
 </head>
 <body style="margin: 0">
@@ -36,6 +37,7 @@ const openFixedAreaStr = `
     @font-face{font-family: "Times New Roman";src:url('{fontPath}/times.ttf') format('truetype');}
     @font-face{font-family: "LiSu";src:url('{fontPath}/simli.ttf') format('truetype');}
     @font-face{font-family: "YouYuan";src:url('{fontPath}/simyou.ttf') format('truetype');}
+    p{margin-top:0; margin-bottom:0;}
   </style>
 	<script>
 		function subst() {

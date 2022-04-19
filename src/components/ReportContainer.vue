@@ -105,7 +105,8 @@ const handleCompsOper = (
       ...compBaseConfig[value],
       styleSheet: {
         ...compBaseConfig[value].styleSheet
-      }
+      },
+      rules: []
     });
     activeCompObj.value = {
       ...baseConfig,
@@ -369,7 +370,7 @@ export default defineComponent({
             pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
-            pageData.html = headStr + `<div style="padding:${pageData.pageHeaderId ? 0 : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
+            pageData.html = headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData) }, '*');
 
             setTimeout(() => {
@@ -437,9 +438,6 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
-.edit-canvas {
-  // margin: 0 auto;
-}
 .edit-canvas-preview {
   position: fixed;
   right: 280px;
