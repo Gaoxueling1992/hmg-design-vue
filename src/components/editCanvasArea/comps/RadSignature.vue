@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2022-02-14 17:44:05
- * @LastEditTime: 2022-04-19 16:10:58
- * @LastEditors: your name
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadSignature.vue
--->
 <template>
   <div
     class="inherit"
@@ -25,50 +17,91 @@
       'flex flex1': !isReadonlyStatus
     }"
     :style="{
-      flexDirection: ele.imagePosi === 'right' ? 'row' : (ele.imagePosi === 'left' ? 'row-reverse' : (ele.imagePosi === 'up' ? 'column-reverse' : 'column')),
+      flexDirection: (ele.imagePosi === 'right' || ele.imagePosi === 'left') ? 'row' : 'column',
       display: isReadonlyStatus ? 'inline-block' : ''
     }"
   >
-    <template v-if="ele.type !== 'image'">
-      <a-input
-        style="flex: 1"
-        :disabled="ele.baseProps.readonly"
-        class="inherit"
-        v-if="!isReadonlyStatus"
-        v-model:value="ele.value"
-        :placeholder="ele.placeholder"
-      >
-      </a-input>
-      <div
-        v-else
-        style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
-    padding-top: 1px;
-    padding-bottom: 1px;"
-        class="inherit display-text"
-        :style="{
-          float: isReadonlyStatus ? '' : 'left'
-        }"
-      >
-        {{ ele.value }}&nbsp;
-      </div>
+    <template v-if="ele.imagePosi === 'right' || ele.imagePosi === 'bottom'">
+      <template v-if="ele.type !== 'image'">
+        <a-input
+          style="flex: 1"
+          :disabled="ele.baseProps.readonly"
+          class="inherit"
+          v-if="!isReadonlyStatus"
+          v-model:value="ele.value"
+          :placeholder="ele.placeholder"
+        >
+        </a-input>
+        <div
+          v-else
+          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          class="inherit display-text"
+          :style="{
+            float: ele.imagePosi === 'right' ? 'left' : ''
+          }"
+        >
+          {{ ele.value }}&nbsp;
+        </div>
+      </template>
+      <template v-if="ele.type !== 'input'">
+        <img
+          class="img"
+          :height="ele.imgHeight"
+          :width="ele.imgWidth"
+          :src="ele.src"
+          v-if="ele.src"
+          alt="签名"
+          :style="{
+            height: ele.imgHeight+ 'px',
+            lineHeight: ele.imgHeight+ 'px',
+            width: ele.imgWidth + 'px',
+            display: 'block',
+            border: '1px solid',
+            float: ele.imagePosi === 'right' ? 'left' : ''
+          }"
+        />
+      </template>
     </template>
-    <template v-if="ele.type !== 'input'">
-      <a-image
-        class="img"
-        :height="ele.imgHeight"
-        :width="ele.imgWidth"
-        :src="ele.src"
-        v-if="ele.src"
-        alt="签名"
-        :style="{
-          height: ele.imgHeight+ 'px',
-          lineHeight: ele.imgHeight+ 'px',
-          width: ele.imgWidth + 'px',
-          display: 'block',
-          border: '1px solid',
-          float: isReadonlyStatus ? 'left' : ''
-        }"
-      />
+    <template v-else>
+      <template v-if="ele.type !== 'input'">
+        <img
+          class="img"
+          :height="ele.imgHeight"
+          :width="ele.imgWidth"
+          :src="ele.src"
+          v-if="ele.src"
+          alt="签名"
+          :style="{
+            height: ele.imgHeight+ 'px',
+            lineHeight: ele.imgHeight+ 'px',
+            width: ele.imgWidth + 'px',
+            display: 'block',
+            border: '1px solid',
+            float: ele.imagePosi === 'left' ? 'left' : ''
+          }"
+        />
+      </template>
+      <template v-if="ele.type !== 'image'">
+        <a-input
+          style="flex: 1"
+          :disabled="ele.baseProps.readonly"
+          class="inherit"
+          v-if="!isReadonlyStatus"
+          v-model:value="ele.value"
+          :placeholder="ele.placeholder"
+        >
+        </a-input>
+        <div
+          v-else
+          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          class="inherit display-text"
+          :style="{
+            float: ele.imagePosi === 'left' ? 'left' : ''
+          }"
+        >
+          {{ ele.value }}&nbsp;
+        </div>
+      </template>
     </template>
   </div>
 </template>
