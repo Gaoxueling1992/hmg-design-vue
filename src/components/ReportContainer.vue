@@ -58,7 +58,7 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, watch, toRefs } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -265,7 +265,11 @@ const handleCompsOper = (
     pageData.name = item.name;
     pageData.id = item.id;
     pageData.pageType = item.pageType;
-    pageData.styleSheet = item.styleSheet;
+    pageData.styleSheet = {
+      minHeight: item.styleSheet.minHeight,
+      width: item.styleSheet.width,
+      padding: item.styleSheet.padding
+    };
     pageData.pageFooterId = item.pageFooterId;
     pageData.pageHeaderId = item.pageHeaderId;
     pageData.headerLine = item.headerLine;
@@ -381,32 +385,20 @@ export default defineComponent({
           break;
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
-          const lines = [];
-          let flag = 0;
-          for (let i = 0; i < pageData.lines.length; i++) {
-            const line = pageData.lines[i];
-            const newLine = [];
+          const { lines } = toRefs(pageData);
+          console.log(lines.value);
+          for (let i = 0; i < lines.value.length; i++) {
+            const line = lines.value[i];
             for (let j = 0; j < line.length; j++) {
               if (line[j].threshold && data3[line[j].threshold]) {
-                flag = 1;
-                newLine.push({
+                lines.value[i][j] = {
                   ...line[j],
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold],
                   src: data3.src || ''
-                });
-              } else {
-                newLine.push({
-                  ...line[j]
-                });
+                };
+                console.log(lines.value[i][j].value);
               }
             }
-            lines.push(newLine);
-          }
-          if (flag === 1) {
-            pageData.lines = [];
-            setTimeout(() => {
-              pageData.lines = lines;
-            });
           }
           break;
       }
@@ -428,6 +420,20 @@ export default defineComponent({
     provide('setFixedArea', setFixedArea);
     provide('pageHeaderId', pageHeaderId);
     provide('pageFooterId', pageFooterId);
+
+    watch(
+      () => pageData,
+      (val) => {
+        let timer: any;
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function () {
+          window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val) }, '*');
+        }, 1000);
+      },
+      { deep: true }
+    )
 
     return {
       activePosi,

@@ -40,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, Ref, inject, ref } from 'vue';
+import { defineComponent, onMounted, Ref, inject, ref, toRefs, watch } from 'vue';
 import E from 'wangeditor';
 import { editorMenus, editorFontSizes } from '@/utils/config';
 
@@ -48,10 +48,12 @@ export default defineComponent({
   props: ['ele'],
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    let editor;
+    const { ele } = toRefs(props);
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
-      const editor = new E(toolbarid, id);
+      editor = new E(toolbarid, id);
       editor.config.menus = editorMenus;
       editor.config.fontSizes = editorFontSizes;
       editor.config.fontNames = [
@@ -87,6 +89,9 @@ export default defineComponent({
       if (document.getElementById(`toolbar${props.ele.id}`)) {
         document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
       }
+    });
+    watch(ele, (val) => {
+      editor.txt.html(val.value);
     });
     const clickEditor = (e) => {
       if (e.target.classList && e.target.classList[0] === 'aspan') {
