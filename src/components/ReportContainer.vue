@@ -486,5 +486,8 @@ export default defineComponent({
     top: 60px;
   }
 }
+.ant-calendar-picker-container {
+  z-index: 10500 !important;
+}
 </style>
 
