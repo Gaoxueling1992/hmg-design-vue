@@ -7,8 +7,9 @@
       @change="activeCompObj.threshold = ''"
     >
       <a-select-option value="domain">数据库域值</a-select-option>
-      <a-select-option value="temp">临时显示</a-select-option>
-      <a-select-option value="prop">存储数据</a-select-option>
+      <a-select-option value="TEMP_">临时显示</a-select-option>
+      <a-select-option value="PROP_">存储数据</a-select-option>
+      <a-select-option value="nosubmit">仅绑定</a-select-option>
     </a-select>
     <a-select
       v-if="activeCompObj.domainType === 'domain'"

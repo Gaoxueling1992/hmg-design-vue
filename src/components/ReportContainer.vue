@@ -396,7 +396,6 @@ export default defineComponent({
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold],
                   src: data3.src || ''
                 };
-                isModified.value = true;
               }
             }
           }
@@ -421,14 +420,18 @@ export default defineComponent({
     provide('pageHeaderId', pageHeaderId);
     provide('pageFooterId', pageFooterId);
 
-    let timer:any;
+    let timer: any;
     watch(
       () => pageData,
       (val) => {
+        if (isReadonlyStatus.value) {
+          return;
+        }
         if (timer) {
           clearTimeout(timer);
         }
         timer = setTimeout(function () {
+          isModified.value = true;
           window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val) }, '*');
         }, 1000);
       },

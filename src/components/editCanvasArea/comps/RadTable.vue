@@ -168,9 +168,9 @@ const dealWithKeyup = () => {
 export default defineComponent({
   props: ['ele'],
   setup(props) {
-    const tableTpl: any = ref(props.ele.value) || ref<object>({});
+    const tableTpl: any = ref(props.ele.value);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
-    const inputs: Ref<object> = ref(props.ele.inputs) || ref<object>({});
+    const inputs: Ref<object> = ref(props.ele.inputs);
     const tds: Ref<number> = ref<number>(0);
     const chooseTableInner: Ref<boolean> = ref<boolean>(false);
     const chooseTableOpen: any = inject('chooseTableOpen') || 'null';
@@ -198,7 +198,6 @@ export default defineComponent({
     };
 
     const applyTpl = (item) => {
-      console.log('fksjdhfkjdsjk');
       window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id }, '*');
       chooseTableInner.value = false;
     };
