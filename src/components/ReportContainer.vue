@@ -315,6 +315,7 @@ export default defineComponent({
     let tableList: any = reactive([]);
     const domainList = reactive([]);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
+    const isModified: Ref<boolean> = ref(false);
     const {
       addComp,
       activeComp,
@@ -376,7 +377,7 @@ export default defineComponent({
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
             pageData.html = headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
-            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData) }, '*');
+            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value }, '*');
 
             setTimeout(() => {
               isReadonlyStatus.value = false;
@@ -386,7 +387,6 @@ export default defineComponent({
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
           const { lines } = toRefs(pageData);
-          console.log(lines.value);
           for (let i = 0; i < lines.value.length; i++) {
             const line = lines.value[i];
             for (let j = 0; j < line.length; j++) {
@@ -396,7 +396,7 @@ export default defineComponent({
                   value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold],
                   src: data3.src || ''
                 };
-                console.log(lines.value[i][j].value);
+                isModified.value = true;
               }
             }
           }
@@ -421,10 +421,10 @@ export default defineComponent({
     provide('pageHeaderId', pageHeaderId);
     provide('pageFooterId', pageFooterId);
 
+    let timer:any;
     watch(
       () => pageData,
       (val) => {
-        let timer: any;
         if (timer) {
           clearTimeout(timer);
         }

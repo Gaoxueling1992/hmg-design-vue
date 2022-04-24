@@ -24,7 +24,7 @@
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;
     padding-bottom: 1px;"
-  >{{moment(ele.value).format(ele.format)}}</div>
+  >{{ele.value ? moment(ele.value).format(ele.format) : ''}}</div>
 </template>
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';

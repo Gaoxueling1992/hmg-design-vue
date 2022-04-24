@@ -198,6 +198,7 @@ export default defineComponent({
     };
 
     const applyTpl = (item) => {
+      console.log('fksjdhfkjdsjk');
       window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id }, '*');
       chooseTableInner.value = false;
     };

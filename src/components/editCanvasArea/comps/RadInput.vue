@@ -9,7 +9,7 @@
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
-  <template v-if="!isReadonlyStatus">
+  <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <a-input
       style="flex: 1"
       :disabled="ele.baseProps.readonly"
