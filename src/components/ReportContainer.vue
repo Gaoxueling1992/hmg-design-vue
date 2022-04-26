@@ -58,7 +58,7 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, watch, toRefs } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, onBeforeUnmount } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -316,6 +316,11 @@ export default defineComponent({
     const domainList = reactive([]);
     const { changePageConfig, changePageSize } = handlePageData(pageData);
     const isModified: Ref<boolean> = ref(false);
+    const currentReport: Ref<string> = ref('');
+    const splitField: Ref<string> = ref('');
+    const splitRule: Ref<string> = ref('');
+    const currentDec: Ref<string> = ref('')
+    
     const {
       addComp,
       activeComp,
@@ -346,8 +351,26 @@ export default defineComponent({
           saveTpl();
           break;
         case 'resetData':
-          const data = JSON.parse(e.data.data);
-          editTpl(data);
+          if (e.data.splitJson) {
+            let splitJson = JSON.parse(e.data.splitJson);
+            currentDec.value = splitJson.calSplitField.filter(item => item.id === splitJson.currentReport)?.[0]?.label
+            currentReport.value = splitJson.currentReport;
+            splitField.value = splitJson.splitField;
+            splitRule.value = splitJson.splitRule;
+          }
+          let data = JSON.parse(e.data.data);
+          if (data) {
+            editTpl(data);
+          }
+          break;
+        case 'resetSplit':
+          if (e.data.splitJson) {
+            let splitJson = JSON.parse(e.data.splitJson);
+            currentDec.value = splitJson.calSplitField.filter(item => item.id === splitJson.currentReport)?.[0]?.label
+            currentReport.value = splitJson.currentReport;
+            splitField.value = splitJson.splitField;
+            splitRule.value = splitJson.splitRule;
+          }
           break;
         case 'resetTableList':
           const data1 = JSON.parse(e.data.data);
@@ -357,14 +380,16 @@ export default defineComponent({
           });
           break;
         case 'resetDomainList':
-          const data2 = JSON.parse(e.data.data);
-          domainList.length = 0;
-          data2.forEach(domain => {
-            domainList.push({
-              value: domain.option,
-              label: domain.name + ' #' + domain.option
+          if(e.data.data && JSON.parse(e.data.data)) {
+            const data2 = JSON.parse(e.data.data);
+            domainList.length = 0;
+            data2.forEach(domain => {
+              domainList.push({
+                value: domain.option,
+                label: domain.name + ' #' + domain.option
+              });
             });
-          });
+          }
           break;
         case 'saveEditor': 
           isReadonlyStatus.value = true;
@@ -391,9 +416,23 @@ export default defineComponent({
             const line = lines.value[i];
             for (let j = 0; j < line.length; j++) {
               if (line[j].threshold && data3[line[j].threshold]) {
+                let value = line[j].value;
+                let insertValue = data3[line[j].threshold];
+                if (value && line[j].elName === 'RadEditor' ) {
+                  let arr = value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+                  for (let j = 0; j < arr.length; j++) {
+                    if (arr[j]) {
+                      if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                        let txt = arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, '');
+                        value = value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
+                        break;
+                      }
+                    }
+                  }
+                }
                 lines.value[i][j] = {
                   ...line[j],
-                  value: e.data.addTo ? line[j].value + data3[line[j].threshold] : data3[line[j].threshold],
+                  value,
                   src: data3.src || ''
                 };
               }
@@ -419,6 +458,10 @@ export default defineComponent({
     provide('setFixedArea', setFixedArea);
     provide('pageHeaderId', pageHeaderId);
     provide('pageFooterId', pageFooterId);
+    provide('currentReport', currentReport);
+    provide('splitField', splitField);
+    provide('splitRule', splitRule);
+    provide('currentDec', currentDec);
 
     let timer: any;
     watch(

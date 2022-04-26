@@ -48,6 +48,15 @@ export default defineComponent({
   props: ['ele'],
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    // provide('currentRerport', currentRerport);
+    // provide('splitField', splitField);
+    // provide('splitRule', splitRule);
+    // provide('currentDec', currentDec);
+    const currentReport: Ref<string> = inject('currentReport');
+    const splitField: Ref<string> = inject('splitField');
+    const splitRule: Ref<string> = inject('splitRule');
+    const currentDec: Ref<string> = inject('currentDec');
+
     let editor;
     const { ele } = toRefs(props);
     onMounted(() => {
@@ -61,16 +70,56 @@ export default defineComponent({
         '新宋体',
         '仿宋',
         '楷体',
-        '黑体',
         '微软雅黑',
         'Times New Roman',
         '隶书',
         '幼圆'
       ];
       editor.create();
-      editor.txt.html(props.ele.value);
+
+      const inputCurReport = () => {
+        if (props.ele.value) {
+          let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+          for (let j = 0; j < arr.length; j++) {
+            if (arr[j]) {
+              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                editor.txt.html(arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, ''));
+                return;
+              }
+            }
+          }
+        }
+      };
+      if (splitField.value) {
+        inputCurReport();
+      } else {
+         editor.txt.html(props.ele.value);
+      }
+
+      const calValue = (h) => {
+        if (props.ele.value) {
+          let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+          for (let j = 0; j < arr.length; j++) {
+            if (arr[j]) {
+              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                props.ele.value = props.ele.value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
+                return;
+              }
+            }
+          }
+        }
+      };
+
+      // 切换当前部位时，重算富文本内容
+      watch(currentReport, () => { inputCurReport(); })
+      watch(ele, () => { inputCurReport(); }, { deep: true });
+
       editor.config.onchange = (newHtml) => {
-        props.ele.value = newHtml;
+        if (splitField.value) {
+          calValue(newHtml);
+        } else {
+          props.ele.value = newHtml;
+        }
         if (document.getElementById(`toolbar${props.ele.id}`)) {
           document.getElementById(`toolbar${props.ele.id}`).style.display = '';
         }
@@ -89,10 +138,11 @@ export default defineComponent({
       if (document.getElementById(`toolbar${props.ele.id}`)) {
         document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
       }
+      
     });
-    watch(ele, (val) => {
-      editor.txt.html(val.value);
-    });
+    // watch(ele, (val) => {
+    //   // inputCurReport();
+    // });
     const clickEditor = (e) => {
       if (e.target.classList && e.target.classList[0] === 'aspan') {
         //获取我们自定义的右键菜单
@@ -226,7 +276,8 @@ font[size='3'] {
     white-space: nowrap;
   }
 }
-.w-e-text-container p, .w-e-menu-panel p {
+.w-e-text-container p,
+.w-e-menu-panel p {
   font-size: unset !important;
 }
 .w-e-text p {
