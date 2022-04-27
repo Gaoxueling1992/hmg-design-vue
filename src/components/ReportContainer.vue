@@ -58,7 +58,7 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, onBeforeUnmount } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -319,7 +319,8 @@ export default defineComponent({
     const currentReport: Ref<string> = ref('');
     const splitField: Ref<string> = ref('');
     const splitRule: Ref<string> = ref('');
-    const currentDec: Ref<string> = ref('')
+    const currentDec: Ref<string> = ref('');
+    let calSplitField = null;
     
     const {
       addComp,
@@ -342,6 +343,14 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
+
+    const sleep = ms => {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    };
+    const getDomHtml = () => {
+      return sleep(100).then(v => document.getElementById('edit-canvas-body').innerHTML);
+    };
+
     window.addEventListener('message', async (e) => {
       switch(e.data.type) {
         case 'newTpl':
@@ -357,6 +366,7 @@ export default defineComponent({
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
+            calSplitField = splitJson.calSplitField;
           }
           let data = JSON.parse(e.data.data);
           if (data) {
@@ -370,6 +380,7 @@ export default defineComponent({
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
+            calSplitField = splitJson.calSplitField;
           }
           break;
         case 'resetTableList':
@@ -391,20 +402,36 @@ export default defineComponent({
             });
           }
           break;
-        case 'saveEditor': 
+        case 'saveEditor':
           isReadonlyStatus.value = true;
-          setTimeout(() => {
+          nextTick(async () => {
             let headercanvas = document.getElementById('edit-canvas-header').innerHTML;
             let footercanvas = document.getElementById('edit-canvas-footer').innerHTML;
-            let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
+            pageData.html = '';
+            if (splitField.value) {
+              console.log('split print', splitField.value, calSplitField);
+              let lastDec = currentDec.value;
+              let lastReport = currentReport.value;
+              // 拆分报告 生成多份报告
+              for (let i = 0; i < calSplitField.length; i++) {
+                currentDec.value = calSplitField[i].label;
+                currentReport.value = calSplitField[i].id;
+                let bodycanvas = await getDomHtml();
+                pageData.html += headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};${i > 0 ? 'page-break-before: always;' : ''}">` + bodycanvas + '</div>' + footStr;
+              }
+              currentDec.value = lastDec;
+              currentReport.value = lastReport;
+            } else {
+              let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
+              pageData.html += headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
+            }
             pageData.headerHtml = pageData.pageHeaderId ? (openFixedAreaStr + (pageData.pageNumType ? (+pageData.pageNumType === 1 ? pageStrStyle + pageStr1 : pageStrStyle + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + headercanvas + '</div>' + footStr) : '';
             pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
-            pageData.html = headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value }, '*');
 
-            setTimeout(() => {
+            nextTick(() => {
               isReadonlyStatus.value = false;
             });
           });

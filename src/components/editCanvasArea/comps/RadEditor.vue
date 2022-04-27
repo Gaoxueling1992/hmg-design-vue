@@ -36,11 +36,11 @@
       'line-height': 1.2
     }"
   >
-    <div v-html="ele.value"></div>
+    <div v-html="readonlyValue"></div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, Ref, inject, ref, toRefs, watch } from 'vue';
+import { defineComponent, onMounted, Ref, inject, ref, toRefs, watch, computed } from 'vue';
 import E from 'wangeditor';
 import { editorMenus, editorFontSizes } from '@/utils/config';
 
@@ -48,14 +48,24 @@ export default defineComponent({
   props: ['ele'],
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
-    // provide('currentRerport', currentRerport);
-    // provide('splitField', splitField);
-    // provide('splitRule', splitRule);
-    // provide('currentDec', currentDec);
     const currentReport: Ref<string> = inject('currentReport');
     const splitField: Ref<string> = inject('splitField');
     const splitRule: Ref<string> = inject('splitRule');
     const currentDec: Ref<string> = inject('currentDec');
+
+    const readonlyValue = computed(() => {
+      if (props.ele.value) {
+        let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+        for (let j = 0; j < arr.length; j++) {
+          if (arr[j]) {
+            if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+              console.log(arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, ''));
+              return arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, '');
+            }
+          }
+        }
+      }
+    });
 
     let editor;
     const { ele } = toRefs(props);
@@ -111,7 +121,7 @@ export default defineComponent({
       };
 
       // 切换当前部位时，重算富文本内容
-      watch(currentReport, () => { inputCurReport(); })
+      watch(currentReport, () => { inputCurReport();})
       watch(ele, () => { inputCurReport(); }, { deep: true });
 
       editor.config.onchange = (newHtml) => {
@@ -190,7 +200,8 @@ export default defineComponent({
     };
     return {
       isReadonlyStatus,
-      clickEditor
+      clickEditor,
+      readonlyValue
     };
   }
 });
