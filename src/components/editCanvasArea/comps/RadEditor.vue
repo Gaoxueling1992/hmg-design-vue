@@ -90,13 +90,18 @@ export default defineComponent({
       const inputCurReport = () => {
         if (props.ele.value) {
           let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+          let hasStr = false;
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                 editor.txt.html(arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, ''));
-                return;
+                hasStr = true;
+                break;
               }
             }
+          }
+          if (!hasStr) {
+            editor.txt.html('');
           }
         }
       };
@@ -109,13 +114,18 @@ export default defineComponent({
       const calValue = (h) => {
         if (props.ele.value) {
           let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+          let hasVal = false; 
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                 props.ele.value = props.ele.value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
-                return;
+                hasVal = true;
+                break;
               }
             }
+          }
+          if (!hasVal) {
+            props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
           }
         }
       };

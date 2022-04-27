@@ -409,7 +409,6 @@ export default defineComponent({
             let footercanvas = document.getElementById('edit-canvas-footer').innerHTML;
             pageData.html = '';
             if (splitField.value) {
-              console.log('split print', splitField.value, calSplitField);
               let lastDec = currentDec.value;
               let lastReport = currentReport.value;
               // 拆分报告 生成多份报告
@@ -447,14 +446,19 @@ export default defineComponent({
                 let insertValue = data3[line[j].threshold];
                 if (value && line[j].elName === 'RadEditor' ) {
                   let arr = value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+                  let hasVal = false; 
                   for (let j = 0; j < arr.length; j++) {
                     if (arr[j]) {
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                         let txt = arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, '');
                         value = value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
+                        hasVal = true;
                         break;
                       }
                     }
+                  }
+                  if (!hasVal) {
+                    value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
                   }
                 }
                 lines.value[i][j] = {
