@@ -59,8 +59,7 @@ export default defineComponent({
         for (let j = 0; j < arr.length; j++) {
           if (arr[j]) {
             if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-              console.log(arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, ''));
-              return arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, '');
+              return arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
             }
           }
         }
@@ -72,6 +71,14 @@ export default defineComponent({
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
+      window.addEventListener('message', async (e) => {
+        if (e.data.type === 'resetReporetDesc' && e.data.currentDec && e.data.oldDesc && props.ele.value) {
+          let { currentDec, oldDesc } = e.data;
+          let oldV = oldDesc + '%%' + currentReport.value;
+          let newV = currentDec + '%%' + currentReport.value;
+          props.ele.value = props.ele.value.split(oldV).join(newV);
+        }
+      });
       editor = new E(toolbarid, id);
       editor.config.menus = editorMenus;
       editor.config.fontSizes = editorFontSizes;
@@ -94,7 +101,7 @@ export default defineComponent({
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                editor.txt.html(arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, ''));
+                editor.txt.html(arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), ''));
                 hasStr = true;
                 break;
               }
@@ -108,7 +115,7 @@ export default defineComponent({
       if (splitField.value) {
         inputCurReport();
       } else {
-         editor.txt.html(props.ele.value);
+        editor.txt.html(props.ele.value);
       }
 
       const calValue = (h) => {
@@ -118,8 +125,12 @@ export default defineComponent({
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                // ???? 
+                // console.log('666', props.ele.value)
+                // props.ele.value = props.ele.value.split(arr[j]).join(`<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
                 props.ele.value = props.ele.value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
                 hasVal = true;
+                // console.log('444', props.ele.value)
                 break;
               }
             }
@@ -160,9 +171,6 @@ export default defineComponent({
       }
       
     });
-    // watch(ele, (val) => {
-    //   // inputCurReport();
-    // });
     const clickEditor = (e) => {
       if (e.target.classList && e.target.classList[0] === 'aspan') {
         //获取我们自定义的右键菜单

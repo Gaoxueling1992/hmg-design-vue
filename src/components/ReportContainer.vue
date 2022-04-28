@@ -308,6 +308,7 @@ export default defineComponent({
   emits: ['saveTpl'],
   name: 'ReportContainer',
   setup(props, { emit }) {
+    debugger
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);
     const isReadonlyStatus: Ref<boolean> = ref(false);
@@ -362,11 +363,12 @@ export default defineComponent({
         case 'resetData':
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
-            currentDec.value = splitJson.calSplitField.filter(item => item.id === splitJson.currentReport)?.[0]?.label
+            currentDec.value = splitJson.calSplitField.filter(item => +item.id === +splitJson.currentReport)?.[0]?.label
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
             calSplitField = splitJson.calSplitField;
+            console.log(calSplitField)
           }
           let data = JSON.parse(e.data.data);
           if (data) {
@@ -376,7 +378,7 @@ export default defineComponent({
         case 'resetSplit':
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
-            currentDec.value = splitJson.calSplitField.filter(item => item.id === splitJson.currentReport)?.[0]?.label
+            currentDec.value = splitJson.calSplitField.filter(item => +item.id === +splitJson.currentReport)?.[0]?.label
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
@@ -401,6 +403,10 @@ export default defineComponent({
               });
             });
           }
+          break;
+        case 'resetReporetDesc':
+          calSplitField[+currentReport.value - 1].label = e.data.currentDec;
+          currentDec.value = e.data.currentDec;
           break;
         case 'saveEditor':
           isReadonlyStatus.value = true;
@@ -444,13 +450,14 @@ export default defineComponent({
               if (line[j].threshold && data3[line[j].threshold]) {
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
-                if (value && line[j].elName === 'RadEditor' ) {
+                if (line[j].elName === 'RadEditor' ) {
                   let arr = value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
                   let hasVal = false; 
                   for (let j = 0; j < arr.length; j++) {
                     if (arr[j]) {
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                        let txt = arr[j].replaceAll(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, '');
+                        let txt = arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
+                        // value = value.split(arr[j]).join(`<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
                         value = value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
                         hasVal = true;
                         break;
@@ -458,8 +465,12 @@ export default defineComponent({
                     }
                   }
                   if (!hasVal) {
-                    value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
+                    console.log(111, value, currentDec.value, currentReport.value)
+                    value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
+                    console.log(222, value)
                   }
+                } else if (line[j].elName !== 'RadEditor') {
+                  value = data3[line[j].threshold];
                 }
                 lines.value[i][j] = {
                   ...line[j],
