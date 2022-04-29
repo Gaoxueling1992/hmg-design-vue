@@ -33,7 +33,7 @@
           <div
             v-if="mouseEnter === +String(index)"
             class="iconfont iconclose1"
-            @click="deleteImg(index)"
+            @click="deleteImg(index, item)"
           ></div>
         </div>
       </a-col>
@@ -88,6 +88,24 @@ export default defineComponent({
     const loading = ref<boolean>(false);
     const mouseEnter = ref<number>(-1);
 
+    window.addEventListener('message', async (e) => {
+      if (e.data.type === 'applyImg') {
+        let item = JSON.parse(e.data.data);
+        for (let i = 0; i < ele.value.value.length; i++) {
+          if (ele.value.value[i].id === item.id) {
+            return;
+          }
+        }
+        ele.value.value.push(JSON.parse(e.data.data));
+      } else if (e.data.type === 'deleteImg') {
+        for (let i = 0; i < ele.value.value.length; i++) {
+          if (ele.value.value[i].id === e.data.data) {
+            ele.value.value.splice(i, 1);
+          }
+        }
+      }
+    });
+
     const beforeUpload = (file: any) => {
       const isJpgOrPng =
         file.type === 'image/jpeg' || file.type === 'image/png';
@@ -111,7 +129,8 @@ export default defineComponent({
       return false;
     };
 
-    const deleteImg = (index: any) => {
+    const deleteImg = (index: any, item: any) => {
+      window.parent.postMessage({ type: 'deleteImg', data: JSON.stringify(item) }, '*');
       ele.value.value.splice(index, 1);
       mouseEnter.value = -1;
     };

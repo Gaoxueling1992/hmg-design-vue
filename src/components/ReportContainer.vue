@@ -308,7 +308,6 @@ export default defineComponent({
   emits: ['saveTpl'],
   name: 'ReportContainer',
   setup(props, { emit }) {
-    debugger
     let pageData: any = reactive(pageConfig);
     const visible: Ref<boolean> = ref(false);
     const isReadonlyStatus: Ref<boolean> = ref(false);
