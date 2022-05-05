@@ -7,7 +7,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import themePreprocessorPlugin from '@zougt/vite-plugin-theme-preprocessor'
 
 export default defineConfig({
-  base: '/',
+  base: './',
   plugins: [
     vue(),
     AutoImport({

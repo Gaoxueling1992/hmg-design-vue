@@ -28,7 +28,7 @@
   </div>
   <div class="title marginT10 marginB5 fontW500">图片间距</div>
   <div class="flex marginT10">
-    <template v-if="activeCompObj.layout === '2'">
+    <template v-if="activeCompObj.layout === '2' || activeCompObj.layoutType === '2'">
       <div class="flex-title1">水平</div>
       <a-input-number
         class="flex1 marginR5"

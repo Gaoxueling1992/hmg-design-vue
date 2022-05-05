@@ -3,41 +3,45 @@
     class="picker-flex-edit"
     v-if="ele.value && ele.value.length"
   >
-    <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
-      <a-col
-        v-for="(item, index) in ele.value"
-        :key="item.id"
-        :span="calSpan(ele, ele.value.length)"
+    <div
+      v-for="(item, index) in ele.value"
+      :key="item.id"
+      :span="calSpan(ele, ele.value.length)"
+      :style="{
+        width: calSpan(ele, ele.value.length)/24*100 + '%',
+        float: 'left'
+      }"
+    >
+      <div
         :style="{
-          width: calSpan(ele, ele.value.length)/24*100 + '%',
-          float: 'left'
-        }"
-      >
-        <div
-          :style="{
           width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
           height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
           margin: '0 auto',
           textAlign: 'center',
-          position: 'relative'
+          position: 'relative',
+          marginTop: ele.verSpacing / 2 + 'px',
+          marginBottom: ele.verSpacing / 2 + 'px',
         }"
-          @mouseover.native="mouseEnter=+String(index)"
-          @mouseleave.native="mouseEnter=-1"
+        @mouseover.native="mouseEnter=+String(index)"
+        @mouseleave.native="mouseEnter=-1"
+      >
+        <img
+          style="height:100%;width:100%;"
+          :style="{
+            paddingLeft: ele.horSpacing / 2 + 'px',
+            paddingRight: ele.horSpacing / 2 + 'px',
+            width: ele.layoutType !== '3' ? '100%' : 'unset',
+            height: ele.layoutType !== '2' ? '100%' : 'unset'
+          }"
+          :src="item.url"
         >
-          <div>
-            <img
-              style="height:100%;width:100%;"
-              :src="item.url"
-            >
-          </div>
-          <div
-            v-if="mouseEnter === +String(index)"
-            class="iconfont iconclose1"
-            @click="deleteImg(index, item)"
-          ></div>
-        </div>
-      </a-col>
-    </a-row>
+        <div
+          v-if="mouseEnter === +String(index)"
+          class="iconfont iconclose1"
+          @click="deleteImg(index, item)"
+        ></div>
+      </div>
+    </div>
   </div>
   <div
     class="picker-flex-text"
@@ -57,7 +61,7 @@
   </a-upload>
 </template>
 <script lang="ts">
-import { defineComponent, ref, toRefs, Ref, inject } from 'vue';
+import { defineComponent, ref, toRefs, Ref, inject, watch, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
 
 // 图片选择器 计算布局
@@ -92,14 +96,14 @@ export default defineComponent({
       if (e.data.type === 'applyImg') {
         let item = JSON.parse(e.data.data);
         for (let i = 0; i < ele.value.value.length; i++) {
-          if (ele.value.value[i].id === item.id) {
+          if (ele.value.value[i].imageInstanceUid === item.imageInstanceUid) {
             return;
           }
         }
         ele.value.value.push(JSON.parse(e.data.data));
       } else if (e.data.type === 'deleteImg') {
         for (let i = 0; i < ele.value.value.length; i++) {
-          if (ele.value.value[i].id === e.data.data) {
+          if (ele.value.value[i].imageInstanceUid === e.data.data) {
             ele.value.value.splice(i, 1);
           }
         }
@@ -130,10 +134,21 @@ export default defineComponent({
     };
 
     const deleteImg = (index: any, item: any) => {
-      window.parent.postMessage({ type: 'deleteImg', data: JSON.stringify(item) }, '*');
+      window.parent.postMessage(
+        { type: 'deleteImg', data: JSON.stringify(item) },
+        '*'
+      );
       ele.value.value.splice(index, 1);
       mouseEnter.value = -1;
     };
+    onMounted(() => {
+      watch(ele, (val, oldVal) => {
+        window.parent.postMessage(
+          { type: 'tempSaveApplyImgs', data: JSON.stringify(val.value) },
+        '*');
+      }, { deep: true });
+    })
+
 
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {
