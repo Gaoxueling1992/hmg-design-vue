@@ -3,45 +3,47 @@
     class="picker-flex-edit"
     v-if="ele.value && ele.value.length"
   >
-    <div
-      v-for="(item, index) in ele.value"
-      :key="item.id"
-      :span="calSpan(ele, ele.value.length)"
-      :style="{
-        width: calSpan(ele, ele.value.length)/24*100 + '%',
-        float: 'left'
-      }"
-    >
+    <draggable v-model="ele.value" @end="consoleIt">
       <div
+        v-for="(item, index) in ele.value"
+        :key="item.id"
+        :span="calSpan(ele, ele.value.length)"
         :style="{
-          width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
-          height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
-          margin: '0 auto',
-          textAlign: 'center',
-          position: 'relative',
-          marginTop: ele.verSpacing / 2 + 'px',
-          marginBottom: ele.verSpacing / 2 + 'px',
+          width: calSpan(ele, ele.value.length)/24*100 + '%',
+          float: 'left'
         }"
-        @mouseover.native="mouseEnter=+String(index)"
-        @mouseleave.native="mouseEnter=-1"
       >
-        <img
-          style="height:100%;width:100%;"
-          :style="{
-            paddingLeft: ele.horSpacing / 2 + 'px',
-            paddingRight: ele.horSpacing / 2 + 'px',
-            width: ele.layoutType !== '3' ? '100%' : 'unset',
-            height: ele.layoutType !== '2' ? '100%' : 'unset'
-          }"
-          :src="item.url"
-        >
         <div
-          v-if="mouseEnter === +String(index)"
-          class="iconfont iconclose1"
-          @click="deleteImg(index, item)"
-        ></div>
+          :style="{
+              width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
+              height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
+              margin: '0 auto',
+              textAlign: 'center',
+              position: 'relative',
+              marginTop: ele.verSpacing / 2 + 'px',
+              marginBottom: ele.verSpacing / 2 + 'px',
+            }"
+          @mouseover.native="mouseEnter=+String(index)"
+          @mouseleave.native="mouseEnter=-1"
+        >
+          <img
+            style="height:100%;width:100%;"
+            :style="{
+                paddingLeft: ele.horSpacing / 2 + 'px',
+                paddingRight: ele.horSpacing / 2 + 'px',
+                width: ele.layoutType !== '3' ? '100%' : 'unset',
+                height: ele.layoutType !== '2' ? '100%' : 'unset'
+              }"
+            :src="item.url"
+          >
+          <div
+            v-if="mouseEnter === +String(index)"
+            class="iconfont iconclose1"
+            @click="deleteImg(index, item)"
+          ></div>
+        </div>
       </div>
-    </div>
+    </draggable>
   </div>
   <div
     class="picker-flex-text"
@@ -61,8 +63,17 @@
   </a-upload>
 </template>
 <script lang="ts">
-import { defineComponent, ref, toRefs, Ref, inject, watch, onMounted } from 'vue';
+import {
+  defineComponent,
+  ref,
+  toRefs,
+  Ref,
+  inject,
+  watch,
+  onMounted
+} from 'vue';
 import { message } from 'ant-design-vue';
+import { VueDraggableNext } from 'vue-draggable-next';
 
 // 图片选择器 计算布局
 const calSpan = (ele: any, length: number) => {
@@ -87,10 +98,31 @@ function getBase64(img: Blob, callback: (base64Url: string) => void) {
 
 export default defineComponent({
   props: ['ele'],
+  components: {
+    draggable: VueDraggableNext
+  },
   setup(props) {
     const { ele } = toRefs(props);
     const loading = ref<boolean>(false);
     const mouseEnter = ref<number>(-1);
+
+    const consoleIt = () => {
+      let newList = [];
+      let applyedImgs = [];
+      for (let i = 0; i < ele.value.value.length; i++) {
+        ele.value.value[i].tempPrintFlag = i + 1;
+        newList.push(ele.value.value[i].imageInstanceUid);
+        applyedImgs.push(ele.value.value[i])
+      }
+      window.parent.postMessage(
+        {
+          type: 'afterDraggedImgs',
+          newList: JSON.stringify(newList),
+          applyedImgs: JSON.stringify(applyedImgs)
+        },
+        '*'
+      );
+    };
 
     window.addEventListener('message', async (e) => {
       if (e.data.type === 'applyImg') {
@@ -142,13 +174,17 @@ export default defineComponent({
       mouseEnter.value = -1;
     };
     onMounted(() => {
-      watch(ele, (val, oldVal) => {
-        window.parent.postMessage(
-          { type: 'tempSaveApplyImgs', data: JSON.stringify(val.value) },
-        '*');
-      }, { deep: true });
-    })
-
+      watch(
+        ele,
+        (val, oldVal) => {
+          window.parent.postMessage(
+            { type: 'tempSaveApplyImgs', data: JSON.stringify(val.value) },
+            '*'
+          );
+        },
+        { deep: true }
+      );
+    });
 
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {
@@ -157,7 +193,8 @@ export default defineComponent({
       beforeUpload,
       mouseEnter,
       deleteImg,
-      isReadonlyStatus
+      isReadonlyStatus,
+      consoleIt
     };
   }
 });

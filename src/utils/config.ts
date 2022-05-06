@@ -156,7 +156,7 @@ const compBaseConfig = {
     placeholder: '',
     label: '',
     inline: true,
-    value: '',
+    value: null,
     styleSheet: styleSheet,
     threshold: '',
     domainType: 'domain',

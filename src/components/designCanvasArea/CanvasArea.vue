@@ -7,31 +7,34 @@
     }"
     @click.self.prevent="handleClickCanvas"
   >
-    <div
-      v-for="(line, idx) in lines"
-      :key="idx"
-      :id="'line' + String(idx)"
-    >
-      <draggable
-        v-model="lines[idx]"
-        group="line"
-        class="canvas-area-line"
+    <template v-if="!loading">
+      <div 
+        v-for="(line, idx) in lines"
+        :key="idx"
+        :id="'line' + String(idx)"
       >
-        <transition-group>
-          <DesignEle
-            v-for="(ele, index) in line"
-            :ele="ele"
-            :key="ele.id"
-            :idx="idx"
-            :index="index"
-          ></DesignEle>
-        </transition-group>
-      </draggable>
-    </div>
+        <draggable
+          v-model="lines[idx]"
+          group="line"
+          class="canvas-area-line"
+        >
+          <transition-group>
+            <DesignEle
+              v-for="(ele, index) in line"
+              :ele="ele"
+              :key="ele.id"
+              :idx="idx"
+              :index="index"
+            ></DesignEle>
+          </transition-group>
+        </draggable>
+      </div>
+    </template>
+    <a-spin style="width:100%" v-else/>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs } from 'vue';
+import { defineComponent, inject, toRefs,Ref } from 'vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 
 // 画布点击
@@ -50,13 +53,15 @@ export default defineComponent({
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
     const { lines, styleSheet } = toRefs(pageData)
-    const { handleClickCanvas } = handleClickCanvasFn() 
+    const { handleClickCanvas } = handleClickCanvasFn()
+    const loading: Ref<boolean> = inject('loading');
 
     return {
       handleClickCanvas,
       pageData,
       lines,
-      styleSheet
+      styleSheet,
+      loading
     };
   }
 });

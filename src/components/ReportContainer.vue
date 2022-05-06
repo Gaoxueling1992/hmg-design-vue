@@ -1,12 +1,13 @@
 <template>
-  <EditCanvas
-    v-if="isEditor"
-    class="edit-canvas"
-    id="editCanvas"
-    :style="{
-      'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE'
-    }"
-  ></EditCanvas>
+  <template v-if="isEditor">
+    <EditCanvas
+      class="edit-canvas"
+      id="editCanvas"
+      :style="{
+        'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE'
+      }"
+    ></EditCanvas>
+  </template>
   <a-layout v-else>
     <a-layout-sider
       width="260px"
@@ -90,7 +91,8 @@ const handleCompsOper = (
   emit:
     | ((event: string, ...args: any[]) => void)
     | ((event: string, ...args: any[]) => void),
-  pageData: any
+  pageData: any,
+  loading: any
 ) => {
   const activePosi: Ref<number> = ref(0);
   const activeCompObj: Ref<object> = ref({});
@@ -217,6 +219,7 @@ const handleCompsOper = (
 
   // 重置模版数据
   const resetData = () => {
+    loading.value = true;
     pageData.lines = [];
     pageData.name = '';
     pageData.id = '';
@@ -236,6 +239,9 @@ const handleCompsOper = (
     activeCompId.value = '';
     pageHeaderId.value = '';
     pageFooterId.value = '';
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   };
 
   // 新建模版
@@ -260,6 +266,7 @@ const handleCompsOper = (
 
   // 解析外部传入的模版详情，用于渲染
   const editTpl = (item: any) => {
+    loading.value = true;
     pageData.lines = [];
     pageData.lines = item.lines;
     pageData.name = item.name;
@@ -278,6 +285,9 @@ const handleCompsOper = (
     activePosi.value = 0;
     activeCompObj.value = {};
     activeCompId.value = '';
+    setTimeout(() => {
+      loading.value = false;
+    }, 500);
   };
 
   const clickCanvas = () => {
@@ -321,6 +331,7 @@ export default defineComponent({
     const splitRule: Ref<string> = ref('');
     const currentDec: Ref<string> = ref('');
     let calSplitField = null;
+    const loading: Ref<boolean> = ref(false);
     
     const {
       addComp,
@@ -337,7 +348,7 @@ export default defineComponent({
       setFixedArea,
       pageHeaderId,
       pageFooterId
-    } = handleCompsOper(emit, pageData);
+    } = handleCompsOper(emit, pageData, loading);
 
     const checkStatus = () => {
       isReadonlyStatus.value = !isReadonlyStatus.value;
@@ -366,8 +377,7 @@ export default defineComponent({
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
-            calSplitField = splitJson.calSplitField;
-            console.log(calSplitField)
+            calSplitField = splitJson.calSplitField
           }
           let data = JSON.parse(e.data.data);
           if (data) {
@@ -503,6 +513,7 @@ export default defineComponent({
     provide('splitField', splitField);
     provide('splitRule', splitRule);
     provide('currentDec', currentDec);
+    provide('loading', loading);
 
     let timer: any;
     watch(

@@ -7,119 +7,122 @@
       padding: styleSheet.padding
     }"
   >
-    <div id="edit-canvas-header">
-      <div
-        v-for="(line, idx) in headerLines"
-        :key="idx"
-        :id="'line' + String(idx)"
-        :style="{
-          'display': isReadonlyStatus ? 'table' : '',
-          'width': '100%'
-        }"
-      >
-        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
-          <div
-            v-for="(ele, index) in line"
-            :key="ele.id"
-            :style="{
-              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-              'max-width': '100%',
-              'overflow-x': 'hidden',
-              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
-              'position': 'relative',
-              ...ele.styleSheet,
-              fontSize: ele.styleSheet.fontSize + 'px',
-              borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
-              width: eleWidth(line, index),
-              'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
-              'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
-              'vertical-align': 'middle',
-              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
-            }"
-          >
-            <component :is="ele.elName" :ele="ele"></component>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="edit-canvas-body">
-      <div
-        v-for="(line, idx) in bodyLines"
-        :key="idx"
-        :id="'line' + String(idx)"
-        :style="{
-          'display': isReadonlyStatus ? 'table' : '',
-          'width': '100%'
-        }"
-      >
-        <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
-          <div
-            v-for="(ele, index) in line"
-            :key="ele.id"
-            :style="{
-              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-              'max-width': '100%',
-              'overflow-x': 'hidden',
-              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
-              'position': 'relative',
-              ...ele.styleSheet,
-              fontSize: ele.styleSheet.fontSize + 'px',
-              borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
-              width: eleWidth(line, index),
-              'vertical-align': 'middle',
-              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
-            }"
-          >
-            <component :is="ele.elName" :ele="ele"></component>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="edit-canvas-footer">
-      <div
-        v-for="(line, idx) in footerLines"
-        :key="idx"
-        :id="'line' + String(idx)"
-        :style="{
-          'display': isReadonlyStatus ? 'table' : '',
-          'width': '100%'
-        }"
-      >
+    <template v-if="!loading">
+      <div id="edit-canvas-header">
         <div
-          style="position:relative;width:100%;line-height:1"
-          :style="{'display': isReadonlyStatus ? 'table-row' : 'flex'}">
-          <div
-            v-for="(ele, index) in line"
-            :key="ele.id"
-            :style="{
-              'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-              'max-width': '100%',
-              'overflow-x': 'hidden',
-              'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
-              'position': 'relative',
-              ...ele.styleSheet,
-              fontSize: ele.styleSheet.fontSize + 'px',
-              borderWidth: ele.styleSheet.borderWidth + 'px',
-              display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
-              width: eleWidth(line, index),
-              'vertical-align': 'middle',
-              'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-              'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
-            }"
-          >
-            <component :is="ele.elName" :ele="ele"></component>
+          v-for="(line, idx) in headerLines"
+          :key="idx"
+          :id="'line' + String(idx)"
+          :style="{
+            'display': isReadonlyStatus ? 'table' : '',
+            'width': '100%'
+          }"
+        >
+          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
+            <div
+              v-for="(ele, index) in line"
+              :key="ele.id"
+              :style="{
+                'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+                'max-width': '100%',
+                'overflow-x': 'hidden',
+                'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+                'position': 'relative',
+                ...ele.styleSheet,
+                fontSize: ele.styleSheet.fontSize + 'px',
+                borderWidth: ele.styleSheet.borderWidth + 'px',
+                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+                width: eleWidth(line, index),
+                'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
+                'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
+                'vertical-align': 'middle',
+                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
+              }"
+            >
+              <component :is="ele.elName" :ele="ele"></component>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div id="edit-canvas-body">
+        <div
+          v-for="(line, idx) in bodyLines"
+          :key="idx"
+          :id="'line' + String(idx)"
+          :style="{
+            'display': isReadonlyStatus ? 'table' : '',
+            'width': '100%'
+          }"
+        >
+          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
+            <div
+              v-for="(ele, index) in line"
+              :key="ele.id"
+              :style="{
+                'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+                'max-width': '100%',
+                'overflow-x': 'hidden',
+                'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+                'position': 'relative',
+                ...ele.styleSheet,
+                fontSize: ele.styleSheet.fontSize + 'px',
+                borderWidth: ele.styleSheet.borderWidth + 'px',
+                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+                width: eleWidth(line, index),
+                'vertical-align': 'middle',
+                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
+              }"
+            >
+              <component :is="ele.elName" :ele="ele"></component>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="edit-canvas-footer">
+        <div
+          v-for="(line, idx) in footerLines"
+          :key="idx"
+          :id="'line' + String(idx)"
+          :style="{
+            'display': isReadonlyStatus ? 'table' : '',
+            'width': '100%'
+          }"
+        >
+          <div
+            style="position:relative;width:100%;line-height:1"
+            :style="{'display': isReadonlyStatus ? 'table-row' : 'flex'}">
+            <div
+              v-for="(ele, index) in line"
+              :key="ele.id"
+              :style="{
+                'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+                'max-width': '100%',
+                'overflow-x': 'hidden',
+                'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+                'position': 'relative',
+                ...ele.styleSheet,
+                fontSize: ele.styleSheet.fontSize + 'px',
+                borderWidth: ele.styleSheet.borderWidth + 'px',
+                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+                width: eleWidth(line, index),
+                'vertical-align': 'middle',
+                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
+              }"
+            >
+              <component :is="ele.elName" :ele="ele"></component>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <a-spin v-else size="large" style="width: 100%" />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs, Ref, computed, ref } from 'vue';
+import { defineComponent, inject, toRefs, Ref, computed } from 'vue';
 import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
@@ -158,6 +161,7 @@ export default defineComponent({
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}};
     const { lines, styleSheet, pageHeaderId, pageFooterId, headerLine, footerLine } = toRefs(pageData);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    const loading: Ref<boolean> = inject('loading');
 
     const eleWidth = computed(() => {
       return (line, idx) => {
@@ -236,7 +240,8 @@ export default defineComponent({
       isReadonlyStatus,
       eleWidth,
       headerLine, footerLine,
-      headerLines, footerLines, bodyLines
+      headerLines, footerLines, bodyLines,
+      loading
     };
   }
 });
