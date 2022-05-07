@@ -459,6 +459,7 @@ export default defineComponent({
               if (line[j].threshold && data3[line[j].threshold]) {
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
+                if (e.data.isAutoApply && line[j].value) {}
                 if (line[j].elName === 'RadEditor' ) {
                   let arr = value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
                   let hasVal = false; 
@@ -466,17 +467,14 @@ export default defineComponent({
                     if (arr[j]) {
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                         let txt = arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
-                        // value = value.split(arr[j]).join(`<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
                         value = value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
                         hasVal = true;
                         break;
                       }
                     }
                   }
-                  if (!hasVal) {
-                    console.log(111, value, currentDec.value, currentReport.value)
+                  if (!hasVal && !e.data.isAutoApply) {
                     value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
-                    console.log(222, value)
                   }
                 } else if (line[j].elName !== 'RadEditor') {
                   value = data3[line[j].threshold];

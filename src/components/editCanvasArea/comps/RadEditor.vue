@@ -235,6 +235,9 @@ export default defineComponent({
 .w-e-text-container,
 .w-e-menu-panel {
   background-color: transparent !important;
+  i {
+    font-style: italic;
+  }
 }
 .w-e-text-container,
 .w-e-text {

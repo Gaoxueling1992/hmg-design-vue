@@ -8,27 +8,29 @@
     @click.self.prevent="handleClickCanvas"
   >
     <template v-if="!loading">
-      <div 
-        v-for="(line, idx) in lines"
-        :key="idx"
-        :id="'line' + String(idx)"
-      >
-        <draggable
-          v-model="lines[idx]"
-          group="line"
-          class="canvas-area-line"
+      <draggable v-model="lines" @end="consoleIt">
+        <div 
+          v-for="(line, idx) in lines"
+          :key="idx"
+          :id="'line' + String(idx)"
         >
-          <transition-group>
-            <DesignEle
-              v-for="(ele, index) in line"
-              :ele="ele"
-              :key="ele.id"
-              :idx="idx"
-              :index="index"
-            ></DesignEle>
-          </transition-group>
-        </draggable>
-      </div>
+          <draggable
+            v-model="lines[idx]"
+            group="line"
+            class="canvas-area-line"
+          >
+            <transition-group>
+              <DesignEle
+                v-for="(ele, index) in line"
+                :ele="ele"
+                :key="ele.id"
+                :idx="idx"
+                :index="index"
+              ></DesignEle>
+            </transition-group>
+          </draggable>
+        </div>
+      </draggable>
     </template>
     <a-spin style="width:100%" v-else/>
   </div>
