@@ -8,18 +8,34 @@ import config from '@/utils/tableConfig';
 export default defineComponent({
   props: ['ele'],
   setup(props, { emit }) {
+    let info = null;
     const saveTpl = () => {
       emit('saveTpl', { pageData: luckysheet.getRangeValue(), type: 1 });
-      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()) }, '*');
+      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()), info: JSON.stringify(info), newPage: info.id ? false : true }, '*');
     };
     const editTpl = (item: any) => {
       console.log(item);
+      let itmm = JSON.parse(item);
+      info = {
+        id: itmm.id,
+        title: itmm.title,
+        departmentId: itmm.departmentId
+      }
+      let content = JSON.parse(itmm.content);
+      content.forEach((row, rowNum) => {
+        row.forEach((cell, cellNum) => {
+          luckysheet.setCellValue(rowNum, cellNum, cell)
+        });
+      });
     };
 
     window.addEventListener('message', (e) => {
       switch(e.data.type) {
         case 'saveTableDesinger':
           saveTpl();
+          break;
+        case 'resetTableData':
+          editTpl(e.data.data);
           break;
       }
     });
