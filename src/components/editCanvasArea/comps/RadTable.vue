@@ -173,7 +173,7 @@ export default defineComponent({
     const inputs: Ref<object> = ref(props.ele.inputs);
     const tds: Ref<number> = ref<number>(0);
     const chooseTableInner: Ref<boolean> = ref<boolean>(false);
-    const chooseTableOpen: Ref<boolean> = ref<boolean>(false);
+    const chooseTableOpen: any = 'null';
     let tableList: any = inject('tableList');
 
     window.addEventListener('message', (e) => {

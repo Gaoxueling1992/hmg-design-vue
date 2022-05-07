@@ -331,7 +331,7 @@ export default defineComponent({
     const splitRule: Ref<string> = ref('');
     const currentDec: Ref<string> = ref('');
     let calSplitField = null;
-    const loading: Ref<boolean> = ref(false);
+    const loading: Ref<boolean> = ref(true);
     
     const {
       addComp,
