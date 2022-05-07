@@ -122,7 +122,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs, Ref, computed } from 'vue';
+import { defineComponent, inject, toRefs, Ref, computed, ref, provide } from 'vue';
 import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
@@ -162,6 +162,7 @@ export default defineComponent({
     const { lines, styleSheet, pageHeaderId, pageFooterId, headerLine, footerLine } = toRefs(pageData);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const loading: Ref<boolean> = inject('loading');
+    const focusedEle: Ref<string> = ref<string>('')
 
     const eleWidth = computed(() => {
       return (line, idx) => {
@@ -232,6 +233,8 @@ export default defineComponent({
         return lines.value;
       }
     });
+
+    provide('focusedEle', focusedEle);
 
     return {
       pageData,

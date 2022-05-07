@@ -40,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, Ref, inject, ref, toRefs, watch, computed } from 'vue';
+import { defineComponent, onMounted, Ref, inject, toRefs, watch, computed } from 'vue';
 import E from 'wangeditor';
 import { editorMenus, editorFontSizes } from '@/utils/config';
 
@@ -52,6 +52,7 @@ export default defineComponent({
     const splitField: Ref<string> = inject('splitField');
     const splitRule: Ref<string> = inject('splitRule');
     const currentDec: Ref<string> = inject('currentDec');
+    const focusedEle: Ref<string> = inject('focusedEle');
 
     const readonlyValue = computed(() => {
       if (props.ele.value) {
@@ -77,6 +78,31 @@ export default defineComponent({
           let oldV = oldDesc + '%%' + currentReport.value;
           let newV = currentDec + '%%' + currentReport.value;
           props.ele.value = props.ele.value.split(oldV).join(newV);
+        } else if (e.data.type === 'setVocabulary') {
+          if (+focusedEle.value === +props.ele.id) {
+            if (splitField.value) {
+              if (props.ele.value) {
+                let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+                let hasStr = false;
+                for (let j = 0; j < arr.length; j++) {
+                  if (arr[j]) {
+                    if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                      // editor.txt.html(arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '') + e.data.text);
+                      // editor.dangerouslyInsertHtml(e.data.text)
+                      editor.cmd.do('insertHTML', e.data.text);
+                      hasStr = true;
+                      break;
+                    }
+                  }
+                }
+                if (!hasStr) {
+                  editor.txt.html(e.data.text);
+                }
+              }
+            } else {
+              editor.cmd.do('insertHTML', e.data.text);
+            }
+          }
         }
       });
       editor = new E(toolbarid, id);
@@ -101,7 +127,10 @@ export default defineComponent({
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                editor.txt.html(arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), ''));
+                let newVal = arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
+                if (newVal !== editor.txt.html()) {
+                  editor.txt.html(newVal);
+                }
                 hasStr = true;
                 break;
               }
@@ -125,12 +154,8 @@ export default defineComponent({
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                // ???? 
-                // console.log('666', props.ele.value)
-                // props.ele.value = props.ele.value.split(arr[j]).join(`<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
                 props.ele.value = props.ele.value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
                 hasVal = true;
-                // console.log('444', props.ele.value)
                 break;
               }
             }
@@ -143,9 +168,18 @@ export default defineComponent({
 
       // 切换当前部位时，重算富文本内容
       watch(currentReport, () => { inputCurReport();})
-      watch(ele, () => { inputCurReport(); }, { deep: true });
+      watch(ele, () => {
+        console.log('ele isfocused', editor.isfocus, editor)
+        if (splitField.value) {
+          inputCurReport();
+        } else if (props.ele.value !== editor.txt.html()){
+          editor.txt.html(props.ele.value);
+        }
+      }, { deep: true });
 
       editor.config.onchange = (newHtml) => {
+        console.log('newHteml', newHtml)
+        focusedEle.value = props.ele.threshold;
         if (splitField.value) {
           calValue(newHtml);
         } else {
@@ -156,6 +190,7 @@ export default defineComponent({
         }
       };
       editor.config.onfocus = function () {
+        focusedEle.value = props.ele.id;
         if (document.getElementById(`toolbar${props.ele.id}`)) {
           document.getElementById(`toolbar${props.ele.id}`).style.display = '';
         }
@@ -172,6 +207,7 @@ export default defineComponent({
       
     });
     const clickEditor = (e) => {
+      focusedEle.value = props.ele.id;
       if (e.target.classList && e.target.classList[0] === 'aspan') {
         //获取我们自定义的右键菜单
         let menu: any = document.getElementById('context-menu');
