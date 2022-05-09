@@ -178,7 +178,6 @@ export default defineComponent({
       }, { deep: true });
 
       editor.config.onchange = (newHtml) => {
-        console.log('newHteml', newHtml)
         focusedEle.value = props.ele.threshold;
         if (splitField.value) {
           calValue(newHtml);
