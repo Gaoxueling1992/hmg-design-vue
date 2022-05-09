@@ -513,6 +513,10 @@ export default defineComponent({
     provide('currentDec', currentDec);
     provide('loading', loading);
 
+    setTimeout(function () {
+      loading.value = false;
+    }, 1000);
+
     let timer: any;
     watch(
       () => pageData,
