@@ -1,30 +1,30 @@
 <template>
   <div class="title marginT10 marginB5 fontW500">域值</div>
-  <div class="attr-group">
-    <a-select
-      ref="select"
-      v-model:value="activeCompObj.domainType"
-      @change="activeCompObj.threshold = ''"
-    >
-      <a-select-option value="domain">数据库域值</a-select-option>
-      <a-select-option value="TEMP_">临时显示</a-select-option>
-      <a-select-option value="PROP_">存储数据</a-select-option>
-      <a-select-option value="nosubmit">仅绑定</a-select-option>
-    </a-select>
-    <a-select
-      v-if="activeCompObj.domainType === 'domain'"
-      v-model:value="activeCompObj.threshold"
-      :options="domainList"
-      allowClear
-      style="width: 160px"
-    ></a-select>
-    <a-input
-      style="width: 160px"
-      v-else
-      v-model:value="activeCompObj.threshold"
-      allowClear
-    />
-  </div>
+  <a-select
+    ref="select"
+    v-model:value="activeCompObj.domainType"
+    @change="activeCompObj.threshold = ''"
+  >
+    <a-select-option value="domain">数据库域值</a-select-option>
+    <a-select-option value="TEMP_">临时显示</a-select-option>
+    <a-select-option value="PROP_">存储数据</a-select-option>
+    <a-select-option value="nosubmit">仅绑定</a-select-option>
+  </a-select>
+  <a-select
+    v-if="activeCompObj.domainType === 'domain'"
+    v-model:value="activeCompObj.threshold"
+    :options="domainList"
+    :allowClear="activeCompObj.threshold"
+    style="width: 100%"
+    class="marginT5"
+  ></a-select>
+  <a-input
+    style="width: 100%"
+    class="marginT5"
+    v-else
+    v-model:value="activeCompObj.threshold"
+    allowClear
+  />
   <a-button
     type="primary"
     class="add-script"
@@ -39,10 +39,19 @@
   >
     <template v-if="activeCompObj.rules.length">
       <div class="title marginT10 marginB5 fontW500 fontS16">已有规则</div>
-      <div v-for="(item, idx) in activeCompObj.rules" :key="idx">
+      <div
+        v-for="(item, idx) in activeCompObj.rules"
+        :key="idx"
+      >
         <div class="fontW500">规则{{idx + 1}}
-          <i class="iconfont icondelete-border fr marginL10" @click="deleteIt(idx)"></i>
-          <i class="iconfont iconedit fr" @click="editIt(idx)"></i>
+          <i
+            class="iconfont icondelete-border fr marginL10"
+            @click="deleteIt(idx)"
+          ></i>
+          <i
+            class="iconfont iconedit fr"
+            @click="editIt(idx)"
+          ></i>
         </div>
         {{opportunityMap[item.opportunity]}} 时, 当 {{+item.current===0?'当前控件':('业务控件 ' + item.threshold)}}
         {{ruleMap[item.elType]['conditionList'][item.type]}} {{item.value}} 时，
@@ -53,10 +62,17 @@
       <div class="title marginT10 marginB5 fontW500 fontS16">{{editingIdx === -1 ? '新增' : '编辑'}}规则{{editingIdx === -1 ? '' : editingIdx+1}}(域值用${xx}代替)</div>
       <div class="title marginB5">执行时机</div>
       <a-select v-model:value="ruleObj.opportunity">
-        <a-select-option v-for="(value, key) in opportunityMap" :key="key" :value="key">{{value}}</a-select-option>
+        <a-select-option
+          v-for="(value, key) in opportunityMap"
+          :key="key"
+          :value="key"
+        >{{value}}</a-select-option>
       </a-select>
       <div class="title marginT10 marginB5">执行条件</div>
-      <a-input-group compact class="marginT5">
+      <a-input-group
+        compact
+        class="marginT5"
+      >
         <a-select
           style="width: 40%"
           v-model:value="ruleObj.current"
@@ -69,7 +85,10 @@
             ruleObj.max=9999;
           "
         >
-          <a-select-option v-if="activeCompObj.elType!=='other'"  :value="0">当前控件({{ruleMap[activeCompObj.elType].n}})</a-select-option>
+          <a-select-option
+            v-if="activeCompObj.elType!=='other'"
+            :value="0"
+          >当前控件({{ruleMap[activeCompObj.elType].n}})</a-select-option>
           <a-select-option :value="1">业务字段</a-select-option>
         </a-select>
         <a-input
@@ -95,11 +114,14 @@
           </template>
         </a-select>
       </a-input-group>
-      <a-input-group compact class="marginT5"
+      <a-input-group
+        compact
+        class="marginT5"
         v-if="
           (ruleObj.current === 0 && ['text', 'singles', 'muls'].indexOf(activeCompObj.elType) > -1) ||
           (ruleObj.current === 1 && ['text', 'singles', 'muls'].indexOf(ruleObj.elType) > -1)
-        ">
+        "
+      >
         <a-select
           style="width: 35%"
           v-model:value="ruleObj.type"
@@ -120,11 +142,14 @@
         >
         </a-input>
       </a-input-group>
-      <a-input-group compact class="marginT5"
+      <a-input-group
+        compact
+        class="marginT5"
         v-if="
           (ruleObj.current === 0 && ['number', 'imgp'].indexOf(activeCompObj.elType) > -1) ||
           (ruleObj.current === 1 && ['number', 'imgp'].indexOf(ruleObj.elType) > -1)
-        ">
+        "
+      >
         <a-select
           v-model:value="ruleObj.type"
           @change="ruleObj.value='';ruleObj.min=0;ruleObj.max=9999"
@@ -138,17 +163,35 @@
             {{value}}
           </a-select-option>
         </a-select>
-        <a-input-number v-if="ruleObj.type>1" style="width: 70%" v-model:value="ruleObj.value"></a-input-number>
+        <a-input-number
+          v-if="ruleObj.type>1"
+          style="width: 70%"
+          v-model:value="ruleObj.value"
+        ></a-input-number>
         <template v-else>
-          <a-input-number class="marginL5" style="width: 30%" :min="0" :max="ruleObj.max" v-model:value="ruleObj.min"></a-input-number> -
-          <a-input-number style="width: 30%" :min="ruleObj.min" :max="99999" v-model:value="ruleObj.max"></a-input-number>
+          <a-input-number
+            class="marginL5"
+            style="width: 30%"
+            :min="0"
+            :max="ruleObj.max"
+            v-model:value="ruleObj.min"
+          ></a-input-number> -
+          <a-input-number
+            style="width: 30%"
+            :min="ruleObj.min"
+            :max="99999"
+            v-model:value="ruleObj.max"
+          ></a-input-number>
         </template>
       </a-input-group>
-      <a-input-group compact class="marginT5"
+      <a-input-group
+        compact
+        class="marginT5"
         v-if="
           (ruleObj.current === 0 && activeCompObj.elType === 'date') ||
           (ruleObj.current === 1 && ruleObj.elType === 'date')
-        ">
+        "
+      >
         <a-select
           v-model:value="ruleObj.type"
           @change="
@@ -166,14 +209,25 @@
             {{value}}
           </a-select-option>
         </a-select>
-        <a-date-picker v-if="+ruleObj.type>1 && ruleObj.type<6" style="width: 70%" v-model:value="ruleObj.value"/>
-        <a-range-picker v-else-if="+ruleObj.type<2" style="width: 70%" v-model:value="ruleObj.value" />
+        <a-date-picker
+          v-if="+ruleObj.type>1 && ruleObj.type<6"
+          style="width: 70%"
+          v-model:value="ruleObj.value"
+        />
+        <a-range-picker
+          v-else-if="+ruleObj.type<2"
+          style="width: 70%"
+          v-model:value="ruleObj.value"
+        />
       </a-input-group>
-      <a-input-group compact class="marginT5"
+      <a-input-group
+        compact
+        class="marginT5"
         v-if="
           (ruleObj.current === 0 && activeCompObj.elType === 'table') ||
           (ruleObj.current === 1 && ruleObj.elType === 'table')
-        ">
+        "
+      >
         <a-select
           style="width: 35%"
           v-model:value="ruleObj.type"
@@ -189,7 +243,10 @@
         </a-select>
       </a-input-group>
       <div class="title marginT10 marginB5">执行动作</div>
-      <a-input-group compact class="marginT5">
+      <a-input-group
+        compact
+        class="marginT5"
+      >
         <a-select
           v-model:value="ruleObj.id"
           style="width: 40%"
@@ -204,11 +261,19 @@
           </a-select-option>
         </a-select>
       </a-input-group>
-      <a-input-group compact class="marginT5" v-if="ruleObj.id>4">
+      <a-input-group
+        compact
+        class="marginT5"
+        v-if="ruleObj.id>4"
+      >
         值
         <a-input v-model:value="ruleObj.content"></a-input>
       </a-input-group>
-      <a-input-group compact class="marginT5" v-if="+ruleObj.id === 6">
+      <a-input-group
+        compact
+        class="marginT5"
+        v-if="+ruleObj.id === 6"
+      >
         标签
         <a-input v-model:value="ruleObj.label"></a-input>
       </a-input-group>
@@ -282,7 +347,7 @@ export default defineComponent({
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
         case 'imgp':
           if (ruleObj.value.type > 1 && !ruleObj.value.value) {
@@ -292,10 +357,10 @@ export default defineComponent({
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
         case 'number':
-          console.log(ruleObj.value)
+          console.log(ruleObj.value);
           if (ruleObj.value.type > 1 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
@@ -303,7 +368,7 @@ export default defineComponent({
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
         case 'muls':
           if (ruleObj.value.type <= 1 && !ruleObj.value.value) {
@@ -313,7 +378,7 @@ export default defineComponent({
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
         case 'singles':
           if (ruleObj.value.type <= 1 && !ruleObj.value.value) {
@@ -323,17 +388,21 @@ export default defineComponent({
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
         case 'date':
-          if (ruleObj.value.type > 1 && ruleObj.value.type < 6 && !ruleObj.value.value) {
-           Modal.warning({
+          if (
+            ruleObj.value.type > 1 &&
+            ruleObj.value.type < 6 &&
+            !ruleObj.value.value
+          ) {
+            Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
               okText: '知道了'
             });
             return;
-          };
+          }
           break;
       }
       if (ruleObj.value.id > 4 && !ruleObj.value.content) {
@@ -352,9 +421,9 @@ export default defineComponent({
       } else {
         activeCompObj.value.rules.splice(editingIdx.value, 1, {
           ...ruleObj.value
-        })
+        });
       }
-      ruleObj.value= {
+      ruleObj.value = {
         opportunity: 'init',
         type: '0',
         value: '',
@@ -380,7 +449,7 @@ export default defineComponent({
       };
       editingIdx.value = idx;
     };
-     
+
     const addRule = () => {
       editingRule.value = true;
       ruleObj.value = {
@@ -396,7 +465,7 @@ export default defineComponent({
         content: '',
         label: ''
       };
-      editingIdx.value = -1
+      editingIdx.value = -1;
     };
 
     return {
