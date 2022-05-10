@@ -2,10 +2,7 @@
   <div class="container">
     <div class="container-item">
       <div class="title marginB15">控件</div>
-      <a-row
-        type="flex"
-        justify="start"
-      >
+      <a-row type="flex">
         <draggable
           :span="12"
           v-model="list"
@@ -61,8 +58,14 @@ export default defineComponent({
 .container-item {
   padding: 5px;
   .container-item-btn {
-    width: 100px !important;
-    margin-bottom: 10px;
+    width: calc(50% - 10px) !important;
+    margin: 0 5px 5px 5px;
+    border-color: var(--border-color-base) !important;
+    color: var(--color-text-primary) !important;
+    &:hover {
+      border-color: var(--color-primary) !important;
+      color: var(--color-primary) !important;
+    }
   }
 }
 </style>

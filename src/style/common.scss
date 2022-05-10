@@ -226,6 +226,7 @@ p {
 .ant-input,
 .ant-input-number {
   background: transparent !important;
+
   .ant-input {
     background: transparent !important;
   }
@@ -237,7 +238,7 @@ p {
   text-overflow: ellipsis;
 }
 
-.flex { 
+.flex {
   display: flex;
 }
 
@@ -247,6 +248,7 @@ p {
 
 .ant-btn-primary {
   color: var(--color-white1) !important;
+  border-color: var(--border-color-base) !important;
 }
 
 .ant-input:focus {

@@ -39,8 +39,14 @@ export default defineComponent({
 .container-item {
   padding: 5px;
   .container-item-btn {
-    width: 100px !important;
-    margin-bottom: 10px;
+    width: 100% !important;
+    margin: 0 5px 5px 5px;
+    border-color: var(--border-color-base) !important;
+    color: var(--color-text-primary) !important;
+    &:hover {
+      border-color: var(--color-primary) !important;
+      color: var(--color-primary) !important;
+    }
   }
 }
 </style>
