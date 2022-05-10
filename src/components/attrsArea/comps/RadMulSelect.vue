@@ -66,10 +66,10 @@ export default defineComponent({
       const index = activeCompObj.value.options.length;
       activeCompObj.value.options.push({
         value:
-          index === 0 ? 0 : activeCompObj.value.options[index - 1].value + 1,
+          index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1,
         label:
           '选项' +
-          (index === 0 ? 0 : activeCompObj.value.options[index - 1].value + 1)
+          (index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1)
       });
     };
     const deleteOption = (index: any) => {

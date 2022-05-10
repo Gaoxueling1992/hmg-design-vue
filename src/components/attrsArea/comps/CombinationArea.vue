@@ -21,7 +21,7 @@
     <a-collapse-panel
       v-for="(comp, index) in activeCompObj.compsList"
       :key="comp.id"
-      :header="'组件' + index + '-' + comp.name"
+      :header="'组件' + (index + 1) + '-' + comp.name"
     >
       <div class="container-item">
         <div class="title marginB5">文本内容</div>
