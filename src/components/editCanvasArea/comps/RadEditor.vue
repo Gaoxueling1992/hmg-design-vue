@@ -89,8 +89,6 @@ export default defineComponent({
                 for (let j = 0; j < arr.length; j++) {
                   if (arr[j]) {
                     if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                      // editor.txt.html(arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '') + e.data.text);
-                      // editor.dangerouslyInsertHtml(e.data.text)
                       editor.cmd.do('insertHTML', e.data.text);
                       hasStr = true;
                       break;
@@ -196,7 +194,8 @@ export default defineComponent({
         }
       };
       editor.config.onblur = function () {
-        if (document.getElementById(`toolbar${props.ele.id}`)) {
+        console.log(focusedEle.value, props.ele.id)
+        if (document.getElementById(`toolbar${props.ele.id}`) && focusedEle.value !== props.ele.id) {
           document.getElementById(`toolbar${props.ele.id}`).style.display =
             'none';
         }

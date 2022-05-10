@@ -244,7 +244,8 @@ export default defineComponent({
       eleWidth,
       headerLine, footerLine,
       headerLines, footerLines, bodyLines,
-      loading
+      loading,
+      focusedEle
     };
   }
 });
