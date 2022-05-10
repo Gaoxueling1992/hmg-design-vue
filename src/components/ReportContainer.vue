@@ -304,6 +304,8 @@ const handleCompsOper = (
 
   // 解析外部传入的模版详情，用于渲染
   const editTpl = (item: any) => {
+    let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
+    item.name = item.name.replace(reg, '$1$3');
     loading.value = true;
     pageData.lines = [];
     pageData.lines = item.lines;

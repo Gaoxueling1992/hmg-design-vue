@@ -16,6 +16,8 @@ export default defineComponent({
     const editTpl = (item: any) => {
       console.log(item);
       let itmm = JSON.parse(item);
+      let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
+      itmm.title = itmm.title.replace(reg, '$1$3');
       info = {
         id: itmm.id,
         title: itmm.title,
