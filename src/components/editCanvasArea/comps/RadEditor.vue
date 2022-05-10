@@ -169,7 +169,6 @@ export default defineComponent({
       // 切换当前部位时，重算富文本内容
       watch(currentReport, () => { inputCurReport();})
       watch(ele, () => {
-        console.log('ele isfocused', editor.isfocus, editor)
         if (splitField.value) {
           inputCurReport();
         } else if (props.ele.value !== editor.txt.html()){
@@ -349,5 +348,8 @@ font[size='3'] {
 }
 .w-e-text p {
   line-height: 1.2;
+}
+.w-e-text-container .placeholder {
+  top: 5px !important;
 }
 </style>
