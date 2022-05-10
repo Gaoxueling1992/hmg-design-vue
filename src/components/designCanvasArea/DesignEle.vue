@@ -422,9 +422,15 @@ export default defineComponent({
         ...compBaseConfig[item.elName],
         styleSheet: {
           ...compBaseConfig[item.elName].styleSheet
-        }
+        },
+        baseProps: {
+          ...compBaseConfig[item.elName].baseProps
+        },
+        validate: {
+          ...compBaseConfig[item.elName].validate
+        },
+        rules: []
       });
-      console.log(JSON.stringify(baseConfig))
       ele.compsList.push({
         ...baseConfig,
         id

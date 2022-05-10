@@ -99,6 +99,32 @@ const handleCompsOper = (
   const activeCompId: Ref<string> = ref('');
   const pageHeaderId: Ref<string> = ref(pageData.pageHeaderId);
   const pageFooterId: Ref<string> = ref(pageData.pageFooterId);
+  const returnComp = (elName: string) => {
+    activePosi.value = 1;
+    const id: string = new Date().getTime() + '';
+    const baseConfig = reactive({
+      ...compBaseConfig[elName],
+      styleSheet: {
+        ...compBaseConfig[elName].styleSheet
+      },
+      baseProps: {
+        ...compBaseConfig[elName].baseProps
+      },
+      validate: {
+        ...compBaseConfig[elName].validate
+      },
+      rules: []
+    });
+    activeCompObj.value = {
+      ...baseConfig,
+      id: id
+    };
+    if (elName === 'combination-area') {
+      activeCompObj.value.compsList = [];
+    }
+    activeCompId.value = id;
+    return activeCompObj.value;
+  };
   // 新增控件
   const addComp = (value: string) => {
     activePosi.value = 1;
@@ -322,7 +348,8 @@ const handleCompsOper = (
     clickCanvas,
     setFixedArea,
     pageHeaderId,
-    pageFooterId
+    pageFooterId,
+    returnComp
   };
 };
 
@@ -359,7 +386,8 @@ export default defineComponent({
       clickCanvas,
       setFixedArea,
       pageHeaderId,
-      pageFooterId
+      pageFooterId,
+      returnComp
     } = handleCompsOper(emit, pageData, loading);
 
     const checkStatus = () => {
@@ -524,6 +552,7 @@ export default defineComponent({
     provide('splitRule', splitRule);
     provide('currentDec', currentDec);
     provide('loading', loading);
+    provide('returnComp', returnComp);
 
     setTimeout(function () {
       loading.value = false;

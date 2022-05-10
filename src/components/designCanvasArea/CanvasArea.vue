@@ -8,7 +8,7 @@
     @click.self.prevent="handleClickCanvas"
   >
     <template v-if="!loading">
-      <draggable v-model="lines" @end="consoleIt">
+      <draggable v-model="lines" group="line">
         <div 
           v-for="(line, idx) in lines"
           :key="idx"
@@ -16,8 +16,8 @@
         >
           <draggable
             v-model="lines[idx]"
-            group="line"
             class="canvas-area-line"
+            group="line"
           >
             <transition-group>
               <DesignEle
