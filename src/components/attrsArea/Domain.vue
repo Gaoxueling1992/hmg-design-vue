@@ -500,4 +500,8 @@ export default defineComponent({
 .add-rule {
   color: var(--color-primary);
 }
+.ant-select-clear {
+  background: transparent !important;
+  right: 26px !important;
+}
 </style>
