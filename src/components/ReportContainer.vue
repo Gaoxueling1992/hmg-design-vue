@@ -304,6 +304,7 @@ const handleCompsOper = (
 
   // 解析外部传入的模版详情，用于渲染
   const editTpl = (item: any) => {
+    console.log(item.pageHeaderId)
     let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
     item.name = item.name.replace(reg, '$1$3');
     loading.value = true;
@@ -322,6 +323,8 @@ const handleCompsOper = (
     pageData.headerLine = item.headerLine;
     pageData.footerLine = item.footerLine;
     pageData.pageNumType = item.pageNumType;
+    pageHeaderId.value = item.pageHeaderId;
+    pageFooterId.value = item.pageFooterId;
     activePosi.value = 0;
     activeCompObj.value = {};
     activeCompId.value = '';

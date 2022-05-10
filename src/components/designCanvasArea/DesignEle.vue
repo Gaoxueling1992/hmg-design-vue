@@ -287,7 +287,7 @@
       >
         <a-tooltip placement="top" :mouseEnterDelay="0.5">
           <template #title>
-            <span>{{pageHeaderId === ele.id ? '取消设为页眉' : '设为页眉'}}</span>
+            <span>{{+pageHeaderId === +ele.id ? '取消设为页眉'  : '设为页眉'}}</span>
           </template>
           <i class="iconfont iconup_top"></i>
         </a-tooltip>
