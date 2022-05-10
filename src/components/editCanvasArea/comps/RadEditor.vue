@@ -3,11 +3,13 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
+    @click="focusedEle = ele.id"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;line-height:1.5;margin-top:10px;"
   >{{ ele.label }}</div>
   <div
     class="flex1"
     v-show="!isReadonlyStatus"
+    @click="focusedEle = ele.id"
   >
     <div
       :id="'toolbar' + ele.id"
@@ -177,7 +179,7 @@ export default defineComponent({
       }, { deep: true });
 
       editor.config.onchange = (newHtml) => {
-        focusedEle.value = props.ele.threshold;
+        focusedEle.value = props.ele.id;
         if (splitField.value) {
           calValue(newHtml);
         } else {
@@ -253,7 +255,8 @@ export default defineComponent({
     return {
       isReadonlyStatus,
       clickEditor,
-      readonlyValue
+      readonlyValue,
+      focusedEle
     };
   }
 });
