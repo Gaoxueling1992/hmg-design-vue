@@ -526,7 +526,7 @@ export default defineComponent({
   }
 }
 .ant-select-dropdown {
-  z-index: 10005;
+  z-index: 10005 !important;
 }
 .delete-comp {
   line-height: 32px;
