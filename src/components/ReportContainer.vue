@@ -108,6 +108,12 @@ const handleCompsOper = (
       styleSheet: {
         ...compBaseConfig[value].styleSheet
       },
+      baseProps: {
+        ...compBaseConfig[value].baseProps
+      },
+      validate: {
+        ...compBaseConfig[value].validate
+      },
       rules: []
     });
     activeCompObj.value = {
@@ -139,6 +145,12 @@ const handleCompsOper = (
       id: id,
       styleSheet: {
         ...ele.styleSheet
+      },
+      baseProps: {
+        ...ele.baseProps
+      },
+      validate: {
+        ...ele.validate
       }
     };
     pageData.lines.push([activeCompObj.value]);
