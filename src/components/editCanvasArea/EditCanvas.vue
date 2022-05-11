@@ -15,7 +15,8 @@
           :id="'line' + String(idx)"
           :style="{
             'display': isReadonlyStatus ? 'table' : '',
-            'width': '100%'
+            'width': '100%',
+            'padding': line.length > 0 ? '2px 0' : '0'
           }"
         >
           <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
@@ -75,7 +76,7 @@
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
               }"
             >
-              <component :is="ele.elName" :ele="ele"></component>
+              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
             </div>
           </div>
         </div>
@@ -112,7 +113,7 @@
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
               }"
             >
-              <component :is="ele.elName" :ele="ele"></component>
+              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
             </div>
           </div>
         </div>
