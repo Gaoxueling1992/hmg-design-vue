@@ -174,6 +174,7 @@ export default defineComponent({
     const tds: Ref<number> = ref<number>(0);
     const chooseTableInner: Ref<boolean> = ref<boolean>(false);
     const chooseTableOpen: any = 'null';
+    const pageId: any = inject('pageId');
     let tableList: any = inject('tableList');
 
     window.addEventListener('message', (e) => {
@@ -198,7 +199,7 @@ export default defineComponent({
     };
 
     const applyTpl = (item) => {
-      window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id }, '*');
+      window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id, pageId: pageId.value }, '*');
       chooseTableInner.value = false;
     };
 

@@ -92,7 +92,8 @@ const handleCompsOper = (
     | ((event: string, ...args: any[]) => void)
     | ((event: string, ...args: any[]) => void),
   pageData: any,
-  loading: any
+  loading: any,
+  pageId: any
 ) => {
   const activePosi: Ref<number> = ref(0);
   const activeCompObj: Ref<object> = ref({});
@@ -245,7 +246,7 @@ const handleCompsOper = (
   const saveTpl = () => {
     if (pageData.lines.length) {
       emit('saveTpl', { pageData, type: 0 });
-      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(pageData) }, '*');
+      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(pageData), pageId: pageId.value }, '*');
     } else {
       Modal.warning({
         title: '提示',
@@ -375,6 +376,7 @@ export default defineComponent({
     const currentDec: Ref<string> = ref('');
     let calSplitField = null;
     const loading: Ref<boolean> = ref(true);
+    const pageId: Ref<string> = ref('');
     
     const {
       addComp,
@@ -392,7 +394,7 @@ export default defineComponent({
       pageHeaderId,
       pageFooterId,
       returnComp
-    } = handleCompsOper(emit, pageData, loading);
+    } = handleCompsOper(emit, pageData, loading, pageId);
 
     const checkStatus = () => {
       isReadonlyStatus.value = !isReadonlyStatus.value;
@@ -422,6 +424,9 @@ export default defineComponent({
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
             calSplitField = splitJson.calSplitField
+          }
+          if (e.data.pageId) {
+            pageId.value = e.data.pageId;
           }
           let data = JSON.parse(e.data.data);
           if (data) {
@@ -487,7 +492,7 @@ export default defineComponent({
             pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
-            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value }, '*');
+            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value, pageId: pageId.value }, '*');
 
             nextTick(() => {
               isReadonlyStatus.value = false;
@@ -557,6 +562,7 @@ export default defineComponent({
     provide('currentDec', currentDec);
     provide('loading', loading);
     provide('returnComp', returnComp);
+    provide('pageId', pageId);
 
     setTimeout(function () {
       loading.value = false;
@@ -574,7 +580,7 @@ export default defineComponent({
         }
         timer = setTimeout(function () {
           isModified.value = true;
-          window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val) }, '*');
+          window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val), pageId: pageId.value }, '*');
         }, 1000);
       },
       { deep: true }

@@ -3,7 +3,10 @@
     class="picker-flex-edit"
     v-if="ele.value && ele.value.length"
   >
-    <draggable v-model="ele.value" @end="consoleIt">
+    <draggable
+      v-model="ele.value"
+      @end="consoleIt"
+    >
       <div
         v-for="(item, index) in ele.value"
         :key="item.id"
@@ -103,6 +106,7 @@ export default defineComponent({
   },
   setup(props) {
     const { ele } = toRefs(props);
+    const pageId: any = inject('pageId');
     const loading = ref<boolean>(false);
     const mouseEnter = ref<number>(-1);
 
@@ -112,13 +116,14 @@ export default defineComponent({
       for (let i = 0; i < ele.value.value.length; i++) {
         ele.value.value[i].tempPrintFlag = i + 1;
         newList.push(ele.value.value[i].imageInstanceUid);
-        applyedImgs.push(ele.value.value[i])
+        applyedImgs.push(ele.value.value[i]);
       }
       window.parent.postMessage(
         {
           type: 'afterDraggedImgs',
           newList: JSON.stringify(newList),
-          applyedImgs: JSON.stringify(applyedImgs)
+          applyedImgs: JSON.stringify(applyedImgs),
+          pageId: pageId.value
         },
         '*'
       );
@@ -167,7 +172,7 @@ export default defineComponent({
 
     const deleteImg = (index: any, item: any) => {
       window.parent.postMessage(
-        { type: 'deleteImg', data: JSON.stringify(item) },
+        { type: 'deleteImg', data: JSON.stringify(item), pageId: pageId.value },
         '*'
       );
       ele.value.value.splice(index, 1);
@@ -178,7 +183,11 @@ export default defineComponent({
         ele,
         (val, oldVal) => {
           window.parent.postMessage(
-            { type: 'tempSaveApplyImgs', data: JSON.stringify(val.value) },
+            {
+              type: 'tempSaveApplyImgs',
+              data: JSON.stringify(val.value),
+              pageId: pageId.value
+            },
             '*'
           );
         },

@@ -11,7 +11,7 @@ export default defineComponent({
     let info = null;
     const saveTpl = () => {
       emit('saveTpl', { pageData: luckysheet.getRangeValue(), type: 1 });
-      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()), info: JSON.stringify(info), newPage: info && info.id ? false : true }, '*');
+      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()), info: JSON.stringify(info), newPage: info && info.id ? false : true, pageId: 'designer' }, '*');
     };
     const editTpl = (item: any) => {
       let itmm = JSON.parse(item);
