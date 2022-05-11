@@ -40,7 +40,7 @@
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0'
               }"
             >
-              <component :is="ele.elName" :ele="ele"></component>
+              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
             </div>
           </div>
         </div>

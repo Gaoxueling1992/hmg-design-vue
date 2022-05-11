@@ -11,13 +11,12 @@
   >{{ ele.label }}</div>
   <a-input-number
     style="flex: 1"
-    :disabled="ele.baseProps.readonly"
     :min="ele.min"
     :max="ele.max"
     class="inherit"
     v-model:value="ele.value"
     :placeholder="ele.placeholder"
-    v-if="!isReadonlyStatus"
+    v-if="!isReadonlyStatus && !ele.baseProps.readonly"
   >
     <template #prefix>
       {{ ele.prefix }}
