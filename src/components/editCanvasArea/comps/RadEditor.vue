@@ -327,6 +327,12 @@ export default defineComponent({
   i {
     font-style: italic;
   }
+  ul {
+    list-style-type: disc;
+  }
+  li {
+    list-style: unset;
+  }
 }
 .w-e-text-container,
 .w-e-text {
