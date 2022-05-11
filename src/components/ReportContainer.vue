@@ -59,7 +59,7 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick, onBeforeUnmount } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -304,7 +304,6 @@ const handleCompsOper = (
 
   // 解析外部传入的模版详情，用于渲染
   const editTpl = (item: any) => {
-    console.log(item.pageHeaderId)
     let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
     item.name = item.name.replace(reg, '$1$3');
     loading.value = true;

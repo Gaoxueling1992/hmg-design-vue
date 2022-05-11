@@ -14,7 +14,6 @@ export default defineComponent({
       window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()), info: JSON.stringify(info), newPage: info && info.id ? false : true }, '*');
     };
     const editTpl = (item: any) => {
-      console.log(item);
       let itmm = JSON.parse(item);
       let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
       itmm.title = itmm.title.replace(reg, '$1$3');

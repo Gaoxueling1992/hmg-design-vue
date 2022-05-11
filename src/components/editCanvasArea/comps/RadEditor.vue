@@ -42,7 +42,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, Ref, inject, toRefs, watch, computed } from 'vue';
+import {
+  defineComponent,
+  onMounted,
+  Ref,
+  inject,
+  toRefs,
+  watch,
+  computed
+} from 'vue';
 import E from 'wangeditor';
 import { editorMenus, editorFontSizes } from '@/utils/config';
 
@@ -57,15 +65,26 @@ export default defineComponent({
     const focusedEle: Ref<string> = inject('focusedEle');
 
     const readonlyValue = computed(() => {
-      if (props.ele.value) {
-        let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+      if (props.ele.value && splitField.value) {
+        let arr =
+          props.ele.value.split(
+            /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+          ) || [];
         for (let j = 0; j < arr.length; j++) {
           if (arr[j]) {
             if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-              return arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
+              return arr[j].replace(
+                new RegExp(
+                  /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                  'gm'
+                ),
+                ''
+              );
             }
           }
         }
+      } else {
+        return props.ele.value;
       }
     });
 
@@ -75,7 +94,12 @@ export default defineComponent({
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
       window.addEventListener('message', async (e) => {
-        if (e.data.type === 'resetReporetDesc' && e.data.currentDec && e.data.oldDesc && props.ele.value) {
+        if (
+          e.data.type === 'resetReporetDesc' &&
+          e.data.currentDec &&
+          e.data.oldDesc &&
+          props.ele.value
+        ) {
           let { currentDec, oldDesc } = e.data;
           let oldV = oldDesc + '%%' + currentReport.value;
           let newV = currentDec + '%%' + currentReport.value;
@@ -84,7 +108,10 @@ export default defineComponent({
           if (+focusedEle.value === +props.ele.id) {
             if (splitField.value) {
               if (props.ele.value) {
-                let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+                let arr =
+                  props.ele.value.split(
+                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+                  ) || [];
                 let hasStr = false;
                 for (let j = 0; j < arr.length; j++) {
                   if (arr[j]) {
@@ -122,12 +149,21 @@ export default defineComponent({
 
       const inputCurReport = () => {
         if (props.ele.value) {
-          let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
+          let arr =
+            props.ele.value.split(
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+            ) || [];
           let hasStr = false;
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                let newVal = arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
+                let newVal = arr[j].replace(
+                  new RegExp(
+                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                    'gm'
+                  ),
+                  ''
+                );
                 if (newVal !== editor.txt.html()) {
                   editor.txt.html(newVal);
                 }
@@ -149,32 +185,46 @@ export default defineComponent({
 
       const calValue = (h) => {
         if (props.ele.value) {
-          let arr = props.ele.value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
-          let hasVal = false; 
+          let arr =
+            props.ele.value.split(
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+            ) || [];
+          let hasVal = false;
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                props.ele.value = props.ele.value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`);
+                props.ele.value = props.ele.value.replace(
+                  arr[j],
+                  `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
+                );
                 hasVal = true;
                 break;
               }
             }
           }
           if (!hasVal) {
-            props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
+            props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
           }
+        } else {
+          props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
         }
       };
 
       // 切换当前部位时，重算富文本内容
-      watch(currentReport, () => { inputCurReport();})
-      watch(ele, () => {
-        if (splitField.value) {
-          inputCurReport();
-        } else if (props.ele.value !== editor.txt.html()){
-          editor.txt.html(props.ele.value);
-        }
-      }, { deep: true });
+      watch(currentReport, () => {
+        inputCurReport();
+      });
+      watch(
+        ele,
+        () => {
+          if (splitField.value) {
+            inputCurReport();
+          } else if (props.ele.value !== editor.txt.html()) {
+            editor.txt.html(props.ele.value);
+          }
+        },
+        { deep: true }
+      );
 
       editor.config.onchange = (newHtml) => {
         focusedEle.value = props.ele.id;
@@ -194,16 +244,19 @@ export default defineComponent({
         }
       };
       editor.config.onblur = function () {
-        console.log(focusedEle.value, props.ele.id)
-        if (document.getElementById(`toolbar${props.ele.id}`) && focusedEle.value !== props.ele.id) {
+        console.log(focusedEle.value, props.ele.id);
+        if (
+          document.getElementById(`toolbar${props.ele.id}`) &&
+          focusedEle.value !== props.ele.id
+        ) {
           document.getElementById(`toolbar${props.ele.id}`).style.display =
             'none';
         }
       };
       if (document.getElementById(`toolbar${props.ele.id}`)) {
-        document.getElementById(`toolbar${props.ele.id}`).style.display = 'none';
+        document.getElementById(`toolbar${props.ele.id}`).style.display =
+          'none';
       }
-      
     });
     const clickEditor = (e) => {
       focusedEle.value = props.ele.id;
@@ -212,8 +265,8 @@ export default defineComponent({
         let menu: any = document.getElementById('context-menu');
         menu.removeEventListener('click', () => {});
 
-        let childs = menu.childNodes; 
-        for(let i = childs .length - 1; i >= 0; i--) {
+        let childs = menu.childNodes;
+        for (let i = childs.length - 1; i >= 0; i--) {
           menu.removeChild(childs[i]);
         }
 
@@ -240,7 +293,7 @@ export default defineComponent({
               menu.style.padding = '0';
             });
           }
-        }
+        };
         window.onclick = (event: any) => {
           if (event.target.id.indexOf('menu-item') === -1) {
             setTimeout(() => {
@@ -248,7 +301,7 @@ export default defineComponent({
               menu.style.padding = '0';
             });
           }
-        }
+        };
       }
     };
     return {
