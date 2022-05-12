@@ -41,7 +41,7 @@
           >
           <div
             v-if="mouseEnter === +String(index)"
-            class="iconfont iconclose1"
+            class="iconfont iconclose"
             @click="deleteImg(index, item)"
           ></div>
         </div>
@@ -238,7 +238,7 @@ export default defineComponent({
     height: 100%;
     width: 100%;
   }
-  .iconclose1 {
+  .iconclose {
     font-size: 18px;
     position: absolute;
     right: 2px;

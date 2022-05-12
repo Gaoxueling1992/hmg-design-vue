@@ -302,15 +302,15 @@
       >
         <draggable v-model="ele.compsList">
           <div
-            v-for="(item, ix) in ele.compsList"
-            :key="ix"
+            v-for="item in ele.compsList"
+            :key="item.id"
             class="comb-comp-selected"
           >
             <i class="iconfont icondrag paddingR10"></i>
             {{item.name}}
             <i
-              class="fr iconfont iconclose1 paddingL10 delete-comp"
-              @click="deleteIt(ix)"
+              class="fr iconfont iconclose paddingL10 delete-comp"
+              @click="deleteIt(item.id)"
             ></i>
             <a-select
               v-model:value="item.threshold"
@@ -354,7 +354,8 @@ const handleEleOperate = (ele: any, props: any) => {
   const copyComp: any = inject('copyComp');
   const deleteComp: any = inject('deleteComp');
   const deleteEle = () => {
-    deleteComp(idx, index);
+    console.log(idx, ele.id)
+    deleteComp(idx, ele.id);
   };
   const copyEle = () => {
     copyComp(ele);
@@ -378,7 +379,6 @@ export default defineComponent({
   },
   setup(props) {
     const ele: any = reactive(props.ele) || {};
-    const idx: any = reactive(props.idx);
     const activeCompId: string = inject('activeCompId') || '';
     const addComp: Ref<boolean> = ref<boolean>(false);
     const list: Array<any> = compsList;
@@ -409,8 +409,14 @@ export default defineComponent({
         id
       });
     };
-    const deleteIt = (index) => {
-      ele.compsList.splice(index, 1);
+    const deleteIt = (id) => {
+      console.log(id.value);
+      for (let i = 0; i < ele.compsList.length; i++) {
+        if (ele.compsList[i].id === id) {
+          ele.compsList.splice(i, 1);
+          break;
+        }
+      }
     };
 
     return {

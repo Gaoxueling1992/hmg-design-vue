@@ -155,12 +155,17 @@ const handleCompsOper = (
     activeCompId.value = id;
   };
   // 删除控件
-  const deleteComp = (idx: any, index: any) => {
+  const deleteComp = (idx: any, id: any) => {
     clickCanvas();
-    pageData.lines[+idx.value > 0 ? idx.value : 0].splice(
-      +index.value > 0 ? index.value : 0,
-      1
-    );
+    for (let i = 0; i < pageData.lines[+idx.value > 0 ? idx.value : 0].length; i++) {
+      if (pageData.lines[+idx.value > 0 ? idx.value : 0][i].id === id) {
+        pageData.lines[+idx.value > 0 ? idx.value : 0].splice(
+          i > 0 ? i: 0,
+          1
+        );
+        break;
+      }
+    }
     if (pageData.lines[+idx.value > 0 ? idx.value : 0].length === 0) {
       pageData.lines.splice(+idx.value > 0 ? idx.value : 0, 1);
     }

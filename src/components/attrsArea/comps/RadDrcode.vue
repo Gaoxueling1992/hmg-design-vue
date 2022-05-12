@@ -9,7 +9,7 @@
   <div class="flex marginT10 dr-demo">
     <qrcode-vue
       :value="activeCompObj.src"
-      size="100"
+      :size="100"
       :background="activeCompObj.background"
       :foreground="activeCompObj.lineColor"
       :id="'canvas' + activeCompObj.id"
