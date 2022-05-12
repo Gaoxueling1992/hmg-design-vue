@@ -59,7 +59,7 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick, onBeforeUnmount } from 'vue';
+import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick, onBeforeUnmount, onUnmounted } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
@@ -81,7 +81,6 @@ const handlePageData = (pageData: any) => {
 
   const changePageSize = (e: { key: string; value: any }) => {
     const { key, value } = e;
-    console.log(key, value)
     pageData.styleSheet[key] = value + 'mm';
   };
 
@@ -253,7 +252,10 @@ const handleCompsOper = (
       Modal.warning({
         title: '提示',
         content: '检测到模版上没有控件，无法保存。',
-        okText: '确定'
+        okText: '确定',
+        onOk: () => {
+          window.parent.postMessage({ type: 'onOk'}, '*');
+        }
       });
     }
   };
@@ -309,7 +311,6 @@ const handleCompsOper = (
   const editTpl = (item: any) => {
     let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
     item.name = item.name.replace(reg, '$1$3');
-    console.log(item)
     loading.value = true;
     pageData.lines = [];
     pageData.lines = item.lines;
@@ -403,6 +404,10 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
+    onBeforeUnmount (() => {
+      
+      window.removeEventListener('message', () => {});
+    });
 
     const sleep = ms => {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -412,6 +417,7 @@ export default defineComponent({
     };
 
     window.addEventListener('message', async (e) => {
+      console.log('message')
       switch(e.data.type) {
         case 'newTpl':
           newTpl(1);
@@ -581,7 +587,6 @@ export default defineComponent({
         if (timer) {
           clearTimeout(timer);
         }
-        console.log('pagetype', val.styleSheet)
         timer = setTimeout(function () {
           isModified.value = true;
           window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val), pageId: pageId.value }, '*');
