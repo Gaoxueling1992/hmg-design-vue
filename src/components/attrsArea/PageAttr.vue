@@ -59,13 +59,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs } from 'vue';
+import { defineComponent, inject, toRefs, ref, Ref, watch } from 'vue';
 import { tplTypeList } from '@/utils/config';
 
 // 处理pageData
 const pageDataEffet = () => {
   const pageData: any = inject('pageData');
-  const { name, pageType, width, minHeight, pageNumType } = toRefs(pageData);
+  const { name, pageType, pageNumType, styleSheet } = toRefs(pageData);
+  const width: Ref<string> = ref<string>(styleSheet.value.width);
+  const minHeight: Ref<string> = ref<string>(styleSheet.value.minHeight);
   const changePageConfig: any = inject('changePageConfig');
   const changePageSize: any = inject('changePageSize');
 
@@ -76,6 +78,14 @@ const pageDataEffet = () => {
   const handlePageSize = (key: string, value: number) => {
     changePageSize({ key, value });
   };
+
+  watch(pageType, (val, oldVal) => {
+    console.log('pagetpe', val, oldVal);
+    if (val !== oldVal) {
+      width.value = styleSheet.value.width;
+      minHeight.value = styleSheet.value.minHeight;
+    }
+  });
   return { name, pageType, width, minHeight, pageNumType, handlePageChange, handlePageSize };
 };
 

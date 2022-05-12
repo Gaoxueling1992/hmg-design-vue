@@ -73,13 +73,15 @@ const handlePageData = (pageData: any) => {
     if (key === 'pageType') {
       pageData.styleSheet = {
         ...pageData.styleSheet,
-        ...styleSheetObj[value as keyof typeof styleSheetObj]
+        minHeight: styleSheetObj[value].minHeight,
+        width: styleSheetObj[value].width
       };
     }
   };
 
   const changePageSize = (e: { key: string; value: any }) => {
     const { key, value } = e;
+    console.log(key, value)
     pageData.styleSheet[key] = value + 'mm';
   };
 
@@ -307,6 +309,7 @@ const handleCompsOper = (
   const editTpl = (item: any) => {
     let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
     item.name = item.name.replace(reg, '$1$3');
+    console.log(item)
     loading.value = true;
     pageData.lines = [];
     pageData.lines = item.lines;
@@ -578,6 +581,7 @@ export default defineComponent({
         if (timer) {
           clearTimeout(timer);
         }
+        console.log('pagetype', val.styleSheet)
         timer = setTimeout(function () {
           isModified.value = true;
           window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val), pageId: pageId.value }, '*');
