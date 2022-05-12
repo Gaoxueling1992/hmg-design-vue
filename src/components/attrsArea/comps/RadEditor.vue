@@ -25,7 +25,7 @@
     />
   </div>
   <div class="flex marginT10">
-    <div class="flex-title3 marginR5">粗细</div>
+    <div class="flex-title3 marginR5">样式</div>
     <a-radio-group v-model:value="activeCompObj.fontStyle">
       <a-radio value="normal">正常</a-radio>
       <a-radio value="italic">斜体</a-radio>

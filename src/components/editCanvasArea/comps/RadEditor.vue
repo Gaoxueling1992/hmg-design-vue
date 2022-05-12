@@ -21,7 +21,8 @@
         fontSize: ele.fontSize + 'px',
         fontWeight: ele.fontWeight,
         fontStyle: ele.fontStyle,
-        textDecoration: ele.textDecoration
+        textDecoration: ele.textDecoration,
+        color: ele.fontColor
       }"
       :id="'editor' + ele.id"
       @contextmenu.prevent="clickEditor"
@@ -35,6 +36,7 @@
       fontWeight: ele.fontWeight,
       fontStyle: ele.fontStyle,
       textDecoration: ele.textDecoration,
+      color: ele.fontColor,
       'line-height': 1.2
     }"
   >
