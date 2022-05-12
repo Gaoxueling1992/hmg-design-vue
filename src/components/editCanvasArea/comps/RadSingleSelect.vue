@@ -22,6 +22,7 @@
     <a-radio-group
       v-else-if="ele.layout === 'crosswise'"
       v-model:value="ele.value"
+      :disabled="ele.baseProps.readonly"
       :options="ele.options"
     />
     <div v-else>
@@ -29,6 +30,7 @@
         v-for="item in ele.options"
         :key="item.value"
         :checked="item.value === ele.value"
+        :disabled="ele.baseProps.readonly"
         class="option"
       >{{item.label}}</a-radio>
     </div>

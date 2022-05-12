@@ -24,10 +24,12 @@
       v-else-if="ele.layout === 'crosswise'"
       v-model:value="ele.value"
       :options="ele.options"
+      :disabled="ele.baseProps.readonly"
     />
     <div v-else>
       <a-checkbox
         v-for="(item, index) in ele.options"
+        :disabled="ele.baseProps.readonly"
         :key="item.value"
         :checked="ele.value.indexOf(item.value) > -1"
         @change="changeStatus(item.value, index)"
