@@ -142,6 +142,7 @@ const handleCompsOper = (
       validate: {
         ...compBaseConfig[value].validate
       },
+      options: [],
       rules: []
     });
     activeCompObj.value = {
@@ -184,7 +185,11 @@ const handleCompsOper = (
       },
       validate: {
         ...ele.validate
-      }
+      },
+      options: {
+        ...ele.options
+      },
+      rules: ele.rules
     };
     pageData.lines.push([activeCompObj.value]);
     activeCompId.value = id;
