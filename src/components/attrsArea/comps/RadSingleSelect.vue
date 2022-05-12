@@ -71,7 +71,7 @@ export default defineComponent({
           (index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1)
       });
       if (index === 0) {
-        activeCompObj.value.value = 0;
+        activeCompObj.value.value = 1;
       }
     };
     const deleteOption = (index: any, option: any) => {
