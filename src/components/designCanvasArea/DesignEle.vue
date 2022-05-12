@@ -69,7 +69,7 @@
               style="flex: 1"
               disabled
               class="inherit"
-              v-if="item.type !== 'textarea' && item.elName !== 'RadText'"
+              v-if="item.elName !== 'RadText'"
               :placeholder="item.placeholder"
             >
               <template #prefix>
@@ -79,19 +79,6 @@
                 {{ item.suffix }}
               </template>
             </a-input>
-            <a-textarea
-              style="flex: 1"
-              disabled
-              class="inherit"
-              v-else-if="item.elName !== 'RadText'"
-            >
-              <template #prefix>
-                {{ item.prefix }}
-              </template>
-              <template #suffix>
-                {{ item.suffix }}
-              </template>
-            </a-textarea>
           </div>
         </div>
       </div>
@@ -105,7 +92,6 @@
         style="flex: 1"
         disabled
         class="inherit"
-        v-if="ele.type !== 'textarea'"
         :placeholder="ele.placeholder"
       >
         <template #prefix>
@@ -115,19 +101,6 @@
           {{ ele.suffix }}
         </template>
       </a-input>
-      <a-textarea
-        style="flex: 1"
-        disabled
-        class="inherit"
-        v-else
-      >
-        <template #prefix>
-          {{ ele.prefix }}
-        </template>
-        <template #suffix>
-          {{ ele.suffix }}
-        </template>
-      </a-textarea>
     </template>
     <template v-else>
       <div
