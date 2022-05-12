@@ -491,8 +491,8 @@ export default defineComponent({
               let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
               pageData.html += headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             }
-            pageData.headerHtml = pageData.pageHeaderId ? (openFixedAreaStr + (pageData.pageNumType ? (+pageData.pageNumType === 1 ? pageStrStyle + pageStr1 : pageStrStyle + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + headercanvas + '</div>' + footStr) : '';
-            pageData.headerHeight = pageData.pageHeaderId ? document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx() : 0;
+            pageData.headerHtml = openFixedAreaStr + (pageData.pageNumType ? (+pageData.pageNumType === 1 ? pageStrStyle + pageStr1 : pageStrStyle + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageHeaderId ? headercanvas : '') + '</div>' + footStr;
+            pageData.headerHeight = pageData.pageHeaderId ? (document.getElementById('edit-canvas-header').clientHeight - (pageData.headerLine + 1) * 2) / getOneMmsPx() : (pageData.pageNumType ? 5 : 0);
             pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
             pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value, pageId: pageId.value }, '*');
