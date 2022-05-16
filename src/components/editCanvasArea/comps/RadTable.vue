@@ -231,7 +231,9 @@ export default defineComponent({
             row.splice(i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
             for (let index = +key + 1; index <= row[i].mc.rs; index++) {
-              list[index + ''].splice(i, 1);
+              if (list[index + '']) {
+                list[index + ''].splice(i, 1);
+              }
             }
           }
           if (row && row[i]) {

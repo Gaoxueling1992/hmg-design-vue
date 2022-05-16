@@ -5,6 +5,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import config from '@/utils/tableConfig';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   props: ['ele'],
@@ -13,8 +14,8 @@ export default defineComponent({
     const saveTpl = () => {
       let cells = luckysheet.getRangeValue();
       if (cells.length === 1 && cells[0][0] === null) {
-        console.log('----', luckysheet.getcellvalue())
-        cells = luckysheet.getcellvalue();
+        message.error('请选择需要保存的表格区域');
+        return;
       }
       emit('saveTpl', { pageData: cells, type: 1 });
       window.parent.postMessage(

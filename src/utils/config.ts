@@ -176,7 +176,7 @@ const compBaseConfig = {
     elName: 'RadSingleSelect',
     name: '单选',
     type: 'select',
-    desc: '从预设的下拉菜单中选择一项，可设为将选项平铺。',
+    desc: '从预设的下拉菜单中选择一项，可设置为平铺模式。',
     placeholder: '',
     label: '',
     value: '',
