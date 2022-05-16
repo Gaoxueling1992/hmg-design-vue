@@ -11,8 +11,22 @@ export default defineComponent({
   setup(props, { emit }) {
     let info = null;
     const saveTpl = () => {
-      emit('saveTpl', { pageData: luckysheet.getRangeValue(), type: 1 });
-      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(luckysheet.getRangeValue()), info: JSON.stringify(info), newPage: info && info.id ? false : true, pageId: 'designer' }, '*');
+      let cells = luckysheet.getRangeValue();
+      if (cells.length === 1 && cells[0][0] === null) {
+        console.log('----', luckysheet.getcellvalue())
+        cells = luckysheet.getcellvalue();
+      }
+      emit('saveTpl', { pageData: cells, type: 1 });
+      window.parent.postMessage(
+        {
+          type: 'doSaveDesigner',
+          pageData: JSON.stringify(cells),
+          info: JSON.stringify(info),
+          newPage: info && info.id ? false : true,
+          pageId: 'designer'
+        },
+        '*'
+      );
     };
     const editTpl = (item: any) => {
       let itmm = JSON.parse(item);
@@ -22,17 +36,17 @@ export default defineComponent({
         id: itmm.id,
         title: itmm.title,
         departmentId: itmm.departmentId
-      }
+      };
       let content = JSON.parse(itmm.content);
       content.forEach((row, rowNum) => {
         row.forEach((cell, cellNum) => {
-          luckysheet.setCellValue(rowNum, cellNum, cell)
+          luckysheet.setCellValue(rowNum, cellNum, cell);
         });
       });
     };
 
     window.addEventListener('message', (e) => {
-      switch(e.data.type) {
+      switch (e.data.type) {
         case 'saveTableDesinger':
           saveTpl();
           break;
