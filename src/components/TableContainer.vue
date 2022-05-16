@@ -1,4 +1,5 @@
 <template>
+  <div>提示：保存前请先选中需要保存的表格区域</div>
   <div id="luckysheet"></div>
 </template>
 <script lang="ts">
@@ -52,7 +53,7 @@ export default defineComponent({
 <style lang="scss">
 #luckysheet {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 22px);
   position: relative;
   .luckysheet_info_detail,
   .luckysheet-sheet-area {
