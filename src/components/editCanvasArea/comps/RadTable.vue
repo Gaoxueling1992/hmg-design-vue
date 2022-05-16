@@ -250,9 +250,9 @@ export default defineComponent({
               textDecoration:
                 !row[i].cl || row[i].cl === 0 ? '' : 'line-through',
               textAlign:
-                !row[i].ht || row[i].ht === 1
+                !row[i].ht || +row[i].ht === 1
                   ? 'left'
-                  : row[i].ht === 0
+                  : +row[i].ht === 0
                   ? 'center'
                   : 'right',
               verticalAlign:
