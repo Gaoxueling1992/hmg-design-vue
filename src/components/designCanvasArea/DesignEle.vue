@@ -437,15 +437,15 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.disgn-ele-active {
+  background: var(--color-btn-bglight);
+}
 .disgn-ele {
   &:hover {
     background: var(--background-color-base);
   }
   .ele-label {
     padding-right: 10px;
-  }
-  .disgn-ele-active {
-    background: var(--color-btn-bglight);
   }
   .ant-divider-horizontal {
     margin: 0;
