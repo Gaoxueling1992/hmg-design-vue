@@ -17,6 +17,7 @@ export default defineComponent({
         message.error('请选择需要保存的表格区域');
         return;
       }
+      console.log(cells)
       emit('saveTpl', { pageData: cells, type: 1 });
       window.parent.postMessage(
         {

@@ -256,9 +256,9 @@ export default defineComponent({
                   ? 'center'
                   : 'right',
               verticalAlign:
-                !row[i].vt || row[i].vt === 0
+                !row[i].vt || +row[i].vt === 0
                   ? 'middle'
-                  : row[i].ht === 1
+                  : +row[i].vt === 1
                   ? 'top'
                   : 'bottom',
               transform: `rotate(${row[i].rt}deg)`,
