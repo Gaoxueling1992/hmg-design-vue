@@ -17,7 +17,10 @@
           :key="idx"
         >
           <td
-            :style="item ? item.style : {}"
+            :style="item ? {
+              ...item.style,
+              width: (item && item.mc && item.mc.cs || 1)/tds * 100 + '%'
+             } : {}"
             style="padding: 2px;"
             :colspan="item && item.mc && item.mc.cs || 1"
             :rowspan="item && item.mc && item.mc.rs || 1"
@@ -260,7 +263,7 @@ export default defineComponent({
                   : 'bottom',
               transform: `rotate(${row[i].rt}deg)`,
               writingMode: !row[i].rt || row[i].rt !== 3 ? '' : 'tb-rl',
-              whiteSpace: !row[i].tb || row[i].tb === 2 ? '' : 'nowrap',
+              whiteSpace: !row[i].tb || +row[i].tb === 2 ? '' : 'nowrap',
               wordBreak: 'break-all',
               overflow: 'hidden'
             };

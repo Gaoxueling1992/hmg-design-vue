@@ -35,7 +35,7 @@ const config = {
     chart: false, // '图表'（图标隐藏，但是如果配置了chart插件，右击仍然可以新建图表）
     postil: false, //'批注'
     pivotTable: false, //'数据透视表'
-    function: true, // '公式'
+    function: false, // '公式'
     frozenMode: false, // '冻结方式'
     sortAndFilter: false, // '排序和筛选'
     conditionalFormat: false, // '条件格式'
@@ -46,11 +46,14 @@ const config = {
     protection: false, // '工作表保护'
     print: false, // '打印'
   },
+  textWrap: {
+    overflow:"Overflow",
+    wrap:"Wrap",
+  },
   functionButton: '<button id="" class="btn btn-primary" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">download</button> <button id="" class="btn btn-primary btn-danger" style=" padding:3px 6px; font-size: 12px; margin-right: 10px;">share</button> <button id="luckysheet-share-btn-title" class="btn btn-primary btn-danger" style=" padding:3px 6px; font-size: 12px; margin-right: 10px;">show data</button>', //右上角按钮
   cellRightClickConfig: {
     //自定义配置单元右键菜单
     copy: true, // 复制
-    copyAs: true, // 复制为
     paste: true, // 粘贴
     insertRow: true, // 插入行insert row
     insertColumn: true, // 插入列insert column
