@@ -12,6 +12,8 @@
       v-model:value="activeCompObj.styleSheet[key]"
       :options="sheet2Form[key].options"
       :num="0"
+      :min="key === 'fontWeight' ? 300 : -Infinity"
+      :max="key === 'fontWeight' ? 800 : Infinity"
     ></component>
   </div>
 </template>
