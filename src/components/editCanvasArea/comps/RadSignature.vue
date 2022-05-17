@@ -3,7 +3,7 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
       lineHeight: ele.imgHeight+ 'px',
       height: ele.imgHeight+ 'px',
@@ -18,7 +18,8 @@
     }"
     :style="{
       flexDirection: (ele.imagePosi === 'right' || ele.imagePosi === 'left') ? 'row' : 'column',
-      display: isReadonlyStatus ? 'inline-block' : ''
+      display: isReadonlyStatus ? 'inline-block' : '',
+      'text-decoration': 'inherit'
     }"
   >
     <template v-if="ele.imagePosi === 'right' || ele.imagePosi === 'bottom'">
@@ -34,7 +35,7 @@
         </a-input>
         <div
           v-else
-          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'right' ? 'left' : ''
@@ -93,7 +94,7 @@
         </a-input>
         <div
           v-else
-          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'left' ? 'left' : ''

@@ -3,7 +3,7 @@
     class="inherit"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : ''
@@ -36,7 +36,7 @@
     </div>
   </template>
   <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
-    padding-top: 1px;
+    padding-top: 1px;text-decoration: inherit;
     padding-bottom: 1px;" class="inherit display-text">
     <template v-for="item in ele.options">
       <span :key="item.value" v-if="item.value === ele.value">

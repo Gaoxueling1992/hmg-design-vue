@@ -5,7 +5,8 @@
     :class="ele.inline ? 'ele-label' : ''"
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': 'inherit'
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
@@ -40,7 +41,7 @@
   <div
     v-else
     class="inherit display-text"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;
     padding-bottom: 1px;"
   >

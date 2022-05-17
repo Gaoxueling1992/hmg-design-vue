@@ -1,7 +1,7 @@
 <template>
   <div
     class="inherit"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;"
     v-if="ele.label"
     :class="ele.inline ? 'ele-label' : ''"
     :style="{
@@ -22,7 +22,7 @@
   <div
     v-else
     class="inherit display-text"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
     padding-top: 1px;
     padding-bottom: 1px;"
   >{{ele.value ? moment(ele.value).format(ele.format) : ''}}</div>

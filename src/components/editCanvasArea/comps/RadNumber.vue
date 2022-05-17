@@ -5,7 +5,8 @@
     :class="ele.inline ? 'ele-label' : ''"
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': 'inherit'
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
@@ -25,7 +26,7 @@
       {{ ele.suffix }}
     </template>
   </a-input-number>
-  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
     padding-top: 1px;
     padding-bottom: 1px;" class="inherit display-text">
     {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;

@@ -7,7 +7,7 @@
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : ''
     }"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;"
   >{{ ele.label }}</div>
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <a-input
@@ -41,9 +41,16 @@
       </template>
     </a-textarea>
   </template>
-  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+  <div v-else style="
+    border-color:inherit;
+    color:inherit !important;
+    background-color: inherit;
+    font-size: inherit;
+    display: inline-block;
+    line-height: 30px !important;
     padding-top: 1px;
-    padding-bottom: 1px;" class="inherit display-text">
+    padding-bottom: 1px;
+    text-decoration: inherit;" class="inherit display-text">
     {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}&nbsp;
   </div>
 </template>
