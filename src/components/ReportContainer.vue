@@ -273,6 +273,7 @@ const handleCompsOper = (
     pageData.footerLine = 9999;
     pageData.pageType = 'a4';
     pageData.pageNumType = 0;
+    pageData.pageNumPosi = 0;
     pageData.styleSheet = {
       minHeight: '297mm',
       width: '210mm',
@@ -328,6 +329,7 @@ const handleCompsOper = (
     pageData.headerLine = item.headerLine;
     pageData.footerLine = item.footerLine;
     pageData.pageNumType = item.pageNumType;
+    pageData.pageNumPosi = item.pageNumPosi;
     pageHeaderId.value = item.pageHeaderId;
     pageFooterId.value = item.pageFooterId;
     activePosi.value = 0;
@@ -496,12 +498,20 @@ export default defineComponent({
               currentReport.value = lastReport;
             } else {
               let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
-              pageData.html += headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
+              pageData.html += headStr + `<div style="padding:${(pageData.pageHeaderId || (pageData.pageNumType && pageData.pageNumPosi <=1)) ? '0' : '10px'} ${pageData.styleSheet.padding} ${(pageData.pageFooterId || (pageData.pageNumType && pageData.pageNumPosi >1)) ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             }
-            pageData.headerHtml = openFixedAreaStr + (pageData.pageNumType ? (+pageData.pageNumType === 1 ? pageStrStyle + pageStr1 : pageStrStyle + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageHeaderId ? headercanvas : '') + '</div>' + footStr;
-            pageData.headerHeight = pageData.pageHeaderId ? (document.getElementById('edit-canvas-header').clientHeight - (pageData.headerLine + 1) * 2) / getOneMmsPx() : (pageData.pageNumType ? 5 : 0);
-            pageData.footerHtml = pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
-            pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : 0;
+            const pagePosiMap = {
+              0: 'text-align: right; width: 100%',
+              1: 'text-align: left;',
+              2: 'text-align: center; width: 100%',
+              3: 'text-align: left;',
+              4: 'text-align: right; width: 100%',
+              5: 'text-align: center; width: 100%',
+            }
+            pageData.headerHtml = openFixedAreaStr + (pageData.pageNumType && pageData.pageNumPosi <=2 ? (+pageData.pageNumType === 1 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageHeaderId ? headercanvas : '') + '</div>' + footStr;
+            pageData.headerHeight = pageData.pageHeaderId ? (document.getElementById('edit-canvas-header').clientHeight - (pageData.headerLine + 1) * 2) / getOneMmsPx() : (pageData.pageNumType && pageData.pageNumPosi <=2 ? 5 : 0);
+            pageData.footerHtml = openFixedAreaStr + (pageData.pageNumType && pageData.pageNumPosi >2 ? (+pageData.pageNumType === 1 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageFooterId ? footercanvas : '') + '</div>' + footStr; // pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
+            pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : (pageData.pageNumType && pageData.pageNumPosi > 2 ? 5 : 0);
             window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value, pageId: pageId.value }, '*');
 
             nextTick(() => {

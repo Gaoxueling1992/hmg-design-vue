@@ -39,7 +39,7 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.justifyContent === 'left' ? 'start' :  (ele.justifyContent === 'right' ? 'end' : 'center')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
@@ -75,7 +75,7 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'left' ? 'start' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'center')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
@@ -113,7 +113,7 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.justifyContent === 'left' ? 'start' :  (ele.justifyContent === 'right' ? 'end' : 'center')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>

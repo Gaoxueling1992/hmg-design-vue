@@ -5,6 +5,7 @@ const pageConfig: Object = {
   pageType: 'a4',
   newPage: false,
   pageNumType: 0,
+  pageNumPosi: 0,
   id: '',
   styleSheet: {
     minHeight: '297mm',

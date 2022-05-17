@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2022-03-11 16:33:56
- * @LastEditTime: 2022-05-12 14:00:59
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /hmg-design-vue/src/utils/tpl-config.ts
- */
 const headStr = `
 <!DOCTYPE html>
 <html>
@@ -72,12 +64,11 @@ const openFixedAreaStr = `
 </head>
 <body style="border:0; margin: 0;" onload="subst()">`
 
-const pageStrStyle = '<table style="width: 100%;right:2px;top:0px">'
-const pageStrStyleB = '<table style="width: 100%;position:absolute;bottom:2px;right:2px;">'
-const pageStr1 = `
+const pageStrStyle = '<table style="'
+const pageStr1 = `">
   <tr>
     <td class="section"></td>
-    <td style="text-align:right">
+    <td>
       第 <span class="page"></span> 页
     </td>
   </tr>
@@ -87,7 +78,7 @@ const pageStr1 = `
 const pageStr2 = `
   <tr>
     <td class="section"></td>
-    <td style="text-align:right">
+    <td>
       第 <span class="page"></span> / <span class="topage"></span> 页
     </td>
   </tr>
@@ -100,6 +91,5 @@ export {
   openFixedAreaStr,
   pageStr1,
   pageStr2,
-  pageStrStyle,
-  pageStrStyleB
+  pageStrStyle
 }

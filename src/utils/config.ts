@@ -330,13 +330,7 @@ const compBaseConfig = {
     },
     threshold: '',
     domainType: 'domain',
-    styleSheet: {
-      width: '100%',
-      paddingTop: '0',
-      paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
-    },
+    styleSheet: styleSheet,
     background: 'transparent',
     displayValue: false,
     text: '',
