@@ -10,9 +10,8 @@
     }"
   >{{ ele.label }}</div>
   <a-date-picker
-    v-if="!isReadonlyStatus"
+    v-if="!isReadonlyStatus && !ele.baseProps.readonly"
     style="flex: 1"
-    :disabled="ele.baseProps.readonly"
     class="inherit"
     v-model:value="ele.value"
     placeholder="请选择时间"
