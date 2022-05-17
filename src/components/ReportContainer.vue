@@ -151,7 +151,6 @@ const handleCompsOper = (
   };
   // 删除控件
   const deleteComp = (idx: any, id: any) => {
-    clickCanvas();
     for (let i = 0; i < pageData.lines[+idx.value > 0 ? idx.value : 0].length; i++) {
       if (pageData.lines[+idx.value > 0 ? idx.value : 0][i].id === id) {
         pageData.lines[+idx.value > 0 ? idx.value : 0].splice(
@@ -164,6 +163,9 @@ const handleCompsOper = (
     if (pageData.lines[+idx.value > 0 ? idx.value : 0].length === 0) {
       pageData.lines.splice(+idx.value > 0 ? idx.value : 0, 1);
     }
+    setTimeout(() => {
+      clickCanvas();
+    });
   };
   // 复制控件
   const copyComp = (ele: any) => {
