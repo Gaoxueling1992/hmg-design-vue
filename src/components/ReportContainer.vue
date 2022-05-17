@@ -409,11 +409,6 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
-    onBeforeUnmount (() => {
-      
-      window.removeEventListener('message', () => {});
-    });
-
     const sleep = ms => {
       return new Promise(resolve => setTimeout(resolve, ms));
     };
@@ -422,7 +417,6 @@ export default defineComponent({
     };
 
     window.addEventListener('message', async (e) => {
-      console.log('message')
       switch(e.data.type) {
         case 'newTpl':
           newTpl(1);

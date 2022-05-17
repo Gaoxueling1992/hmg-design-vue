@@ -28,6 +28,20 @@
             :height="(item && item.mc && item.mc.rs || 1) * 30 + 'px'"
           >
             <span v-if="item && item.m">{{ item.m }}</span>
+            <span v-else-if="item && item.ct && item.ct.s && item.ct.s.length">
+              <span v-for="(vv, ix) in item.ct.s" :key="ix"
+                :style="{
+                  fontFamily: transFamily(vv.ff),
+                  color: vv.fc,
+                  fontWeight: !vv.bl || vv.bl === 0 ? 'normal' : 'bold',
+                  fontStyle: !vv.it || vv.it === 0 ? 'normal' : 'italic',
+                  fontSize: vv.fs + 'px',
+                  textDecoration:
+                    !vv.cl || vv.cl === 0 ? '' : 'line-through',
+                }">
+                {{vv.v}}
+              </span>
+            </span>
             <span v-else>
               <a-input
                 v-if="!isReadonlyStatus"
@@ -208,6 +222,7 @@ export default defineComponent({
 
     const tbList = computed(() => {
       let list = [];
+      console.log('tabel', tableTpl.value.content)
       if (tableTpl.value.list) {
         list = JSON.parse(JSON.stringify(tableTpl.value.list));
       } else {
@@ -288,7 +303,8 @@ export default defineComponent({
       tds,
       chooseTableInner,
       tableList,
-      applyTpl
+      applyTpl,
+      transFamily
     };
   }
 });
