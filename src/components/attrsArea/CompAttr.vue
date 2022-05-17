@@ -23,7 +23,6 @@
       >左侧标签</a-checkbox>
       <component :is="activeCompObj.elName"></component>
       <Domain v-if="activeCompObj.domainType"></Domain>
-      <Validate v-if="activeCompObj.validate"></Validate>
       <BaseProps v-if="activeCompObj.baseProps"></BaseProps>
       <StyleSheet v-if="activeCompObj.styleSheet"></StyleSheet>
     </div>

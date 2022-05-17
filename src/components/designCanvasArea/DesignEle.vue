@@ -399,9 +399,6 @@ export default defineComponent({
         baseProps: {
           ...compBaseConfig[item.elName].baseProps
         },
-        validate: {
-          ...compBaseConfig[item.elName].validate
-        },
         rules: []
       });
       ele.compsList.push({

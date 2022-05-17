@@ -125,54 +125,6 @@
           allowClear
         />
       </div>
-      
-      <div
-        class="title marginT10 fontW500"
-        v-if="comp.validate"
-      >验证</div>
-      <template
-        v-for="(value, key) in comp.validate"
-        :key="key"
-      >
-        <div
-          v-if="sheet2Form[key] && sheet2Form[key].label"
-          class="attr-group paddingT10"
-        >
-          <a-checkbox v-model:checked="comp.validate[key]">
-            {{ sheet2Form[key].label }}
-          </a-checkbox>
-        </div>
-        <template v-if="key === 'limitLength' && comp.validate[key]">
-          <a-input-number
-            class="limit-input marginR10 marginT5"
-            v-model:value="comp.validate.minLength"
-            :min="0"
-            :max="comp.validate.maxLength"
-          />-
-          <a-input-number
-            class="limit-input marginL10"
-            v-model:value="comp.validate.maxLength"
-            :min="comp.validate.minLength"
-          />
-        </template>
-        <div
-          class="flex"
-          v-if="key === 'limitRule' && comp.validate[key]"
-        >
-          <a-select
-            v-model:value="comp.validate.rule"
-            :options="ruleList"
-            class="marginT5"
-            style="width: 100px"
-          ></a-select>
-          <a-input
-            v-if="comp.validate.rule === 'custom'"
-            class="flex1"
-            allowClear
-            v-model:value="comp.validate.customRule"
-          />
-        </div>
-      </template>
       <div
         class="title marginT10 fontW500"
         v-if="comp.baseProps"

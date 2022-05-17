@@ -98,17 +98,6 @@ const baseProps: object = {
   // script: '' // 控件脚本
 }
 
-// 校验属性
-const validate: object = {
-  required: false, // 是否必填
-  limitLength: false, // 限定输入长度
-  minLength: 0,
-  maxLength: 1000,
-  limitRule: false, // 限定输入格式
-  rule: '', // 选择的格式
-  customRule: '' // 自定义格式，正则
-}
-
 // 组件预设属性
 const compBaseConfig = {
   'rad-text': {
@@ -143,7 +132,6 @@ const compBaseConfig = {
     threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
-    validate: validate,
     prefix: '',
     suffix: '',
     elType: 'text',
@@ -162,9 +150,6 @@ const compBaseConfig = {
     domainType: 'domain',
     baseProps: {
       readonly: false
-    },
-    validate: {
-      required: false
     },
     format: 'YYYY-MM-DD',
     picker: 'date',
@@ -224,9 +209,6 @@ const compBaseConfig = {
     threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
-    validate: {
-      required: false, // 是否必填
-    },
     prefix: '',
     suffix: '',
     min: 0,
@@ -411,9 +393,6 @@ const compBaseConfig = {
     threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
-    validate: {
-      required: false
-    },
     fontColor: '#333',
     fontSize: 18,
     fontWeight: 400,
@@ -436,7 +415,6 @@ const compBaseConfig = {
     threshold: '',
     domainType: 'domain',
     baseProps: baseProps,
-    validate: validate,
     imagePosi: 'right',
     imgHeight: '32',
     imgWidth: '50',

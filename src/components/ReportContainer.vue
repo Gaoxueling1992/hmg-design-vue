@@ -112,9 +112,6 @@ const handleCompsOper = (
       baseProps: {
         ...compBaseConfig[elName].baseProps
       },
-      validate: {
-        ...compBaseConfig[elName].validate
-      },
       rules: []
     });
     activeCompObj.value = {
@@ -138,9 +135,6 @@ const handleCompsOper = (
       },
       baseProps: {
         ...compBaseConfig[value].baseProps
-      },
-      validate: {
-        ...compBaseConfig[value].validate
       },
       options: [],
       rules: []
@@ -182,9 +176,6 @@ const handleCompsOper = (
       },
       baseProps: {
         ...ele.baseProps
-      },
-      validate: {
-        ...ele.validate
       },
       options: {
         ...ele.options
