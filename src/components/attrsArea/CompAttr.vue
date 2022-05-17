@@ -105,4 +105,9 @@ export default defineComponent({
     }
   }
 }
+.container-item {
+  .ant-input-affix-wrapper-textarea-with-clear-btn .ant-input {
+    padding: 4px 20px 4px 11px !important;
+  }
+}
 </style>
