@@ -226,10 +226,15 @@ p {
 .ant-input,
 .ant-input-number {
   background: transparent !important;
-
   .ant-input {
     background: transparent !important;
   }
+}
+.ant-input-prefix, .ant-input, .ant-input-affix-wrapper, .ant-input-suffix {
+  border-color: inherit;
+  color: inherit !important;
+  background-color: inherit;
+  font-size: inherit;
 }
 
 .ellipsis {

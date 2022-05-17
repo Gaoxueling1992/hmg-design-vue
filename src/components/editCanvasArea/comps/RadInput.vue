@@ -44,7 +44,7 @@
   <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;
     padding-bottom: 1px;" class="inherit display-text">
-    {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
+    {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}&nbsp;
   </div>
 </template>
 <script lang="ts">
