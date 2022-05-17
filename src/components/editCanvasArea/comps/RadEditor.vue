@@ -416,4 +416,9 @@ font[size='3'] {
 .w-e-text-container .placeholder {
   top: 5px !important;
 }
+.container-editor {
+  .w-e-text-container {
+    z-index: 888 !important;
+  }
+}
 </style>
