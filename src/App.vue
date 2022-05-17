@@ -1,20 +1,28 @@
 <template>
-  <router-view></router-view>
+  <a-config-provider :locale="locale">
+    <router-view></router-view>
+  </a-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
 
 export default defineComponent({
   name: 'App',
-  created () {
+  data () {
+    return {
+      locale: zhCN
+    }
+  },
+  created() {
     if (location.href.indexOf('isEditor') > -1) {
       document.getElementById('vite-app').style.overflow = 'auto';
     } else {
       document.getElementById('vite-app').style.overflow = 'hidden';
     }
-  },
-})
+  }
+});
 </script>
 <style lang="scss">
 html {
