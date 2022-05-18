@@ -344,13 +344,12 @@ export default defineComponent({
   height: fit-content !important;
 }
 .w-e-text {
-  min-height: 32px !important;
+  min-height: 75px !important;
   padding: 4px 0;
 }
 .w-e-toolbar .w-e-droplist {
   height: 80px;
   overflow: auto;
-  padding-bottom: 30px;
 }
 .container {
   border: 1px solid var(--border-color-lighter);
