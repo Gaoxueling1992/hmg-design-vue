@@ -36,7 +36,7 @@
     </div>
   </template>
   <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
-    padding-top: 1px;text-decoration: inherit;
+    padding-top: 1px;text-decoration: inherit;white-space:normal;word-break: break-all;
     padding-bottom: 1px;" class="inherit display-text">
     <template v-for="item in ele.options">
       <span :key="item.value" v-if="item.value === ele.value">

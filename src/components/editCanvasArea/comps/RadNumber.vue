@@ -27,7 +27,7 @@
     </template>
   </a-input-number>
   <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
-    padding-top: 1px;
+    padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;" class="inherit display-text">
     {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
   </div>

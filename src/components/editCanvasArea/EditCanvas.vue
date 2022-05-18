@@ -14,12 +14,12 @@
           :key="idx"
           :id="'line' + String(idx)"
           :style="{
-            'display': isReadonlyStatus ? 'table' : '',
             'width': '100%',
-            'padding': line.length > 0 ? '2px 0' : '0'
+            'padding': line.length > 0 ? '2px 0' : '0',
+            'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
+          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"
               :key="ele.id"
@@ -39,7 +39,8 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                float: 'left'
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
@@ -53,11 +54,12 @@
           :key="idx"
           :id="'line' + String(idx)"
           :style="{
-            'display': isReadonlyStatus ? 'table' : '',
-            'width': '100%'
+            'display': '',
+            'width': '100%',
+            'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? 'table-row' : 'flex'}">
+          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"
               :key="ele.id"
@@ -75,7 +77,8 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                float: 'left'
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
@@ -89,13 +92,14 @@
           :key="idx"
           :id="'line' + String(idx)"
           :style="{
-            'display': isReadonlyStatus ? 'table' : '',
-            'width': '100%'
+            'display': '',
+            'width': '100%',
+            'overflow': 'hidden'
           }"
         >
           <div
             style="position:relative;width:100%;line-height:1"
-            :style="{'display': isReadonlyStatus ? 'table-row' : 'flex'}">
+            :style="{'display': isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"
               :key="ele.id"
@@ -113,7 +117,8 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start')
+                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                float: 'left'
               }"
             >
               <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>

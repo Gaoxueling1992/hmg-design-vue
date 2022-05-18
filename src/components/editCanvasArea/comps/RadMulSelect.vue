@@ -42,8 +42,8 @@
     v-else
     class="inherit display-text"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;display: inline-block;line-height: 30px !important;
-    padding-top: 1px;
-    padding-bottom: 1px;"
+    padding-top: 1px;word-break: break-all;
+    padding-bottom: 1px;white-space:normal;"
   >
     <template v-for="item in ele.options">
       <span

@@ -778,8 +778,6 @@ const sheet2Form = {
     type: 'a-select',
     label: '超出一行',
     options: [{
-      label: '隐藏', value: 'noWrap'
-    }, {
       label: '自动换行', value: 'autoWrap'
     }]
   },

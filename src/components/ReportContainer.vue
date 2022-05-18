@@ -494,7 +494,7 @@ export default defineComponent({
               currentReport.value = lastReport;
             } else {
               let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
-              pageData.html += headStr + `<div style="padding:${(pageData.pageHeaderId || (pageData.pageNumType && pageData.pageNumPosi <=1)) ? '0' : '10px'} ${pageData.styleSheet.padding} ${(pageData.pageFooterId || (pageData.pageNumType && pageData.pageNumPosi >1)) ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
+              pageData.html += headStr + `<div style="padding:${(pageData.pageHeaderId || (pageData.pageNumType && pageData.pageNumPosi <=1)) ? '5px' : '10px'} ${pageData.styleSheet.padding} ${(pageData.pageFooterId || (pageData.pageNumType && pageData.pageNumPosi >1)) ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
             }
             const pagePosiMap = {
               0: 'text-align: right; width: 100%',

@@ -12,7 +12,6 @@
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <a-input
       style="flex: 1"
-      :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type !== 'textarea'"
       v-model:value="ele.value"
@@ -27,7 +26,6 @@
     </a-input>
     <a-textarea
       style="flex: 1"
-      :disabled="ele.baseProps.readonly"
       v-model:value="ele.value"
       :placeholder="ele.placeholder"
       class="inherit"
@@ -49,8 +47,9 @@
     display: inline-block;
     line-height: 30px !important;
     padding-top: 1px;
-    padding-bottom: 1px;
-    text-decoration: inherit;" class="inherit display-text">
+    flex: 1;
+    padding-bottom: 1px;word-break: break-all;
+    text-decoration: inherit;white-space:normal;" class="inherit display-text">
     {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}&nbsp;
   </div>
 </template>

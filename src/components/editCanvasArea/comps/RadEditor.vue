@@ -38,7 +38,9 @@
       textDecoration: ele.textDecoration,
       color: ele.fontColor,
       'line-height': 1.2,
-      'text-decoration': 'inherit'
+      'text-decoration': 'inherit',
+      'white-space': 'normal',
+      'word-break': 'break-all'
     }"
   >
     <div v-html="readonlyValue"></div>

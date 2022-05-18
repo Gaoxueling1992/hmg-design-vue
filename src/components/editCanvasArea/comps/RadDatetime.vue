@@ -22,7 +22,7 @@
     v-else
     class="inherit display-text"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
-    padding-top: 1px;
+    padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
   >{{ele.value ? moment(ele.value).format(ele.format) : ''}}</div>
 </template>
