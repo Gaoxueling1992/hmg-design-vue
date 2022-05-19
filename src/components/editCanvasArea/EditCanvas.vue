@@ -30,8 +30,9 @@
                 'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
                 'position': 'relative',
                 ...ele.styleSheet,
-                fontSize: ele.styleSheet.fontSize + 'px',
-                borderWidth: ele.styleSheet.borderWidth + 'px',
+                fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
+                borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
                 display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
                 width: eleWidth(line, index),
                 'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
@@ -39,7 +40,7 @@
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left'
               }"
             >
@@ -70,14 +71,15 @@
                 'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
                 'position': 'relative',
                 ...ele.styleSheet,
-                fontSize: ele.styleSheet.fontSize + 'px',
-                borderWidth: ele.styleSheet.borderWidth + 'px',
+                fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
+                borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
                 display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
                 width: eleWidth(line, index),
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left'
               }"
             >
@@ -110,14 +112,14 @@
                 'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
                 'position': 'relative',
                 ...ele.styleSheet,
-                fontSize: ele.styleSheet.fontSize + 'px',
-                borderWidth: ele.styleSheet.borderWidth + 'px',
+                fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
+                borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
                 display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
                 width: eleWidth(line, index),
                 'vertical-align': 'middle',
                 'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
                 'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left'
               }"
             >

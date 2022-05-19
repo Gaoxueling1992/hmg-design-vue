@@ -8,6 +8,7 @@
           v-model="list"
           :group="{ name: 'line', pull: 'clone', put: false }"
           :clone="cloneDog"
+          @end="dragEnd"
         >
           <a-button
             v-for="(item, index) in list"
@@ -36,6 +37,7 @@ export default defineComponent({
     const list: Array<any> = compsList;
     const addComp: any = inject('addComp');
     const returnComp: any = inject('returnComp');
+    const pageData: any = inject('pageData');
 
     const handleAddComp = (value) => {
       addComp(value.elName);
@@ -45,10 +47,21 @@ export default defineComponent({
       return returnComp(value.elName);
     };
 
+    const dragEnd = () => {
+      let res = [[]];
+      for (let i = 0; i < pageData.lines.length; i++) {
+        if (pageData.lines[i].length) {
+          res.push(pageData.lines[i]);
+          res.push([]);
+        }
+      }
+      pageData.lines = [].concat(res);
+    };
     return {
       list,
       handleAddComp,
-      cloneDog
+      cloneDog,
+      dragEnd
     };
   }
 });

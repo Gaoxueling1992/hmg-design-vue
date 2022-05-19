@@ -8,7 +8,7 @@
     @click.self.prevent="handleClickCanvas"
   >
     <template v-if="!loading">
-      <draggable v-model="lines" group="line">
+      <draggable v-model="lines" @end="dragEnd">
         <div 
           v-for="(line, idx) in lines"
           :key="idx"
@@ -18,6 +18,7 @@
             v-model="lines[idx]"
             class="canvas-area-line"
             group="line"
+            @end="dragEnd"
           >
             <transition-group>
               <DesignEle
@@ -58,12 +59,24 @@ export default defineComponent({
     const { handleClickCanvas } = handleClickCanvasFn()
     const loading: Ref<boolean> = inject('loading');
 
+    const dragEnd = () => {
+      let res = [[]];
+      for (let i = 0; i < pageData.lines.length; i++) {
+        if (pageData.lines[i].length) {
+          res.push(pageData.lines[i]);
+          res.push([]);
+        }
+      }
+      pageData.lines = [].concat(res);
+    };
+
     return {
       handleClickCanvas,
       pageData,
       lines,
       styleSheet,
-      loading
+      loading,
+      dragEnd
     };
   }
 });

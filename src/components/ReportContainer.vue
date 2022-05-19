@@ -59,11 +59,29 @@
   <div id="context-menu"></div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, provide, Ref, watch, toRefs, nextTick, onBeforeUnmount, onUnmounted } from 'vue';
+import {
+  defineComponent,
+  ref,
+  reactive,
+  provide,
+  Ref,
+  watch,
+  toRefs,
+  nextTick,
+  onBeforeUnmount,
+  onUnmounted
+} from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
-import { headStr, footStr, openFixedAreaStr, pageStr1, pageStr2, pageStrStyle } from '@/utils/tpl-config';
+import {
+  headStr,
+  footStr,
+  openFixedAreaStr,
+  pageStr1,
+  pageStr2,
+  pageStrStyle
+} from '@/utils/tpl-config';
 import { getOneMmsPx } from '@/utils/util';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
@@ -147,16 +165,18 @@ const handleCompsOper = (
       activeCompObj.value.compsList = [];
     }
     pageData.lines.push([activeCompObj.value]);
+    pageData.lines.push([]);
     activeCompId.value = id;
   };
   // 删除控件
   const deleteComp = (idx: any, id: any) => {
-    for (let i = 0; i < pageData.lines[+idx.value > 0 ? idx.value : 0].length; i++) {
+    for (
+      let i = 0;
+      i < pageData.lines[+idx.value > 0 ? idx.value : 0].length;
+      i++
+    ) {
       if (pageData.lines[+idx.value > 0 ? idx.value : 0][i].id === id) {
-        pageData.lines[+idx.value > 0 ? idx.value : 0].splice(
-          i > 0 ? i: 0,
-          1
-        );
+        pageData.lines[+idx.value > 0 ? idx.value : 0].splice(i > 0 ? i : 0, 1);
         break;
       }
     }
@@ -185,6 +205,7 @@ const handleCompsOper = (
       rules: ele.rules
     };
     pageData.lines.push([activeCompObj.value]);
+    pageData.lines.push([]);
     activeCompId.value = id;
     activePosi.value = 1;
   };
@@ -220,7 +241,7 @@ const handleCompsOper = (
         okText: '我知道了',
         cancelText: '取消',
         onOk() {},
-        onCancel() {},
+        onCancel() {}
       });
       return;
     }
@@ -249,15 +270,27 @@ const handleCompsOper = (
   // 保存模版
   const saveTpl = () => {
     if (pageData.lines.length) {
+      for (let i = pageData.lines.length - 1; i >= 0; i--) {
+        if (pageData.lines[i].length === 0) {
+          pageData.lines.splice(i, 1);
+        }
+      }
       emit('saveTpl', { pageData, type: 0 });
-      window.parent.postMessage({ type: 'doSaveDesigner', pageData: JSON.stringify(pageData), pageId: pageId.value }, '*');
+      window.parent.postMessage(
+        {
+          type: 'doSaveDesigner',
+          pageData: JSON.stringify(pageData),
+          pageId: pageId.value
+        },
+        '*'
+      );
     } else {
       Modal.warning({
         title: '提示',
         content: '检测到模版上没有控件，无法保存。',
         okText: '确定',
         onOk: () => {
-          window.parent.postMessage({ type: 'onOk'}, '*');
+          window.parent.postMessage({ type: 'onOk' }, '*');
         }
       });
     }
@@ -312,12 +345,22 @@ const handleCompsOper = (
   };
 
   // 解析外部传入的模版详情，用于渲染
-  const editTpl = (item: any) => {
+  const editTpl = (item: any, pageId: string) => {
     let reg = new RegExp(`^([^]*)(v2)([^]*)$`);
     item.name = item.name.replace(reg, '$1$3');
     loading.value = true;
     pageData.lines = [];
-    pageData.lines = item.lines;
+    // 设计器在每行后面追加一行，方便拖拽
+    if (pageId === 'designer') {
+      let res = [[]];
+      for (let i = 0; i < item.lines.length; i++) {
+        res.push(item.lines[i]);
+        res.push([]);
+      }
+      pageData.lines = [].concat(res);
+    } else {
+      pageData.lines = item.lines;
+    }
     pageData.name = item.name;
     pageData.id = item.id;
     pageData.pageType = item.pageType;
@@ -386,7 +429,7 @@ export default defineComponent({
     let calSplitField = null;
     const loading: Ref<boolean> = ref(true);
     const pageId: Ref<string> = ref('');
-    
+
     const {
       addComp,
       activeComp,
@@ -409,15 +452,17 @@ export default defineComponent({
       isReadonlyStatus.value = !isReadonlyStatus.value;
     };
 
-    const sleep = ms => {
-      return new Promise(resolve => setTimeout(resolve, ms));
+    const sleep = (ms) => {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     };
     const getDomHtml = () => {
-      return sleep(100).then(v => document.getElementById('edit-canvas-body').innerHTML);
+      return sleep(100).then(
+        (v) => document.getElementById('edit-canvas-body').innerHTML
+      );
     };
 
     window.addEventListener('message', async (e) => {
-      switch(e.data.type) {
+      switch (e.data.type) {
         case 'newTpl':
           newTpl(1);
           break;
@@ -427,24 +472,28 @@ export default defineComponent({
         case 'resetData':
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
-            currentDec.value = splitJson.calSplitField.filter(item => +item.id === +splitJson.currentReport)?.[0]?.label
+            currentDec.value = splitJson.calSplitField.filter(
+              (item) => +item.id === +splitJson.currentReport
+            )?.[0]?.label;
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
-            calSplitField = splitJson.calSplitField
+            calSplitField = splitJson.calSplitField;
           }
           if (e.data.pageId) {
             pageId.value = e.data.pageId;
           }
           let data = JSON.parse(e.data.data);
           if (data) {
-            editTpl(data);
+            editTpl(data, e.data.pageId);
           }
           break;
         case 'resetSplit':
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
-            currentDec.value = splitJson.calSplitField.filter(item => +item.id === +splitJson.currentReport)?.[0]?.label
+            currentDec.value = splitJson.calSplitField.filter(
+              (item) => +item.id === +splitJson.currentReport
+            )?.[0]?.label;
             currentReport.value = splitJson.currentReport;
             splitField.value = splitJson.splitField;
             splitRule.value = splitJson.splitRule;
@@ -454,15 +503,15 @@ export default defineComponent({
         case 'resetTableList':
           const data1 = JSON.parse(e.data.data);
           tableList.length = 0;
-          data1.forEach(tpl => {
+          data1.forEach((tpl) => {
             tableList.push(tpl);
           });
           break;
         case 'resetDomainList':
-          if(e.data.data && JSON.parse(e.data.data)) {
+          if (e.data.data && JSON.parse(e.data.data)) {
             const data2 = JSON.parse(e.data.data);
             domainList.length = 0;
-            data2.forEach(domain => {
+            data2.forEach((domain) => {
               domainList.push({
                 value: domain.option,
                 label: domain.name + ' #' + domain.option
@@ -477,8 +526,10 @@ export default defineComponent({
         case 'saveEditor':
           isReadonlyStatus.value = true;
           nextTick(async () => {
-            let headercanvas = document.getElementById('edit-canvas-header').innerHTML;
-            let footercanvas = document.getElementById('edit-canvas-footer').innerHTML;
+            let headercanvas =
+              document.getElementById('edit-canvas-header').innerHTML;
+            let footercanvas =
+              document.getElementById('edit-canvas-footer').innerHTML;
             pageData.html = '';
             if (splitField.value) {
               let lastDec = currentDec.value;
@@ -488,13 +539,40 @@ export default defineComponent({
                 currentDec.value = calSplitField[i].label;
                 currentReport.value = calSplitField[i].id;
                 let bodycanvas = await getDomHtml();
-                pageData.html += headStr + `<div style="padding:${pageData.pageHeaderId ? '5px' : '10px'} ${pageData.styleSheet.padding} ${pageData.pageFooterId ? 0 : '10px'} ${pageData.styleSheet.padding};${i > 0 ? 'page-break-before: always;' : ''}">` + bodycanvas + '</div>' + footStr;
+                pageData.html +=
+                  headStr +
+                  `<div style="padding:${
+                    pageData.pageHeaderId ? '5px' : '10px'
+                  } ${pageData.styleSheet.padding} ${
+                    pageData.pageFooterId ? 0 : '10px'
+                  } ${pageData.styleSheet.padding};${
+                    i > 0 ? 'page-break-before: always;' : ''
+                  }">` +
+                  bodycanvas +
+                  '</div>' +
+                  footStr;
               }
               currentDec.value = lastDec;
               currentReport.value = lastReport;
             } else {
-              let bodycanvas = document.getElementById('edit-canvas-body').innerHTML;
-              pageData.html += headStr + `<div style="padding:${(pageData.pageHeaderId || (pageData.pageNumType && pageData.pageNumPosi <=1)) ? '5px' : '10px'} ${pageData.styleSheet.padding} ${(pageData.pageFooterId || (pageData.pageNumType && pageData.pageNumPosi >1)) ? 0 : '10px'} ${pageData.styleSheet.padding};">` + bodycanvas + '</div>' + footStr;
+              let bodycanvas =
+                document.getElementById('edit-canvas-body').innerHTML;
+              pageData.html +=
+                headStr +
+                `<div style="padding:${
+                  pageData.pageHeaderId ||
+                  (pageData.pageNumType && pageData.pageNumPosi <= 1)
+                    ? '5px'
+                    : '10px'
+                } ${pageData.styleSheet.padding} ${
+                  pageData.pageFooterId ||
+                  (pageData.pageNumType && pageData.pageNumPosi > 1)
+                    ? 0
+                    : '10px'
+                } ${pageData.styleSheet.padding};">` +
+                bodycanvas +
+                '</div>' +
+                footStr;
             }
             const pagePosiMap = {
               0: 'text-align: right; width: 100%',
@@ -502,13 +580,52 @@ export default defineComponent({
               2: 'text-align: center; width: 100%',
               3: 'text-align: left;',
               4: 'text-align: right; width: 100%',
-              5: 'text-align: center; width: 100%',
-            }
-            pageData.headerHtml = openFixedAreaStr + (pageData.pageNumType && pageData.pageNumPosi <=2 ? (+pageData.pageNumType === 1 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageHeaderId ? headercanvas : '') + '</div>' + footStr;
-            pageData.headerHeight = pageData.pageHeaderId ? (document.getElementById('edit-canvas-header').clientHeight - (pageData.headerLine + 1) * 2) / getOneMmsPx() : (pageData.pageNumType && pageData.pageNumPosi <=2 ? 5 : 0);
-            pageData.footerHtml = openFixedAreaStr + (pageData.pageNumType && pageData.pageNumPosi >2 ? (+pageData.pageNumType === 1 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2) : '') + `<div style="padding:0 ${pageData.styleSheet.padding};">` + (pageData.pageFooterId ? footercanvas : '') + '</div>' + footStr; // pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
-            pageData.footerHeight = pageData.pageFooterId ? document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx() : (pageData.pageNumType && pageData.pageNumPosi > 2 ? 5 : 0);
-            window.parent.postMessage({ type: 'saveEditor', pageData: JSON.stringify(pageData), isModified: isModified.value, pageId: pageId.value }, '*');
+              5: 'text-align: center; width: 100%'
+            };
+            pageData.headerHtml =
+              openFixedAreaStr +
+              (pageData.pageNumType && pageData.pageNumPosi <= 2
+                ? +pageData.pageNumType === 1
+                  ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
+                  : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
+                : '') +
+              `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+              (pageData.pageHeaderId ? headercanvas : '') +
+              '</div>' +
+              footStr;
+            pageData.headerHeight = pageData.pageHeaderId
+              ? (document.getElementById('edit-canvas-header').clientHeight -
+                  (pageData.headerLine + 1) * 2) /
+                getOneMmsPx()
+              : pageData.pageNumType && pageData.pageNumPosi <= 2
+              ? 5
+              : 0;
+            pageData.footerHtml =
+              openFixedAreaStr +
+              (pageData.pageNumType && pageData.pageNumPosi > 2
+                ? +pageData.pageNumType === 1
+                  ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
+                  : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
+                : '') +
+              `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+              (pageData.pageFooterId ? footercanvas : '') +
+              '</div>' +
+              footStr; // pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
+            pageData.footerHeight = pageData.pageFooterId
+              ? document.getElementById('edit-canvas-footer').clientHeight /
+                getOneMmsPx()
+              : pageData.pageNumType && pageData.pageNumPosi > 2
+              ? 5
+              : 0;
+            window.parent.postMessage(
+              {
+                type: 'saveEditor',
+                pageData: JSON.stringify(pageData),
+                isModified: isModified.value,
+                pageId: pageId.value
+              },
+              '*'
+            );
 
             nextTick(() => {
               isReadonlyStatus.value = false;
@@ -524,15 +641,32 @@ export default defineComponent({
               if (line[j].threshold && data3[line[j].threshold]) {
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
-                if (e.data.isAutoApply && line[j].value) {}
-                if (line[j].elName === 'RadEditor' ) {
-                  let arr = value.split(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/) || [];
-                  let hasVal = false; 
+                if (e.data.isAutoApply && line[j].value) {
+                }
+                if (line[j].elName === 'RadEditor') {
+                  let arr =
+                    value.split(
+                      /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+                    ) || [];
+                  let hasVal = false;
                   for (let j = 0; j < arr.length; j++) {
                     if (arr[j]) {
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                        let txt = arr[j].replace(new RegExp(/<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g, 'gm'), '');
-                        value = value.replace(arr[j], `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${(e.data.addTo ? txt : '') + insertValue}`);
+                        let txt = arr[j].replace(
+                          new RegExp(
+                            /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                            'gm'
+                          ),
+                          ''
+                        );
+                        value = value.replace(
+                          arr[j],
+                          `<!-- ${currentDec.value}%%${
+                            currentReport.value
+                          }%%start -->${
+                            (e.data.addTo ? txt : '') + insertValue
+                          }`
+                        );
                         hasVal = true;
                         break;
                       }
@@ -588,7 +722,7 @@ export default defineComponent({
     watch(
       () => pageData,
       (val) => {
-        if (isReadonlyStatus.value) {
+        if (isReadonlyStatus.value || pageId.value === 'designer') {
           return;
         }
         if (timer) {
@@ -596,11 +730,18 @@ export default defineComponent({
         }
         timer = setTimeout(function () {
           isModified.value = true;
-          window.parent.postMessage({ type: 'saveInLocal', pageData: JSON.stringify(val), pageId: pageId.value }, '*');
+          window.parent.postMessage(
+            {
+              type: 'saveInLocal',
+              pageData: JSON.stringify(val),
+              pageId: pageId.value
+            },
+            '*'
+          );
         }, 1000);
       },
       { deep: true }
-    )
+    );
 
     return {
       activePosi,

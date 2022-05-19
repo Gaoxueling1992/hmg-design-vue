@@ -3,13 +3,13 @@
     :id="ele.id"
     :style="{
       'align-items': ele.inline ? 'center' : '',
-      'flex': ele.styleSheet.width !== '100%' ? 'unset' : 1,
+      'flex': ele.styleSheet && ele.styleSheet.width !== '100%' ? 'unset' : 1,
       'max-width': '100%',
       'overflow': 'hidden',
       'position': 'relative',
       ...ele.styleSheet,
-      fontSize: ele.styleSheet.fontSize + 'px',
-      borderWidth: ele.styleSheet.borderWidth + 'px',
+      fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
+      borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
       display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block'
     }"
     @click.stop="clickEle"
