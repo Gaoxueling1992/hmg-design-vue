@@ -13,7 +13,8 @@
       'font-size': 'inherit'
     }"
     :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
-  >{{ ele.label || '静态文本' }}</div>
+    v-html="ele.label || '静态文本'"
+  ></div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

@@ -59,7 +59,8 @@
                 marginRight: item.styleSheet.paddingRight + 'px'
               }"
               :class="{'ellipsis': item.styleSheet.wrap === 'noWrap'}"
-            >{{ item.label || '静态文本' }}</div>
+              v-html="item.label ||  '静态文本'"
+            ></div>
             <div
               v-if="item.elName !== 'RadText'"
               class="inherit"
@@ -114,7 +115,8 @@
           marginRight: ele.styleSheet.paddingRight + 'px',
         }"
         :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
-      >{{ ele.label || '静态文本' }}</div>
+        v-html="ele.label || '静态文本'"
+      ></div>
       <a-divider
         v-if="ele.elName === 'RadLine'"
         class="inherit"

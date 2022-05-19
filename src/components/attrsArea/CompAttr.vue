@@ -10,7 +10,18 @@
     <div class="padding10 attr-body">
       <div class="container-item">
         <div class="title marginB5 fontW500">文本内容</div>
+        <div
+          id="toolbar"
+          class="toolbar"
+          v-show="activeCompObj.elName === 'RadText'"
+        ></div>
+        <div
+          class="container container-editor"
+          id="editor-ct"
+          v-show="activeCompObj.elName === 'RadText'"
+        ></div>
         <a-textarea
+          v-if="activeCompObj.elName !== 'RadText'"
           v-model:value="activeCompObj.label"
           allowClear
           :auto-size="{ minRows: 2, maxRows: 2 }"
@@ -29,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, onMounted, watch } from 'vue';
 import { sheet2Form } from '@/utils/config';
 import RadInput from './comps/RadInput.vue';
 import RadNumber from './comps/RadNumber.vue';
@@ -44,6 +55,8 @@ import RadEditor from './comps/RadEditor.vue';
 import RadTable from './comps/RadTable.vue';
 import RadSignature from './comps/RadSignature.vue';
 import CombinationArea from './comps/CombinationArea.vue';
+import { editorFontSizes } from '@/utils/config';
+import E from 'wangeditor';
 
 export default defineComponent({
   components: {
@@ -63,7 +76,61 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
-    
+    let editor: any;
+    let id: string = `#editor-ct`;
+    let toolbarid: string = `#toolbar`;
+    let editorMenus: any = [
+      'bold', // 粗体
+      'fontSize', // 字号
+      'fontName', // 字体
+      'lineHeight', //
+      'foreColor' // 文字颜色
+    ];
+    let fontNames: any = [
+      '宋体',
+      '新宋体',
+      '仿宋',
+      '楷体',
+      '微软雅黑',
+      'Times New Roman',
+      '隶书',
+      '幼圆'
+    ];
+
+    onMounted(() => {
+      if (activeCompObj.value.id && activeCompObj.value.elName === 'RadText') {
+        editor = new E(toolbarid, id);
+        editor.config.menus = editorMenus;
+        editor.config.fontSizes = editorFontSizes;
+        editor.config.fontNames = fontNames;
+        editor.create();
+        if (activeCompObj.value.label) {
+          editor.txt.html(activeCompObj.value.label);
+        }
+        editor.config.onchange = (newHtml) => {
+          activeCompObj.value.label = newHtml;
+        };
+      }
+    });
+    watch(
+      () => activeCompObj,
+      () => {
+        if (activeCompObj.value.id && activeCompObj.value.elName === 'RadText' && !editor) {
+          editor = new E(toolbarid, id);
+          editor.config.menus = editorMenus;
+          editor.config.fontSizes = editorFontSizes;
+          editor.config.fontNames = fontNames;
+          editor.create();
+          if (activeCompObj.value.label) {
+            editor.txt.html(activeCompObj.value.label);
+          }
+          editor.config.onchange = (newHtml) => {
+            activeCompObj.value.label = newHtml;
+          };
+        }
+      },
+      { deep: true }
+    );
     return {
       activeCompObj,
       sheet2Form
