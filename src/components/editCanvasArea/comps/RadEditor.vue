@@ -40,7 +40,8 @@
       'line-height': 1.2,
       'text-decoration': 'inherit',
       'white-space': 'normal',
-      'word-break': 'break-all'
+      'word-break': 'break-all',
+      minHeight: (ele.containerMinHeight || 0) + 'px'
     }"
   >
     <div v-html="readonlyValue"></div>

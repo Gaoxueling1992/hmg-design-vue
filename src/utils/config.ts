@@ -390,6 +390,7 @@ const compBaseConfig = {
     fontColor: '#333',
     fontSize: 18,
     fontWeight: 400,
+    containerMinHeight: 0,
     fontStyle: 'normal',
     textDecoration: 'none',
     elType: 'text',
