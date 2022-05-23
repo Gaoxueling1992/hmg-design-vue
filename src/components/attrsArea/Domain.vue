@@ -105,7 +105,7 @@
             >
               <a-select-option
                 :value="key"
-                v-if="key !== 'other'"
+                v-if="key !== 'other' && key !== 'onlytext'"
               >
                 {{value.n}}
               </a-select-option>
@@ -309,9 +309,10 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     const domainList: any = inject('domainList');
     const visibleDrawer: Ref<boolean> = ref<boolean>(false);
+    console.log(ruleMap[activeCompObj.value.elType])
     const initRule = {
       opportunity: 'init',
-      type: '0',
+      type: ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '',
       value: '',
       min: 0,
       max: 9999,
@@ -475,7 +476,7 @@ export default defineComponent({
       editingRule.value = true;
       ruleObj.value = {
         opportunity: 'init',
-        type: '0',
+        type: ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '',
         value: '',
         min: 0,
         max: 9999,
@@ -493,7 +494,6 @@ export default defineComponent({
 
     const changeCurrent = () => {
       ruleObj.value.threshold = '';
-      ruleObj.value.type = '0';
       ruleObj.value.value = '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
@@ -501,9 +501,12 @@ export default defineComponent({
       ruleObj.value.label = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
+        ruleObj.value.type = ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '';;
         ruleObj.value.id = actionList[activeCompObj.value.elType][0].key;
         ruleObj.value.name = actionList[activeCompObj.value.elType][0].value;
       } else {
+        ruleObj.value.elType = ruleObj.value.elType === 'onlytext' ? 'text' : ruleObj.value.elType;
+        ruleObj.value.type = ruleMap[ruleObj.value.elType] && ruleMap[ruleObj.value.elType].conditionList ? ruleMap[ruleObj.value.elType].conditionList[0] : '';;
         ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
         ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
       }
@@ -512,7 +515,7 @@ export default defineComponent({
     const changeElType = () => {
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
-      ruleObj.value.type = '0';
+      ruleObj.value.type = ruleMap[ruleObj.value.elType] && ruleMap[ruleObj.value.elType].conditionList ? ruleMap[ruleObj.value.elType].conditionList[0] : '';
       ruleObj.value.value = '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
@@ -528,7 +531,6 @@ export default defineComponent({
         elType = ruleObj.value.elType;
       }
       ruleObj.value.name = actionList[elType].filter((action) => action.key === ruleObj.value.id)[0].value;
-      console.log('---', actionList)
       ruleObj.value.content = '';
       ruleObj.value.label = '';
     };
