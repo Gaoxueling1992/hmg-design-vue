@@ -33,8 +33,6 @@
   <div class="flex marginT10">
     <div class="flex-title">左</div>
     <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.styleSheet.paddingLeft"/>
-    <div class="flex-title">右</div>
-    <a-input-number class="flex1" v-model:value="activeCompObj.styleSheet.paddingRight"/>
   </div>
 </template>
 <script lang="ts">
