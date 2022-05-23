@@ -19,9 +19,9 @@
   <div class="title marginT10 marginB5 fontW500">图片大小</div>
   <div class="flex marginT10">
     <div class="flex-title">宽</div>
-    <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.imgWidth"/>
+    <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.imgWidth" :min="5"/>
     <div class="flex-title marginL5">高</div>
-    <a-input-number class="flex1" v-model:value="activeCompObj.imgHeight"/>
+    <a-input-number class="flex1" v-model:value="activeCompObj.imgHeight" :min="5"/>
   </div>
   <div class="title marginT10 marginB5 fontW500">内边距</div>
   <div class="flex marginT10">
