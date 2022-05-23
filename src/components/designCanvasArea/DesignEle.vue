@@ -401,7 +401,7 @@ export default defineComponent({
         baseProps: {
           ...compBaseConfig[item.elName].baseProps
         },
-        rules: []
+        rules: {}
       });
       ele.compsList.push({
         ...baseConfig,

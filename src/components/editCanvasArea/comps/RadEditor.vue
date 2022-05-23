@@ -14,6 +14,7 @@
     <div
       :id="'toolbar' + ele.id"
       class="toolbar"
+      style="z-index:0 !important"
     ></div>
     <div
       class="container container-editor"

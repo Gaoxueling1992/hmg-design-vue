@@ -37,31 +37,34 @@
     placement="right"
     @close="editingRule=false"
   >
-    <template v-if="activeCompObj.rules.length">
-      <div class="title marginT10 marginB5 fontW500 fontS16">已有规则</div>
-      <div
-        v-for="(item, idx) in activeCompObj.rules"
-        :key="idx"
-      >
-        <div class="fontW500">规则{{idx + 1}}
-          <i
-            class="iconfont icondelete-border fr marginL10"
-            @click="deleteIt(idx)"
-          ></i>
-          <i
-            class="iconfont iconedit fr"
-            @click="editIt(idx)"
-          ></i>
-        </div>
-        {{opportunityMap[item.opportunity]}} 时, 当 {{+item.current===0?'当前控件':('业务控件 ' + item.threshold)}}
-        {{ruleMap[item.elType]['conditionList'][item.type]}} {{item.value}} 时，
-        执行动作-{{actionList[item.id]}}{{item.content ? (',内容：' + item.content) : ''}}{{item.label ? (',标签：' + item.label) : ''}}
-      </div>
-    </template>
+    <rule-list
+      v-if="activeCompObj.rules && activeCompObj.rules['init'] && activeCompObj.rules['init'].length"
+      :rules="activeCompObj.rules['init']"
+      ruleType="init"
+      @deleteIt="deleteIt"
+      @editIt="editIt"
+    ></rule-list>
+    <rule-list
+      v-if="activeCompObj.rules && activeCompObj.rules['change'] && activeCompObj.rules['change'].length"
+      :rules="activeCompObj.rules['change']"
+      ruleType="change"
+      @deleteIt="deleteIt"
+      @editIt="editIt"
+    ></rule-list>
+    <rule-list
+      v-if="activeCompObj.rules && activeCompObj.rules['submit'] && activeCompObj.rules['submit'].length"
+      :rules="activeCompObj.rules['submit']"
+      ruleType="submit"
+      @deleteIt="deleteIt"
+      @editIt="editIt"
+    ></rule-list>
     <template v-if="editingRule">
-      <div class="title marginT10 marginB5 fontW500 fontS16">{{editingIdx === -1 ? '新增' : '编辑'}}规则{{editingIdx === -1 ? '' : editingIdx+1}}(域值用${xx}代替)</div>
+      <div class="title marginT10 marginB5 fontW500 fontS16">{{editingIdx === -1 ? '新增' : '编辑' + opportunityMap[editingOp]}}规则{{editingIdx === -1 ? '' : editingIdx+1}}(域值用${xx}代替)</div>
       <div class="title marginB5">执行时机</div>
-      <a-select v-model:value="ruleObj.opportunity">
+      <a-select
+        v-model:value="ruleObj.opportunity"
+        :disabled="editingIdx !== -1"
+      >
         <a-select-option
           v-for="(value, key) in opportunityMap"
           :key="key"
@@ -76,14 +79,7 @@
         <a-select
           style="width: 40%"
           v-model:value="ruleObj.current"
-          @change="
-            ruleObj.threshold='';
-            ruleObj.elType='text';
-            ruleObj.type='0';
-            ruleObj.value='';
-            ruleObj.min=0;
-            ruleObj.max=9999;
-          "
+          @change="changeCurrent"
         >
           <a-select-option
             v-if="activeCompObj.elType!=='other'"
@@ -91,157 +87,162 @@
           >当前控件({{ruleMap[activeCompObj.elType].n}})</a-select-option>
           <a-select-option :value="1">业务字段</a-select-option>
         </a-select>
-        <a-input
-          v-if="ruleObj.current === 1"
-          style="width: 40%"
-          v-model:value="ruleObj.threshold"
-        ></a-input>
-        <a-select
-          style="width: 20%"
-          v-if="ruleObj.current === 1"
-          v-model:value="ruleObj.elType"
-        >
-          <template
-            v-for="(value, key) in ruleMap"
-            :key="key"
+        <template v-if="ruleObj.current === 1">
+          <a-select
+            style="width: 40%"
+            v-model:value="ruleObj.threshold"
+            :options="domainList"
+            :allowClear="ruleObj.threshold"
+          ></a-select>
+          <a-select
+            style="width: 20%"
+            v-model:value="ruleObj.elType"
+            @change="changeElType"
           >
-            <a-select-option
-              :value="key"
-              v-if="key !== 'other'"
+            <template
+              v-for="(value, key) in ruleMap"
+              :key="key"
             >
-              {{value.n}}
-            </a-select-option>
-          </template>
-        </a-select>
-      </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="
-          (ruleObj.current === 0 && ['text', 'singles', 'muls'].indexOf(activeCompObj.elType) > -1) ||
-          (ruleObj.current === 1 && ['text', 'singles', 'muls'].indexOf(ruleObj.elType) > -1)
-        "
-      >
-        <a-select
-          style="width: 35%"
-          v-model:value="ruleObj.type"
-          @change="ruleObj.value=''"
-        >
-          <a-select-option
-            v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-            :value="key"
-            :key="key"
-          >
-            {{value}}
-          </a-select-option>
-        </a-select>
-        <a-input
-          style="width: 65%"
-          v-model:value="ruleObj.value"
-          v-if="ruleObj.type <= 5"
-        >
-        </a-input>
-      </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="
-          (ruleObj.current === 0 && ['number', 'imgp'].indexOf(activeCompObj.elType) > -1) ||
-          (ruleObj.current === 1 && ['number', 'imgp'].indexOf(ruleObj.elType) > -1)
-        "
-      >
-        <a-select
-          v-model:value="ruleObj.type"
-          @change="ruleObj.value='';ruleObj.min=0;ruleObj.max=9999"
-          style="width: 30%"
-        >
-          <a-select-option
-            v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-            :value="key"
-            :key="key"
-          >
-            {{value}}
-          </a-select-option>
-        </a-select>
-        <a-input-number
-          v-if="ruleObj.type>1"
-          style="width: 70%"
-          v-model:value="ruleObj.value"
-        ></a-input-number>
-        <template v-else>
-          <a-input-number
-            class="marginL5"
-            style="width: 30%"
-            :min="0"
-            :max="ruleObj.max"
-            v-model:value="ruleObj.min"
-          ></a-input-number> -
-          <a-input-number
-            style="width: 30%"
-            :min="ruleObj.min"
-            :max="99999"
-            v-model:value="ruleObj.max"
-          ></a-input-number>
+              <a-select-option
+                :value="key"
+                v-if="key !== 'other'"
+              >
+                {{value.n}}
+              </a-select-option>
+            </template>
+          </a-select>
         </template>
       </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="
-          (ruleObj.current === 0 && activeCompObj.elType === 'date') ||
-          (ruleObj.current === 1 && ruleObj.elType === 'date')
-        "
-      >
-        <a-select
-          v-model:value="ruleObj.type"
-          @change="
-            ruleObj.value='';
-            ruleObj.min=0;
-            ruleObj.max=9999
+      <template v-if="!(ruleObj.current === 0 && activeCompObj.elName === 'RadText') && !(ruleObj.current === 0 && ruleObj.elType === 'onlytext')">
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="
+            ((ruleObj.current === 0 && ['text', 'singles', 'muls'].indexOf(activeCompObj.elType) > -1) ||
+            (ruleObj.current === 1 && ['text', 'singles', 'muls'].indexOf(ruleObj.elType) > -1))
           "
-          style="width: 30%"
         >
-          <a-select-option
-            v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-            :value="key"
-            :key="key"
+          <a-select
+            style="width: 35%"
+            v-model:value="ruleObj.type"
+            @change="changeType"
           >
-            {{value}}
-          </a-select-option>
-        </a-select>
-        <a-date-picker
-          v-if="+ruleObj.type>1 && ruleObj.type<6"
-          style="width: 70%"
-          v-model:value="ruleObj.value"
-        />
-        <a-range-picker
-          v-else-if="+ruleObj.type<2"
-          style="width: 70%"
-          v-model:value="ruleObj.value"
-        />
-      </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="
-          (ruleObj.current === 0 && activeCompObj.elType === 'table') ||
-          (ruleObj.current === 1 && ruleObj.elType === 'table')
-        "
-      >
-        <a-select
-          style="width: 35%"
-          v-model:value="ruleObj.type"
-          @change="ruleObj.value=''"
+            <a-select-option
+              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="key"
+              :key="key"
+            >
+              {{value}}
+            </a-select-option>
+          </a-select>
+          <a-input
+            style="width: 65%"
+            v-model:value="ruleObj.value"
+            v-if="ruleObj.type <= 5"
+          >
+          </a-input>
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="
+            (ruleObj.current === 0 && ['number', 'imgp'].indexOf(activeCompObj.elType) > -1) ||
+            (ruleObj.current === 1 && ['number', 'imgp'].indexOf(ruleObj.elType) > -1)
+          "
         >
-          <a-select-option
-            v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-            :value="key"
-            :key="key"
+          <a-select
+            v-model:value="ruleObj.type"
+            @change="ruleObj.value='';ruleObj.min=0;ruleObj.max=9999"
+            style="width: 30%"
           >
-            {{value}}
-          </a-select-option>
-        </a-select>
-      </a-input-group>
+            <a-select-option
+              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="key"
+              :key="key"
+            >
+              {{value}}
+            </a-select-option>
+          </a-select>
+          <a-input-number
+            v-if="ruleObj.type>1"
+            style="width: 70%"
+            v-model:value="ruleObj.value"
+          ></a-input-number>
+          <template v-else>
+            <a-input-number
+              class="marginL5"
+              style="width: 30%"
+              :min="0"
+              :max="ruleObj.max"
+              v-model:value="ruleObj.min"
+            ></a-input-number> -
+            <a-input-number
+              style="width: 30%"
+              :min="ruleObj.min"
+              :max="99999"
+              v-model:value="ruleObj.max"
+            ></a-input-number>
+          </template>
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="
+            (ruleObj.current === 0 && activeCompObj.elType === 'date') ||
+            (ruleObj.current === 1 && ruleObj.elType === 'date')
+          "
+        >
+          <a-select
+            v-model:value="ruleObj.type"
+            @change="
+              ruleObj.value='';
+              ruleObj.min=0;
+              ruleObj.max=9999
+            "
+            style="width: 30%"
+          >
+            <a-select-option
+              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="key"
+              :key="key"
+            >
+              {{value}}
+            </a-select-option>
+          </a-select>
+          <a-date-picker
+            v-if="+ruleObj.type>1 && ruleObj.type<6"
+            style="width: 70%"
+            v-model:value="ruleObj.value"
+          />
+          <a-range-picker
+            v-else-if="+ruleObj.type<2"
+            style="width: 70%"
+            v-model:value="ruleObj.value"
+          />
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="
+            (ruleObj.current === 0 && activeCompObj.elType === 'table') ||
+            (ruleObj.current === 1 && ruleObj.elType === 'table')
+          "
+        >
+          <a-select
+            style="width: 35%"
+            v-model:value="ruleObj.type"
+            @change="ruleObj.value=''"
+          >
+            <a-select-option
+              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="key"
+              :key="key"
+            >
+              {{value}}
+            </a-select-option>
+          </a-select>
+        </a-input-group>
+      </template>
       <div class="title marginT10 marginB5">执行动作</div>
       <a-input-group
         compact
@@ -251,13 +252,14 @@
           v-model:value="ruleObj.id"
           style="width: 40%"
           class="marginT5"
+          @change="changeId"
         >
           <a-select-option
-            v-for="(value, key) in actionList"
-            :value="key"
-            :key="key"
+            v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]"
+            :value="value.key"
+            :key="value.key"
           >
-            {{value}}
+            {{value.value}}
           </a-select-option>
         </a-select>
       </a-input-group>
@@ -272,7 +274,10 @@
       <a-input-group
         compact
         class="marginT5"
-        v-if="+ruleObj.id === 6"
+        v-if="+ruleObj.id === 6 && (
+          (ruleObj.current === 0 && activeCompObj.elType !== 'onlytext') ||
+          (ruleObj.current === 1 && ruleObj.elType !== 'onlytext')
+        )"
       >
         标签
         <a-input v-model:value="ruleObj.label"></a-input>
@@ -295,7 +300,7 @@
   </a-drawer>
 </template>
 <script lang="ts">
-import { defineComponent, inject, ref, Ref, reactive } from 'vue';
+import { defineComponent, inject, ref, Ref } from 'vue';
 import { ruleMap, actionList, opportunityMap } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
 
@@ -304,7 +309,7 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     const domainList: any = inject('domainList');
     const visibleDrawer: Ref<boolean> = ref<boolean>(false);
-    const ruleObj: any = ref({
+    const initRule = {
       opportunity: 'init',
       type: '0',
       value: '',
@@ -312,13 +317,18 @@ export default defineComponent({
       max: 9999,
       threshold: '',
       current: 0,
-      elType: 'text',
-      id: '0',
+      elType: activeCompObj.value.elType,
+      id: actionList[activeCompObj.value.elType][0].key,
+      name: actionList[activeCompObj.value.elType][0].value,
       content: '',
       label: ''
+    };
+    const ruleObj: any = ref({
+      ...initRule
     });
     const editingRule: Ref<boolean> = ref<boolean>(false);
     const editingIdx = ref<number>(-1);
+    const editingOp = ref<string>('');
 
     const addScript = () => {
       visibleDrawer.value = true;
@@ -338,7 +348,13 @@ export default defineComponent({
         });
         return;
       }
-      switch (ruleObj.value.elType) {
+      switch (
+        ruleObj.value.current === 0
+          ? activeCompObj.value.elType
+          : ruleObj.value.elType
+      ) {
+        case 'onlytext':
+          break;
         case 'text':
           if (ruleObj.value.type < 6 && !ruleObj.value.value) {
             Modal.warning({
@@ -406,48 +422,53 @@ export default defineComponent({
           break;
       }
       if (ruleObj.value.id > 4 && !ruleObj.value.content) {
+        let value;
+        if (ruleObj.value.current === 0) {
+          value =
+            actionList[activeCompObj.value.elType][ruleObj.value.id].value;
+        } else {
+          value = actionList[ruleObj.value.elType][ruleObj.value.id].value;
+        }
         Modal.warning({
           title: '提示',
-          content: `请输入完整${actionList[ruleObj.value.id]}内容`,
+          content: `请输入完整${value}内容`,
           okText: '知道了'
         });
         return;
       }
       editingRule.value = false;
       if (editingIdx.value === -1) {
-        activeCompObj.value.rules.push({
+        if (!activeCompObj.value.rules[ruleObj.value.opportunity]) {
+          activeCompObj.value.rules[ruleObj.value.opportunity] = [];
+        }
+        activeCompObj.value.rules[ruleObj.value.opportunity].push({
           ...ruleObj.value
         });
       } else {
-        activeCompObj.value.rules.splice(editingIdx.value, 1, {
-          ...ruleObj.value
-        });
+        activeCompObj.value.rules[ruleObj.value.opportunity].splice(
+          editingIdx.value,
+          1,
+          {
+            ...ruleObj.value
+          }
+        );
       }
       ruleObj.value = {
-        opportunity: 'init',
-        type: '0',
-        value: '',
-        min: 0,
-        max: 9999,
-        threshold: '',
-        current: 0,
-        elType: 'text',
-        id: '0',
-        content: '',
-        label: ''
+        ...initRule
       };
     };
 
-    const deleteIt = (idx) => {
-      activeCompObj.value.rules.splice(idx, 1);
+    const deleteIt = (idx, opportunity) => {
+      activeCompObj.value.rules[opportunity].splice(idx, 1);
     };
 
-    const editIt = (idx) => {
+    const editIt = (idx, opportunity) => {
       editingRule.value = true;
       ruleObj.value = {
-        ...activeCompObj.value.rules[idx]
+        ...activeCompObj.value.rules[opportunity][idx]
       };
       editingIdx.value = idx;
+      editingOp.value = opportunity;
     };
 
     const addRule = () => {
@@ -460,12 +481,60 @@ export default defineComponent({
         max: 9999,
         threshold: '',
         current: 0,
-        elType: 'text',
-        id: '0',
+        elType: activeCompObj.value.elType,
+        id: actionList[activeCompObj.value.elType][0].key,
+        name: actionList[activeCompObj.value.elType][0].value,
         content: '',
         label: ''
       };
       editingIdx.value = -1;
+      editingOp.value = '';
+    };
+
+    const changeCurrent = () => {
+      ruleObj.value.threshold = '';
+      ruleObj.value.type = '0';
+      ruleObj.value.value = '';
+      ruleObj.value.min = 0;
+      ruleObj.value.max = 9999;
+      ruleObj.value.content = '';
+      ruleObj.value.label = '';
+      if (ruleObj.value.current === 0) {
+        ruleObj.value.elType = activeCompObj.value.elType;
+        ruleObj.value.id = actionList[activeCompObj.value.elType][0].key;
+        ruleObj.value.name = actionList[activeCompObj.value.elType][0].value;
+      } else {
+        ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
+        ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
+      }
+    };
+
+    const changeElType = () => {
+      ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
+      ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
+      ruleObj.value.type = '0';
+      ruleObj.value.value = '';
+      ruleObj.value.min = 0;
+      ruleObj.value.max = 9999;
+      ruleObj.value.content = '';
+      ruleObj.value.label = '';
+    };
+
+    const changeId = () => {
+      let elType;
+      if (ruleObj.value.current === 0) {
+        elType = activeCompObj.value.elType;
+      } else {
+        elType = ruleObj.value.elType;
+      }
+      ruleObj.value.name = actionList[elType].filter((action) => action.key === ruleObj.value.id)[0].value;
+      console.log('---', actionList)
+      ruleObj.value.content = '';
+      ruleObj.value.label = '';
+    };
+
+    const changeType = () => {
+      ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
     };
 
     return {
@@ -481,8 +550,13 @@ export default defineComponent({
       opportunityMap,
       deleteIt,
       editingIdx,
+      editingOp,
       editIt,
-      addRule
+      addRule,
+      changeCurrent,
+      changeElType,
+      changeId,
+      changeType
     };
   }
 });

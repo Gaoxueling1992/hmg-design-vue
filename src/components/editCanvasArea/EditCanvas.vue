@@ -19,7 +19,7 @@
             'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+          <div style="position:relative;width:100%;" :style="{display: isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"
               :key="ele.id"
@@ -60,7 +60,7 @@
             'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;line-height:1" :style="{display: isReadonlyStatus ? '' : 'flex'}">
+          <div style="position:relative;width:100%;" :style="{display: isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"
               :key="ele.id"
@@ -100,7 +100,7 @@
           }"
         >
           <div
-            style="position:relative;width:100%;line-height:1"
+            style="position:relative;width:100%;"
             :style="{'display': isReadonlyStatus ? '' : 'flex'}">
             <div
               v-for="(ele, index) in line"

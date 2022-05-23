@@ -130,7 +130,7 @@ const handleCompsOper = (
       baseProps: {
         ...compBaseConfig[elName].baseProps
       },
-      rules: []
+      rules: {}
     });
     activeCompObj.value = {
       ...baseConfig,
@@ -155,7 +155,7 @@ const handleCompsOper = (
         ...compBaseConfig[value].baseProps
       },
       options: [],
-      rules: []
+      rules: {}
     });
     activeCompObj.value = {
       ...baseConfig,

@@ -115,8 +115,8 @@ const compBaseConfig = {
     },
     threshold: '',
     domainType: 'domain',
-    elType: 'text',
-    rules: []
+    elType: 'onlytext',
+    rules: {}
   },
   'rad-input': {
     elName: 'RadInput',
@@ -135,7 +135,7 @@ const compBaseConfig = {
     prefix: '',
     suffix: '',
     elType: 'text',
-    rules: []
+    rules: {}
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -155,7 +155,7 @@ const compBaseConfig = {
     picker: 'date',
     rangeOpen: false,
     elType: 'date',
-    rules: []
+    rules: {}
   },
   'rad-single-select': {
     elName: 'RadSingleSelect',
@@ -174,7 +174,7 @@ const compBaseConfig = {
     layout: 'crosswise',
     options: [],
     elType: 'singles',
-    rules: []
+    rules: {}
   },
   'rad-mul-select': {
     elName: 'RadMulSelect',
@@ -194,7 +194,7 @@ const compBaseConfig = {
     options: [],
     defaultType: [],
     elType: 'muls',
-    rules: []
+    rules: {}
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -214,7 +214,7 @@ const compBaseConfig = {
     min: 0,
     max: 1000,
     elType: 'number',
-    rules: []
+    rules: {}
   },
   'rad-line': {
     elName: 'RadLine',
@@ -234,7 +234,7 @@ const compBaseConfig = {
       paddingBottom: '0'
     },
     elType: 'other',
-    rules: []
+    rules: {}
   },
   'rad-image': {
     elName: 'RadImage',
@@ -258,7 +258,7 @@ const compBaseConfig = {
     imgHeight: '100',
     imgWidth: '100',
     elType: 'other',
-    rules: []
+    rules: {}
   },
   'rad-table': {
     elName: 'RadTable',
@@ -284,7 +284,7 @@ const compBaseConfig = {
     defaultType: {},
     inputs: {},
     elType: 'table',
-    rules: []
+    rules: {}
   },
   'rad-mulitImagepicker': {
     elName: 'RadMulitImagepicker',
@@ -316,7 +316,7 @@ const compBaseConfig = {
     defaultType: [],
     hideSelectBtn: true,
     elType: 'imgp',
-    rules: []
+    rules: {}
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',
@@ -340,7 +340,7 @@ const compBaseConfig = {
     codeWidth: 2,
     codeHeight: 50,
     elType: 'other',
-    rules: []
+    rules: {}
   },
   'rad-drcode': {
     elName: 'RadDrcode',
@@ -371,7 +371,7 @@ const compBaseConfig = {
     imgWidth: '100',
     img: '',
     elType: 'other',
-    rules: []
+    rules: {}
   },
   'rad-editor': {
     elName: 'RadEditor',
@@ -394,7 +394,7 @@ const compBaseConfig = {
     fontStyle: 'normal',
     textDecoration: 'none',
     elType: 'text',
-    rules: []
+    rules: {}
   },
   'rad-signature': {
     elName: 'RadSignature',
@@ -414,7 +414,7 @@ const compBaseConfig = {
     imgHeight: '32',
     imgWidth: '50',
     elType: 'other',
-    rules: [],
+    rules: {},
     src: ''
   },
   'combination-area': {
@@ -429,7 +429,7 @@ const compBaseConfig = {
     align: 'left',
     layout: 'top',
     elType: 'other',
-    rules: []
+    rules: {}
   }
 }
 
@@ -437,10 +437,13 @@ const ruleMap: object = {
   'other': {
     n: '其他'
   },
+  'onlytext': {
+    n: '纯文本'
+  },
   'text': {
     n: '文本',
     conditionList: {
-      0:  '包含',
+      0: '包含',
       1: '不包含',
       2: '是',
       3: '不是',
@@ -486,11 +489,11 @@ const ruleMap: object = {
   'muls': {
     n: '多选',
     conditionList: {
-      0: '包含', 
+      0: '包含',
       1: '不包含',
       6: '为空',
       7: '不为空'
-    } 
+    }
   },
   'singles': {
     n: '单选',
@@ -517,32 +520,59 @@ const ruleMap: object = {
 };
 
 const actionList: any = {
-  0: '隐藏',
-  1: '显示',
-  2: '可编辑',
-  3: '只读',
-  4: '必填',
-  // {
-  //   id: 5,
-  //   value: '样式变化'
-  // },
-  6: '拼接',
-  // {
-  //   id: 7,
-  //   value: '计算（域值用${xx}）'
-  // },
-  8: '提示'
-  // {
-  //   id: 9,
-  //   value: '基础属性'
-  // }
+  'text': [
+    {
+      key: 0,
+      value: '隐藏'
+    },
+    {
+      key: 1,
+      value: '显示'
+    },
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
+    {
+      key: 4,
+      value: '必填'
+    },
+    // {
+    //   id: 5,
+    //   value: '样式变化'
+    // },
+    {
+      key: 6,
+      value: '拼接'
+    },
+    // {
+    //   id: 7,
+    //   value: '计算（域值用${xx}）'
+    // },
+    {
+      key: 8,
+      value: '提示'
+    }
+    // {
+    //   id: 9,
+    //   value: '基础属性'
+    // }
+  ],
+  'onlytext': [
+    {
+      key: 6,
+      value: '拼接'
+    }
+  ]
 };
 
 const opportunityMap: any = {
   'init': '初始化',
   'change': '值变化时',
-  'click': '单击时',
-  'dbclick': '双击时',
   'submit': '提交'
 };
 

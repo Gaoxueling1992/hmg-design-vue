@@ -13,6 +13,7 @@
         <div
           id="toolbar"
           class="toolbar"
+          style="z-index: 1"
           v-show="activeCompObj.elName === 'RadText'"
         ></div>
         <div
@@ -143,6 +144,9 @@ export default defineComponent({
   overflow: auto;
   // margin-bottom: 50px;
   height: 100vh;
+  .w-e-toolbar {
+    z-index: 1 !important;
+  }
   .limit-input {
     width: calc(50% - 20px);
   }
