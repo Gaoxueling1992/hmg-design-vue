@@ -239,7 +239,7 @@ const compBaseConfig = {
   'rad-image': {
     elName: 'RadImage',
     name: '图片',
-    desc: '支持上传.png，.jpeg，.jpg格式的图片。',
+    desc: '支持上传.png，.jpeg，.jpg， *.pjpeg，*.jfif，*.pjg格式的图片。',
     value: '',
     src: '',
     noLabel: true,
@@ -563,6 +563,12 @@ const actionList: any = {
     // }
   ],
   'onlytext': [
+    {
+      key: 6,
+      value: '拼接'
+    }
+  ],
+  'other': [
     {
       key: 6,
       value: '拼接'

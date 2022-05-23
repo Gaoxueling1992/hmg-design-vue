@@ -59,14 +59,13 @@ export default defineComponent({
     const loading = ref<boolean>(false);
 
     const beforeUpload = (file: any) => {
-      console.log(file)
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
-        message.error('You can only upload JPG file!');
+        message.error('仅支持上传png和jpeg格式的图片');
       }
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt2M = file.size / 1024 / 1024 < 10;
       if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
+        message.error('不支持上传10M以上的图片');
       }
 
       if (isJpgOrPng && isLt2M) {
