@@ -11,6 +11,12 @@
     v-model:value="activeCompObj.format"
     :options="pickerMap[activeCompObj.picker]"
   />
+  <div class="flex marginT10">
+    <div class="flex-title">前缀</div>
+    <a-input class="flex1 marginR5" allowClear v-model:value="activeCompObj.prefix"/>
+    <div class="flex-title">后缀</div>
+    <a-input class="flex1" allowClear v-model:value="activeCompObj.suffix"/>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';

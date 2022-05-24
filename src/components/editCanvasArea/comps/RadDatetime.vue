@@ -9,6 +9,7 @@
       'display': ele.inline ? 'inline-block' : ''
     }"
   >{{ ele.label }}</div>
+  {{ele.prefix}}
   <a-date-picker
     v-if="!isReadonlyStatus && !ele.baseProps.readonly"
     style="flex: 1"
@@ -25,6 +26,7 @@
     padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
   >{{ele.value ? moment(ele.value).format(ele.format) : ''}}</div>
+  {{ele.suffix}}
 </template>
 <script lang="ts">
 import { defineComponent, inject, Ref } from 'vue';

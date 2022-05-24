@@ -151,6 +151,8 @@ const compBaseConfig = {
     baseProps: {
       readonly: false
     },
+    prefix: '',
+    suffix: '',
     format: 'YYYY-MM-DD',
     picker: 'date',
     rangeOpen: false,
@@ -496,38 +498,38 @@ const ruleMap: object = {
   'imgp': {
     n: '图片选择器',
     conditionList: [
-      {
-        key: '0',
-        value: '在范围内'
-      },
-      {
-        key: '1',
-        value: '不在范围内'
-      },
-      {
-        key: '2',
-        value: '不等于'
-      },
-      {
-        key: '3',
-        value: '大于',
-      },
-      {
-        key: '4',
-        value: '大于等于'
-      },
-      {
-        key: '5',
-        value: '小于'
-      },
-      {
-        key: '6',
-        value: '小于等于'
-      },
-      {
-        key: '7',
-        value: '等于'
-      },
+      // {
+      //   key: '0',
+      //   value: '在范围内'
+      // },
+      // {
+      //   key: '1',
+      //   value: '不在范围内'
+      // },
+      // {
+      //   key: '2',
+      //   value: '不等于'
+      // },
+      // {
+      //   key: '3',
+      //   value: '大于',
+      // },
+      // {
+      //   key: '4',
+      //   value: '大于等于'
+      // },
+      // {
+      //   key: '5',
+      //   value: '小于'
+      // },
+      // {
+      //   key: '6',
+      //   value: '小于等于'
+      // },
+      // {
+      //   key: '7',
+      //   value: '等于'
+      // },
       {
         key: '10',
         value: '无条件'
@@ -539,7 +541,7 @@ const ruleMap: object = {
     conditionList: [
       {
         key: '11',
-        value: '在范围内'
+        value: '在范围内(包含)'
       },
       {
         key: '12',
@@ -645,27 +647,35 @@ const ruleMap: object = {
   'date': {
     n: '时间',
     conditionList: [{
-      key: '4',
+      key: '2',
       value: '是'
     },
     {
-      key: '5',
+      key: '3',
       value: '不是'
     },
     {
-      key: '2',
+      key: '15',
       value: '早于'
     },
     {
-      key: '3',
+      key: '13',
       value: '晚于'
     },
     {
-      key: '0',
+      key: '14',
+      value: '不早于'
+    },
+    {
+      key: '16',
+      value: '不晚于'
+    },
+    {
+      key: '11',
       value: '在范围内'
     },
     {
-      key: '1',
+      key: '12',
       value: '不在范围内'
     },
     {
@@ -730,14 +740,6 @@ const actionList: any = {
   ],
   'date': [
     {
-      key: 0,
-      value: '隐藏'
-    },
-    {
-      key: 1,
-      value: '显示'
-    },
-    {
       key: 2,
       value: '可编辑'
     },
@@ -772,7 +774,8 @@ const actionList: any = {
     },
     {
       key: 8,
-      value: '提示'
+      value: '提示',
+      disableOp: ['init']
     }
   ],
   'onlytext': [
