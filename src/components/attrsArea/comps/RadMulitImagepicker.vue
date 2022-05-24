@@ -11,9 +11,11 @@
     <div class="flex-title3">每行最多图片数</div>
     <a-input-number
       class="flex1 marginR5"
-      step="2"
       :max="12"
       :min="2"
+      :step="1"
+      :precision="0"
+      step-strictly
       v-model:value="activeCompObj.perNum"
     />
   </div>

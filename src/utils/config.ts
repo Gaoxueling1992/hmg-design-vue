@@ -315,7 +315,7 @@ const compBaseConfig = {
     imgList: [],
     defaultType: [],
     hideSelectBtn: true,
-    elType: 'imgp',
+    elType: 'other',
     rules: {}
   },
   'rad-signalcode': {

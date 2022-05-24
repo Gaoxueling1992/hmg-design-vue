@@ -309,7 +309,6 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     const domainList: any = inject('domainList');
     const visibleDrawer: Ref<boolean> = ref<boolean>(false);
-    console.log(ruleMap[activeCompObj.value.elType])
     const initRule = {
       opportunity: 'init',
       type: ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '',
