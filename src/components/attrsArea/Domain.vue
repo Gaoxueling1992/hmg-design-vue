@@ -35,7 +35,8 @@
     class="custom-class"
     title="业务规则配置"
     placement="right"
-    @close="editingRule=false"
+    destroyOnClose
+    @close="closeDrawer"
   >
     <rule-list
       v-if="activeCompObj.rules && activeCompObj.rules['init'] && activeCompObj.rules['init'].length"
@@ -59,7 +60,8 @@
       @editIt="editIt"
     ></rule-list>
     <template v-if="editingRule">
-      <div class="title marginT10 marginB5 fontW500 fontS16">{{editingIdx === -1 ? '新增' : '编辑' + opportunityMap[editingOp]}}规则{{editingIdx === -1 ? '' : editingIdx+1}}(域值用${xx}代替)</div>
+      <div class="title marginT10 marginB5 fontW500 fontS16">{{editingIdx === -1 ? '新增' : '编辑' + opportunityMap[editingOp]}}规则{{editingIdx === -1 ? '' : editingIdx+1}}</div>
+      <div class="tip-color marginT5 marginB5 fontW400 fontS14">说明：域值用${xx}代替,当前控件的值用${current}代替，若规则冲突，以后配置的规则为准。</div>
       <div class="title marginB5">执行时机</div>
       <a-select
         v-model:value="ruleObj.opportunity"
@@ -124,21 +126,21 @@
         >
           <a-select
             style="width: 35%"
-            v-model:value="ruleObj.type"
+            v-model:value="ruleObj.ruleType"
             @change="changeType"
           >
             <a-select-option
-              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-              :value="key"
-              :key="key"
+              v-for="item in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="item.key"
+              :key="item.key"
             >
-              {{value}}
+              {{item.value}}
             </a-select-option>
           </a-select>
           <a-input
             style="width: 65%"
             v-model:value="ruleObj.value"
-            v-if="ruleObj.type <= 5"
+            v-if="ruleObj.ruleType <= 5"
           >
           </a-input>
         </a-input-group>
@@ -151,24 +153,24 @@
           "
         >
           <a-select
-            v-model:value="ruleObj.type"
-            @change="ruleObj.value='';ruleObj.min=0;ruleObj.max=9999"
+            v-model:value="ruleObj.ruleType"
             style="width: 30%"
+            @change="changeType"
           >
             <a-select-option
-              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-              :value="key"
-              :key="key"
+              v-for="item in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="item.key"
+              :key="'' + item.key"
             >
-              {{value}}
+              {{item.value}}
             </a-select-option>
           </a-select>
           <a-input-number
-            v-if="ruleObj.type>1"
+            v-if="[11, 12, 10].indexOf(+ruleObj.ruleType) === -1"
             style="width: 70%"
             v-model:value="ruleObj.value"
           ></a-input-number>
-          <template v-else>
+          <template v-else-if="[11, 12].indexOf(+ruleObj.ruleType) > -1">
             <a-input-number
               class="marginL5"
               style="width: 30%"
@@ -193,29 +195,25 @@
           "
         >
           <a-select
-            v-model:value="ruleObj.type"
-            @change="
-              ruleObj.value='';
-              ruleObj.min=0;
-              ruleObj.max=9999
-            "
+            v-model:value="ruleObj.ruleType"
+            @change="changeType"
             style="width: 30%"
           >
             <a-select-option
-              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-              :value="key"
-              :key="key"
+              v-for="item in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="item.key"
+              :key="'' + item.key"
             >
-              {{value}}
+              {{item.value}}
             </a-select-option>
           </a-select>
           <a-date-picker
-            v-if="+ruleObj.type>1 && ruleObj.type<6"
+            v-if="+ruleObj.ruleType>1 && +ruleObj.ruleType<6"
             style="width: 70%"
             v-model:value="ruleObj.value"
           />
           <a-range-picker
-            v-else-if="+ruleObj.type<2"
+            v-else-if="+ruleObj.ruleType<2"
             style="width: 70%"
             v-model:value="ruleObj.value"
           />
@@ -230,15 +228,15 @@
         >
           <a-select
             style="width: 35%"
-            v-model:value="ruleObj.type"
-            @change="ruleObj.value=''"
+            v-model:value="ruleObj.ruleType"
+            @change="changeType"
           >
             <a-select-option
-              v-for="(value, key) in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
-              :value="key"
-              :key="key"
+              v-for="item in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="item.key"
+              :key="'' + item.key"
             >
-              {{value}}
+              {{item.value}}
             </a-select-option>
           </a-select>
         </a-input-group>
@@ -254,13 +252,14 @@
           class="marginT5"
           @change="changeId"
         >
-          <a-select-option
-            v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]"
-            :value="value.key"
-            :key="value.key"
-          >
-            {{value.value}}
-          </a-select-option>
+          <template  v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]" :key="value.key">
+            <a-select-option
+              :value="value.key"
+              v-if="!value.disableOp || (value.disableOp && value.disableOp.indexOf(ruleObj.opportunity) === -1)"
+            >
+              {{value.value}}
+            </a-select-option>
+          </template>
         </a-select>
       </a-input-group>
       <a-input-group
@@ -311,7 +310,7 @@ export default defineComponent({
     const visibleDrawer: Ref<boolean> = ref<boolean>(false);
     const initRule = {
       opportunity: 'init',
-      type: ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '',
+      ruleType: '10',
       value: '',
       min: 0,
       max: 9999,
@@ -356,7 +355,7 @@ export default defineComponent({
         case 'onlytext':
           break;
         case 'text':
-          if (ruleObj.value.type < 6 && !ruleObj.value.value) {
+          if (+ruleObj.value.ruleType < 6 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
@@ -366,7 +365,7 @@ export default defineComponent({
           }
           break;
         case 'imgp':
-          if (ruleObj.value.type > 1 && !ruleObj.value.value) {
+          if (+ruleObj.value.ruleType > 1 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
@@ -377,7 +376,7 @@ export default defineComponent({
           break;
         case 'number':
           console.log(ruleObj.value);
-          if (ruleObj.value.type > 1 && !ruleObj.value.value) {
+          if (+ruleObj.value.ruleType !== 10 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
@@ -387,7 +386,7 @@ export default defineComponent({
           }
           break;
         case 'muls':
-          if (ruleObj.value.type <= 1 && !ruleObj.value.value) {
+          if (+ruleObj.value.ruleType <= 1 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
@@ -397,7 +396,7 @@ export default defineComponent({
           }
           break;
         case 'singles':
-          if (ruleObj.value.type <= 1 && !ruleObj.value.value) {
+          if (+ruleObj.value.ruleType <= 1 && !ruleObj.value.value) {
             Modal.warning({
               title: '提示',
               content: '请输入完整执行条件',
@@ -408,8 +407,8 @@ export default defineComponent({
           break;
         case 'date':
           if (
-            ruleObj.value.type > 1 &&
-            ruleObj.value.type < 6 &&
+            +ruleObj.value.ruleType > 1 &&
+            +ruleObj.value.ruleType < 6 &&
             !ruleObj.value.value
           ) {
             Modal.warning({
@@ -421,7 +420,7 @@ export default defineComponent({
           }
           break;
       }
-      if (ruleObj.value.id > 4 && !ruleObj.value.content) {
+      if (+ruleObj.value.id > 4 && !ruleObj.value.content) {
         let value;
         if (ruleObj.value.current === 0) {
           value =
@@ -475,7 +474,7 @@ export default defineComponent({
       editingRule.value = true;
       ruleObj.value = {
         opportunity: 'init',
-        type: ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '',
+        ruleType: '10',
         value: '',
         min: 0,
         max: 9999,
@@ -500,12 +499,12 @@ export default defineComponent({
       ruleObj.value.label = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
-        ruleObj.value.type = ruleMap[activeCompObj.value.elType] && ruleMap[activeCompObj.value.elType].conditionList ? ruleMap[activeCompObj.value.elType].conditionList[0] : '';;
+        ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[activeCompObj.value.elType][0].key;
         ruleObj.value.name = actionList[activeCompObj.value.elType][0].value;
       } else {
         ruleObj.value.elType = ruleObj.value.elType === 'onlytext' ? 'text' : ruleObj.value.elType;
-        ruleObj.value.type = ruleMap[ruleObj.value.elType] && ruleMap[ruleObj.value.elType].conditionList ? ruleMap[ruleObj.value.elType].conditionList[0] : '';;
+        ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
         ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
       }
@@ -514,7 +513,7 @@ export default defineComponent({
     const changeElType = () => {
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
-      ruleObj.value.type = ruleMap[ruleObj.value.elType] && ruleMap[ruleObj.value.elType].conditionList ? ruleMap[ruleObj.value.elType].conditionList[0] : '';
+      ruleObj.value.ruleType = '10';
       ruleObj.value.value = '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
@@ -536,9 +535,18 @@ export default defineComponent({
 
     const changeType = () => {
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
+      ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
+    };
+
+    const closeDrawer = () => {
+      editingRule.value = false;
+      ruleObj.value = {
+        ...initRule
+      };
     };
 
     return {
+      closeDrawer,
       domainList,
       activeCompObj,
       addScript,
@@ -578,5 +586,8 @@ export default defineComponent({
 .ant-select-clear {
   background: transparent !important;
   right: 26px !important;
+}
+.tip-color {
+  color: var(--color-danger);
 }
 </style>

@@ -435,92 +435,300 @@ const compBaseConfig = {
 
 const ruleMap: object = {
   'other': {
-    n: '其他'
+    n: '其他',
+    conditionList: [
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'onlytext': {
-    n: '纯文本'
+    n: '纯文本',
+    conditionList: [
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'text': {
     n: '文本',
-    conditionList: {
-      0: '包含',
-      1: '不包含',
-      2: '是',
-      3: '不是',
-      4: '开头为',
-      5: '结尾为',
-      6: '为空',
-      7: '不为空'
-    }
+    conditionList: [
+      {
+        key: '0',
+        value: '包含'
+      },
+      {
+        key: '1',
+        value: '不包含'
+      },
+      {
+        key: '2',
+        value: '是'
+      },
+      {
+        key: '3',
+        value: '不是'
+      },
+      {
+        key: '4',
+        value: '开头为',
+      },
+      {
+        key: '5',
+        value: '结尾为',
+      },
+      {
+        key: '6',
+        value: '为空'
+      },
+      {
+        key: '7',
+        value: '不为空'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'imgp': {
     n: '图片选择器',
-    conditionList: {
-      0: '在范围内',
-      1: '不在范围内',
-      2: '不等于',
-      3: '大于',
-      4: '大于等于',
-      5: '小于',
-      6: '小于等于',
-      7: '等于'
-    }
+    conditionList: [
+      {
+        key: '0',
+        value: '在范围内'
+      },
+      {
+        key: '1',
+        value: '不在范围内'
+      },
+      {
+        key: '2',
+        value: '不等于'
+      },
+      {
+        key: '3',
+        value: '大于',
+      },
+      {
+        key: '4',
+        value: '大于等于'
+      },
+      {
+        key: '5',
+        value: '小于'
+      },
+      {
+        key: '6',
+        value: '小于等于'
+      },
+      {
+        key: '7',
+        value: '等于'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'number': {
     n: '数值',
-    conditionList: {
-      0: '在范围内',
-      1: '不在范围内',
-      2: '不等于',
-      3: '大于',
-      4: '大于等于',
-      5: '小于',
-      6: '小于等于',
-      7: '等于'
-    }
+    conditionList: [
+      {
+        key: '11',
+        value: '在范围内'
+      },
+      {
+        key: '12',
+        value: '不在范围内'
+      },
+      {
+        key: '3',
+        value: '不等于'
+      },
+      {
+        key: '13',
+        value: '大于'
+      },
+      {
+        key: '14',
+        value: '大于等于'
+      },
+      {
+        key: '15',
+        value: '小于'
+      },
+      {
+        key: '16',
+        value: '小于等于'
+      },
+      {
+        key: '2',
+        value: '等于'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'table': {
     n: '表格',
-    conditionList: {
-      0: '有空白',
-      1: '无空白'
-    }
+    conditionList: [
+      {
+        key: '0',
+        value: '有空白'
+      },
+      {
+        key: '1',
+        value: '无空白'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'muls': {
     n: '多选',
-    conditionList: {
-      0: '包含',
-      1: '不包含',
-      6: '为空',
-      7: '不为空'
-    }
+    conditionList: [
+      {
+        key: '0',
+        value: '包含'
+      },
+      {
+        key: '1',
+        value: '不包含'
+      },
+      {
+        key: '6',
+        value: '为空'
+      },
+      {
+        key: '7',
+        value: '不为空'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'singles': {
     n: '单选',
-    conditionList: {
-      0: '是',
-      1: '不是',
-      6: '为空',
-      7: '不为空'
-    }
+    conditionList: [
+      {
+        key: '0',
+        value: '是'
+      },
+      {
+        key: '1',
+        value: '不是'
+      },
+      {
+        key: '6',
+        value: '为空'
+      },
+      {
+        key: '7',
+        value: '不为空'
+      },
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'date': {
     n: '时间',
-    conditionList: {
-      4: '是',
-      5: '不是',
-      2: '早于',
-      3: '晚于',
-      0: '在范围内',
-      1: '不在范围内',
-      6: '为空',
-      7: '不为空'
+    conditionList: [{
+      key: '4',
+      value: '是'
+    },
+    {
+      key: '5',
+      value: '不是'
+    },
+    {
+      key: '2',
+      value: '早于'
+    },
+    {
+      key: '3',
+      value: '晚于'
+    },
+    {
+      key: '0',
+      value: '在范围内'
+    },
+    {
+      key: '1',
+      value: '不在范围内'
+    },
+    {
+      key: '6',
+      value: '为空'
+    },
+    {
+      key: '7',
+      value: '不为空'
+    },
+    {
+      key: '10',
+      value: '无条件'
     }
+    ]
   }
 };
 
 const actionList: any = {
   'text': [
+    // {
+    //   key: 0,
+    //   value: '打印隐藏'
+    // },
+    // {
+    //   key: 1,
+    //   value: '显示'
+    // },
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
+    // {
+    //   key: 4,
+    //   value: '必填'
+    // },
+    // {
+    //   id: 5,
+    //   value: '样式变化'
+    // },
+    {
+      key: 6,
+      value: '拼接'
+    },
+    // {
+    //   id: 7,
+    //   value: '计算（域值用${xx}）'
+    // },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    }
+    // {
+    //   id: 9,
+    //   value: '基础属性'
+    // }
+  ],
+  'date': [
     {
       key: 0,
       value: '隐藏'
@@ -538,29 +746,34 @@ const actionList: any = {
       value: '只读'
     },
     {
-      key: 4,
-      value: '必填'
+      key: 6,
+      value: '拼接',
+      disableOp: ['init']
     },
-    // {
-    //   id: 5,
-    //   value: '样式变化'
-    // },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    }
+  ],
+  'number': [
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
     {
       key: 6,
-      value: '拼接'
+      value: '拼接',
+      disableOp: ['init']
     },
-    // {
-    //   id: 7,
-    //   value: '计算（域值用${xx}）'
-    // },
     {
       key: 8,
       value: '提示'
     }
-    // {
-    //   id: 9,
-    //   value: '基础属性'
-    // }
   ],
   'onlytext': [
     {
@@ -578,7 +791,7 @@ const actionList: any = {
 
 const opportunityMap: any = {
   'init': '初始化',
-  'change': '值变化时',
+  // 'change': '值变化时',
   'submit': '提交'
 };
 
