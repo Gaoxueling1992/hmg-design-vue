@@ -72,6 +72,11 @@ export default defineComponent({
         label: '选项1'
       });
     }
+    for (let i = 0; i < activeCompObj.value.options.length; i++) {
+      if (activeCompObj.value.value.indexOf(activeCompObj.value.options[i].label) > -1) {
+        checkedValue.value.push(activeCompObj.value.options[i].value);
+      }
+    }
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       activeCompObj.value.options.push({
@@ -117,7 +122,6 @@ export default defineComponent({
           activeCompObj.value.value.push(activeCompObj.value.options[i].label);
         }
       }
-      console.log('value', activeCompObj.value.value);
     }
     return {
       activeCompObj,

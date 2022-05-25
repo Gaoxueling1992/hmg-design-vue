@@ -199,7 +199,7 @@ const compBaseConfig = {
     layout: 'crosswise',
     options: [],
     defaultType: [],
-    elType: 'singles',
+    elType: 'muls',
     rules: {}
   },
   'rad-number': {
@@ -598,24 +598,16 @@ const ruleMap: object = {
       }
     ]
   },
-  'muls': {
-    n: '多选',
+  'singles': {
+    n: '单选',
     conditionList: [
       {
-        key: '0',
-        value: '包含'
+        key: '2',
+        value: '是'
       },
       {
-        key: '1',
-        value: '不包含'
-      },
-      {
-        key: '6',
-        value: '为空'
-      },
-      {
-        key: '7',
-        value: '不为空'
+        key: '3',
+        value: '不是'
       },
       {
         key: '10',
@@ -623,16 +615,24 @@ const ruleMap: object = {
       }
     ]
   },
-  'singles': {
-    n: '单选',
+  'muls': {
+    n: '多选',
     conditionList: [
       {
-        key: '0',
+        key: '2',
         value: '是'
       },
       {
-        key: '1',
+        key: '3',
         value: '不是'
+      },
+      {
+        key: '0',
+        value: '包含'
+      },
+      {
+        key: '1',
+        value: '不包含'
       },
       {
         key: '6',
@@ -740,6 +740,20 @@ const actionList: any = {
     {
       key: 0,
       value: '追加前后缀'
+    }
+  ],
+  'muls': [
+    {
+      key: 0,
+      value: '追加前后缀'
+    },
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
     }
   ],
   'number': [
