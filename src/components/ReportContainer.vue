@@ -42,6 +42,7 @@
     width="100%"
     wrap-class-name="full-modal"
     :footer="null"
+    destroyOnClose
   >
     <a-button
       class="print-preview"

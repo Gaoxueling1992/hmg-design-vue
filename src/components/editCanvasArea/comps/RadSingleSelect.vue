@@ -16,46 +16,67 @@
       :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type === 'select'"
-      v-model:value="ele.value"
+      v-model:value="choosedValue"
       :options="ele.options"
+      @change="changeValue"
     >
     </a-select>
     <a-radio-group
       v-else-if="ele.layout === 'crosswise'"
-      v-model:value="ele.value"
+      v-model:value="choosedValue"
       :disabled="ele.baseProps.readonly"
       :options="ele.options"
+      @change="changeValue"
     />
     <div v-else>
       <a-radio
         v-for="item in ele.options"
         :key="item.value"
-        :checked="item.value === ele.value"
+        :checked="item.label === ele.value"
         :disabled="ele.baseProps.readonly"
         class="option"
+        @click="clickIt(item.label)"
       >{{item.label}}</a-radio>
     </div>
   </template>
-  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+  <div
+    v-else
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;text-decoration: inherit;white-space:normal;word-break: break-all;
-    padding-bottom: 1px;" class="inherit display-text">
-    <template v-for="item in ele.options">
-      <span :key="item.value" v-if="item.value === ele.value">
-        {{item.label}}
-      </span>
-    </template>
+    padding-bottom: 1px;"
+    class="inherit display-text"
+  >
+    {{ele.value}}
   </div>
   <span>{{ele.suffix}} </span>
 </template>
 <script lang="ts">
-import { defineComponent, Ref, inject } from 'vue';
+import { defineComponent, Ref, inject, ref } from 'vue';
 
 export default defineComponent({
   props: ['ele'],
-  setup() {
+  setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    const choosedValue: Ref<string> = ref<string>('');
+    let chooseedOption = props.ele.options.filter(
+      (option) => option.label === props.ele.value
+    );
+    if (chooseedOption && chooseedOption[0]) {
+      choosedValue.value = chooseedOption[0].value;
+    }
+    const changeValue = () => {
+      props.ele.value = props.ele.options.filter(
+        (option) => option.value === choosedValue.value
+      )[0].label;
+    };
+    const clickIt = (label) => {
+      props.ele.value = label;
+    };
     return {
-      isReadonlyStatus
+      isReadonlyStatus,
+      changeValue,
+      choosedValue,
+      clickIt
     };
   }
 });

@@ -188,6 +188,8 @@ const compBaseConfig = {
     placeholder: '',
     label: '',
     value: [],
+    prefix: '',
+    suffix: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
@@ -197,7 +199,7 @@ const compBaseConfig = {
     layout: 'crosswise',
     options: [],
     defaultType: [],
-    elType: 'muls',
+    elType: 'singles',
     rules: {}
   },
   'rad-number': {

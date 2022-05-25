@@ -31,11 +31,16 @@
       class="paddingT5"
     >
       <i class="iconfont icondrag"></i>
-      <a-input size="small" class="input-width" v-model:value="option.label"/>
+      <a-input
+        size="small"
+        class="input-width"
+        v-model:value="option.label"
+        @change="changeDefault(option)"
+      />
       <div class="option-op">
         <a-radio
-          @click="activeCompObj.value=option.value"
-          :checked="option.value===activeCompObj.value"
+          @click="changeDefault(option)"
+          :checked="option.label===activeCompObj.value"
         ></a-radio>
         <i
           class="iconfont icondelete-border"
@@ -54,6 +59,7 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import { VueDraggableNext } from 'vue-draggable-next';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
@@ -61,6 +67,13 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+      activeCompObj.value.options.push({
+        value: 1,
+        label: '选项1'
+      });
+      activeCompObj.value.value = '选项1';
+    }
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       activeCompObj.value.options.push({
@@ -71,19 +84,27 @@ export default defineComponent({
           (index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1)
       });
       if (index === 0) {
-        activeCompObj.value.value = 1;
+        activeCompObj.value.value = activeCompObj.value.options[0].label;
       }
     };
     const deleteOption = (index: any, option: any) => {
-      activeCompObj.value.options.splice(index, 1);
-      if (option.value === activeCompObj.value.value) {
-        activeCompObj.value.value = activeCompObj.value.options[0].value;
+      if (activeCompObj.value.options.length === 1) {
+        message.warning('选择器至少有一个选项，无法删除')
+        return;
       }
+      activeCompObj.value.options.splice(index, 1);
+      if (option.label === activeCompObj.value.value) {
+        activeCompObj.value.value = activeCompObj.value.options[0].label;
+      }
+    };
+    const changeDefault = (option: any) => {
+      activeCompObj.value.value = option.label;
     };
     return {
       activeCompObj,
       addOption,
-      deleteOption
+      deleteOption,
+      changeDefault
     };
   }
 });

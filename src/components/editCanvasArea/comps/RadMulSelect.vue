@@ -10,6 +10,7 @@
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
+  <span>{{ele.prefix}} </span>
   <template v-if="!isReadonlyStatus">
     <a-select
       style="flex: 1"
@@ -37,6 +38,7 @@
         class="option"
       >{{item.label}}</a-checkbox>
     </div>
+    <span>{{ele.suffix}} </span>
   </template>
   <div
     v-else
