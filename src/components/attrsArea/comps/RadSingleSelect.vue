@@ -35,11 +35,12 @@
         size="small"
         class="input-width"
         v-model:value="option.label"
-        @change="changeDefault(option)"
+        @click="clickIt(option)"
+        @change="changeDefault(option, 1)"
       />
       <div class="option-op">
         <a-radio
-          @click="changeDefault(option)"
+          @click="changeDefault(option, 0)"
           :checked="option.label===activeCompObj.value"
         ></a-radio>
         <i
@@ -67,6 +68,7 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    let focusOption = '';
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options.push({
         value: 1,
@@ -89,7 +91,7 @@ export default defineComponent({
     };
     const deleteOption = (index: any, option: any) => {
       if (activeCompObj.value.options.length === 1) {
-        message.warning('选择器至少有一个选项，无法删除')
+        message.warning('选择器至少有一个选项，无法删除');
         return;
       }
       activeCompObj.value.options.splice(index, 1);
@@ -97,14 +99,33 @@ export default defineComponent({
         activeCompObj.value.value = activeCompObj.value.options[0].label;
       }
     };
-    const changeDefault = (option: any) => {
-      activeCompObj.value.value = option.label;
+    const clickIt = (option: any) => {
+      focusOption = option.label;
+    };
+    const changeDefault = (option: any, op = 0) => {
+      // 输入重复的选项，提示
+      if (op === 1) {
+        let cur = activeCompObj.value.options.filter(
+          (opt) => opt.label === option.label
+        );
+        if (cur.length > 1) {
+          message.warning('无法添加重复的选项');
+          option.label = focusOption;
+          return;
+        }
+      }
+      // op 0 单选 1输入
+      if (focusOption === activeCompObj.value.value || op === 0) {
+        activeCompObj.value.value = option.label;
+        focusOption = option.label;
+      }
     };
     return {
       activeCompObj,
       addOption,
       deleteOption,
-      changeDefault
+      changeDefault,
+      clickIt
     };
   }
 });

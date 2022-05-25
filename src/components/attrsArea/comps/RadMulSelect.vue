@@ -36,7 +36,7 @@
         <i class="iconfont icondrag"></i>
         <a-input size="small" class="input-width" v-model:value="option.label"/>
         <div class="option-op">
-          <a-checkbox :value="option.value"></a-checkbox>
+          <a-checkbox :value="option.label"></a-checkbox>
           <i
             class="iconfont icondelete-border paddingL5"
             @click="deleteOption(index)"
@@ -62,6 +62,13 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+      activeCompObj.value.options.push({
+        value: 1,
+        label: '选项1'
+      });
+      activeCompObj.value.value = '选项1';
+    }
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       activeCompObj.value.options.push({
