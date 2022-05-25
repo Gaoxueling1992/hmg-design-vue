@@ -28,7 +28,7 @@
   </div>
   <div class="flex marginT10">
     <div class="flex-title1">高度</div>
-    <a-input-number v-model:value="activeCompObj.codeHeight" min="20"/>
+    <a-input-number v-model:value="activeCompObj.codeHeight" :min="20"/>
   </div>
   <a-checkbox
     class="marginT10"
@@ -55,7 +55,7 @@
   </div>
   <div class="flex marginT10" v-if="activeCompObj.displayValue">
     <div class="flex-title2">文字大小</div>
-    <a-input-number v-model:value="activeCompObj.textSize" min="12"/>
+    <a-input-number v-model:value="activeCompObj.textSize" :min="12"/>
   </div>
 </template>
 <script lang="ts">

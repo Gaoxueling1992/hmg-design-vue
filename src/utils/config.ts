@@ -253,7 +253,7 @@ const compBaseConfig = {
       hideOnPrint: false
     },
     threshold: '',
-    domainType: 'domain',
+    domainType: '',
     styleSheet: {
       width: '100%',
       paddingTop: '0',
@@ -335,7 +335,7 @@ const compBaseConfig = {
       hideOnPrint: false
     },
     threshold: '',
-    domainType: 'domain',
+    domainType: '',
     styleSheet: styleSheet,
     background: 'transparent',
     displayValue: false,
@@ -359,7 +359,7 @@ const compBaseConfig = {
       hideOnPrint: false
     },
     threshold: '',
-    domainType: 'domain',
+    domainType: '',
     styleSheet: {
       width: '100%',
       paddingTop: '0',
@@ -442,12 +442,7 @@ const compBaseConfig = {
 const ruleMap: object = {
   'other': {
     n: '其他',
-    conditionList: [
-      {
-        key: '10',
-        value: '无条件'
-      }
-    ]
+    conditionList: []
   },
   'onlytext': {
     n: '纯文本',
@@ -502,38 +497,6 @@ const ruleMap: object = {
   'imgp': {
     n: '图片选择器',
     conditionList: [
-      // {
-      //   key: '0',
-      //   value: '在范围内'
-      // },
-      // {
-      //   key: '1',
-      //   value: '不在范围内'
-      // },
-      // {
-      //   key: '2',
-      //   value: '不等于'
-      // },
-      // {
-      //   key: '3',
-      //   value: '大于',
-      // },
-      // {
-      //   key: '4',
-      //   value: '大于等于'
-      // },
-      // {
-      //   key: '5',
-      //   value: '小于'
-      // },
-      // {
-      //   key: '6',
-      //   value: '小于等于'
-      // },
-      // {
-      //   key: '7',
-      //   value: '等于'
-      // },
       {
         key: '10',
         value: '无条件'
@@ -780,6 +743,12 @@ const actionList: any = {
       value: '追加前后缀'
     }
   ],
+  'imgp': [
+    {
+      key: 6,
+      value: '拼接'
+    }
+  ],
   'onlytext': [
     {
       key: 6,
@@ -800,12 +769,7 @@ const actionList: any = {
       value: '只读'
     },
   ],
-  'other': [
-    {
-      key: 6,
-      value: '拼接'
-    }
-  ]
+  'other': []
 };
 
 const opportunityMap: any = {
