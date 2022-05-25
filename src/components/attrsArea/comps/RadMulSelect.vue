@@ -19,9 +19,10 @@
     </a-radio-group>
   </template>
   <a-checkbox-group
-    v-model:value="activeCompObj.value"
+    v-model:value="checkedValue"
     style="width: 100%"
     v-if="activeCompObj.options && activeCompObj.options.length"
+    @change="changeCheckbox"
   >
     <draggable
       v-model="activeCompObj.options"
@@ -34,9 +35,9 @@
         class="paddingT5"
       >
         <i class="iconfont icondrag"></i>
-        <a-input size="small" class="input-width" v-model:value="option.label"/>
+        <a-input size="small" class="input-width" v-model:value="option.label" @change="changeDefault(option, 1)" @click="clickIt(option)"/>
         <div class="option-op">
-          <a-checkbox :value="option.label"></a-checkbox>
+          <a-checkbox :value="option.value" @click="changeDefault(option, 0)"></a-checkbox>
           <i
             class="iconfont icondelete-border paddingL5"
             @click="deleteOption(index)"
@@ -53,8 +54,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, Ref, ref } from 'vue';
 import { VueDraggableNext } from 'vue-draggable-next';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
@@ -62,12 +64,13 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    let focusOption = '';
+    const checkedValue: Ref<any> = ref<any>([]);
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options.push({
         value: 1,
         label: '选项1'
       });
-      activeCompObj.value.value = '选项1';
     }
     const addOption = () => {
       const index = activeCompObj.value.options.length;
@@ -80,12 +83,50 @@ export default defineComponent({
       });
     };
     const deleteOption = (index: any) => {
+      if (activeCompObj.value.options.length === 1) {
+        message.warning('选择器至少有一个选项，无法删除');
+        return;
+      }
       activeCompObj.value.options.splice(index, 1);
+      changeCheckbox();
     };
+    const clickIt = (option: any) => {
+      focusOption = option.label;
+    };
+    const changeDefault = (option: any, op = 0) => {
+      if (op === 1) {
+        let cur = activeCompObj.value.options.filter(
+          (opt) => opt.label === option.label
+        );
+        if (cur.length > 1) {
+          message.warning('无法添加重复的选项');
+          option.label = focusOption;
+          return;
+        }
+        changeCheckbox();
+      }
+      // op 0 单选 1输入
+      if (focusOption === activeCompObj.value.value || op === 0) {
+        focusOption = option.label;
+      }
+    };
+    const changeCheckbox = () => {
+      activeCompObj.value.value = [];
+      for (let i = 0; i < activeCompObj.value.options.length; i++) {
+        if (checkedValue.value.indexOf(activeCompObj.value.options[i].value) > -1) {
+          activeCompObj.value.value.push(activeCompObj.value.options[i].label);
+        }
+      }
+      console.log('value', activeCompObj.value.value);
+    }
     return {
       activeCompObj,
       addOption,
-      deleteOption
+      deleteOption,
+      clickIt,
+      changeDefault,
+      checkedValue,
+      changeCheckbox
     };
   }
 });

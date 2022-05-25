@@ -10,31 +10,33 @@
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
-  <span>{{ele.prefix}} </span>
   <template v-if="!isReadonlyStatus">
+    <span>{{ele.prefix}} </span>
     <a-select
       style="flex: 1"
       :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type === 'select'"
-      v-model:value="ele.value"
+      v-model:value="choosedValue"
       :options="ele.options"
       mode="multiple"
+      @change="changeChecked"
     >
     </a-select>
     <a-checkbox-group
       v-else-if="ele.layout === 'crosswise'"
-      v-model:value="ele.value"
+      v-model:value="choosedValue"
       :options="ele.options"
       :disabled="ele.baseProps.readonly"
+       @change="changeChecked"
     />
     <div v-else>
       <a-checkbox
-        v-for="(item, index) in ele.options"
+        v-for="item in ele.options"
         :disabled="ele.baseProps.readonly"
         :key="item.value"
-        :checked="ele.value.indexOf(item.value) > -1"
-        @change="changeStatus(item.value, index)"
+        :checked="choosedValue.indexOf(item.value) > -1"
+        @change="changeStatus(item.label, item.value)"
         class="option"
       >{{item.label}}</a-checkbox>
     </div>
@@ -47,35 +49,52 @@
     padding-top: 1px;word-break: break-all;
     padding-bottom: 1px;white-space:normal;"
   >
-    <template v-for="item in ele.options">
-      <span
-        :key="item.value"
-        v-if="ele.value.indexOf(item.value) > -1"
-      >
-        {{item.label}}&nbsp;
-      </span>
+    <template v-for="item in ele.value">
+      {{item}}&nbsp;
     </template>
     &nbsp;
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, toRefs, Ref, inject } from 'vue';
+import { defineComponent, toRefs, Ref, inject, ref } from 'vue';
 
 export default defineComponent({
   props: ['ele'],
   setup(props) {
     const { ele } = toRefs(props);
-    const changeStatus = (value: any, index: any) => {
-      if (ele.value.value.indexOf(value) > -1) {
-        ele.value.value.splice(ele.value.value.indexOf(value), 1);
+    const choosedValue: Ref<any> = ref<any>([]);
+    for (let i = 0; i < ele.value.options.length; i++) {
+      if (ele.value.value.indexOf(ele.value.options[i].label) > -1) {
+        choosedValue.value.push(ele.value.options[i].value);
+      }
+    }
+    const changeStatus = (label: any, value: any) => {
+      if (ele.value.value.indexOf(label) > -1) {
+        ele.value.value.splice(ele.value.value.indexOf(label), 1);
+        choosedValue.value.splice(choosedValue.value.indexOf(value), 1);
       } else {
-        ele.value.value.push(value);
+        ele.value.value.push(label);
+        choosedValue.value.push(value);
+      }
+    };
+    const changeChecked = () => {
+      ele.value.value = [];
+      if (!choosedValue.value || !choosedValue.value.length) {
+        return;
+      }
+      for (let i = 0; i < choosedValue.value.length; i++) {
+        let sel = ele.value.options.filter(option => option.value === choosedValue.value[i]);
+        if (sel) {
+          ele.value.value.push(sel[0].label);
+        }
       }
     };
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {
       changeStatus,
-      isReadonlyStatus
+      isReadonlyStatus,
+      choosedValue,
+      changeChecked
     };
   }
 });
