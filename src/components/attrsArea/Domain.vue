@@ -265,6 +265,22 @@
       <a-input-group
         compact
         class="marginT5"
+        v-if="ruleObj.id === 0"
+      >
+        前缀
+        <a-input v-model:value="ruleObj.prefix"></a-input>
+      </a-input-group>
+      <a-input-group
+        compact
+        class="marginT5"
+        v-if="ruleObj.id === 0"
+      >
+        后缀
+        <a-input v-model:value="ruleObj.suffix"></a-input>
+      </a-input-group>
+      <a-input-group
+        compact
+        class="marginT5"
         v-if="ruleObj.id>4"
       >
         值
@@ -315,6 +331,8 @@ export default defineComponent({
       min: 0,
       max: 9999,
       threshold: '',
+      prefix: '',
+      suffix: '',
       current: 0,
       elType: activeCompObj.value.elType,
       id: actionList[activeCompObj.value.elType][0].key,
@@ -468,6 +486,8 @@ export default defineComponent({
         min: 0,
         max: 9999,
         threshold: '',
+        prefix: '',
+        suffix: '',
         current: 0,
         elType: activeCompObj.value.elType,
         id: actionList[activeCompObj.value.elType][0].key,
@@ -484,6 +504,8 @@ export default defineComponent({
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
+      ruleObj.value.prefix = '';
+      ruleObj.value.suffix = '';
       ruleObj.value.label = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
@@ -509,6 +531,8 @@ export default defineComponent({
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
       ruleObj.value.label = '';
+      ruleObj.value.prefix = '';
+      ruleObj.value.suffix = '';
     };
 
     const changeId = () => {
@@ -521,6 +545,8 @@ export default defineComponent({
       ruleObj.value.name = actionList[elType].filter((action) => action.key === ruleObj.value.id)[0].value;
       ruleObj.value.content = '';
       ruleObj.value.label = '';
+      ruleObj.value.prefix = '';
+      ruleObj.value.suffix = '';
     };
 
     const changeType = () => {
@@ -531,6 +557,8 @@ export default defineComponent({
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
       ruleObj.value.label = '';
+      ruleObj.value.prefix = '';
+      ruleObj.value.suffix = '';
     };
 
     const closeDrawer = () => {

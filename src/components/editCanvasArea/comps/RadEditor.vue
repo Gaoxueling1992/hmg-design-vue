@@ -8,7 +8,7 @@
   >{{ ele.label }}</div>
   <div
     class="flex1"
-    v-show="!isReadonlyStatus"
+    v-show="!isReadonlyStatus && !ele.baseProps.readonly"
     @click="focusedEle = ele.id"
   >
     <div
@@ -30,7 +30,7 @@
     ></div>
   </div>
   <div
-    v-show="isReadonlyStatus"
+    v-show="isReadonlyStatus || ele.baseProps.readonly"
     class="inherit editor-display-text"
     :style="{
       fontSize: ele.fontSize + 'px',

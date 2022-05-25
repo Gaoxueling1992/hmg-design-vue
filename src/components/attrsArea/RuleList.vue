@@ -26,7 +26,7 @@
         (item.elType === 'date' ? formatDate(item.min) : item.min + '-' + item.elType === 'date' ? formatDate(item.max) : item.max)
       }} 时，
     </template>
-    执行动作-{{item.name}}{{item.content ? (',内容：' + item.content) : ''}}{{item.label ? (',标签：' + item.label) : ''}}
+    执行动作-{{item.name}}{{item.content ? (',内容：' + item.content) : ''}}{{item.label ? (',标签：' + item.label) : ''}} {{item.prefix ? (',前缀：' + item.prefix) : ''}} {{item.suffix ? (',后缀：' + item.suffix) : ''}}
   </div>
 </template>
 <script lang="ts">

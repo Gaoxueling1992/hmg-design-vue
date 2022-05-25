@@ -9,7 +9,7 @@
       'display': ele.inline ? 'inline-block' : ''
     }"
   >{{ ele.label }}</div>
-  {{ele.prefix}}
+  <span>{{ele.prefix}} </span>
   <a-date-picker
     v-if="!isReadonlyStatus && !ele.baseProps.readonly"
     style="flex: 1"
@@ -25,7 +25,7 @@
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
     padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
-  >{{ele.value ? moment(ele.value).format(ele.format) : ''}}</div>
+  >{{ele.value ? moment(ele.value).format(ele.format) : ''}} </div>
   {{ele.suffix}}
 </template>
 <script lang="ts">

@@ -167,6 +167,8 @@ const compBaseConfig = {
     placeholder: '',
     label: '',
     value: '',
+    prefix: '',
+    suffix: '',
     noLabel: false,
     inline: true,
     styleSheet: styleSheet,
@@ -696,14 +698,6 @@ const ruleMap: object = {
 
 const actionList: any = {
   'text': [
-    // {
-    //   key: 0,
-    //   value: '打印隐藏'
-    // },
-    // {
-    //   key: 1,
-    //   value: '显示'
-    // },
     {
       key: 2,
       value: '可编辑'
@@ -712,31 +706,15 @@ const actionList: any = {
       key: 3,
       value: '只读'
     },
-    // {
-    //   key: 4,
-    //   value: '必填'
-    // },
-    // {
-    //   id: 5,
-    //   value: '样式变化'
-    // },
     {
       key: 6,
       value: '拼接'
     },
-    // {
-    //   id: 7,
-    //   value: '计算（域值用${xx}）'
-    // },
     {
       key: 8,
       value: '提示',
       disableOp: ['init']
     }
-    // {
-    //   id: 9,
-    //   value: '基础属性'
-    // }
   ],
   'date': [
     {
@@ -756,6 +734,10 @@ const actionList: any = {
       key: 8,
       value: '提示',
       disableOp: ['init']
+    },
+    {
+      key: 0,
+      value: '追加前后缀'
     }
   ],
   'number': [
@@ -776,6 +758,10 @@ const actionList: any = {
       key: 8,
       value: '提示',
       disableOp: ['init']
+    },
+    {
+      key: 0,
+      value: '追加前后缀'
     }
   ],
   'onlytext': [
@@ -783,6 +769,20 @@ const actionList: any = {
       key: 6,
       value: '拼接'
     }
+  ],
+  'singles': [
+    {
+      key: 0,
+      value: '追加前后缀'
+    },
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
   ],
   'other': [
     {

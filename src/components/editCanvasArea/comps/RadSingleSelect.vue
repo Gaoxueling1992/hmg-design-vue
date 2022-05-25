@@ -9,6 +9,7 @@
       'display': ele.inline ? 'inline-block' : ''
     }"
   >{{ ele.label }}</div>
+  <span>{{ele.prefix}} </span>
   <template v-if="!isReadonlyStatus">
     <a-select
       style="flex: 1"
@@ -40,10 +41,11 @@
     padding-bottom: 1px;" class="inherit display-text">
     <template v-for="item in ele.options">
       <span :key="item.value" v-if="item.value === ele.value">
-        {{item.label}}&nbsp;
+        {{item.label}}
       </span>
     </template>
   </div>
+  <span>{{ele.suffix}} </span>
 </template>
 <script lang="ts">
 import { defineComponent, Ref, inject } from 'vue';

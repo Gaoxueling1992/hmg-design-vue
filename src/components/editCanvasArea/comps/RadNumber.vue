@@ -10,22 +10,19 @@
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
-  <a-input-number
-    style="flex: 1"
-    :min="ele.min"
-    :max="ele.max"
-    class="inherit"
-    v-model:value="ele.value"
-    :placeholder="ele.placeholder"
-    v-if="!isReadonlyStatus && !ele.baseProps.readonly"
-  >
-    <template #prefix>
-      {{ ele.prefix }}
-    </template>
-    <template #suffix>
-      {{ ele.suffix }}
-    </template>
-  </a-input-number>
+  <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
+    <span>{{ele.prefix}}</span>
+    <a-input-number
+      style="flex: 1"
+      :min="ele.min"
+      :max="ele.max"
+      class="inherit"
+      v-model:value="ele.value"
+      :placeholder="ele.placeholder"
+    >
+    </a-input-number>
+    <span>{{ele.suffix}}</span>
+  </template>
   <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
     padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;" class="inherit display-text">
