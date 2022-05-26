@@ -252,7 +252,10 @@
           class="marginT5"
           @change="changeId"
         >
-          <template  v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]" :key="value.key">
+          <template
+            v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]"
+            :key="value.key"
+          >
             <a-select-option
               :value="value.key"
               v-if="!value.disableOp || (value.disableOp && value.disableOp.indexOf(ruleObj.opportunity) === -1)"
@@ -281,11 +284,26 @@
       <a-input-group
         compact
         class="marginT5"
-        v-if="ruleObj.id>4"
+        v-if="ruleObj.id>4 && ruleObj.id !== 7"
       >
         值
         <a-input v-model:value="ruleObj.content"></a-input>
       </a-input-group>
+      <a-select
+        v-model:value="ruleObj.content"
+        style="width: 100%"
+        v-if="ruleObj.id === 7"
+        class="marginT5"
+      >
+        <template
+          v-for="tb in tableList"
+          :key="tb.id"
+        >
+          <a-select-option :value="tb.id">
+            {{tb.title}}
+          </a-select-option>
+        </template>
+      </a-select>
       <a-input-group
         compact
         class="marginT5"
@@ -324,6 +342,7 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     const domainList: any = inject('domainList');
     const visibleDrawer: Ref<boolean> = ref<boolean>(false);
+    let tableList: any = inject('tableList');
     const initRule = {
       opportunity: 'init',
       ruleType: '10',
@@ -472,7 +491,11 @@ export default defineComponent({
       ruleObj.value = {
         opportunity: 'init',
         ruleType: '10',
-        value: activeCompObj.value.elType === 'number' || activeCompObj.value.elType === 'imgp' ? 0 : '',
+        value:
+          activeCompObj.value.elType === 'number' ||
+          activeCompObj.value.elType === 'imgp'
+            ? 0
+            : '',
         min: 0,
         max: 9999,
         threshold: '',
@@ -499,13 +522,21 @@ export default defineComponent({
       ruleObj.value.label = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
-        ruleObj.value.value = activeCompObj.value.elType === 'number' ||  activeCompObj.value.elType === 'imgp' ? 0 : '';
+        ruleObj.value.value =
+          activeCompObj.value.elType === 'number' ||
+          activeCompObj.value.elType === 'imgp'
+            ? 0
+            : '';
         ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[activeCompObj.value.elType][0].key;
         ruleObj.value.name = actionList[activeCompObj.value.elType][0].value;
       } else {
-        ruleObj.value.elType = ruleObj.value.elType === 'onlytext' ? 'text' : ruleObj.value.elType;
-        ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
+        ruleObj.value.elType =
+          ruleObj.value.elType === 'onlytext' ? 'text' : ruleObj.value.elType;
+        ruleObj.value.value =
+          ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp'
+            ? 0
+            : '';
         ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
         ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
@@ -516,7 +547,10 @@ export default defineComponent({
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
       ruleObj.value.ruleType = '10';
-      ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
+      ruleObj.value.value =
+        ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp'
+          ? 0
+          : '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
@@ -532,7 +566,9 @@ export default defineComponent({
       } else {
         elType = ruleObj.value.elType;
       }
-      ruleObj.value.name = actionList[elType].filter((action) => action.key === ruleObj.value.id)[0].value;
+      ruleObj.value.name = actionList[elType].filter(
+        (action) => action.key === ruleObj.value.id
+      )[0].value;
       ruleObj.value.content = '';
       ruleObj.value.label = '';
       ruleObj.value.prefix = '';
@@ -542,7 +578,10 @@ export default defineComponent({
     const changeType = () => {
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
-      ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
+      ruleObj.value.value =
+        ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp'
+          ? 0
+          : '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
@@ -578,7 +617,8 @@ export default defineComponent({
       changeCurrent,
       changeElType,
       changeId,
-      changeType
+      changeType,
+      tableList
     };
   }
 });
