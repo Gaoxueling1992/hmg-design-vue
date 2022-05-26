@@ -3,10 +3,6 @@
     style="min-height: 20px"
     class="inherit"
     :style="{
-      marginTop: ele.styleSheet.paddingTop + 'px',
-      marginBottom: ele.styleSheet.paddingBottom + 'px',
-      marginLeft: ele.styleSheet.paddingLeft + 'px',
-      marginRight: ele.styleSheet.paddingRight + 'px',
       'border-color': 'inherit',
       color: 'inherit !important',
       'background-color': 'inherit',

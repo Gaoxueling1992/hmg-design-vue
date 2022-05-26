@@ -10,7 +10,11 @@
       ...ele.styleSheet,
       fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
       borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
-      display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block'
+      display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block',
+      marginTop: ele.styleSheet.paddingTop + 'px',
+      marginBottom: ele.styleSheet.paddingBottom + 'px',
+      marginLeft: ele.styleSheet.paddingLeft + 'px',
+      marginRight: ele.styleSheet.paddingRight + 'px',
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
@@ -52,12 +56,6 @@
             <div
               v-if="item.elName === 'RadText'"
               style="min-height: 20px"
-              :style="{
-                marginTop: item.styleSheet.paddingTop + 'px',
-                marginBottom: item.styleSheet.paddingBottom + 'px',
-                marginLeft: item.styleSheet.paddingLeft + 'px',
-                marginRight: item.styleSheet.paddingRight + 'px'
-              }"
               :class="{'ellipsis': item.styleSheet.wrap === 'noWrap'}"
               v-html="item.label ||  '静态文本'"
             ></div>
@@ -108,24 +106,13 @@
         v-if="ele.elName === 'RadText'"
         style="min-height: 20px"
         class="inherit"
-        :style="{
-          marginTop: ele.styleSheet.paddingTop + 'px',
-          marginBottom: ele.styleSheet.paddingBottom + 'px',
-          marginLeft: ele.styleSheet.paddingLeft + 'px',
-          marginRight: ele.styleSheet.paddingRight + 'px',
-        }"
         :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
         v-html="ele.label || '静态文本'"
       ></div>
       <a-divider
         v-if="ele.elName === 'RadLine'"
         class="inherit"
-        :style="{
-          marginTop: ele.styleSheet.paddingTop + 'px',
-          marginBottom: ele.styleSheet.paddingBottom + 'px',
-          marginLeft: ele.styleSheet.paddingLeft + 'px',
-          marginRight: ele.styleSheet.paddingRight + 'px',
-        }"
+        
       >{{ele.label}}</a-divider>
       <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'">
         <template v-if="(ele.elName === 'RadDrcode' && ele.img) || (ele.src && ele.elName !== 'RadDrcode') ">
@@ -136,10 +123,6 @@
             :width="ele.imgWidth"
             :src="ele.src"
             :style="{
-              marginTop: ele.styleSheet.paddingTop + 'px',
-              marginBottom: ele.styleSheet.paddingBottom + 'px',
-              marginLeft: ele.styleSheet.paddingLeft + 'px',
-              marginRight: ele.styleSheet.paddingRight + 'px',
               height: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px'
             }"
@@ -165,10 +148,6 @@
             :width="ele.imgWidth"
             :src="ele.img"
             :style="{
-              marginTop: ele.styleSheet.paddingTop + 'px',
-              marginBottom: ele.styleSheet.paddingBottom + 'px',
-              marginLeft: ele.styleSheet.paddingLeft + 'px',
-              marginRight: ele.styleSheet.paddingRight + 'px',
               height: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px'
             }"
@@ -176,10 +155,6 @@
         </template>
         <div
           :style="{
-            marginTop: ele.styleSheet.paddingTop + 'px',
-            marginBottom: ele.styleSheet.paddingBottom + 'px',
-            marginLeft: ele.styleSheet.paddingLeft + 'px',
-            marginRight: ele.styleSheet.paddingRight + 'px',
             height: ele.imgHeight+ 'px'
           }"
           v-else
@@ -189,10 +164,6 @@
         <table
           border="1"
           :style="{
-            marginTop: ele.styleSheet.paddingTop + 'px',
-            marginBottom: ele.styleSheet.paddingBottom + 'px',
-            marginLeft: ele.styleSheet.paddingLeft + 'px',
-            marginRight: ele.styleSheet.paddingRight + 'px',
             height: ele.imgHeight+ 'px'
           }"
         >
