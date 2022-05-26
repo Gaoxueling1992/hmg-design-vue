@@ -273,7 +273,8 @@ const compBaseConfig = {
     src: '',
     noLabel: true,
     baseProps: {
-      hideOnPrint: false
+      hideOnPrint: false,
+      readonly: false
     },
     threshold: '',
     domainType: 'domain',
@@ -579,14 +580,6 @@ const ruleMap: object = {
     n: '表格',
     conditionList: [
       {
-        key: '0',
-        value: '有空白'
-      },
-      {
-        key: '1',
-        value: '无空白'
-      },
-      {
         key: '10',
         value: '无条件'
       }
@@ -693,6 +686,20 @@ const ruleMap: object = {
 };
 
 const actionList: any = {
+  'table': [
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
+    {
+      key: 7,
+      value: '加载表格'
+    }
+  ],
   'text': [
     {
       key: 2,

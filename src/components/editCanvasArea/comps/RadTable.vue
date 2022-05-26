@@ -44,7 +44,7 @@
             </span>
             <span v-else>
               <a-input
-                v-if="!isReadonlyStatus"
+                v-if="!isReadonlyStatus && !ele.baseProps.readonly"
                 class="table-cell"
                 :id="'cell' + String(index) + '_' + String(idx)"
                 @keyup.up="toup(index, idx)"
@@ -65,7 +65,7 @@
     </table>
   </div>
   <div
-    v-else-if="!isReadonlyStatus"
+    v-else-if="!isReadonlyStatus && !ele.baseProps.readonly"
     class="picker-flex-text"
     @click="chooseTable"
   >选择表格</div>
@@ -91,7 +91,7 @@
   </a-modal>
 </template>
 <script lang="ts">
-import { defineComponent, inject, computed, Ref, ref, reactive } from 'vue';
+import { defineComponent, inject, computed, Ref, ref } from 'vue';
 
 // 字体转换方法
 const transFamily = (ff) => {
@@ -205,6 +205,9 @@ export default defineComponent({
     });
 
     const chooseTable = () => {
+      if (isReadonlyStatus.value || props.ele.baseProps.readonly) {
+        return;
+      }
       if (
         chooseTableOpen &&
         (chooseTableOpen.value === true || chooseTableOpen.value === false)

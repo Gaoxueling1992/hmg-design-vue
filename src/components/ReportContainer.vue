@@ -24,7 +24,7 @@
         <a-button
           class="edit-canvas-preview"
           shape="circle"
-          @click="visible=true;isReadonlyStatus=false"
+          @click="openPreview"
         >
           <template #icon>
             <i class="iconfont iconpreview_border"></i>
@@ -43,6 +43,7 @@
     wrap-class-name="full-modal"
     :footer="null"
     destroyOnClose
+    @cancel="closePreview"
   >
     <a-button
       class="print-preview"
@@ -430,6 +431,7 @@ export default defineComponent({
     let calSplitField = null;
     const loading: Ref<boolean> = ref(true);
     const pageId: Ref<string> = ref('');
+    let tempLines: any = [];
 
     const {
       addComp,
@@ -468,7 +470,16 @@ export default defineComponent({
           newTpl(1);
           break;
         case 'saveDesinger':
-          saveTpl();
+          if (visible.value) {
+            visible.value = false;
+            pageData.lines = [];
+            setTimeout(() => {
+              pageData.lines = JSON.parse(tempLines);
+              saveTpl();
+            });
+          } else {
+            saveTpl();
+          }
           break;
         case 'resetData':
           if (e.data.splitJson) {
@@ -744,6 +755,20 @@ export default defineComponent({
       { deep: true }
     );
 
+    const openPreview = () => {
+      tempLines = JSON.stringify(pageData.lines);
+      visible.value = true;
+      isReadonlyStatus.value = false;
+      clickCanvas();
+    };
+
+    const closePreview = () => {
+      pageData.lines = [];
+      setTimeout(() => {
+        pageData.lines = JSON.parse(tempLines);
+      });
+    };
+
     return {
       activePosi,
       pageData,
@@ -754,7 +779,8 @@ export default defineComponent({
       clickCanvas,
       checkStatus,
       isReadonlyStatus,
-      isEditor
+      isEditor,
+      openPreview, closePreview
     };
   }
 });
