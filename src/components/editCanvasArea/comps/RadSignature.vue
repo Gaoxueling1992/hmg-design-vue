@@ -44,7 +44,7 @@
           {{ ele.value }}&nbsp;
         </div>
       </template>
-      <template v-if="ele.type !== 'input'">
+      <div v-if="ele.type !== 'input'" :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}">
         <img
           class="img"
           :height="ele.imgHeight"
@@ -56,15 +56,34 @@
             height: ele.imgHeight+ 'px',
             lineHeight: ele.imgHeight+ 'px',
             width: ele.imgWidth + 'px',
-            display: 'block',
             border: '1px solid',
-            float: ele.imagePosi === 'right' ? 'left' : ''
+            float: 'left',
+            marginRight: '5px'
           }"
         />
-      </template>
+        <template v-if="ele.srcs">
+          <img
+            v-for="(src, idx) in ele.srcs"
+            :key="idx"
+            class="img"
+            :height="ele.imgHeight"
+            :width="ele.imgWidth"
+            :src="src"
+            alt="签名"
+            :style="{
+              height: ele.imgHeight+ 'px',
+              lineHeight: ele.imgHeight+ 'px',
+              width: ele.imgWidth + 'px',
+              border: '1px solid',
+              float: 'left',
+              marginRight: '5px'
+            }"
+          />
+        </template>
+      </div>
     </template>
     <template v-else>
-      <template v-if="ele.type !== 'input'">
+      <div v-if="ele.type !== 'input'" :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}">
         <img
           class="img"
           :height="ele.imgHeight"
@@ -76,12 +95,31 @@
             height: ele.imgHeight+ 'px',
             lineHeight: ele.imgHeight+ 'px',
             width: ele.imgWidth + 'px',
-            display: 'block',
             border: '1px solid',
-            float: ele.imagePosi === 'left' ? 'left' : ''
+            float: 'left',
+            marginRight: '5px'
           }"
         />
-      </template>
+        <template v-if="ele.srcs">
+          <img
+            v-for="(src, idx) in ele.srcs"
+            :key="idx"
+            class="img"
+            :height="ele.imgHeight"
+            :width="ele.imgWidth"
+            :src="src"
+            alt="签名"
+            :style="{
+              height: ele.imgHeight+ 'px',
+              lineHeight: ele.imgHeight+ 'px',
+              width: ele.imgWidth + 'px',
+              border: '1px solid',
+              float: 'left',
+              marginRight: '5px'
+            }"
+          />
+        </template>
+      </div>
       <template v-if="ele.type !== 'image'">
         <a-input
           style="flex: 1"

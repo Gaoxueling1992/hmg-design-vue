@@ -94,8 +94,6 @@ const styleSheet: object = {
 const baseProps: object = {
   readonly: false, // 只读
   hideOnPrint: false, // 打印隐藏
-  // rules: [], // 业务规则
-  // script: '' // 控件脚本
 }
 
 // 组件预设属性
@@ -116,7 +114,8 @@ const compBaseConfig = {
     threshold: '',
     domainType: 'domain',
     elType: 'onlytext',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-input': {
     elName: 'RadInput',
@@ -135,7 +134,8 @@ const compBaseConfig = {
     prefix: '',
     suffix: '',
     elType: 'text',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-datetime': {
     elName: 'RadDatetime',
@@ -157,7 +157,8 @@ const compBaseConfig = {
     picker: 'date',
     rangeOpen: false,
     elType: 'date',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-single-select': {
     elName: 'RadSingleSelect',
@@ -178,7 +179,8 @@ const compBaseConfig = {
     layout: 'crosswise',
     options: [],
     elType: 'singles',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-mul-select': {
     elName: 'RadMulSelect',
@@ -200,7 +202,8 @@ const compBaseConfig = {
     options: [],
     defaultType: [],
     elType: 'muls',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-number': {
     elName: 'RadNumber',
@@ -220,7 +223,8 @@ const compBaseConfig = {
     min: 0,
     max: 1000,
     elType: 'number',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-line': {
     elName: 'RadLine',
@@ -239,7 +243,8 @@ const compBaseConfig = {
       paddingBottom: '0'
     },
     elType: 'other',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-image': {
     elName: 'RadImage',
@@ -263,7 +268,8 @@ const compBaseConfig = {
     imgHeight: '100',
     imgWidth: '100',
     elType: 'other',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-table': {
     elName: 'RadTable',
@@ -290,7 +296,8 @@ const compBaseConfig = {
     defaultType: {},
     inputs: {},
     elType: 'table',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-mulitImagepicker': {
     elName: 'RadMulitImagepicker',
@@ -322,7 +329,8 @@ const compBaseConfig = {
     defaultType: [],
     hideSelectBtn: true,
     elType: 'imgp',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-signalcode': {
     elName: 'RadSignalcode',
@@ -346,7 +354,8 @@ const compBaseConfig = {
     codeWidth: 2,
     codeHeight: 50,
     elType: 'other',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-drcode': {
     elName: 'RadDrcode',
@@ -377,7 +386,8 @@ const compBaseConfig = {
     imgWidth: '100',
     img: '',
     elType: 'other',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-editor': {
     elName: 'RadEditor',
@@ -400,7 +410,8 @@ const compBaseConfig = {
     fontStyle: 'normal',
     textDecoration: 'none',
     elType: 'text',
-    rules: {}
+    rules: {},
+    display: true,
   },
   'rad-signature': {
     elName: 'RadSignature',
@@ -419,9 +430,11 @@ const compBaseConfig = {
     imagePosi: 'right',
     imgHeight: '32',
     imgWidth: '50',
-    elType: 'other',
+    elType: 'sig',
     rules: {},
-    src: ''
+    src: '',
+    display: true,
+    srcs: []
   },
   'combination-area': {
     elName: 'CombinationArea',
@@ -435,7 +448,8 @@ const compBaseConfig = {
     align: 'left',
     layout: 'top',
     elType: 'other',
-    rules: {}
+    rules: {},
+    display: true,
   }
 }
 
@@ -443,6 +457,15 @@ const ruleMap: object = {
   'other': {
     n: '其他',
     conditionList: []
+  },
+  'sig': {
+    n: '操作人',
+    conditionList: [
+      {
+        key: '10',
+        value: '无条件'
+      }
+    ]
   },
   'onlytext': {
     n: '纯文本',
@@ -686,6 +709,20 @@ const ruleMap: object = {
 };
 
 const actionList: any = {
+  'sig': [
+    {
+      key: 2,
+      value: '可编辑'
+    },
+    {
+      key: 3,
+      value: '只读'
+    },
+    {
+      key: 6,
+      value: '拼接'
+    }
+  ],
   'table': [
     {
       key: 2,
@@ -783,8 +820,11 @@ const actionList: any = {
   ],
   'imgp': [
     {
-      key: 6,
-      value: '拼接'
+      key: 1,
+      value: '编辑属性'
+    }, {
+      key: -1,
+      value: '隐藏控件'
     }
   ],
   'onlytext': [

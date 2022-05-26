@@ -74,6 +74,7 @@
         >{{value}}</a-select-option>
       </a-select>
       <div class="title marginT10 marginB5">执行条件</div>
+      <!-- 选择条件控件 -->
       <a-input-group
         compact
         class="marginT5"
@@ -107,7 +108,7 @@
             >
               <a-select-option
                 :value="key"
-                v-if="['onlytext', 'text', 'imgp'].indexOf(key) === -1"
+                v-if="['onlytext', 'table', 'other'].indexOf(key) === -1"
               >
                 {{value.n}}
               </a-select-option>
@@ -116,6 +117,30 @@
         </template>
       </a-input-group>
       <template v-if="!(ruleObj.current === 0 && activeCompObj.elName === 'RadText') && !(ruleObj.current === 0 && ruleObj.elType === 'onlytext')">
+        <!-- 操作人 -->
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="
+            ((ruleObj.current === 0 && activeCompObj.elType === 'sig') ||
+            (ruleObj.current === 1 && ruleObj.elType === 'sig'))
+          "
+        >
+          <a-select
+            style="width: 35%"
+            v-model:value="ruleObj.ruleType"
+            @change="changeType"
+          >
+            <a-select-option
+              v-for="item in ruleMap[ruleObj.current===0?activeCompObj.elType:ruleObj.elType].conditionList"
+              :value="item.key"
+              :key="item.key"
+            >
+              {{item.value}}
+            </a-select-option>
+          </a-select>
+        </a-input-group>
+        <!-- 文本 单复选 -->
         <a-input-group
           compact
           class="marginT5"
@@ -144,6 +169,7 @@
           >
           </a-input>
         </a-input-group>
+        <!-- 数值和图片选择器 -->
         <a-input-group
           compact
           class="marginT5"
@@ -186,6 +212,7 @@
             ></a-input-number>
           </template>
         </a-input-group>
+        <!-- 时间 -->
         <a-input-group
           compact
           class="marginT5"
@@ -218,6 +245,7 @@
             v-model:value="ruleObj.value"
           />
         </a-input-group>
+        <!-- 表格 -->
         <a-input-group
           compact
           class="marginT5"
@@ -242,6 +270,7 @@
         </a-input-group>
       </template>
       <div class="title marginT10 marginB5">执行动作</div>
+      <!-- 选择动作 -->
       <a-input-group
         compact
         class="marginT5"
@@ -265,22 +294,24 @@
           </template>
         </a-select>
       </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="ruleObj.id === 0"
-      >
-        前缀
-        <a-input v-model:value="ruleObj.prefix"></a-input>
-      </a-input-group>
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="ruleObj.id === 0"
-      >
-        后缀
-        <a-input v-model:value="ruleObj.suffix"></a-input>
-      </a-input-group>
+      <!-- 0 追加前后缀 -->
+      <template v-if="ruleObj.id === 0">
+        <a-input-group
+          compact
+          class="marginT5"
+        >
+          前缀
+          <a-input v-model:value="ruleObj.prefix"></a-input>
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+        >
+          后缀
+          <a-input v-model:value="ruleObj.suffix"></a-input>
+        </a-input-group>
+      </template>
+      <!-- >4 !==7 拼接值 -->
       <a-input-group
         compact
         class="marginT5"
@@ -289,6 +320,7 @@
         值
         <a-input v-model:value="ruleObj.content"></a-input>
       </a-input-group>
+      <!-- 7 选择表格 -->
       <a-select
         v-model:value="ruleObj.content"
         style="width: 100%"
@@ -304,6 +336,7 @@
           </a-select-option>
         </template>
       </a-select>
+      <!-- 6 拼标签 -->
       <a-input-group
         compact
         class="marginT5"
@@ -314,6 +347,15 @@
       >
         标签
         <a-input v-model:value="ruleObj.label"></a-input>
+      </a-input-group>
+      <!-- 6 拼标签 -->
+      <a-input-group
+        compact
+        class="marginT5"
+        v-if="+ruleObj.id === 6 && activeCompObj.elType === 'sig'"
+      >
+        获取多签名的域值（逗号分隔）
+        <a-input v-model:value="ruleObj.moreIds"></a-input>
       </a-input-group>
       <a-button
         type="primary"
@@ -357,7 +399,8 @@ export default defineComponent({
       id: actionList[activeCompObj.value.elType][0].key,
       name: actionList[activeCompObj.value.elType][0].value,
       content: '',
-      label: ''
+      label: '',
+      moreIds: ''
     };
     const ruleObj: any = ref({
       ...initRule
@@ -383,6 +426,9 @@ export default defineComponent({
           okText: '知道了'
         });
         return;
+      }
+      if (ruleObj.value.ruleType === 10) {
+        ruleObj.value.value = '';
       }
       switch (
         ruleObj.value.current === 0
@@ -501,6 +547,7 @@ export default defineComponent({
         threshold: '',
         prefix: '',
         suffix: '',
+        moreIds: '',
         current: 0,
         elType: activeCompObj.value.elType,
         id: actionList[activeCompObj.value.elType][0].key,
@@ -520,6 +567,7 @@ export default defineComponent({
       ruleObj.value.prefix = '';
       ruleObj.value.suffix = '';
       ruleObj.value.label = '';
+      ruleObj.value.moreIds = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
         ruleObj.value.value =
@@ -551,6 +599,7 @@ export default defineComponent({
         ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp'
           ? 0
           : '';
+      ruleObj.value.moreIds = '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
@@ -572,6 +621,7 @@ export default defineComponent({
       ruleObj.value.content = '';
       ruleObj.value.label = '';
       ruleObj.value.prefix = '';
+      ruleObj.value.moreIds = '';
       ruleObj.value.suffix = '';
     };
 
@@ -588,6 +638,7 @@ export default defineComponent({
       ruleObj.value.label = '';
       ruleObj.value.prefix = '';
       ruleObj.value.suffix = '';
+      ruleObj.value.moreIds = '';
     };
 
     const closeDrawer = () => {

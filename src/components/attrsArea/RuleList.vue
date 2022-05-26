@@ -20,13 +20,14 @@
     </template>
     <template v-else>当 {{+item.current===0?'当前控件':('业务控件 ' + item.threshold)}} 满足规则
       {{ruleMap[item.elType]['conditionList'].filter((it)=>+it.key === +item.ruleType)[0].value}} 
+      <template v-if="+item.ruleType !== 10">
       {{
         ['11', '12'].indexOf(ruleMap[item.elType]['conditionList'].filter((it)=>+it.key === +item.ruleType)[0].key) === -1 ?
         (item.elType === 'date' ? formatDate(item.value) : item.value) :
         (item.elType === 'date' ? formatDate(item.min) : item.min + '-' + item.elType === 'date' ? formatDate(item.max) : item.max)
-      }} 时，
+      }}</template> 时，
     </template>
-    执行动作-{{item.name}}{{item.content ? (',内容：' + item.content) : ''}}{{item.label ? (',标签：' + item.label) : ''}} {{item.prefix ? (',前缀：' + item.prefix) : ''}} {{item.suffix ? (',后缀：' + item.suffix) : ''}}
+    执行动作-{{item.name}}{{item.content ? (',内容：' + item.content) : ''}}{{item.label ? (',标签：' + item.label) : ''}} {{item.prefix ? (',前缀：' + item.prefix) : ''}} {{item.suffix ? (',后缀：' + item.suffix) : ''}} {{item.moreIds ? (',追加签名的域值：' + item.moreIds) : ''}}
   </div>
 </template>
 <script lang="ts">

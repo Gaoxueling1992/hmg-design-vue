@@ -19,11 +19,17 @@
             'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;" :style="{display: isReadonlyStatus ? '' : 'flex'}">
-            <div
+          <div
+            style="position:relative;width:100%;"
+            :style="{display: isReadonlyStatus ? '' : 'flex'}"
+          >
+            <template
               v-for="(ele, index) in line"
               :key="ele.id"
-              :style="{
+            >
+              <div
+                v-if="ele.display !== false"
+                :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
                 'overflow-x': 'hidden',
@@ -46,9 +52,14 @@
                 marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
                 marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
               }"
-            >
-              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
-            </div>
+              >
+                <component
+                  v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                  :is="ele.elName"
+                  :ele="ele"
+                ></component>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -63,11 +74,16 @@
             'overflow': 'hidden'
           }"
         >
-          <div style="position:relative;width:100%;" :style="{display: isReadonlyStatus ? '' : 'flex'}">
-            <div
+          <div
+            style="position:relative;width:100%;"
+            :style="{display: isReadonlyStatus ? '' : 'flex'}"
+          >
+            <template
               v-for="(ele, index) in line"
               :key="ele.id"
-              :style="{
+            >
+              <div
+                :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
                 'overflow-x': 'hidden',
@@ -88,9 +104,15 @@
                 marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
                 marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
               }"
-            >
-              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
-            </div>
+                v-if="ele.display !== false"
+              >
+                <component
+                  v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                  :is="ele.elName"
+                  :ele="ele"
+                ></component>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -107,43 +129,64 @@
         >
           <div
             style="position:relative;width:100%;"
-            :style="{'display': isReadonlyStatus ? '' : 'flex'}">
-            <div
+            :style="{'display': isReadonlyStatus ? '' : 'flex'}"
+          >
+            <template
               v-for="(ele, index) in line"
               :key="ele.id"
-              :style="{
-                'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
-                'max-width': '100%',
-                'overflow-x': 'hidden',
-                'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
-                'position': 'relative',
-                ...ele.styleSheet,
-                fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
-                borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
-                display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
-                width: eleWidth(line, index),
-                'vertical-align': 'middle',
-                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
-                'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
-                float: 'left',
-                marginTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px') : '2px',
-                marginBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px') : '2px',
-                marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
-                marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
-              }"
             >
-              <component v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus" :is="ele.elName" :ele="ele"></component>
-            </div>
+              <div
+                :style="{
+                  'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
+                  'max-width': '100%',
+                  'overflow-x': 'hidden',
+                  'overflow-y': ele.elName === 'rad-editor' ? 'auto' : 'hidden',
+                  'position': 'relative',
+                  ...ele.styleSheet,
+                  fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
+                  borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+                  display: ele.inline ? (isReadonlyStatus ? 'table-cell' : 'flex') : (isReadonlyStatus ? 'table-cell' : 'inline-block'),
+                  width: eleWidth(line, index),
+                  'vertical-align': 'middle',
+                  'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
+                  'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
+                  'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
+                  float: 'left',
+                  marginTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px') : '2px',
+                  marginBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px') : '2px',
+                  marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
+                  marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
+                }"
+                v-if="ele.display !== false"
+              >
+                <component
+                  v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
+                  :is="ele.elName"
+                  :ele="ele"
+                ></component>
+              </div>
+            </template>
           </div>
         </div>
       </div>
     </template>
-    <a-spin v-else size="large" style="width: 100%" />
+    <a-spin
+      v-else
+      size="large"
+      style="width: 100%"
+    />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, toRefs, Ref, computed, ref, provide } from 'vue';
+import {
+  defineComponent,
+  inject,
+  toRefs,
+  Ref,
+  computed,
+  ref,
+  provide
+} from 'vue';
 import RadText from './comps/RadText.vue';
 import RadImage from './comps/RadImage.vue';
 import RadLine from './comps/RadLine.vue';
@@ -179,11 +222,18 @@ export default defineComponent({
     CombinationArea: CombinationArea
   },
   setup() {
-    const pageData: any = inject('pageData') || { line: [], styleSheet: {}};
-    const { lines, styleSheet, pageHeaderId, pageFooterId, headerLine, footerLine } = toRefs(pageData);
+    const pageData: any = inject('pageData') || { line: [], styleSheet: {} };
+    const {
+      lines,
+      styleSheet,
+      pageHeaderId,
+      pageFooterId,
+      headerLine,
+      footerLine
+    } = toRefs(pageData);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const loading: Ref<boolean> = inject('loading');
-    const focusedEle: Ref<string> = ref<string>('')
+    const focusedEle: Ref<string> = ref<string>('');
 
     const eleWidth = computed(() => {
       return (line, idx) => {
@@ -195,12 +245,12 @@ export default defineComponent({
           for (let i = 0; i < line.length; i++) {
             if (line[i].styleSheet.width !== '100%') {
               totalWidth += parseInt(line[i].styleSheet.width);
-              count ++;
+              count++;
             }
           }
-          return Math.floor((100 - totalWidth) / (line.length - count)) + '%'
+          return Math.floor((100 - totalWidth) / (line.length - count)) + '%';
         }
-      }
+      };
     });
 
     for (let i = 0; i < lines.value.length; i++) {
@@ -236,8 +286,8 @@ export default defineComponent({
     });
 
     const footerLines = computed(() => {
-      if (footerLine.value < 9999 ) {
-        return lines.value.slice(footerLine.value, lines.value.length)
+      if (footerLine.value < 9999) {
+        return lines.value.slice(footerLine.value, lines.value.length);
       } else {
         return [];
       }
@@ -263,8 +313,11 @@ export default defineComponent({
       styleSheet,
       isReadonlyStatus,
       eleWidth,
-      headerLine, footerLine,
-      headerLines, footerLines, bodyLines,
+      headerLine,
+      footerLine,
+      headerLines,
+      footerLines,
+      bodyLines,
       loading,
       focusedEle
     };
@@ -281,7 +334,9 @@ export default defineComponent({
   .ql-container {
     height: auto;
   }
-  .ant-input, .ant-input-number-input, .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  .ant-input,
+  .ant-input-number-input,
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     padding-left: 0 !important;
   }
   .display-text {
