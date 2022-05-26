@@ -107,7 +107,7 @@
             >
               <a-select-option
                 :value="key"
-                v-if="key !== 'other' && key !== 'onlytext'"
+                v-if="['onlytext', 'text', 'imgp'].indexOf(key) === -1"
               >
                 {{value.n}}
               </a-select-option>
@@ -382,16 +382,6 @@ export default defineComponent({
             return;
           }
           break;
-        case 'imgp':
-          if (+ruleObj.value.ruleType > 1 && !ruleObj.value.value) {
-            Modal.warning({
-              title: '提示',
-              content: '请输入完整执行条件',
-              okText: '知道了'
-            });
-            return;
-          }
-          break;
         case 'muls':
           if (+ruleObj.value.ruleType <= 1 && !ruleObj.value.value) {
             Modal.warning({
@@ -482,7 +472,7 @@ export default defineComponent({
       ruleObj.value = {
         opportunity: 'init',
         ruleType: '10',
-        value: activeCompObj.value.elType === 'number' ? 0 : '',
+        value: activeCompObj.value.elType === 'number' || activeCompObj.value.elType === 'imgp' ? 0 : '',
         min: 0,
         max: 9999,
         threshold: '',
@@ -509,13 +499,13 @@ export default defineComponent({
       ruleObj.value.label = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
-        ruleObj.value.value = activeCompObj.value.elType === 'number' ? 0 : '';
+        ruleObj.value.value = activeCompObj.value.elType === 'number' ||  activeCompObj.value.elType === 'imgp' ? 0 : '';
         ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[activeCompObj.value.elType][0].key;
         ruleObj.value.name = actionList[activeCompObj.value.elType][0].value;
       } else {
         ruleObj.value.elType = ruleObj.value.elType === 'onlytext' ? 'text' : ruleObj.value.elType;
-        ruleObj.value.value = ruleObj.value.elType === 'number' ? 0 : '';
+        ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
         ruleObj.value.ruleType = '10';
         ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
         ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
@@ -526,7 +516,7 @@ export default defineComponent({
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
       ruleObj.value.ruleType = '10';
-      ruleObj.value.value = ruleObj.value.elType === 'number' ? 0 : '';
+      ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
@@ -552,7 +542,7 @@ export default defineComponent({
     const changeType = () => {
       ruleObj.value.id = actionList[ruleObj.value.elType][0].key;
       ruleObj.value.name = actionList[ruleObj.value.elType][0].value;
-      ruleObj.value.value = ruleObj.value.elType === 'number' ? 0 : '';
+      ruleObj.value.value = ruleObj.value.elType === 'number' || ruleObj.value.elType === 'imgp' ? 0 : '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';

@@ -469,6 +469,7 @@ export default defineComponent({
     top: 2px;
     right: 10px;
     font-size: 13px;
+    font-weight: initial;
     .delete-item {
       margin-left: 5px;
       display: inline-block;

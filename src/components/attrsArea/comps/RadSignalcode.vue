@@ -1,9 +1,10 @@
 <template>
-  <div class="title marginT10 marginB5 fontW500">源</div>
+  <div class="title marginT10 marginB5 fontW500">源(不超过30位)</div>
   <div class="flex marginT10">
     <a-input
       class="flex1 marginR5"
       v-model:value="activeCompObj.src"
+      :maxlength="30"
     />
   </div>
   <div class="flex marginT10">

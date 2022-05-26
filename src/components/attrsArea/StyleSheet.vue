@@ -12,8 +12,8 @@
       v-model:value="activeCompObj.styleSheet[key]"
       :options="sheet2Form[key].options"
       :num="0"
-      :min="key === 'fontWeight' ? 300 : -Infinity"
-      :max="key === 'fontWeight' ? 800 : Infinity"
+      :min="key === 'fontWeight' ? 300 : key === 'fontSize' ? 12 : -Infinity"
+      :max="key === 'fontWeight' ? 800 : (key === 'fontSize' && activeCompObj.elName === 'RadLine' ? 20 : Infinity)"
     ></component>
   </div>
 </template>

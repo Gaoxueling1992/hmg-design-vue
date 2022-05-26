@@ -1,31 +1,43 @@
 <template>
-  <a-divider
-    v-if="ele.elName === 'RadLine'"
-    class="inherit"
+  <div
     :style="{
-      marginTop: ele.styleSheet.paddingTop + 'px',
-      marginBottom: ele.styleSheet.paddingBottom + 'px',
-      marginLeft: ele.styleSheet.paddingLeft + 'px',
-      marginRight: ele.styleSheet.paddingRight + 'px',
-      'color': '#21263C',
-      'font-size': '14px',
+      height: ele.styleSheet.fontSize / 2 + 'px',
+      'border-top': '1px solid ' + ele.styleSheet.color,
+      'text-align': 'center',
+      'color': ele.styleSheet.color,
+      'font-size': ele.styleSheet.fontSize + 'px',
       'font-variant': 'tabular-nums',
-      'line-height': 1.5715,
+      'line-height': 1,
       'list-style': 'none',
       'font-feature-settings': 'tnum',
-      'border-top': '2px solid #21263C'
     }"
-  >{{ele.label}}</a-divider>
+  >
+    <span :style="{
+      position: 'relative',
+      top: -ele.styleSheet.fontSize/2 + 'px',
+      background: isReadonlyStatus ? '#fff' : bg,
+      padding: ele.label ? '0 5px' : '0',
+      'max-width': '80%',
+      'white-space': 'nowrap',
+      'overflow': 'hidden',
+      'text-overflow': 'ellipsis'
+    }">{{ele.label}}</span>
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, Ref, inject } from 'vue';
 
 export default defineComponent({
   props: ['ele'],
-  setup () {
-    
-  },
-})
+  setup() {
+    const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
+    const bg = window.themeVariables['--background-color-main'];
+    return {
+      isReadonlyStatus,
+      bg
+    };
+  }
+});
 </script>
 <style lang="scss" scoped>
 .inherit {

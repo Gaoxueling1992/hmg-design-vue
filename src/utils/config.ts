@@ -234,7 +234,6 @@ const compBaseConfig = {
       fontWeight: '400',
       fontSize: '18',
       color: '#333333',
-      borderColor: '#333',
       width: '100%',
       paddingTop: '0',
       paddingBottom: '0'
@@ -321,7 +320,7 @@ const compBaseConfig = {
     imgList: [],
     defaultType: [],
     hideSelectBtn: true,
-    elType: 'other',
+    elType: 'imgp',
     rules: {}
   },
   'rad-signalcode': {
@@ -497,6 +496,38 @@ const ruleMap: object = {
   'imgp': {
     n: '图片选择器',
     conditionList: [
+      {
+        key: '11',
+        value: '数量在范围内'
+      },
+      {
+        key: '12',
+        value: '数量不在范围内'
+      },
+      {
+        key: '3',
+        value: '数量不等于'
+      },
+      {
+        key: '13',
+        value: '数量大于'
+      },
+      {
+        key: '14',
+        value: '数量大于等于'
+      },
+      {
+        key: '15',
+        value: '数量小于'
+      },
+      {
+        key: '16',
+        value: '数量小于等于'
+      },
+      {
+        key: '2',
+        value: '数量等于'
+      },
       {
         key: '10',
         value: '无条件'
