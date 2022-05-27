@@ -434,7 +434,8 @@ const compBaseConfig = {
     rules: {},
     src: '',
     display: true,
-    srcs: []
+    srcs: [],
+    splitWords: ''
   },
   'combination-area': {
     elName: 'CombinationArea',
@@ -711,44 +712,51 @@ const ruleMap: object = {
 const actionList: any = {
   'sig': [
     {
+      key: 6,
+      value: '拼接'
+    },
+    {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
-    },
-    {
-      key: 6,
-      value: '拼接'
+      value: '只读',
+      disableOp: ['submit']
     }
   ],
   'table': [
     {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
+      value: '只读',
+      disableOp: ['submit']
     },
     {
       key: 7,
-      value: '加载表格'
+      value: '加载表格',
+      disableOp: ['submit']
     }
   ],
   'text': [
     {
+      key: 6,
+      value: '拼接'
+    },
+    {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
-    },
-    {
-      key: 6,
-      value: '拼接'
+      value: '只读',
+      disableOp: ['submit']
     },
     {
       key: 8,
@@ -758,17 +766,18 @@ const actionList: any = {
   ],
   'date': [
     {
+      key: 6,
+      value: '拼接'
+    },
+    {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
-    },
-    {
-      key: 6,
-      value: '拼接',
-      disableOp: ['init']
+      value: '只读',
+      disableOp: ['submit']
     },
     {
       key: 8,
@@ -787,26 +796,29 @@ const actionList: any = {
     },
     {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
+      value: '只读',
+      disableOp: ['submit']
     }
   ],
   'number': [
     {
+      key: 6,
+      value: '拼接'
+    },
+    {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
-    },
-    {
-      key: 6,
-      value: '拼接',
-      disableOp: ['init']
+      value: '只读',
+      disableOp: ['submit']
     },
     {
       key: 8,
@@ -820,11 +832,13 @@ const actionList: any = {
   ],
   'imgp': [
     {
-      key: 1,
-      value: '编辑属性'
-    }, {
       key: -1,
       value: '隐藏控件'
+    },
+    {
+      key: 1,
+      value: '属性',
+      disableOp: ['init']
     }
   ],
   'onlytext': [
@@ -840,11 +854,13 @@ const actionList: any = {
     },
     {
       key: 2,
-      value: '可编辑'
+      value: '可编辑',
+      disableOp: ['submit']
     },
     {
       key: 3,
-      value: '只读'
+      value: '只读',
+      disableOp: ['submit']
     },
   ],
   'other': []

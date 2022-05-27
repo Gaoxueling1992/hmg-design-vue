@@ -44,7 +44,10 @@
           {{ ele.value }}&nbsp;
         </div>
       </template>
-      <div v-if="ele.type !== 'input'" :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}">
+      <div
+        v-if="ele.type !== 'input'"
+        :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}"
+      >
         <img
           class="img"
           :height="ele.imgHeight"
@@ -57,33 +60,39 @@
             lineHeight: ele.imgHeight+ 'px',
             width: ele.imgWidth + 'px',
             border: '1px solid',
-            float: 'left',
-            marginRight: '5px'
+            float: 'left'
           }"
         />
         <template v-if="ele.srcs">
-          <img
+          <span v-if="ele.src" style="float: left">{{ele.splitWords}}</span>
+          <template
             v-for="(src, idx) in ele.srcs"
             :key="idx"
-            class="img"
-            :height="ele.imgHeight"
-            :width="ele.imgWidth"
-            :src="src"
-            alt="签名"
-            :style="{
+          >
+            <img
+              class="img"
+              :height="ele.imgHeight"
+              :width="ele.imgWidth"
+              :src="src"
+              alt="签名"
+              :style="{
               height: ele.imgHeight+ 'px',
               lineHeight: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px',
               border: '1px solid',
               float: 'left',
-              marginRight: '5px'
             }"
-          />
+            />
+            <span v-if="idx < ele.srcs.length - 1" style="float: left">{{ele.splitWords}}</span>
+          </template>
         </template>
       </div>
     </template>
     <template v-else>
-      <div v-if="ele.type !== 'input'" :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}">
+      <div
+        v-if="ele.type !== 'input'"
+        :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}"
+      >
         <img
           class="img"
           :height="ele.imgHeight"
@@ -96,28 +105,31 @@
             lineHeight: ele.imgHeight+ 'px',
             width: ele.imgWidth + 'px',
             border: '1px solid',
-            float: 'left',
-            marginRight: '5px'
+            float: 'left'
           }"
         />
         <template v-if="ele.srcs">
-          <img
+          <span v-if="ele.src" style="float: left">{{ele.splitWords}}</span>
+          <template
             v-for="(src, idx) in ele.srcs"
             :key="idx"
-            class="img"
-            :height="ele.imgHeight"
-            :width="ele.imgWidth"
-            :src="src"
-            alt="签名"
-            :style="{
+          >
+            <img
+              class="img"
+              :height="ele.imgHeight"
+              :width="ele.imgWidth"
+              :src="src"
+              alt="签名"
+              :style="{
               height: ele.imgHeight+ 'px',
               lineHeight: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px',
               border: '1px solid',
-              float: 'left',
-              marginRight: '5px'
+              float: 'left'
             }"
-          />
+            />
+            <span v-if="idx < ele.srcs.length - 1" style="float: left">{{ele.splitWords}}</span>
+          </template>
         </template>
       </div>
       <template v-if="ele.type !== 'image'">

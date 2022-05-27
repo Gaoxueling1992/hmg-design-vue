@@ -14,7 +14,7 @@
     v-if="activeCompObj.domainType === 'domain'"
     v-model:value="activeCompObj.threshold"
     :options="domainList"
-    :allowClear="activeCompObj.threshold"
+    :allowClear="!!activeCompObj.threshold"
     style="width: 100%"
     class="marginT5"
   ></a-select>
@@ -66,6 +66,7 @@
       <a-select
         v-model:value="ruleObj.opportunity"
         :disabled="editingIdx !== -1"
+        @change="changeOpp"
       >
         <a-select-option
           v-for="(value, key) in opportunityMap"
@@ -349,14 +350,23 @@
         <a-input v-model:value="ruleObj.label"></a-input>
       </a-input-group>
       <!-- 6 拼标签 -->
-      <a-input-group
-        compact
-        class="marginT5"
-        v-if="+ruleObj.id === 6 && activeCompObj.elType === 'sig'"
-      >
-        获取多签名的域值（逗号分隔）
-        <a-input v-model:value="ruleObj.moreIds"></a-input>
-      </a-input-group>
+      <template v-if="+ruleObj.id === 6 && activeCompObj.elType === 'sig'">
+        <a-input-group
+          compact
+          class="marginT5"
+        >
+          获取多签名的域值（逗号分隔）
+          <a-input v-model:value="ruleObj.moreIds" @change="changeMoreIds"></a-input>
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+          v-if="ruleObj.moreIds && ruleObj.moreIds.split(',')[1]"
+        >
+          手写体签名分隔符
+          <a-input v-model:value="ruleObj.splitWords"></a-input>
+        </a-input-group>
+      </template>
       <a-button
         type="primary"
         class="marginT20"
@@ -400,7 +410,8 @@ export default defineComponent({
       name: actionList[activeCompObj.value.elType][0].value,
       content: '',
       label: '',
-      moreIds: ''
+      moreIds: '',
+      splitWords: ''
     };
     const ruleObj: any = ref({
       ...initRule
@@ -482,7 +493,11 @@ export default defineComponent({
           }
           break;
       }
-      if (+ruleObj.value.id > 4 && !ruleObj.value.content) {
+      if (
+        +ruleObj.value.id > 4 &&
+        !ruleObj.value.content &&
+        activeCompObj.value.elType !== 'sig'
+      ) {
         let value;
         if (ruleObj.value.current === 0) {
           value =
@@ -531,6 +546,30 @@ export default defineComponent({
       editingIdx.value = idx;
       editingOp.value = opportunity;
     };
+    const changeOpp = () => {
+      ruleObj.value = {
+        opportunity: ruleObj.value.opportunity,
+        ruleType: '10',
+        value:
+          activeCompObj.value.elType === 'number' ||
+          activeCompObj.value.elType === 'imgp'
+            ? 0
+            : '',
+        min: 0,
+        max: 9999,
+        threshold: '',
+        prefix: '',
+        suffix: '',
+        moreIds: '',
+        splitWords: '',
+        current: 0,
+        elType: activeCompObj.value.elType,
+        id: actionList[activeCompObj.value.elType][0].key,
+        name: actionList[activeCompObj.value.elType][0].value,
+        content: '',
+        label: ''
+      };
+    };
 
     const addRule = () => {
       editingRule.value = true;
@@ -548,6 +587,7 @@ export default defineComponent({
         prefix: '',
         suffix: '',
         moreIds: '',
+        splitWords: '',
         current: 0,
         elType: activeCompObj.value.elType,
         id: actionList[activeCompObj.value.elType][0].key,
@@ -568,6 +608,7 @@ export default defineComponent({
       ruleObj.value.suffix = '';
       ruleObj.value.label = '';
       ruleObj.value.moreIds = '';
+      ruleObj.value.splitWords = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
         ruleObj.value.value =
@@ -600,6 +641,7 @@ export default defineComponent({
           ? 0
           : '';
       ruleObj.value.moreIds = '';
+      ruleObj.value.splitWords = '';
       ruleObj.value.min = 0;
       ruleObj.value.max = 9999;
       ruleObj.value.content = '';
@@ -622,6 +664,7 @@ export default defineComponent({
       ruleObj.value.label = '';
       ruleObj.value.prefix = '';
       ruleObj.value.moreIds = '';
+      ruleObj.value.splitWords = '';
       ruleObj.value.suffix = '';
     };
 
@@ -639,6 +682,7 @@ export default defineComponent({
       ruleObj.value.prefix = '';
       ruleObj.value.suffix = '';
       ruleObj.value.moreIds = '';
+      ruleObj.value.splitWords = '';
     };
 
     const closeDrawer = () => {
@@ -646,6 +690,11 @@ export default defineComponent({
       ruleObj.value = {
         ...initRule
       };
+    };
+    const changeMoreIds = () => {
+      if (!ruleObj.value.moreIds || ruleObj.value.moreIds.indexOf(',') === -1) {
+        ruleObj.value.splitWords = '';
+      }
     };
 
     return {
@@ -669,7 +718,9 @@ export default defineComponent({
       changeElType,
       changeId,
       changeType,
-      tableList
+      tableList,
+      changeOpp,
+      changeMoreIds
     };
   }
 });
