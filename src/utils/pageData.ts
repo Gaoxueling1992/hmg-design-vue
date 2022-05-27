@@ -10,7 +10,7 @@ const pageConfig: Object = {
   styleSheet: {
     minHeight: '297mm',
     width: '210mm',
-    padding: '10px'
+    padding: '5mm'
   },
   pageHeaderId: '',
   pageFooterId: '',

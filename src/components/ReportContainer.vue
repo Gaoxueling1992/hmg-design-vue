@@ -622,7 +622,7 @@ export default defineComponent({
               `<div style="padding:0 ${pageData.styleSheet.padding};">` +
               (pageData.pageFooterId ? footercanvas : '') +
               '</div>' +
-              footStr; // pageData.pageFooterId ? (openFixedAreaStr + `<div style="padding:0 ${pageData.styleSheet.padding};">` + footercanvas + '</div>' + footStr) : '';
+              footStr;
             pageData.footerHeight = pageData.pageFooterId
               ? document.getElementById('edit-canvas-footer').clientHeight /
                 getOneMmsPx()

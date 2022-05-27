@@ -49,6 +49,16 @@
       />mm
     </div>
     <div class="container-item padding10">
+      边距：
+      <a-input-number
+        v-model:value="padding"
+        :keyboard="true"
+        :min="0"
+        :max="Math.min(parseFloat(width), parseFloat(minHeight)) / 2"
+        @change="handlePageSize('padding', padding)"
+      />mm
+    </div>
+    <div class="container-item padding10">
       <div class="title marginB5 fontW500">分页</div>
        <a-radio-group v-model:value="pageNumType" name="pageNumType" @change="handlePageChange('pageNumType', pageNumType)">
         <a-radio :value="0">不展示</a-radio>
@@ -79,6 +89,7 @@ const pageDataEffet = () => {
   const { name, pageType, pageNumType, styleSheet, pageNumPosi } = toRefs(pageData);
   const width: Ref<string> = ref<string>(styleSheet.value.width);
   const minHeight: Ref<string> = ref<string>(styleSheet.value.minHeight);
+  const padding: Ref<string> = ref<string>(styleSheet.value.padding);
   const changePageConfig: any = inject('changePageConfig');
   const changePageSize: any = inject('changePageSize');
 
@@ -91,13 +102,12 @@ const pageDataEffet = () => {
   };
 
   watch(pageType, (val, oldVal) => {
-    console.log('pagetpe', val, oldVal);
     if (val !== oldVal) {
       width.value = styleSheet.value.width;
       minHeight.value = styleSheet.value.minHeight;
     }
   });
-  return { name, pageType, width, minHeight, pageNumType, pageNumPosi, handlePageChange, handlePageSize };
+  return { name, pageType, width, minHeight, pageNumType, pageNumPosi, handlePageChange, handlePageSize, padding };
 };
 
 export default defineComponent({
@@ -110,7 +120,8 @@ export default defineComponent({
       pageNumType,
       pageNumPosi,
       handlePageChange,
-      handlePageSize
+      handlePageSize,
+      padding
     } = pageDataEffet();
 
     return {
@@ -122,7 +133,8 @@ export default defineComponent({
       pageNumType,
       tplTypeList,
       handlePageChange,
-      handlePageSize
+      handlePageSize,
+      padding
     };
   }
 });
