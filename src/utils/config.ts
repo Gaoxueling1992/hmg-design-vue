@@ -724,6 +724,21 @@ const actionList: any = {
       key: 3,
       value: '只读',
       disableOp: ['submit']
+    },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
     }
   ],
   'table': [
@@ -741,6 +756,21 @@ const actionList: any = {
       key: 7,
       value: '加载表格',
       disableOp: ['submit']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
     }
   ],
   'text': [
@@ -780,8 +810,8 @@ const actionList: any = {
   ],
   'date': [
     {
-      key: 6,
-      value: '拼接'
+      key: 0,
+      value: '追加前后缀'
     },
     {
       key: 2,
@@ -799,9 +829,20 @@ const actionList: any = {
       disableOp: ['init']
     },
     {
-      key: 0,
-      value: '追加前后缀'
-    }
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
   ],
   'muls': [
     {
@@ -817,12 +858,31 @@ const actionList: any = {
       key: 3,
       value: '只读',
       disableOp: ['submit']
+    },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
+    {
+      key: 0,
+      value: '追加前后缀'
     }
   ],
   'number': [
     {
-      key: 6,
-      value: '拼接'
+      key: 0,
+      value: '追加前后缀'
     },
     {
       key: 2,
@@ -840,9 +900,15 @@ const actionList: any = {
       disableOp: ['init']
     },
     {
-      key: 0,
-      value: '追加前后缀'
-    }
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
   ],
   'imgp': [
     {
@@ -852,6 +918,21 @@ const actionList: any = {
     {
       key: 1,
       value: '属性',
+      disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
+    {
+      key: 8,
+      value: '提示',
       disableOp: ['init']
     }
   ],
@@ -886,6 +967,21 @@ const actionList: any = {
       value: '只读',
       disableOp: ['submit']
     },
+    {
+      key: 8,
+      value: '提示',
+      disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    }
   ],
   'other': []
 };
