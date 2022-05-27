@@ -762,6 +762,20 @@ const actionList: any = {
       key: 8,
       value: '提示',
       disableOp: ['init']
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
+    },
+    {
+      key: 0,
+      value: '追加前后缀'
     }
   ],
   'date': [
@@ -845,6 +859,16 @@ const actionList: any = {
     {
       key: 6,
       value: '拼接'
+    },
+    {
+      key: -1,
+      value: '隐藏控件',
+      disableOp: ['submit']
+    },
+    {
+      key: -2,
+      value: '打印隐藏',
+      disableOp: ['init']
     }
   ],
   'singles': [
@@ -869,7 +893,7 @@ const actionList: any = {
 const opportunityMap: any = {
   'init': '初始化',
   // 'change': '值变化时',
-  'submit': '提交'
+  'submit': '提交前'
 };
 
 const pickerMap: object = {

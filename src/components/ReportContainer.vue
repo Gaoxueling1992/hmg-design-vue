@@ -69,9 +69,7 @@ import {
   Ref,
   watch,
   toRefs,
-  nextTick,
-  onBeforeUnmount,
-  onUnmounted
+  nextTick
 } from 'vue';
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
@@ -84,7 +82,7 @@ import {
   pageStr2,
   pageStrStyle
 } from '@/utils/tpl-config';
-import { getOneMmsPx } from '@/utils/util';
+import { getOneMmsPx, dealWithRules } from '@/utils/util';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -536,6 +534,13 @@ export default defineComponent({
           currentDec.value = e.data.currentDec;
           break;
         case 'saveEditor':
+          const checkInfo = JSON.parse(e.data.checkData);
+          // 处理提交前控件脚本
+          let res = dealWithRules(pageData.lines, checkInfo);
+          if (!res.result) {
+            isReadonlyStatus.value = false;
+            return;
+          }
           isReadonlyStatus.value = true;
           nextTick(async () => {
             let headercanvas =

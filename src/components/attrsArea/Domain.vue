@@ -312,13 +312,32 @@
           <a-input v-model:value="ruleObj.suffix"></a-input>
         </a-input-group>
       </template>
+      <!-- 提示类型 是否中断提交 -->
+      <template v-if="ruleObj.id === 8">
+        <a-input-group
+          compact
+          class="marginT5"
+          style="width: 100%"
+        >
+          <a-select
+            ref="select"
+            v-model:value="ruleObj.tipType"
+            style="width: 50%"
+          >
+            <a-select-option value="info">信息</a-select-option>
+            <a-select-option value="error">错误</a-select-option>
+            <a-select-option value="warning">警告</a-select-option>
+            <a-select-option value="confirm">确认</a-select-option>
+          </a-select>
+        </a-input-group>
+      </template>
       <!-- >4 !==7 拼接值 -->
       <a-input-group
         compact
         class="marginT5"
         v-if="ruleObj.id>4 && ruleObj.id !== 7"
       >
-        值
+        {{ruleObj.id === 8 ? '提示文案' : '值'}}
         <a-input v-model:value="ruleObj.content"></a-input>
       </a-input-group>
       <!-- 7 选择表格 -->
@@ -411,7 +430,8 @@ export default defineComponent({
       content: '',
       label: '',
       moreIds: '',
-      splitWords: ''
+      splitWords: '',
+      tipType: 'info'
     };
     const ruleObj: any = ref({
       ...initRule
@@ -567,7 +587,8 @@ export default defineComponent({
         id: actionList[activeCompObj.value.elType][0].key,
         name: actionList[activeCompObj.value.elType][0].value,
         content: '',
-        label: ''
+        label: '',
+        tipType: 'info'
       };
     };
 
@@ -593,7 +614,8 @@ export default defineComponent({
         id: actionList[activeCompObj.value.elType][0].key,
         name: actionList[activeCompObj.value.elType][0].value,
         content: '',
-        label: ''
+        label: '',
+        tipType: 'info'
       };
       editingIdx.value = -1;
       editingOp.value = '';
@@ -648,6 +670,7 @@ export default defineComponent({
       ruleObj.value.label = '';
       ruleObj.value.prefix = '';
       ruleObj.value.suffix = '';
+      ruleObj.value.tipType = 'info';
     };
 
     const changeId = () => {
@@ -666,6 +689,7 @@ export default defineComponent({
       ruleObj.value.moreIds = '';
       ruleObj.value.splitWords = '';
       ruleObj.value.suffix = '';
+      ruleObj.value.tipType = 'info';
     };
 
     const changeType = () => {
@@ -683,6 +707,7 @@ export default defineComponent({
       ruleObj.value.suffix = '';
       ruleObj.value.moreIds = '';
       ruleObj.value.splitWords = '';
+      ruleObj.value.tipType = 'info';
     };
 
     const closeDrawer = () => {
