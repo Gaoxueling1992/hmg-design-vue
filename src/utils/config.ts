@@ -873,10 +873,6 @@ const actionList: any = {
       key: -2,
       value: '打印隐藏',
       disableOp: ['init']
-    },
-    {
-      key: 0,
-      value: '追加前后缀'
     }
   ],
   'number': [
@@ -913,18 +909,14 @@ const actionList: any = {
   'imgp': [
     {
       key: -1,
-      value: '隐藏控件'
-    },
-    {
-      key: 1,
-      value: '属性',
-      disableOp: ['init']
-    },
-    {
-      key: -1,
       value: '隐藏控件',
       disableOp: ['submit']
     },
+    // {
+    //   key: 1,
+    //   value: '属性',
+    //   disableOp: ['init']
+    // },
     {
       key: -2,
       value: '打印隐藏',
