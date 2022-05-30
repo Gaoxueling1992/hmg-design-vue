@@ -49,7 +49,7 @@ const dealWithRules = async (lines: any, checkInfo: any) => {
               break;
             case 8: // 提示  
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
-                let res = await new Promise((resolve, reject) => {
+                await new Promise((resolve, reject) => {
                   Modal[tipType]({
                     content,
                     okText: '确定',
@@ -65,7 +65,8 @@ const dealWithRules = async (lines: any, checkInfo: any) => {
                   });
                 });
 
-                if (res !== 'continue') {
+
+                if (tipType !== 'submit') {
                   return {
                     result: false
                   };

@@ -38,6 +38,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   background-color: var(--background-color-base);
+  width: 100%;
+  margin: 0 auto;
   // overflow: auto;
 }
 </style>

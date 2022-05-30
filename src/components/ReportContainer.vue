@@ -83,6 +83,7 @@ import {
   pageStrStyle
 } from '@/utils/tpl-config';
 import { getOneMmsPx, dealWithRules } from '@/utils/util';
+import { AnyARecord } from 'dns';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -536,116 +537,125 @@ export default defineComponent({
         case 'saveEditor':
           const checkInfo = JSON.parse(e.data.checkData);
           // 处理提交前控件脚本
-          let res = dealWithRules(pageData.lines, checkInfo);
-          if (!res.result) {
-            isReadonlyStatus.value = false;
-            return;
-          }
-          isReadonlyStatus.value = true;
-          nextTick(async () => {
-            let headercanvas =
-              document.getElementById('edit-canvas-header').innerHTML;
-            let footercanvas =
-              document.getElementById('edit-canvas-footer').innerHTML;
-            pageData.html = '';
-            if (splitField.value) {
-              let lastDec = currentDec.value;
-              let lastReport = currentReport.value;
-              // 拆分报告 生成多份报告
-              for (let i = 0; i < calSplitField.length; i++) {
-                currentDec.value = calSplitField[i].label;
-                currentReport.value = calSplitField[i].id;
-                let bodycanvas = await getDomHtml();
+          dealWithRules(pageData.lines, checkInfo).then((res) => {
+            if (!res.result) {
+              isReadonlyStatus.value = false;
+              return;
+            }
+            isReadonlyStatus.value = true;
+            nextTick(async () => {
+              let headercanvas =
+                document.getElementById('edit-canvas-header').innerHTML;
+              let footercanvas =
+                document.getElementById('edit-canvas-footer').innerHTML;
+              pageData.html = '';
+              if (splitField.value) {
+                let lastDec = currentDec.value;
+                let lastReport = currentReport.value;
+                // 拆分报告 生成多份报告
+                for (let i = 0; i < calSplitField.length; i++) {
+                  currentDec.value = calSplitField[i].label;
+                  currentReport.value = calSplitField[i].id;
+                  let bodycanvas = await getDomHtml();
+                  pageData.html +=
+                    headStr +
+                    `<div style="padding:${
+                      pageData.pageHeaderId ? '5px' : '10px'
+                    } ${pageData.styleSheet.padding} ${
+                      pageData.pageFooterId ? 0 : '10px'
+                    } ${pageData.styleSheet.padding};${
+                      i > 0 ? 'page-break-before: always;' : ''
+                    }">` +
+                    bodycanvas +
+                    '</div>' +
+                    footStr;
+                }
+                currentDec.value = lastDec;
+                currentReport.value = lastReport;
+              } else {
+                let bodycanvas =
+                  document.getElementById('edit-canvas-body').innerHTML;
                 pageData.html +=
                   headStr +
                   `<div style="padding:${
-                    pageData.pageHeaderId ? '5px' : '10px'
+                    pageData.pageHeaderId ||
+                    (pageData.pageNumType && pageData.pageNumPosi <= 1)
+                      ? '5px'
+                      : '10px'
                   } ${pageData.styleSheet.padding} ${
-                    pageData.pageFooterId ? 0 : '10px'
-                  } ${pageData.styleSheet.padding};${
-                    i > 0 ? 'page-break-before: always;' : ''
-                  }">` +
+                    pageData.pageFooterId ||
+                    (pageData.pageNumType && pageData.pageNumPosi > 1)
+                      ? 0
+                      : '10px'
+                  } ${pageData.styleSheet.padding};">` +
                   bodycanvas +
                   '</div>' +
                   footStr;
               }
-              currentDec.value = lastDec;
-              currentReport.value = lastReport;
-            } else {
-              let bodycanvas =
-                document.getElementById('edit-canvas-body').innerHTML;
-              pageData.html +=
-                headStr +
-                `<div style="padding:${
-                  pageData.pageHeaderId ||
-                  (pageData.pageNumType && pageData.pageNumPosi <= 1)
-                    ? '5px'
-                    : '10px'
-                } ${pageData.styleSheet.padding} ${
-                  pageData.pageFooterId ||
-                  (pageData.pageNumType && pageData.pageNumPosi > 1)
-                    ? 0
-                    : '10px'
-                } ${pageData.styleSheet.padding};">` +
-                bodycanvas +
+              const pagePosiMap = {
+                0: 'text-align: right; width: 100%',
+                1: 'text-align: left;',
+                2: 'text-align: center; width: 100%',
+                3: 'text-align: left;',
+                4: 'text-align: right; width: 100%',
+                5: 'text-align: center; width: 100%'
+              };
+              pageData.headerHtml =
+                openFixedAreaStr +
+                (pageData.pageNumType && pageData.pageNumPosi <= 2
+                  ? +pageData.pageNumType === 1
+                    ? pageStrStyle +
+                      pagePosiMap[pageData.pageNumPosi] +
+                      pageStr1
+                    : pageStrStyle +
+                      pagePosiMap[pageData.pageNumPosi] +
+                      pageStr2
+                  : '') +
+                `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+                (pageData.pageHeaderId ? headercanvas : '') +
                 '</div>' +
                 footStr;
-            }
-            const pagePosiMap = {
-              0: 'text-align: right; width: 100%',
-              1: 'text-align: left;',
-              2: 'text-align: center; width: 100%',
-              3: 'text-align: left;',
-              4: 'text-align: right; width: 100%',
-              5: 'text-align: center; width: 100%'
-            };
-            pageData.headerHtml =
-              openFixedAreaStr +
-              (pageData.pageNumType && pageData.pageNumPosi <= 2
-                ? +pageData.pageNumType === 1
-                  ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-                  : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-                : '') +
-              `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-              (pageData.pageHeaderId ? headercanvas : '') +
-              '</div>' +
-              footStr;
-            pageData.headerHeight = pageData.pageHeaderId
-              ? (document.getElementById('edit-canvas-header').clientHeight -
-                  (pageData.headerLine + 1) * 2) /
-                getOneMmsPx()
-              : pageData.pageNumType && pageData.pageNumPosi <= 2
-              ? 5
-              : 0;
-            pageData.footerHtml =
-              openFixedAreaStr +
-              (pageData.pageNumType && pageData.pageNumPosi > 2
-                ? +pageData.pageNumType === 1
-                  ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-                  : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-                : '') +
-              `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-              (pageData.pageFooterId ? footercanvas : '') +
-              '</div>' +
-              footStr;
-            pageData.footerHeight = pageData.pageFooterId
-              ? document.getElementById('edit-canvas-footer').clientHeight /
-                getOneMmsPx()
-              : pageData.pageNumType && pageData.pageNumPosi > 2
-              ? 5
-              : 0;
-            window.parent.postMessage(
-              {
-                type: 'saveEditor',
-                pageData: JSON.stringify(pageData),
-                isModified: isModified.value,
-                pageId: pageId.value
-              },
-              '*'
-            );
+              pageData.headerHeight = pageData.pageHeaderId
+                ? (document.getElementById('edit-canvas-header').clientHeight -
+                    (pageData.headerLine + 1) * 2) /
+                  getOneMmsPx()
+                : pageData.pageNumType && pageData.pageNumPosi <= 2
+                ? 5
+                : 0;
+              pageData.footerHtml =
+                openFixedAreaStr +
+                (pageData.pageNumType && pageData.pageNumPosi > 2
+                  ? +pageData.pageNumType === 1
+                    ? pageStrStyle +
+                      pagePosiMap[pageData.pageNumPosi] +
+                      pageStr1
+                    : pageStrStyle +
+                      pagePosiMap[pageData.pageNumPosi] +
+                      pageStr2
+                  : '') +
+                `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+                (pageData.pageFooterId ? footercanvas : '') +
+                '</div>' +
+                footStr;
+              pageData.footerHeight = pageData.pageFooterId
+                ? document.getElementById('edit-canvas-footer').clientHeight /
+                  getOneMmsPx()
+                : pageData.pageNumType && pageData.pageNumPosi > 2
+                ? 5
+                : 0;
+              window.parent.postMessage(
+                {
+                  type: 'saveEditor',
+                  pageData: JSON.stringify(pageData),
+                  isModified: isModified.value,
+                  pageId: pageId.value
+                },
+                '*'
+              );
 
-            nextTick(() => {
-              isReadonlyStatus.value = false;
+              nextTick(() => {
+                isReadonlyStatus.value = false;
+              });
             });
           });
           break;
@@ -785,7 +795,8 @@ export default defineComponent({
       checkStatus,
       isReadonlyStatus,
       isEditor,
-      openPreview, closePreview
+      openPreview,
+      closePreview
     };
   }
 });

@@ -330,7 +330,6 @@ export default defineComponent({
   background-color: var(--color-white);
   border: 1px dashed var(--color-primary);
   width: calc(100% - 20px);
-  // margin: 0 auto;
   .ql-container {
     height: auto;
   }
