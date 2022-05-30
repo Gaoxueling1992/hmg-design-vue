@@ -104,7 +104,6 @@
                 marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
                 marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
               }"
-                v-if="ele.display !== false"
               >
                 <component
                   v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"

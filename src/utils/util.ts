@@ -5,7 +5,8 @@ const styleSheet2obj = (styleSheet: Object) => {
 }
 
 // 处理提交脚本
-const dealWithRules = async (lines: any, checkInfo: any) => {
+const dealWithRules = async (linesStr: any, checkInfo: any) => {
+  let lines = JSON.parse(linesStr);
   for (let i = 0; i < lines.length; i++) {
     for (let j = 0; j < lines[i].length; j++) {
       let ele = lines[i][j];
@@ -64,7 +65,6 @@ const dealWithRules = async (lines: any, checkInfo: any) => {
                     }
                   });
                 });
-
 
                 if (tipType !== 'submit') {
                   return {

@@ -92,7 +92,6 @@ export default defineComponent({
       let line = classStr[classStr.length - 1];
       // 如果拖动的是固定页头元素
       if (line && pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
-        console.log('----', line, footerLine.value);
         if (footerLine.value <= line) {
           return false;
         }
