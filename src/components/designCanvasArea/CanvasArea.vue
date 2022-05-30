@@ -8,7 +8,7 @@
     @click.self.prevent="handleClickCanvas"
   >
     <template v-if="!loading">
-      <draggable v-model="lines" @end="dragEnd">
+      <draggable v-model="lines" @end="dragEnd" :move="onMoveCallback">
         <div 
           v-for="(line, idx) in lines"
           :key="idx"
@@ -19,6 +19,7 @@
             class="canvas-area-line"
             group="line"
             @end="dragEnd"
+            :move="onMoveCallback"
           >
             <transition-group>
               <DesignEle
@@ -55,7 +56,7 @@ export default defineComponent({
   },
   setup() {
     const pageData: any = inject('pageData') || { line: [], styleSheet: {}}
-    const { lines, styleSheet } = toRefs(pageData)
+    const { lines, styleSheet, pageHeaderId, pageFooterId, headerLine, footerLine } = toRefs(pageData)
     const { handleClickCanvas } = handleClickCanvasFn()
     const loading: Ref<boolean> = inject('loading');
 
@@ -70,13 +71,27 @@ export default defineComponent({
       pageData.lines = [].concat(res);
     };
 
+    const onMoveCallback = (evt, originalEvent) => {
+      console.log('dskadjk', evt.draggedContext.element.id, originalEvent);
+      // 如果拖动的是固定页头元素
+      if (pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
+
+      }
+      // 是页脚
+      if (pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
+
+      }
+      return true;
+    };
+
     return {
       handleClickCanvas,
       pageData,
       lines,
       styleSheet,
       loading,
-      dragEnd
+      dragEnd,
+      onMoveCallback
     };
   }
 });

@@ -360,6 +360,18 @@ const handleCompsOper = (
       }
       pageData.lines = [].concat(res);
     } else {
+      if (item.pageFooterId || item.pageHeaderId) {
+        for (let i = 0; i < item.lines.length; i++) {
+          for (let j = 0; j < item.lines[i].length; j++) {
+            if (item.pageHeaderId && item.lines[i][j].id === item.pageHeaderId) {
+              pageData.headerLine = i;
+            }
+            if (item.pageFooterId && item.lines[i][j].id === item.pageFooterId) {
+              pageData.footerLine = i;
+            }
+          }
+        }
+      }
       pageData.lines = item.lines;
     }
     pageData.name = item.name;
@@ -372,8 +384,8 @@ const handleCompsOper = (
     };
     pageData.pageFooterId = item.pageFooterId;
     pageData.pageHeaderId = item.pageHeaderId;
-    pageData.headerLine = item.headerLine;
-    pageData.footerLine = item.footerLine;
+    // pageData.headerLine = item.headerLine;
+    // pageData.footerLine = item.footerLine;
     pageData.pageNumType = item.pageNumType;
     pageData.pageNumPosi = item.pageNumPosi;
     pageHeaderId.value = item.pageHeaderId;
