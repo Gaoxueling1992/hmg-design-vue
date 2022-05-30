@@ -232,7 +232,7 @@ const handleCompsOper = (
         content = '页眉不能和页脚设置为同一控件。';
       }
       if (pageData.footerLine < idx) {
-        content = '页眉控件不能在页尾下方。';
+        content = '页眉控件不能在页脚下方。';
       }
     }
     if (content) {
