@@ -357,16 +357,30 @@ const handleCompsOper = (
       for (let i = 0; i < item.lines.length; i++) {
         res.push(item.lines[i]);
         res.push([]);
+        for (let j = 0; j < item.lines[i].length; j++) {
+          if (item.pageHeaderId && item.lines[i][j].id === item.pageHeaderId) {
+            pageData.headerLine = i == 0 ? 0 : 2 * i - 1;
+          }
+          if (item.pageFooterId && item.lines[i][j].id === item.pageFooterId) {
+            pageData.footerLine = i == 0 ? 0 : 2 * i - 1;
+          }
+        }
       }
       pageData.lines = [].concat(res);
     } else {
       if (item.pageFooterId || item.pageHeaderId) {
         for (let i = 0; i < item.lines.length; i++) {
           for (let j = 0; j < item.lines[i].length; j++) {
-            if (item.pageHeaderId && item.lines[i][j].id === item.pageHeaderId) {
+            if (
+              item.pageHeaderId &&
+              item.lines[i][j].id === item.pageHeaderId
+            ) {
               pageData.headerLine = i;
             }
-            if (item.pageFooterId && item.lines[i][j].id === item.pageFooterId) {
+            if (
+              item.pageFooterId &&
+              item.lines[i][j].id === item.pageFooterId
+            ) {
               pageData.footerLine = i;
             }
           }
@@ -374,6 +388,7 @@ const handleCompsOper = (
       }
       pageData.lines = item.lines;
     }
+    console.log(item.footerLine, item.headerLine)
     pageData.name = item.name;
     pageData.id = item.id;
     pageData.pageType = item.pageType;
@@ -384,8 +399,6 @@ const handleCompsOper = (
     };
     pageData.pageFooterId = item.pageFooterId;
     pageData.pageHeaderId = item.pageHeaderId;
-    // pageData.headerLine = item.headerLine;
-    // pageData.footerLine = item.footerLine;
     pageData.pageNumType = item.pageNumType;
     pageData.pageNumPosi = item.pageNumPosi;
     pageHeaderId.value = item.pageHeaderId;

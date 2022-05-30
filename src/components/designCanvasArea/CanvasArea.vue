@@ -17,6 +17,7 @@
           <draggable
             v-model="lines[idx]"
             class="canvas-area-line"
+            :class="'line' + String(idx)"
             group="line"
             @end="dragEnd"
             :move="onMoveCallback"
@@ -28,6 +29,7 @@
                 :key="ele.id"
                 :idx="idx"
                 :index="index"
+                :class="'line' + String(idx)"
               ></DesignEle>
             </transition-group>
           </draggable>
@@ -69,17 +71,37 @@ export default defineComponent({
         }
       }
       pageData.lines = [].concat(res);
+      for (let i = 0; i < pageData.lines.length; i++) {
+        if (pageData.lines[i].length) {
+          for (let j = 0; j < pageData.lines[i].length; j++) {
+            if (pageHeaderId.value === pageData.lines[i][j].id) {
+              console.log(i, j);
+              headerLine.value = i;
+            }
+            if (pageFooterId.value === pageData.lines[i][j].id) {
+              console.log(i, j)
+              footerLine.value = i;
+            }
+          }
+        }
+      }
     };
 
     const onMoveCallback = (evt, originalEvent) => {
-      console.log('dskadjk', evt.draggedContext.element.id, originalEvent);
+      let classStr = originalEvent.target.getAttribute('class').split('line');
+      let line = classStr[classStr.length - 1];
       // 如果拖动的是固定页头元素
-      if (pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
-
+      if (line && pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
+        console.log('----', line, footerLine.value);
+        if (footerLine.value <= line) {
+          return false;
+        }
       }
       // 是页脚
-      if (pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
-
+      if (line && pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
+        if (headerLine.value >= line) {
+          return false;
+        }
       }
       return true;
     };
