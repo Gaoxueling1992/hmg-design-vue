@@ -58,7 +58,7 @@
       }"
     ></EditCanvas>
   </a-modal>
-  <div id="context-menu"></div>
+  <div id="context-menu1" style="display: none"></div>
 </template>
 <script lang="ts">
 import {

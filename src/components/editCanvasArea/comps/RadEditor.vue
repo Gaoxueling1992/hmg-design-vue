@@ -269,7 +269,7 @@ export default defineComponent({
       focusedEle.value = props.ele.id;
       if (e.target.classList && e.target.classList[0] === 'aspan') {
         //获取我们自定义的右键菜单
-        let menu: any = document.getElementById('context-menu');
+        let menu: any = document.getElementById('context-menu1');
         menu.removeEventListener('click', () => {});
 
         let childs = menu.childNodes;
@@ -287,6 +287,7 @@ export default defineComponent({
         });
 
         //根据事件对象中鼠标点击的位置，进行定位
+        menu.style.display = '';
         menu.style.width = 'fit-content';
         menu.style.padding = '10px';
         menu.style.left = e.clientX + 'px';
@@ -391,7 +392,7 @@ font[size='3'] {
     position: relative;
   }
 }
-#context-menu {
+#context-menu1 {
   width: 0; /*设置为0 隐藏自定义菜单*/
   z-index: 10001;
   overflow: hidden; /*隐藏溢出的元素*/
