@@ -16,7 +16,7 @@
     />
   </div>
   <div class="flex marginT10">
-    <div class="flex-title3 marginR5">字体</div>
+    <div class="flex-title3 marginR5">字号</div>
     <a-input-number
       class="flex1"
       v-model:value="activeCompObj.fontSize"

@@ -1188,7 +1188,7 @@ const sheet2Form = {
   },
   fontSize: {
     type: 'a-input-number',
-    label: '大小'
+    label: '字号'
   },
   fontWeight: {
     type: 'a-input-number',
