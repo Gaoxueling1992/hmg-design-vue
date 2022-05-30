@@ -10,7 +10,7 @@
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
-  <template v-if="!isReadonlyStatus">
+  <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <span>{{ele.prefix}} </span>
     <a-select
       style="flex: 1"
@@ -49,10 +49,11 @@
     padding-top: 1px;word-break: break-all;
     padding-bottom: 1px;white-space:normal;"
   >
+    <span>{{ele.prefix}} </span>
     <template v-for="item in ele.value">
       {{item}}&nbsp;
     </template>
-    &nbsp;
+    <span>{{ele.suffix}} </span>
   </div>
 </template>
 <script lang="ts">

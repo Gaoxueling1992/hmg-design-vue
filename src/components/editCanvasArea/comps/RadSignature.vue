@@ -28,7 +28,7 @@
           style="flex: 1"
           :disabled="ele.baseProps.readonly"
           class="inherit"
-          v-if="!isReadonlyStatus"
+          v-if="!isReadonlyStatus && !ele.baseProps.readonly"
           v-model:value="ele.value"
           :placeholder="ele.placeholder"
         >
@@ -137,7 +137,7 @@
           style="flex: 1"
           :disabled="ele.baseProps.readonly"
           class="inherit"
-          v-if="!isReadonlyStatus"
+          v-if="!isReadonlyStatus && !ele.baseProps.readonly"
           v-model:value="ele.value"
           :placeholder="ele.placeholder"
         >
