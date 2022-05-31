@@ -67,10 +67,16 @@ import {
   inject,
   toRefs,
   watch,
-  computed
+  computed,
+  onBeforeUnmount,
+  shallowRef
 } from 'vue';
 import E from 'wangeditor';
-import { editorMenus, editorFontSizes } from '@/utils/config';
+import {
+  editorMenus,
+  editorFontSizes,
+  editorMenusInline
+} from '@/utils/config';
 
 export default defineComponent({
   props: ['ele'],
@@ -111,6 +117,7 @@ export default defineComponent({
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
+      const editorRef = shallowRef();
       window.addEventListener('message', async (e) => {
         if (
           e.data.type === 'resetReporetDesc' &&
@@ -123,6 +130,7 @@ export default defineComponent({
           let newV = currentDec + '%%' + currentReport.value;
           props.ele.value = props.ele.value.split(oldV).join(newV);
         } else if (e.data.type === 'setVocabulary') {
+          console.log('---', e.data,focusedEle.value, props.ele.id)
           if (+focusedEle.value === +props.ele.id) {
             if (splitField.value) {
               if (props.ele.value) {
@@ -143,6 +151,8 @@ export default defineComponent({
                 if (!hasStr) {
                   editor.txt.html(e.data.text);
                 }
+              } else {
+                editor.txt.html(e.data.text);
               }
             } else {
               editor.cmd.do('insertHTML', e.data.text);
@@ -164,6 +174,17 @@ export default defineComponent({
         '幼圆'
       ];
       editor.create();
+
+      editor.created = () => {
+        editorRef.value = editor;
+      };
+
+      onBeforeUnmount(() => {
+        if (editor == null) {
+          return;
+        }
+        editor.destroy();
+      });
 
       const inputCurReport = () => {
         if (props.ele.value) {
@@ -361,6 +382,11 @@ export default defineComponent({
 .w-e-toolbar .w-e-droplist {
   max-height: 80px;
   overflow: auto;
+  margin-top: 25px !important;
+  border: 1px solid var(--border-color-light);
+  border-radius: 4px;
+  background-color: var(--color-white);
+  color: var(--color-text-regular);
 }
 .container {
   border: 1px solid var(--border-color-lighter);
@@ -430,6 +456,10 @@ font[size='3'] {
 }
 .editor-toolbar {
   z-index: 11 !important;
+  background: #fff;
+}
+.w-e-toolbar .w-e-menu {
+  height: 25px !important;
 }
 .container-editor {
   z-index: 10 !important;

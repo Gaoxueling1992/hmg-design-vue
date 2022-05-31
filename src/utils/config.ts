@@ -1365,6 +1365,30 @@ const editorMenus = [
   'justify' // 对齐方式
 ];
 
+const editorMenusInline = [
+  'bold', // 粗体
+  'fontSize', // 字号
+  'fontName', // 字体
+  {
+    key: 'group-more-style', // 必填，要以 group 开头
+    title: '更多样式', // 必填
+    iconSvg: '<svg>....</svg>', // 可选
+    menuKeys: [
+      'undo', // 撤销
+      'redo', // 重做
+      'lineHeight',// 
+      'italic', // 斜体
+      'underline', // 下划线
+      'strikeThrough', // 删除线
+      'foreColor', // 文字颜色
+      'backColor', // 背景颜色
+      'list', // 列表
+      'justify', // 对齐方式
+      'head', // 标题
+    ] // 下级菜单 key ，必填
+  }
+];
+
 const editorFontSizes = {
   'small': {
     name: '13px',
@@ -1401,6 +1425,7 @@ export {
   pickerList,
   pickerMap,
   editorMenus,
+  editorMenusInline,
   editorFontSizes,
   areaList,
   ruleMap,
