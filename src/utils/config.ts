@@ -1365,31 +1365,19 @@ const editorMenus = [
   'justify' // 对齐方式
 ];
 
-const editorMenusInline = [
-  'bold', // 粗体
-  'fontSize', // 字号
-  'fontName', // 字体
-  {
-    key: 'group-more-style', // 必填，要以 group 开头
-    title: '更多样式', // 必填
-    iconSvg: '<svg>....</svg>', // 可选
-    menuKeys: [
-      'undo', // 撤销
-      'redo', // 重做
-      'lineHeight',// 
-      'italic', // 斜体
-      'underline', // 下划线
-      'strikeThrough', // 删除线
-      'foreColor', // 文字颜色
-      'backColor', // 背景颜色
-      'list', // 列表
-      'justify', // 对齐方式
-      'head', // 标题
-    ] // 下级菜单 key ，必填
-  }
+const editorColors = [
+  'transparent',
+  '#000000',
+  '#1c487f',
+  '#4d80bf', '#FFFFFF',
+  '#3B99D4', '#8ED14B', '#F06B49', '#ECC2F1', '#82C7C3', '#E3698A', '#1776EB', '#F5B2AC', '#533085', '#89363A', '#19413E', '#D92B45', '#60C9FF', '#1B9F2E', '#BA217D', '#076B82'
 ];
 
 const editorFontSizes = {
+  'x-small': {
+    name: '12px',
+    value: '1'
+  },
   'small': {
     name: '13px',
     value: '2'
@@ -1425,7 +1413,7 @@ export {
   pickerList,
   pickerMap,
   editorMenus,
-  editorMenusInline,
+  editorColors,
   editorFontSizes,
   areaList,
   ruleMap,

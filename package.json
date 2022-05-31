@@ -16,6 +16,8 @@
   "dependencies": {
     "@babel/types": "^7.17.0",
     "@surely-vue/table": "^2.0.10",
+    "@wangeditor/editor": "^5.1.0",
+    "@wangeditor/editor-for-vue": "^5.1.11",
     "@zougt/vite-plugin-theme-preprocessor": "^1.4.3",
     "ant-design-vue": "^2.2.8",
     "css-vars-ponyfill": "^2.4.7",

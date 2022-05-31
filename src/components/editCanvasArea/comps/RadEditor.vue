@@ -21,6 +21,7 @@
     <div
       :id="'toolbar' + ele.id"
       class="editor-toolbar"
+      mode="default"
     ></div>
     <div
       class="container container-editor"
@@ -68,14 +69,13 @@ import {
   toRefs,
   watch,
   computed,
-  onBeforeUnmount,
-  shallowRef
+  onBeforeUnmount
 } from 'vue';
 import E from 'wangeditor';
 import {
   editorMenus,
   editorFontSizes,
-  editorMenusInline
+  editorColors
 } from '@/utils/config';
 
 export default defineComponent({
@@ -117,7 +117,6 @@ export default defineComponent({
     onMounted(() => {
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
-      const editorRef = shallowRef();
       window.addEventListener('message', async (e) => {
         if (
           e.data.type === 'resetReporetDesc' &&
@@ -130,7 +129,6 @@ export default defineComponent({
           let newV = currentDec + '%%' + currentReport.value;
           props.ele.value = props.ele.value.split(oldV).join(newV);
         } else if (e.data.type === 'setVocabulary') {
-          console.log('---', e.data,focusedEle.value, props.ele.id)
           if (+focusedEle.value === +props.ele.id) {
             if (splitField.value) {
               if (props.ele.value) {
@@ -161,8 +159,11 @@ export default defineComponent({
         }
       });
       editor = new E(toolbarid, id);
+      console.log('editor', editor)
+      editor.config.mode = 'default';
       editor.config.menus = editorMenus;
       editor.config.fontSizes = editorFontSizes;
+      editor.config.colors = editorColors;
       editor.config.fontNames = [
         '宋体',
         '新宋体',
@@ -175,15 +176,12 @@ export default defineComponent({
       ];
       editor.create();
 
-      editor.created = () => {
-        editorRef.value = editor;
-      };
-
       onBeforeUnmount(() => {
         if (editor == null) {
           return;
         }
         editor.destroy();
+        editor = null;
       });
 
       const inputCurReport = () => {
