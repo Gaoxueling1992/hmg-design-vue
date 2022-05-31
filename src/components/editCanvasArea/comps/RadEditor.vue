@@ -13,8 +13,7 @@
   >
     <div
       :id="'toolbar' + ele.id"
-      class="toolbar"
-      style="z-index:0 !important"
+      class="editor-toolbar"
     ></div>
     <div
       class="container container-editor"
@@ -351,7 +350,7 @@ export default defineComponent({
   padding: 4px 0;
 }
 .w-e-toolbar .w-e-droplist {
-  height: 80px;
+  max-height: 80px;
   overflow: auto;
 }
 .container {
@@ -420,9 +419,13 @@ font[size='3'] {
 .w-e-text-container .placeholder {
   top: 5px !important;
 }
+.editor-toolbar {
+  z-index: 11 !important;
+}
 .container-editor {
+  z-index: 10 !important;
   .w-e-text-container {
-    z-index: 888 !important;
+    z-index: 0 !important;
   }
 }
 </style>
