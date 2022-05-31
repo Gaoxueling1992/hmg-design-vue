@@ -4,7 +4,14 @@
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
     @click="focusedEle = ele.id"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;line-height:1.5;margin-top:10px;"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+    :style="{
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ? ele.styleSheet.textDecoration : 'none',
+      'margin-top': ele.inline ? 0 : '10px',
+      'float': ele.inline && !isReadonlyStatus && !ele.baseProps.readonly ? 'left': 'unset',
+      'line-height': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ?  '1.2' : '1.5',
+      'display': ele.inline ? 'table-cell' : 'unset'
+    }"
   >{{ ele.label }}</div>
   <div
     class="flex1"
@@ -22,14 +29,15 @@
         fontWeight: ele.fontWeight,
         fontStyle: ele.fontStyle,
         textDecoration: ele.textDecoration,
-        color: ele.fontColor
+        color: ele.fontColor,
+        'display': ele.inline ? 'grid' : 'block'
       }"
       :id="'editor' + ele.id"
       @contextmenu.prevent="clickEditor"
     ></div>
   </div>
   <div
-    v-show="isReadonlyStatus || ele.baseProps.readonly"
+    v-if="isReadonlyStatus || ele.baseProps.readonly"
     class="inherit editor-display-text"
     :style="{
       fontSize: ele.fontSize + 'px',
@@ -41,7 +49,11 @@
       'text-decoration': 'inherit',
       'white-space': 'normal',
       'word-break': 'break-all',
-      minHeight: (ele.containerMinHeight || 0) + 'px'
+      'word-wrap': 'break-word',
+      'padding-left': ele.inline ? '5px': '0',
+      'display': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ? 'table-cell' : 'unset',
+      minHeight: (ele.containerMinHeight || (ele.inline ? ele.styleSheet.fontSize * 1.4 : 0)) + 'px',
+      'vertical-align': 'middle'
     }"
   >
     <div v-html="readonlyValue"></div>
@@ -251,10 +263,7 @@ export default defineComponent({
       };
       editor.config.onblur = function () {
         console.log(focusedEle.value, props.ele.id);
-        if (
-          document.getElementById(`toolbar${props.ele.id}`) &&
-          focusedEle.value !== props.ele.id
-        ) {
+        if (document.getElementById(`toolbar${props.ele.id}`)) {
           document.getElementById(`toolbar${props.ele.id}`).style.display =
             'none';
         }
