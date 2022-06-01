@@ -127,20 +127,27 @@
               width: ele.imgWidth + 'px'
             }"
           />
-          <Vue3Barcode
-            v-else-if="ele.elName === 'RadSignalcode'"
-            :value="ele.src"
-            :background="ele.background"
-            :lineColor="ele.lineColor"
-            :displayValue="ele.displayValue"
-            :text="ele.text"
-            :textAlign="ele.textAlign"
-            :textPosition="ele.textPosition"
-            :fontSize="ele.textSize"
-            :width="ele.codeWidth"
-            :height="ele.codeHeight"
-            :margin="0"
-          />
+          <template v-else-if="ele.elName === 'RadSignalcode'">
+            <Vue3Barcode    
+              :value="ele.src"
+              :background="ele.background"
+              :lineColor="ele.lineColor"
+              :displayValue="false"
+              :text="ele.text"
+              :textAlign="ele.textAlign"
+              :textPosition="ele.textPosition"
+              :fontSize="ele.textSize"
+              :width="ele.codeWidth"
+              :height="ele.codeHeight"
+              :margin="0"
+            />
+            <div v-if="ele.displayValue" style="text-align:center"
+              :style="{
+                'width': textWidth + 'px'
+              }">
+              {{ele.text}}
+            </div>
+          </template>
           <a-image
             v-if="ele.img"
             class="img"
@@ -298,7 +305,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, inject, ref, Ref } from 'vue';
+import { defineComponent, reactive, inject, ref, Ref, onMounted, watch } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 import QrcodeVue from 'qrcode.vue';
 import { compsList, compBaseConfig } from '@/utils/config';
@@ -327,7 +334,6 @@ const handleEleOperate = (ele: any, props: any) => {
   const copyComp: any = inject('copyComp');
   const deleteComp: any = inject('deleteComp');
   const deleteEle = () => {
-    console.log(idx, ele.id)
     deleteComp(idx, ele.id);
   };
   const copyEle = () => {
@@ -359,6 +365,21 @@ export default defineComponent({
     const setFixedArea: any = inject('setFixedArea');
     const pageFooterId: Ref<string> = inject('pageFooterId');
     const pageHeaderId: Ref<string> = inject('pageHeaderId');
+
+    const textWidth: Ref = ref<number>(0);
+    onMounted(() => {
+      if (ele.elName === 'RadSignalcode' && ele.text && document.getElementById(ele.id) && document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')) {
+        textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
+      }
+    });
+    watch(
+      () => ele.text, 
+      () => {
+        if (ele.elName === 'RadSignalcode' && ele.text && document.getElementById(ele.id) && document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')) {
+          textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
+        }
+      }
+    );
 
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
 
@@ -401,7 +422,8 @@ export default defineComponent({
       addComp2Comb,
       domainList,
       deleteIt,
-      setFixedArea, pageFooterId, pageHeaderId
+      setFixedArea, pageFooterId, pageHeaderId,
+      textWidth
     };
   }
 });

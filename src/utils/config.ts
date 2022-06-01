@@ -335,7 +335,7 @@ const compBaseConfig = {
   'rad-signalcode': {
     elName: 'RadSignalcode',
     name: '条形码',
-    desc: '根据输入自动生成条形码，每个页面仅可配置一个。',
+    desc: '根据输入自动生成条形码，每个页面仅可配置一个，配置规则：大小写字母+数字。',
     value: '',
     src: '',
     noLabel: true,

@@ -3,18 +3,20 @@
     :value="ele.src"
     :background="ele.background"
     :lineColor="ele.lineColor"
-    :displayValue="ele.displayValue"
-    :text="ele.text"
-    :textAlign="ele.textAlign"
-    :textPosition="ele.textPosition"
-    :fontSize="ele.textSize"
+    :displayValue="false"
     :width="ele.codeWidth"
     :height="ele.codeHeight"
     :margin="0"
   />
+  <div v-if="ele.displayValue" style="text-align:center"
+    :style="{
+      'width': textWidth + 'px'
+    }">
+    {{ele.text}}
+  </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, Ref, ref } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 
 export default defineComponent({
@@ -22,8 +24,16 @@ export default defineComponent({
   components: {
     Vue3Barcode
   },
-  setup () {
-    
+  setup (props) {
+    const textWidth: Ref = ref<number>(0);
+    onMounted(() => {
+      if (props.ele.text) {
+        textWidth.value = document.getElementById(props.ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
+      }
+    });
+    return {
+      textWidth
+    }
   },
 })
 </script>

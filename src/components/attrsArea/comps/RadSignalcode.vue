@@ -5,6 +5,7 @@
       class="flex1 marginR5"
       v-model:value="activeCompObj.src"
       :maxlength="30"
+      @change="changeSrc"
     />
   </div>
   <div class="flex marginT10">
@@ -37,7 +38,7 @@
   >展示码值</a-checkbox>
   <div class="flex marginT10" v-if="activeCompObj.displayValue">
     <div class="flex-title1">码值</div>
-    <a-input v-model:value="activeCompObj.text"/>
+    <a-input v-model:value="activeCompObj.text" :maxlength="30" @change="changeText"/>
   </div>
   <div class="flex marginT10" v-if="activeCompObj.displayValue">
     <div class="flex-title1">对齐</div>
@@ -71,8 +72,18 @@ export default defineComponent({
   setup() {
     const activeCompObj: any = inject('activeCompObj');
 
+    const changeSrc = () => {
+      activeCompObj.value.src = activeCompObj.value.src.replace(/[^A-Z|0-9]/g, '');
+    };
+
+    const changeText = () => {
+      activeCompObj.value.text = activeCompObj.value.text.replace(/[^A-Z|0-9]/g, '');
+    };
+
     return {
-      activeCompObj
+      activeCompObj,
+      changeSrc,
+      changeText
     };
   }
 });

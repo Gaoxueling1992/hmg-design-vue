@@ -53,6 +53,7 @@
                 marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
+              :id="ele.id"
               >
                 <component
                   v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -106,6 +107,8 @@
                 marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
+              :id="ele.id"
+              v-if="ele.display !== false"
               >
                 <component
                   v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -159,6 +162,7 @@
                   marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
                 }"
+                :id="ele.id"
                 v-if="ele.display !== false"
               >
                 <component
