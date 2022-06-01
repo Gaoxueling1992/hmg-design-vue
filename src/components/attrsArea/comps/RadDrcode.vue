@@ -33,11 +33,15 @@
     <a-input-number
       class="flex1 marginR5"
       v-model:value="activeCompObj.imgWidth"
+      :min="10"
+      @change="activeCompObj.imgWidth = !activeCompObj.imgWidth ? 300 : activeCompObj.imgWidth"
     />
     <div class="flex-title marginL5">高</div>
     <a-input-number
       class="flex1"
       v-model:value="activeCompObj.imgHeight"
+      :min="10"
+      @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 300 : activeCompObj.imgHeight"
     />
   </div>
   <a-button
@@ -52,11 +56,15 @@
     <a-input-number
       class="flex1 marginR5"
       v-model:value="activeCompObj.styleSheet.paddingTop"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingTop = !activeCompObj.styleSheet.paddingTop ? 0 : activeCompObj.styleSheet.paddingTop"
     />
     <div class="flex-title marginL5">下</div>
     <a-input-number
       class="flex1"
       v-model:value="activeCompObj.styleSheet.paddingBottom"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingBottom = !activeCompObj.styleSheet.paddingBottom ? 0 : activeCompObj.styleSheet.paddingBottom"
     />
   </div>
   <div class="flex marginT10">
@@ -64,11 +72,15 @@
     <a-input-number
       class="flex1 marginR5"
       v-model:value="activeCompObj.styleSheet.paddingLeft"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingLeft = !activeCompObj.styleSheet.paddingLeft ? 0 : activeCompObj.styleSheet.paddingLeft"
     />
     <div class="flex-title">右</div>
     <a-input-number
       class="flex1"
       v-model:value="activeCompObj.styleSheet.paddingRight"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingRight = !activeCompObj.styleSheet.paddingRight ? 0 : activeCompObj.styleSheet.paddingRight"
     />
   </div>
 </template>

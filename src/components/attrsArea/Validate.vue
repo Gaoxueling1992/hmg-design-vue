@@ -18,11 +18,13 @@
         v-model:value="activeCompObj.validate.minLength"
         :min="0"
         :max="activeCompObj.validate.maxLength"
+        @change="activeCompObj.validate.minLength = !activeCompObj.validate.minLength ? 0 : activeCompObj.validate.minLength"
       />-
       <a-input-number
         class="limit-input marginL10"
         v-model:value="activeCompObj.validate.maxLength"
         :min="activeCompObj.validate.minLength"
+        @change="activeCompObj.validate.maxLength = !activeCompObj.validate.maxLength ? activeCompObj.validate.minLength : activeCompObj.validate.maxLength"
       />
     </template>
     <div

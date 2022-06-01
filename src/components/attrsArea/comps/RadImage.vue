@@ -9,7 +9,12 @@
     :before-upload="beforeUpload"
     accept="image/png, image/jpeg, image/jpg"
   >
-    <img height="100" width="100" v-if="activeCompObj.src" :src="activeCompObj.src"/>
+    <img
+      height="100"
+      width="100"
+      v-if="activeCompObj.src"
+      :src="activeCompObj.src"
+    />
     <div v-else>
       <loading-outlined v-if="loading"></loading-outlined>
       <plus-outlined v-else></plus-outlined>
@@ -19,20 +24,45 @@
   <div class="title marginT10 marginB5 fontW500">图片大小</div>
   <div class="flex marginT10">
     <div class="flex-title">宽</div>
-    <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.imgWidth" :min="5"/>
+    <a-input-number
+      class="flex1 marginR5"
+      v-model:value="activeCompObj.imgWidth"
+      :min="5"
+      @change="activeCompObj.imgWidth = !activeCompObj.imgWidth ? 5 : activeCompObj.imgWidth"
+    />
     <div class="flex-title marginL5">高</div>
-    <a-input-number class="flex1" v-model:value="activeCompObj.imgHeight" :min="5"/>
+    <a-input-number
+      class="flex1"
+      v-model:value="activeCompObj.imgHeight"
+      :min="5"
+      @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 5 : activeCompObj.imgHeight"
+    />
   </div>
   <div class="title marginT10 marginB5 fontW500">内边距</div>
   <div class="flex marginT10">
     <div class="flex-title">上</div>
-    <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.styleSheet.paddingTop"/>
+    <a-input-number
+      class="flex1 marginR5"
+      v-model:value="activeCompObj.styleSheet.paddingTop"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingTop = !activeCompObj.styleSheet.paddingTop ? 0 : activeCompObj.styleSheet.paddingTop"
+    />
     <div class="flex-title marginL5">下</div>
-    <a-input-number class="flex1" v-model:value="activeCompObj.styleSheet.paddingBottom"/>
+    <a-input-number
+      class="flex1"
+      v-model:value="activeCompObj.styleSheet.paddingBottom"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingBottom = !activeCompObj.styleSheet.paddingBottom ? 0 : activeCompObj.styleSheet.paddingBottom"
+    />
   </div>
   <div class="flex marginT10">
     <div class="flex-title">左</div>
-    <a-input-number class="flex1 marginR5" v-model:value="activeCompObj.styleSheet.paddingLeft"/>
+    <a-input-number
+      class="flex1 marginR5"
+      v-model:value="activeCompObj.styleSheet.paddingLeft"
+      :min="0"
+      @change="activeCompObj.styleSheet.paddingLeft = !activeCompObj.styleSheet.paddingLeft ? 0 : activeCompObj.styleSheet.paddingLeft"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -49,15 +79,16 @@ function getBase64(img: Blob, callback: (base64Url: string) => void) {
 export default defineComponent({
   components: {
     LoadingOutlined,
-    PlusOutlined,
+    PlusOutlined
   },
-  setup () {
+  setup() {
     const activeCompObj: any = inject('activeCompObj');
     const fileList = ref([]);
     const loading = ref<boolean>(false);
 
     const beforeUpload = (file: any) => {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      const isJpgOrPng =
+        file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
         message.error('仅支持上传png和jpeg格式的图片');
       }
@@ -79,10 +110,10 @@ export default defineComponent({
       fileList,
       loading,
       activeCompObj,
-      beforeUpload,
+      beforeUpload
     };
-  },
-})
+  }
+});
 </script>
 <style lang="scss" scoped>
 .flex-title {

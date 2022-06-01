@@ -17,6 +17,7 @@
       :precision="0"
       step-strictly
       v-model:value="activeCompObj.perNum"
+      @change="activeCompObj.perNum = !activeCompObj.perNum ? 2 : activeCompObj.perNum"
     />
   </div>
   <div class="flex marginT10">
@@ -25,6 +26,7 @@
       class="flex1 marginR5"
       :min="1"
       v-model:value="activeCompObj.testTotalNum"
+      @change="activeCompObj.testTotalNum = !activeCompObj.testTotalNum ? 1 : activeCompObj.testTotalNum"
     />
     <div class="flex-title3">张图片效果</div>
   </div>
@@ -35,12 +37,16 @@
       <a-input-number
         class="flex1 marginR5"
         v-model:value="activeCompObj.horSpacing"
+        :min="0"
+        @change="activeCompObj.horSpacing = !activeCompObj.horSpacing ? 0 : activeCompObj.horSpacing"
       />
     </template>
     <div class="flex-title1">垂直</div>
     <a-input-number
       class="flex1"
       v-model:value="activeCompObj.verSpacing"
+      :min="0"
+      @change="activeCompObj.verSpacing = !activeCompObj.verSpacing ? 0 : activeCompObj.verSpacing"
     />
   </div>
   <div class="title marginT10 marginB5 fontW500">图片大小</div>
@@ -58,13 +64,17 @@
       <a-input-number
         class="flex1 marginR5"
         v-model:value="activeCompObj.imgWidth"
+        :min="10"
+        @change="activeCompObj.imgWidth = !activeCompObj.imgWidth ? 10 : activeCompObj.imgWidth"
       />
     </template>
     <template v-if="activeCompObj.layoutType !== '2'">
       <div class="flex-title">高</div>
       <a-input-number
         class="flex1"
+        :min="10"
         v-model:value="activeCompObj.imgHeight"
+        @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 10 : activeCompObj.imgHeight"
       />
     </template>
   </div>

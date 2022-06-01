@@ -75,12 +75,14 @@
             v-model:value="comp.min"
             :min="0"
             :max="comp.max"
+            @change="comp.min = !comp.min ? 0 : comp.min"
           />
           <a-input-number
             class="flex1"
             allowClear
             v-model:value="comp.max"
             :min="comp.min"
+            @change="comp.max = !comp.max ? comp.min : comp.max"
           />
         </div>
       </template>

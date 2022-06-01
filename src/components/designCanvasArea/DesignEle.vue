@@ -128,22 +128,28 @@
             }"
           />
           <template v-else-if="ele.elName === 'RadSignalcode'">
+            <div v-if="ele.displayValue && ele.textPosition === 'top'" style="text-align:center"
+              :style="{
+                'width': textWidth + 'px',
+                'text-align': ele.textAlign,
+                'font-size': ele.textSize + 'px'
+              }">
+              {{ele.text}}
+            </div>
             <Vue3Barcode    
               :value="ele.src"
               :background="ele.background"
               :lineColor="ele.lineColor"
               :displayValue="false"
-              :text="ele.text"
-              :textAlign="ele.textAlign"
-              :textPosition="ele.textPosition"
-              :fontSize="ele.textSize"
               :width="ele.codeWidth"
               :height="ele.codeHeight"
               :margin="0"
             />
-            <div v-if="ele.displayValue" style="text-align:center"
+            <div v-if="ele.displayValue && ele.textPosition === 'bottom'" style="text-align:center"
               :style="{
-                'width': textWidth + 'px'
+                'width': textWidth + 'px',
+                'text-align': ele.textAlign,
+                'font-size': ele.textSize + 'px'
               }">
               {{ele.text}}
             </div>
@@ -373,12 +379,16 @@ export default defineComponent({
       }
     });
     watch(
-      () => ele.text, 
+      () => ele, 
       () => {
         if (ele.elName === 'RadSignalcode' && ele.text && document.getElementById(ele.id) && document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')) {
-          textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
+          setTimeout(() => {
+            textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
+            console.log('textWidth', textWidth.value);
+          });
         }
-      }
+      },
+      { deep: true }
     );
 
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);

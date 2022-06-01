@@ -6,6 +6,7 @@
       class="flex1"
       v-model:value="activeCompObj.containerMinHeight"
       :min="0"
+      @change="activeCompObj.containerMinHeight = !activeCompObj.containerMinHeight ? 0 : activeCompObj.containerMinHeight"
     />
   </div>
   <div class="flex marginT10">
@@ -21,6 +22,7 @@
       class="flex1"
       v-model:value="activeCompObj.fontSize"
       :min="12"
+      @change="activeCompObj.fontSize = !activeCompObj.fontSize ? 12 : activeCompObj.fontSize"
     /> 
   </div>
   <div class="flex marginT10">
@@ -30,6 +32,7 @@
       v-model:value="activeCompObj.fontWeight"
       :min="300"
       step="100"
+      @change="activeCompObj.fontWeight = !activeCompObj.fontWeight ? 300 : activeCompObj.fontWeight"
     />
   </div>
   <div class="flex marginT10">

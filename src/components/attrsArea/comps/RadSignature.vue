@@ -1,6 +1,10 @@
 <template>
   <div class="title marginT10 marginB5 fontW500">引导文字</div>
-  <a-textarea v-model:value="activeCompObj.placeholder" allowClear :auto-size="{ minRows: 2, maxRows: 2 }"/>
+  <a-textarea
+    v-model:value="activeCompObj.placeholder"
+    allowClear
+    :auto-size="{ minRows: 2, maxRows: 2 }"
+  />
   <div class="title marginT10 marginB5 fontW500">类型</div>
   <a-radio-group
     class="marginB5"
@@ -28,21 +32,31 @@
     <div class="title marginT10 marginB5 fontW500">签名大小</div>
     <div class="flex">
       <div class="flex-title">宽</div>
-      <a-input-number class="flex1 marginR5" :min="10" v-model:value="activeCompObj.imgWidth"/>
+      <a-input-number
+        class="flex1 marginR5"
+        :min="10"
+        v-model:value="activeCompObj.imgWidth"
+        @change="activeCompObj.imgWidth = !activeCompObj.imgWidth ? 10 : activeCompObj.imgWidth"
+      />
       <div class="flex-title marginL5">高</div>
-      <a-input-number class="flex1" :min="10" v-model:value="activeCompObj.imgHeight"/>
+      <a-input-number
+        class="flex1"
+        :min="10"
+        v-model:value="activeCompObj.imgHeight"
+        @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 10 : activeCompObj.imgHeight"
+      />
     </div>
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
+import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
-  setup () {
+  setup() {
     const activeCompObj: any = inject('activeCompObj');
     return {
       activeCompObj
     };
-  },
-})
+  }
+});
 </script>

@@ -25,7 +25,7 @@
       class="flex1 marginR5"
       allowClear
       v-model:value="activeCompObj.min"
-      :min="0"
+      :min="-Infinity"
       :max="activeCompObj.max"
     />
     <a-input-number
@@ -33,6 +33,7 @@
       allowClear
       v-model:value="activeCompObj.max"
       :min="activeCompObj.min"
+      :max="Infinity"
     />
   </div>
 </template>

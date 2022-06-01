@@ -98,6 +98,16 @@ const pageDataEffet = () => {
     changePageConfig({ key, value });
   };
   const handlePageSize = (key: string, value: number) => {
+    if (key === 'width' && !value) {
+      width.value = '10';
+      value = 10;
+    } else if (key === 'minHeight' && !value) {
+      minHeight.value = '10';
+      value = 10;
+    } else if (key === 'padding' && !value) {
+      padding.value = '0';
+      value = 0;
+    }
     changePageSize({ key, value });
   };
 

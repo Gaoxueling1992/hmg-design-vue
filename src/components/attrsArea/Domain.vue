@@ -196,6 +196,7 @@
             v-if="[11, 12, 10].indexOf(+ruleObj.ruleType) === -1"
             style="width: 70%"
             v-model:value="ruleObj.value"
+            @change="ruleObj.value = !ruleObj.value ? 0 : ruleObj.value"
           ></a-input-number>
           <template v-else-if="[11, 12].indexOf(+ruleObj.ruleType) > -1">
             <a-input-number
@@ -204,12 +205,14 @@
               :min="0"
               :max="ruleObj.max"
               v-model:value="ruleObj.min"
+              @change="ruleObj.value = !ruleObj.value ? 0 : ruleObj.value"
             ></a-input-number> -
             <a-input-number
               style="width: 30%"
               :min="ruleObj.min"
               :max="99999"
               v-model:value="ruleObj.max"
+              @change="ruleObj.value = !ruleObj.value ? ruleObj.min : ruleObj.value"
             ></a-input-number>
           </template>
         </a-input-group>

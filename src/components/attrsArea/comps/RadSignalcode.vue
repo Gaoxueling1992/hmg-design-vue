@@ -30,17 +30,31 @@
   </div>
   <div class="flex marginT10">
     <div class="flex-title1">高度</div>
-    <a-input-number v-model:value="activeCompObj.codeHeight" :min="20"/>
+    <a-input-number
+      v-model:value="activeCompObj.codeHeight"
+      :min="20"
+      @change="activeCompObj.codeHeight = !activeCompObj.codeHeight ? 20 : activeCompObj.codeHeight"
+    />
   </div>
   <a-checkbox
     class="marginT10"
     v-model:checked="activeCompObj.displayValue"
   >展示码值</a-checkbox>
-  <div class="flex marginT10" v-if="activeCompObj.displayValue">
+  <div
+    class="flex marginT10"
+    v-if="activeCompObj.displayValue"
+  >
     <div class="flex-title1">码值</div>
-    <a-input v-model:value="activeCompObj.text" :maxlength="30" @change="changeText"/>
+    <a-input
+      v-model:value="activeCompObj.text"
+      :maxlength="30"
+      @change="changeText"
+    />
   </div>
-  <div class="flex marginT10" v-if="activeCompObj.displayValue">
+  <div
+    class="flex marginT10"
+    v-if="activeCompObj.displayValue"
+  >
     <div class="flex-title1">对齐</div>
     <a-radio-group v-model:value="activeCompObj.textAlign">
       <a-radio value="left">左</a-radio>
@@ -48,16 +62,26 @@
       <a-radio value="right">右</a-radio>
     </a-radio-group>
   </div>
-  <div class="flex marginT10" v-if="activeCompObj.displayValue">
+  <div
+    class="flex marginT10"
+    v-if="activeCompObj.displayValue"
+  >
     <div class="flex-title1">位置</div>
     <a-radio-group v-model:value="activeCompObj.textPosition">
       <a-radio value="top">顶部</a-radio>
       <a-radio value="bottom">底部</a-radio>
     </a-radio-group>
   </div>
-  <div class="flex marginT10" v-if="activeCompObj.displayValue">
+  <div
+    class="flex marginT10"
+    v-if="activeCompObj.displayValue"
+  >
     <div class="flex-title2">文字大小</div>
-    <a-input-number v-model:value="activeCompObj.textSize" :min="12"/>
+    <a-input-number
+      v-model:value="activeCompObj.textSize"
+      :min="12"
+      @change="activeCompObj.textSize = !activeCompObj.textSize ? 12 : activeCompObj.textSize"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -73,11 +97,17 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
 
     const changeSrc = () => {
-      activeCompObj.value.src = activeCompObj.value.src.replace(/[^A-Z|0-9]/g, '');
+      activeCompObj.value.src = activeCompObj.value.src.replace(
+        /[^A-Z|0-9]/g,
+        ''
+      );
     };
 
     const changeText = () => {
-      activeCompObj.value.text = activeCompObj.value.text.replace(/[^A-Z|0-9]/g, '');
+      activeCompObj.value.text = activeCompObj.value.text.replace(
+        /[^A-Z|0-9]/g,
+        ''
+      );
     };
 
     return {
