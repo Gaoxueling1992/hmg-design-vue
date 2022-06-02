@@ -254,7 +254,7 @@ export default defineComponent({
               count++;
             }
           }
-          return Math.floor((100 - totalWidth) / (line.length - count)) + '%';
+          return ((100 - totalWidth) / (line.length - count)).toFixed(2) + '%';
         }
       };
     });
