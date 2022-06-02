@@ -15,7 +15,16 @@
     :width="ele.codeWidth"
     :height="ele.codeHeight"
     :margin="0"
+    v-if="pageId!=='designer'"
   />
+  <div :style="{
+    width: textWidth + 'px',
+    height: ele.codeHeight + 'px',
+    backgroundColor: ele.background,
+    color: ele.lineColor,
+    textAlign: ele.textAlign,
+    border: '1px solid ' + ele.lineColor
+  }" v-else>二维码占位符</div>
   <div v-if="ele.displayValue && ele.textPosition === 'bottom'" style="text-align:center"
     :style="{
       'width': textWidth + 'px',
@@ -26,7 +35,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, Ref, ref } from 'vue';
+import { defineComponent, onMounted, Ref, ref, inject } from 'vue';
 import Vue3Barcode from 'vue3-barcode';
 
 export default defineComponent({
@@ -36,13 +45,15 @@ export default defineComponent({
   },
   setup (props) {
     const textWidth: Ref = ref<number>(0);
+    const pageId: any = inject('pageId');
     onMounted(() => {
       if (props.ele.text) {
         textWidth.value = document.getElementById(props.ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
       }
     });
     return {
-      textWidth
+      textWidth,
+      pageId
     }
   },
 })

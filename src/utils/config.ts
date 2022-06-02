@@ -290,7 +290,6 @@ const compBaseConfig = {
       color: '#333333',
       backgroundColor: '',
       textDecoration: 'none',
-      fontStyle: 'normal',
       width: '100%'
     },
     defaultType: {},
@@ -346,6 +345,7 @@ const compBaseConfig = {
     domainType: '',
     styleSheet: styleSheet,
     background: 'transparent',
+    lineColor: '#000000',
     displayValue: false,
     text: '',
     textAlign: 'center',

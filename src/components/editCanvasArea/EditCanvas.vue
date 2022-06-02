@@ -343,6 +343,7 @@ export default defineComponent({
   .ant-input-number-input,
   .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     padding-left: 0 !important;
+    font-style: inherit !important;
   }
   .display-text {
     line-height: 30px !important;

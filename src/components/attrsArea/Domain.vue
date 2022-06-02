@@ -28,6 +28,7 @@
   <a-button
     type="primary"
     class="add-script"
+    v-if="activeCompObj.elType && activeCompObj.elType !== 'other'"
     @click="addScript"
   >添加业务规则</a-button>
   <a-drawer
@@ -408,7 +409,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, inject, ref, Ref } from 'vue';
-import { ruleMap, actionList, opportunityMap } from '@/utils/config';
+import { ruleMap, actionList, opportunityMap, compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
 
 export default defineComponent({
@@ -427,9 +428,9 @@ export default defineComponent({
       prefix: '',
       suffix: '',
       current: 0,
-      elType: activeCompObj.value.elType,
-      id: actionList[activeCompObj.value.elType][0].key,
-      name: actionList[activeCompObj.value.elType][0].value,
+      elType: activeCompObj.value.elType === 'other' ? '' : activeCompObj.value.elType,
+      id: activeCompObj.value.elType === 'other' ? '' : actionList[activeCompObj.value.elType][0].key,
+      name: activeCompObj.value.elType === 'other' ? '' : actionList[activeCompObj.value.elType][0].value,
       content: '',
       label: '',
       moreIds: '',
@@ -613,9 +614,9 @@ export default defineComponent({
         moreIds: '',
         splitWords: '',
         current: 0,
-        elType: activeCompObj.value.elType,
-        id: actionList[activeCompObj.value.elType][0].key,
-        name: actionList[activeCompObj.value.elType][0].value,
+        elType: activeCompObj.value.elType === 'other' ? '' : activeCompObj.value.elType,
+        id: activeCompObj.value.elType === 'other' ? '' : actionList[activeCompObj.value.elType][0].key,
+        name: activeCompObj.value.elType === 'other' ? '' : actionList[activeCompObj.value.elType][0].value,
         content: '',
         label: '',
         tipType: 'info'

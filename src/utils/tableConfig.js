@@ -62,8 +62,8 @@ const config = {
     deleteCell: false, // delete cell
     hideRow: true, // hide the selected row and display the selected row
     hideColumn: true, // hide the selected column and display the selected column
-    rowHeight: true, // 设置行高
-    columnWidth: true, // 设置行宽
+    rowHeight: false, // 设置行高
+    columnWidth: false, // 设置行宽
     clear: true, // 清空选定内容clear content
     matrix: false, //矩阵 matrix operation selection
     sort: false, // 排序sort selection

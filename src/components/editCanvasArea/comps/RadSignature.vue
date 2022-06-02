@@ -5,8 +5,8 @@
     :class="ele.inline ? 'ele-label' : ''"
     style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
-      lineHeight: ele.imgHeight+ 'px',
-      height: ele.imgHeight+ 'px',
+      lineHeight: ele.imgHeight > 30 ? ele.imgHeight + 'px' : '30px',
+      height: ele.imgHeight > 30 ? ele.imgHeight+ 'px' : '30px',
       'vertical-align': 'top',
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : ''
@@ -38,7 +38,8 @@
           style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
-            float: ele.imagePosi === 'right' ? 'left' : ''
+            float: ele.imagePosi === 'right' ? 'left' : '',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px' : '30px'
           }"
         >
           {{ ele.value }}&nbsp;
@@ -147,7 +148,8 @@
           style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
-            float: ele.imagePosi === 'left' ? 'left' : ''
+            float: ele.imagePosi === 'left' ? 'left' : '',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px' : '30px'
           }"
         >
           {{ ele.value }}&nbsp;

@@ -41,7 +41,7 @@
       <div class="flex-title marginL5">高</div>
       <a-input-number
         class="flex1"
-        :min="10"
+        :min="30"
         v-model:value="activeCompObj.imgHeight"
         @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 10 : activeCompObj.imgHeight"
       />

@@ -351,7 +351,6 @@ const handleCompsOper = (
     item.name = item.name.replace(reg, '$1$3');
     loading.value = true;
     pageData.lines = [];
-    console.log(pageId)
     pageData.headerLine = -1;
     item.pageFooterId = 9999;
     // 设计器在每行后面追加一行，方便拖拽
@@ -564,11 +563,11 @@ export default defineComponent({
         case 'saveEditor':
           const checkInfo = JSON.parse(e.data.checkData);
           // 处理提交前控件脚本
-          // dealWithRules(JSON.stringify(pageData.lines), checkInfo).then((res) => {
-          //   if (!res.result) {
-          //     isReadonlyStatus.value = false;
-          //     return;
-          //   }
+          dealWithRules(JSON.stringify(pageData.lines), checkInfo).then((res) => {
+            if (!res.result) {
+              isReadonlyStatus.value = false;
+              return;
+            }
 
             isReadonlyStatus.value = true;
             nextTick(async () => {
@@ -685,7 +684,7 @@ export default defineComponent({
                 isReadonlyStatus.value = false;
               });
             });
-          // });
+          });
           break;
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
