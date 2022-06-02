@@ -40,17 +40,13 @@
                 borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
                 display: ele.inline ? (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'flex') : (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'inline-block'),
                 width: eleWidth(line, index),
-                'padding-top': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
-                'padding-bottom': ele.elName === 'RadLine' ? '10px !important' : '0px !important',
                 'vertical-align': 'middle',
-                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                marginTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px') : '2px',
-                marginBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px') : '2px',
-                marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
-                marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
+                paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
               :id="ele.id"
@@ -97,14 +93,12 @@
                 display: ele.inline ? (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'flex') : (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'inline-block'),
                 width: eleWidth(line, index),
                 'vertical-align': 'middle',
-                'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-                'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                marginTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px') : '2px',
-                marginBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px') : '2px',
-                marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
-                marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
+                paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
               :id="ele.id"
@@ -152,14 +146,12 @@
                   display: ele.inline ? (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'flex') : (isReadonlyStatus ? (ele.elName === 'RadEditor' ? 'table-row' : 'table-cell') : 'inline-block'),
                   width: eleWidth(line, index),
                   'vertical-align': 'middle',
-                  'padding-top': ele.elName === 'RadLine' ? '10px' : '0',
-                  'padding-bottom': ele.elName === 'RadLine' ? '10px' : '0',
                   'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                   float: 'left',
-                  marginTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px') : '2px',
-                  marginBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px') : '2px',
-                  marginLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px') : '0px',
-                  marginRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px') : '0px',
+                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                  paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"

@@ -15,6 +15,8 @@
           width: calSpan(ele, ele.value.length)/24*100 + '%',
           float: 'left'
         }"
+        @mouseover.native="mouseEnter=+String(index)"
+        @mouseleave.native="mouseEnter=-1"
       >
         <div
           :style="{
@@ -26,8 +28,6 @@
               marginTop: ele.verSpacing / 2 + 'px',
               marginBottom: ele.verSpacing / 2 + 'px',
             }"
-          @mouseover.native="mouseEnter=+String(index)"
-          @mouseleave.native="mouseEnter=-1"
         >
           <img
             style="height:100%;width:100%;"
@@ -40,7 +40,7 @@
             :src="item.url"
           >
           <div
-            v-if="mouseEnter === +String(index)"
+            v-show="mouseEnter === +String(index)"
             class="iconfont iconclose"
             @click="deleteImg(index, item)"
           ></div>
@@ -244,7 +244,7 @@ export default defineComponent({
     right: 2px;
     top: 2px;
     z-index: 3;
-    color: var(--color-white);
+    background: var(--color-white);
     line-height: 18px;
     &:hover {
       color: var(--color-primary);
