@@ -24,15 +24,19 @@
       'paddingT10 paddingB10': ele.elName === 'RadLine'
     }"
   >
+    <!-- 复合组件 -->
     <template v-if="ele.type === 'comb'">
       <div class="inherit">
         <span :style="{
-          'text-decoration': ele.styleSheet.textDecoration
+          'text-decoration': 'none',
+          'font-size': '18px',
+          color: 'initial',
+          'font-weight': '400'
         }">{{ ele.label || ele.name }}</span>
         <i
           class="iconfont iconplus"
           :style="{
-            fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit'
+            fontSize: '18px'
           }"
           v-if="activeCompId === ele.id"
           @click="addComp=true"
@@ -53,13 +57,15 @@
           :key="idx"
           :style="{
             display: 'block',
+            padding: '5px 0',
             height: ele.layout === 'top' ? 'auto' : (100/ele.compsList.length + '%')
           }"
         >
           <div :style="{
-            display: ele.inline ? 'flex' : 'inline-block',
-            ...item.styleSheet,
-            fontSize: item.styleSheet.fontSize + 'px',
+            display: ele.inline && item.elName !== 'RadText' ? 'flex' : 'inline-block',
+            ...ele.styleSheet,
+            fontSize: ele.styleSheet.fontSize + 'px',
+            border: 'none'
           }">
             <div
               v-if="item.elName === 'RadText'"
@@ -67,25 +73,25 @@
               :class="{'ellipsis': item.styleSheet.wrap === 'noWrap'}"
               v-html="item.label ||  '静态文本'"
             ></div>
-            <div
-              v-if="item.elName !== 'RadText'"
-              class="inherit"
-              :class="ele.inline ? 'ele-label' : ''"
-            >{{ item.label || item.name }}</div>
-            <a-input
-              style="flex: 1"
-              disabled
-              class="inherit"
-              v-if="item.elName !== 'RadText'"
-              :placeholder="item.placeholder"
-            >
-              <template #prefix>
-                {{ item.prefix }}
-              </template>
-              <template #suffix>
-                {{ item.suffix }}
-              </template>
-            </a-input>
+            <template v-else>
+              <div
+                class="inherit"
+                :class="ele.inline ? 'ele-label' : ''"
+              >{{ item.label || item.name }}</div>
+              <a-input
+                style="flex: 1"
+                disabled
+                class="inherit"
+                :placeholder="item.placeholder"
+              >
+                <template #prefix>
+                  {{ item.prefix }}
+                </template>
+                <template #suffix>
+                  {{ item.suffix }}
+                </template>
+              </a-input>
+            </template>
           </div>
         </div>
       </div>
@@ -465,7 +471,6 @@ export default defineComponent({
     color: inherit !important;
     background-color: inherit;
     font-size: inherit;
-    text-align: left;
   }
   table {
     width: 100%;
@@ -530,7 +535,7 @@ export default defineComponent({
 .disgn-ele {
   .iconplus {
     color: var(--color-text-regular) !important;
-    padding-left: 20px;
+    padding-left: 5px;
   }
 }
 </style>

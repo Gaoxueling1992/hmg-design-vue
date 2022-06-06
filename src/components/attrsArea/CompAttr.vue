@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="padding10 attr-body">
-      <div class="container-item">
+      <div class="container-item" v-show="activeCompObj.elName !== 'CombinationArea'">
         <div class="title marginB5 fontW500">文本内容</div>
         <div
           id="toolbar"

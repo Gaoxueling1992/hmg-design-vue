@@ -31,25 +31,28 @@
           :auto-size="{ minRows: 2, maxRows: 2 }"
         />
       </div>
-      <template v-if="comp.elName === 'rad-input' || comp.elName === 'rad-number'">
-        <a-radio-group
-          v-if="comp.elName === 'rad-input'"
-          class="marginT10 marginB5"
-          v-model:value="comp.type"
-          name="radioGroup"
-        >
-          <a-radio value="text">单行</a-radio>
-          <a-radio value="textarea">多行</a-radio>
-        </a-radio-group>
-        <div class="title marginT10 marginB5 fontW500">引导文字</div>
-        <a-textarea
-          v-model:value="activeCompObj.placeholder"
-          allowClear
-          :auto-size="{ minRows: 2, maxRows: 2 }"
-        />
-        <div
-          class="flex marginT10"
-          v-if="comp.type === 'text' || comp.elName === 'rad-number'"
+      <a-radio-group
+        v-if="comp.elName === 'RadInput'"
+        class="marginT10 marginB5"
+        v-model:value="comp.type"
+        name="radioGroup"
+      >
+        <a-radio value="text">单行</a-radio>
+        <a-radio value="textarea">多行</a-radio>
+      </a-radio-group>
+      <div class="title marginT10 marginB5 fontW500">引导文字</div>
+      <a-textarea
+        v-model:value="comp.placeholder"
+        allowClear
+        :auto-size="{ minRows: 2, maxRows: 2 }"
+      />
+      <div
+        class="flex marginT10"
+        v-if="comp.elName !== 'RadText'"
+      >
+        <a-input-group
+          compact
+          class="marginT5"
         >
           <div class="flex-title">前缀</div>
           <a-input
@@ -57,36 +60,41 @@
             allowClear
             v-model:value="comp.prefix"
           />
+        </a-input-group>
+        <a-input-group
+          compact
+          class="marginT5"
+        >
           <div class="flex-title">后缀</div>
           <a-input
             class="flex1"
             allowClear
             v-model:value="comp.suffix"
           />
-        </div>
-        <div
-          class="flex marginT10"
-          v-if="comp.elName === 'rad-number'"
-        >
-          <div class="flex-title marginT10 marginB5">范围</div>
-          <a-input-number
-            class="flex1 marginR5"
-            allowClear
-            v-model:value="comp.min"
-            :min="0"
-            :max="comp.max"
-            @change="comp.min = !comp.min ? 0 : comp.min"
-          />
-          <a-input-number
-            class="flex1"
-            allowClear
-            v-model:value="comp.max"
-            :min="comp.min"
-            @change="comp.max = !comp.max ? comp.min : comp.max"
-          />
-        </div>
-      </template>
-      <template v-if="comp.elName === 'rad-datetime'">
+        </a-input-group>
+      </div>
+      <div
+        class="flex marginT10"
+        v-if="comp.elName === 'RadNumber'"
+      >
+        <div class="flex-title marginT10 marginB5">范围</div>
+        <a-input-number
+          class="flex1 marginR5"
+          allowClear
+          v-model:value="comp.min"
+          :min="0"
+          :max="comp.max"
+          @change="comp.min = !comp.min ? 0 : comp.min"
+        />
+        <a-input-number
+          class="flex1"
+          allowClear
+          v-model:value="comp.max"
+          :min="comp.min"
+          @change="comp.max = !comp.max ? comp.min : comp.max"
+        />
+      </div>
+      <template v-if="comp.elName === 'RadDatetime'">
         <div class="title marginT10 marginB5 fontW500">选择器类型</div>
         <div class="flex">
           <a-select
@@ -110,18 +118,21 @@
           @change="comp.threshold = ''"
         >
           <a-select-option value="domain">数据库域值</a-select-option>
-          <a-select-option value="temp">临时显示</a-select-option>
-          <a-select-option value="prop">存储数据</a-select-option>
+          <a-select-option value="TEMP_">临时显示</a-select-option>
+          <a-select-option value="PROP_">存储数据</a-select-option>
+          <a-select-option value="nosubmit">仅绑定</a-select-option>
         </a-select>
+      </div>
+      <div class="attr-group">
         <a-select
           v-if="comp.domainType === 'domain'"
           v-model:value="comp.threshold"
           :options="domainList"
           allowClear
-          style="width: 160px"
+          style="width: 100%"
         ></a-select>
         <a-input
-          style="width: 160px"
+          style="width: 100%"
           v-else
           v-model:value="comp.threshold"
           allowClear
@@ -142,21 +153,6 @@
           <a-checkbox v-model:checked="comp.baseProps[key]">{{ sheet2Form[key].label }}</a-checkbox>
         </div>
       </template>
-      <div class="title marginT10 fontW500">样式</div>
-      <div
-        v-for="(value, key) in comp.styleSheet"
-        :key="key"
-        class="attr-group paddingT10"
-      >
-        <div class="label">{{ sheet2Form[key].label }}</div>
-        <component
-          class="flex1"
-          :is="sheet2Form[key].type"
-          v-model:value="comp.styleSheet[key]"
-          :options="sheet2Form[key].options"
-          :num="0"
-        ></component>
-      </div>
     </a-collapse-panel>
   </a-collapse>
 </template>

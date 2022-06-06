@@ -443,7 +443,7 @@ const compBaseConfig = {
     desc: '表单复合组件，可将多个表单控件聚合成一体。',
     type: 'comb',
     label: '',
-    inline: false,
+    inline: true,
     styleSheet: styleSheet,
     compsList: [],
     align: 'left',
