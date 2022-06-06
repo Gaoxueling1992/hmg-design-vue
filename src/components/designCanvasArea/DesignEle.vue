@@ -15,6 +15,7 @@
       marginBottom: ele.styleSheet.paddingBottom + 'px',
       marginLeft: ele.styleSheet.paddingLeft + 'px',
       marginRight: ele.styleSheet.paddingRight + 'px',
+      'text-decoration': ele.type !== 'comb' ? ele.styleSheet.textDecoration : 'unset'
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
@@ -24,9 +25,15 @@
     }"
   >
     <template v-if="ele.type === 'comb'">
-      <div class="inherit">{{ ele.label || ele.name }}
+      <div class="inherit">
+        <span :style="{
+          'text-decoration': ele.styleSheet.textDecoration
+        }">{{ ele.label || ele.name }}</span>
         <i
           class="iconfont iconplus"
+          :style="{
+            fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit'
+          }"
           v-if="activeCompId === ele.id"
           @click="addComp=true"
         >
@@ -37,7 +44,8 @@
         class="flex-row"
         :style="{
           'text-align': ele.align,
-          height: 'calc(100% - 25px)'
+          height: 'calc(100% - 25px)',
+          'text-decoration': ele.styleSheet.textDecoration
         }"
       >
         <div
@@ -518,5 +526,11 @@ export default defineComponent({
   display: block;
   text-align: center;
   vertical-align: middle;
+}
+.disgn-ele {
+  .iconplus {
+    color: var(--color-text-regular) !important;
+    padding-left: 20px;
+  }
 }
 </style>
