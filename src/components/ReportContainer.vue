@@ -557,7 +557,7 @@ export default defineComponent({
             });
           }
           break;
-        case 'resetReporetDesc':
+        case 'resetReportDesc':
           calSplitField[+currentReport.value - 1].label = e.data.currentDec;
           currentDec.value = e.data.currentDec;
           break;
@@ -693,11 +693,9 @@ export default defineComponent({
           for (let i = 0; i < lines.value.length; i++) {
             const line = lines.value[i];
             for (let j = 0; j < line.length; j++) {
-              if (line[j].threshold && data3[line[j].threshold]) {
+              if (line[j].threshold && data3[line[j].threshold] && line[j].elName !== 'CombinationArea') {
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
-                if (e.data.isAutoApply && line[j].value) {
-                }
                 if (line[j].elName === 'RadEditor') {
                   let arr =
                     value.split(
@@ -730,14 +728,23 @@ export default defineComponent({
                   if (!hasVal && !e.data.isAutoApply) {
                     value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
                   }
-                } else if (line[j].elName !== 'RadEditor') {
+                } else  {
                   value = data3[line[j].threshold];
-                }
+                } 
                 lines.value[i][j] = {
                   ...line[j],
                   value,
                   src: data3.src || ''
                 };
+              } else if (line[j].elName === 'CombinationArea') {
+                if (line[j].compsList && line[j].compsList.length) {
+                  line[j].compsList.forEach(item => {
+                    if (item.threshold && data3[item.threshold]) {
+                      item.value = data3[item.threshold];
+                      item.src = data3.src || ''
+                    }
+                  });
+                }
               }
             }
           }

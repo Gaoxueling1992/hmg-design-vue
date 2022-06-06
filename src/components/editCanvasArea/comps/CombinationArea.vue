@@ -144,6 +144,178 @@
         >{{item.value ? moment(item.value).format(item.format) : ''}} </div>
         {{item.suffix}}
       </template>
+      <template v-if="item.elName === 'RadSignature'">
+        <div
+          class="inherit"
+          v-if="item.label"
+          :class="ele.inline ? 'ele-label' : ''"
+          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+          :style="{
+      lineHeight: item.imgHeight > 30 ? item.imgHeight + 'px' : '30px',
+      height: item.imgHeight > 30 ? item.imgHeight+ 'px' : '30px',
+      'vertical-align': 'top',
+      'padding-right': ele.inline ? '10px' : 0,
+      'display': ele.inline ? 'inline-block' : ''
+    }"
+        >{{ item.label }}</div>
+        <div
+          :class="{
+      'flex flex1': !isReadonlyStatus
+    }"
+          :style="{
+      flexDirection: (item.imagePosi === 'right' || item.imagePosi === 'left') ? 'row' : 'column',
+      display: isReadonlyStatus ? 'inline-block' : '',
+      'text-decoration': 'inherit'
+    }"
+        >
+          <template v-if="item.imagePosi === 'right' || item.imagePosi === 'bottom'">
+            <template v-if="item.type !== 'image'">
+              <a-input
+                style="flex: 1"
+                :disabled="item.baseProps.readonly"
+                class="inherit"
+                v-if="!isReadonlyStatus && !item.baseProps.readonly"
+                v-model:value="item.value"
+                :placeholder="item.placeholder"
+              >
+              </a-input>
+              <div
+                v-else
+                style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+                class="inherit display-text"
+                :style="{
+            float: item.imagePosi === 'right' ? 'left' : '',
+            lineHeight: item.imgHeight > 30 && item.imagePosi === 'right' ? item.imgHeight + 'px' : '30px'
+          }"
+              >
+                {{ item.value }}&nbsp;
+              </div>
+            </template>
+            <div
+              v-if="item.type !== 'input'"
+              :style="{float: item.imagePosi === 'right' ? 'left' : '',display: 'block'}"
+            >
+              <img
+                class="img"
+                :height="item.imgHeight"
+                :width="item.imgWidth"
+                :src="item.src"
+                v-if="item.src"
+                alt="签名"
+                :style="{
+            height: item.imgHeight+ 'px',
+            lineHeight: item.imgHeight+ 'px',
+            width: item.imgWidth + 'px',
+            border: '1px solid',
+            float: 'left'
+          }"
+              />
+              <template v-if="item.srcs">
+                <span
+                  v-if="item.src"
+                  style="float: left"
+                >{{item.splitWords}}</span>
+                <template
+                  v-for="(src, idx) in item.srcs"
+                  :key="idx"
+                >
+                  <img
+                    class="img"
+                    :height="item.imgHeight"
+                    :width="item.imgWidth"
+                    :src="src"
+                    alt="签名"
+                    :style="{
+              height: item.imgHeight+ 'px',
+              lineHeight: item.imgHeight+ 'px',
+              width: item.imgWidth + 'px',
+              border: '1px solid',
+              float: 'left',
+            }"
+                  />
+                  <span
+                    v-if="idx < item.srcs.length - 1"
+                    style="float: left"
+                  >{{item.splitWords}}</span>
+                </template>
+              </template>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              v-if="item.type !== 'input'"
+              :style="{float: item.imagePosi === 'right' ? 'left' : '',display: 'block'}"
+            >
+              <img
+                class="img"
+                :height="item.imgHeight"
+                :width="item.imgWidth"
+                :src="item.src"
+                v-if="item.src"
+                alt="签名"
+                :style="{
+            height: item.imgHeight+ 'px',
+            lineHeight: item.imgHeight+ 'px',
+            width: item.imgWidth + 'px',
+            border: '1px solid',
+            float: 'left'
+          }"
+              />
+              <template v-if="item.srcs">
+                <span
+                  v-if="item.src"
+                  style="float: left"
+                >{{item.splitWords}}</span>
+                <template
+                  v-for="(src, idx) in item.srcs"
+                  :key="idx"
+                >
+                  <img
+                    class="img"
+                    :height="item.imgHeight"
+                    :width="item.imgWidth"
+                    :src="src"
+                    alt="签名"
+                    :style="{
+              height: item.imgHeight+ 'px',
+              lineHeight: item.imgHeight+ 'px',
+              width: item.imgWidth + 'px',
+              border: '1px solid',
+              float: 'left'
+            }"
+                  />
+                  <span
+                    v-if="idx < item.srcs.length - 1"
+                    style="float: left"
+                  >{{item.splitWords}}</span>
+                </template>
+              </template>
+            </div>
+            <template v-if="item.type !== 'image'">
+              <a-input
+                style="flex: 1"
+                :disabled="item.baseProps.readonly"
+                class="inherit"
+                v-if="!isReadonlyStatus && !item.baseProps.readonly"
+                v-model:value="item.value"
+                :placeholder="item.placeholder"
+              >
+              </a-input>
+              <div
+                v-else
+                style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+                class="inherit display-text"
+                :style="{
+            float: item.imagePosi === 'left' ? 'left' : '',
+            lineHeight: item.imgHeight > 30 && item.imagePosi === 'left' ? item.imgHeight + 'px' : '30px'
+          }"
+              >
+                {{ item.value }}&nbsp;
+              </div>
+            </template>
+          </template>
+        </div>
+      </template>
     </div>
   </div>
 </template>

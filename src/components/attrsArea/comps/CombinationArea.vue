@@ -110,6 +110,50 @@
           />
         </div>
       </template>
+      <template v-if="comp.elName === 'RadSignature'">
+        <div class="title marginT10 marginB5 fontW500">类型</div>
+        <a-radio-group
+          class="marginB5"
+          v-model:value="comp.type"
+          name="radioGroup"
+        >
+          <a-radio value="input">电子签名</a-radio>
+          <a-radio value="image">手写体签名</a-radio>
+          <a-radio value="both">组合</a-radio>
+        </a-radio-group>
+        <template v-if="comp.type === 'both'">
+          <div class="title marginT10 marginB5 fontW500">手写签名位置</div>
+          <a-radio-group
+            class="marginB5"
+            v-model:value="comp.imagePosi"
+            name="radioGroup"
+          >
+            <a-radio value="up">上</a-radio>
+            <a-radio value="bottom">下</a-radio>
+            <a-radio value="left">左</a-radio>
+            <a-radio value="right">右</a-radio>
+          </a-radio-group>
+        </template>
+        <template v-if="comp.type !== 'input'">
+          <div class="title marginT10 marginB5 fontW500">签名大小</div>
+          <div class="flex">
+            <div class="flex-title">宽</div>
+            <a-input-number
+              class="flex1 marginR5"
+              :min="10"
+              v-model:value="comp.imgWidth"
+              @change="comp.imgWidth = !comp.imgWidth ? 10 : comp.imgWidth"
+            />
+            <div class="flex-title marginL5">高</div>
+            <a-input-number
+              class="flex1"
+              :min="30"
+              v-model:value="comp.imgHeight"
+              @change="comp.imgHeight = !comp.imgHeight ? 10 : comp.imgHeight"
+            />
+          </div>
+        </template>
+      </template>
       <div class="title marginT10 marginB5 fontW500">域值</div>
       <div class="attr-group">
         <a-select
