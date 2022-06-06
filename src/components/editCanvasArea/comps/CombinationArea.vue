@@ -76,7 +76,7 @@
     padding-bottom: 1px;"
           class="inherit display-text"
         >
-          {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
+          {{ item.prefix }} {{ item.value }} {{ item.suffix }}&nbsp;
         </div>
       </template>
       <template v-if="item.elName === 'RadNumber'">
@@ -90,9 +90,9 @@
               'text-decoration': 'inherit'
             }"
           style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
-        >{{ item.label }}</div>
+        >{{ item.label }}&nbsp;</div>
         <template v-if="!isReadonlyStatus && !item.baseProps.readonly">
-          <span>{{item.prefix}}</span>
+          <span>{{item.prefix}}&nbsp;</span>
           <a-input-number
             style="flex: 1"
             :min="item.min"
@@ -124,8 +124,8 @@
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : ''
     }"
-        >{{ item.label }}</div>
-        <span>{{item.prefix}} </span>
+        >{{ item.label }} </div>
+        <span>{{item.prefix}}&nbsp;</span>
         <a-date-picker
           v-if="!isReadonlyStatus && !item.baseProps.readonly"
           style="flex: 1"

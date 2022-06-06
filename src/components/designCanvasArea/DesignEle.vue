@@ -39,12 +39,12 @@
             fontSize: '18px'
           }"
           v-if="activeCompId === ele.id"
-          @click="addComp=true"
+          @click="openAdd2Comp"
         >
         </i>
       </div>
       <div
-        v-if="ele.compsList && ele.compsList.length && addComp===false"
+        v-if="ele.compsList && ele.compsList.length"
         class="flex-row"
         :style="{
           'text-align': ele.align,
@@ -284,7 +284,7 @@
       cancelText="关闭"
       okText="确定"
       @cancel="addComp=false"
-      @ok="addComp=false"
+      @ok="confirm2Comp"
     >
       <template v-for="(item, index) in list">
         <button
@@ -298,11 +298,11 @@
       </template>
       <div
         class="comp-canvas"
-        v-if="ele.compsList && ele.compsList.length"
+        v-if="tempCompList && tempCompList.length"
       >
-        <draggable v-model="ele.compsList">
+        <draggable v-model="tempCompList">
           <div
-            v-for="item in ele.compsList"
+            v-for="item in tempCompList"
             :key="item.id"
             class="comb-comp-selected"
           >
@@ -385,6 +385,7 @@ export default defineComponent({
     const setFixedArea: any = inject('setFixedArea');
     const pageFooterId: Ref<string> = inject('pageFooterId');
     const pageHeaderId: Ref<string> = inject('pageHeaderId');
+    const tempCompList: Ref<any> = ref<any>([]);
 
     const textWidth: Ref = ref<number>(0);
     onMounted(() => {
@@ -419,19 +420,28 @@ export default defineComponent({
         },
         rules: {}
       });
-      ele.compsList.push({
+      tempCompList.value.push({
         ...baseConfig,
         id
       });
     };
     const deleteIt = (id) => {
-      console.log(id.value);
-      for (let i = 0; i < ele.compsList.length; i++) {
-        if (ele.compsList[i].id === id) {
-          ele.compsList.splice(i, 1);
+      for (let i = 0; i < tempCompList.value.length; i++) {
+        if (tempCompList.value[i].id === id) {
+          tempCompList.value.splice(i, 1);
           break;
         }
       }
+    };
+
+    const confirm2Comp = () => {
+      addComp.value = false;
+      ele.compsList = JSON.parse(JSON.stringify(tempCompList.value));
+    };
+
+    const openAdd2Comp = () => {
+      addComp.value = true;
+      tempCompList.value = JSON.parse(JSON.stringify(ele.compsList));
     };
 
     return {
@@ -447,7 +457,10 @@ export default defineComponent({
       domainList,
       deleteIt,
       setFixedArea, pageFooterId, pageHeaderId,
-      textWidth
+      textWidth,
+      openAdd2Comp,
+      tempCompList,
+      confirm2Comp
     };
   }
 });
