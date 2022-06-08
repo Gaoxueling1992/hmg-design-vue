@@ -4,7 +4,8 @@
       class="edit-canvas"
       id="editCanvas"
       :style="{
-        'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE'
+        'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE',
+        zoom: zoom + '%'
       }"
     ></EditCanvas>
   </template>
@@ -473,6 +474,7 @@ export default defineComponent({
     const pageId: Ref<string> = ref('');
     let tempLines: any = [];
     let customComp: Ref<string> = ref('');
+    const zoom: Ref<string> = ref('100');
 
     const {
       addComp,
@@ -507,6 +509,9 @@ export default defineComponent({
 
     window.addEventListener('message', async (e) => {
       switch (e.data.type) {
+        case 'resetZoom':
+          zoom.value = e.data.data;
+          break;
         case 'newTpl':
           newTpl(1);
           break;
@@ -523,6 +528,11 @@ export default defineComponent({
           }
           break;
         case 'resetData':
+          if (e.data.zoom) {
+            zoom.value = e.data.zoom;
+          } else {
+            zoom.value = '100';
+          }
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
             currentDec.value = splitJson.calSplitField.filter(
@@ -852,7 +862,8 @@ export default defineComponent({
       isReadonlyStatus,
       isEditor,
       openPreview,
-      closePreview
+      closePreview,
+      zoom
     };
   }
 });
