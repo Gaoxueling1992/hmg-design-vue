@@ -120,7 +120,7 @@ const handleCompsOper = (
   const activeCompId: Ref<string> = ref('');
   const pageHeaderId: Ref<string> = ref(pageData.pageHeaderId);
   const pageFooterId: Ref<string> = ref(pageData.pageFooterId);
-  const returnComp = (elName: string) => {
+  const returnComp = (elName: string, cusInfo = {}) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
     const baseConfig = reactive({
@@ -137,6 +137,13 @@ const handleCompsOper = (
       ...baseConfig,
       id: id
     };
+    if (cusInfo && cusInfo.threshold) {
+      activeCompObj.value.label = cusInfo.label;
+      activeCompObj.value.threshold = cusInfo.threshold;
+      if (cusInfo.elValue) {
+        activeCompObj.value.value = cusInfo.elValue;
+      }
+    }
     if (elName === 'combination-area') {
       activeCompObj.value.compsList = [];
     }
@@ -144,7 +151,7 @@ const handleCompsOper = (
     return activeCompObj.value;
   };
   // 新增控件
-  const addComp = (value: string) => {
+  const addComp = (value: string, cusInfo = {}) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
     const baseConfig = reactive({
@@ -162,6 +169,13 @@ const handleCompsOper = (
       ...baseConfig,
       id: id
     };
+    if (cusInfo && cusInfo.threshold) {
+      activeCompObj.value.label = cusInfo.label;
+      activeCompObj.value.threshold = cusInfo.threshold;
+      if (cusInfo.elValue) {
+        activeCompObj.value.value = cusInfo.elValue;
+      }
+    }
     if (value === 'combination-area') {
       activeCompObj.value.compsList = [];
     }
@@ -458,6 +472,7 @@ export default defineComponent({
     const loading: Ref<boolean> = ref(true);
     const pageId: Ref<string> = ref('');
     let tempLines: any = [];
+    let customComp: Ref<string> = ref('');
 
     const {
       addComp,
@@ -555,6 +570,11 @@ export default defineComponent({
                 label: domain.name + ' #' + domain.option
               });
             });
+          }
+          break;
+        case 'resetCustomComp':
+          if (e.data.data && JSON.parse(e.data.data)) {
+            customComp.value = JSON.parse(e.data.data);
           }
           break;
         case 'resetReportDesc':
@@ -775,6 +795,7 @@ export default defineComponent({
     provide('loading', loading);
     provide('returnComp', returnComp);
     provide('pageId', pageId);
+    provide('customComp', customComp);
 
     setTimeout(function () {
       loading.value = false;
@@ -874,6 +895,10 @@ export default defineComponent({
 }
 .ant-calendar-picker-container {
   z-index: 10500 !important;
+}
+.ant-layout-sider {
+  height: 100vh;
+  overflow-y: auto;
 }
 </style>
 

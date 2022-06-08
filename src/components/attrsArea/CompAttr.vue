@@ -141,9 +141,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .comp-attr {
-  overflow: auto;
-  // margin-bottom: 50px;
-  height: 100vh;
   .w-e-toolbar {
     z-index: 1 !important;
   }
