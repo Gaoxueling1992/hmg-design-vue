@@ -116,18 +116,22 @@ export default defineComponent({
     watch(
       () => activeCompObj,
       () => {
-        if (activeCompObj.value.id && activeCompObj.value.elName === 'RadText' && !editor) {
-          editor = new E(toolbarid, id);
-          editor.config.menus = editorMenus;
-          editor.config.fontSizes = editorFontSizes;
-          editor.config.fontNames = fontNames;
-          editor.create();
+        if (activeCompObj.value.id && activeCompObj.value.elName === 'RadText') {
+          if (!editor) {
+            editor = new E(toolbarid, id);
+            editor.config.menus = editorMenus;
+            editor.config.fontSizes = editorFontSizes;
+            editor.config.fontNames = fontNames;
+            editor.create();
+            editor.config.onchange = (newHtml) => {
+              activeCompObj.value.label = newHtml;
+            };
+          }
           if (activeCompObj.value.label) {
             editor.txt.html(activeCompObj.value.label);
+          } else {
+            editor.txt.html('');
           }
-          editor.config.onchange = (newHtml) => {
-            activeCompObj.value.label = newHtml;
-          };
         }
       },
       { deep: true }
