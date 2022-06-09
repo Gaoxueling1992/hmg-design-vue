@@ -87,8 +87,7 @@ const styleSheet: object = {
   width: '100%',
   paddingTop: '0',
   paddingBottom: '0',
-  paddingLeft: '0',
-  paddingRight: '0'
+  paddingLeft: '0'
 }
 
 // 基础属性配置
@@ -263,8 +262,7 @@ const compBaseConfig = {
       width: '100%',
       paddingTop: '0',
       paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+      paddingLeft: '0'
     },
     imgHeight: '100',
     imgWidth: '100',
@@ -314,8 +312,7 @@ const compBaseConfig = {
       width: '100%',
       paddingTop: '0',
       paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+      paddingLeft: '0'
     },
     imgHeight: '100',
     imgWidth: '100',
@@ -374,8 +371,7 @@ const compBaseConfig = {
       width: '100%',
       paddingTop: '0',
       paddingBottom: '0',
-      paddingLeft: '0',
-      paddingRight: '0'
+      paddingLeft: '0'
     },
     background: 'transparent',
     displayValue: false,
@@ -1314,10 +1310,6 @@ const sheet2Form = {
   paddingLeft: {
     type: 'a-input-number',
     label: '左边距'
-  },
-  paddingRight: {
-    type: 'a-input-number',
-    label: '右边距'
   }
 }
 

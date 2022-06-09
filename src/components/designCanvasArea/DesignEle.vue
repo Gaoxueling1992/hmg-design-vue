@@ -11,10 +11,6 @@
       fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
       borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
       display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block',
-      marginTop: ele.styleSheet.paddingTop + 'px',
-      marginBottom: ele.styleSheet.paddingBottom + 'px',
-      marginLeft: ele.styleSheet.paddingLeft + 'px',
-      marginRight: ele.styleSheet.paddingRight + 'px',
       'text-decoration': ele.type !== 'comb' ? ele.styleSheet.textDecoration : 'unset'
     }"
     @click.stop="clickEle"
@@ -25,7 +21,13 @@
     }"
   >
     <!-- 复合组件 -->
-    <template v-if="ele.type === 'comb'">
+    <div v-if="ele.type === 'comb'"
+      :style="{
+        paddingTop: ele.styleSheet.paddingTop + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft + 'px',
+        paddingRight: ele.styleSheet.paddingRight + 'px',
+      }">
       <div class="inherit">
         <span :style="{
           'text-decoration': 'none',
@@ -95,8 +97,14 @@
           </div>
         </div>
       </div>
-    </template>
-    <template v-else-if="!ele.noLabel">
+    </div>
+    <div v-else-if="!ele.noLabel"
+      :style="{
+        paddingTop: ele.styleSheet.paddingTop + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft + 'px',
+        paddingRight: ele.styleSheet.paddingRight + 'px',
+      }">
       <div
         class="inherit"
         :class="ele.inline ? 'ele-label' : ''"
@@ -114,8 +122,14 @@
           {{ ele.suffix }}
         </template>
       </a-input>
-    </template>
-    <template v-else>
+    </div>
+    <div v-else
+      :style="{
+        paddingTop: ele.styleSheet.paddingTop + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft + 'px',
+        paddingRight: ele.styleSheet.paddingRight + 'px',
+      }">
       <div
         v-if="ele.elName === 'RadText'"
         style="min-height: 20px"
@@ -225,7 +239,7 @@
           </a-col>
         </a-row>
       </div>
-    </template>
+    </div>
     <!-- 操作区域 -->
     <div
       class="oper"

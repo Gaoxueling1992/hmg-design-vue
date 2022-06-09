@@ -43,19 +43,26 @@
                 'vertical-align': 'middle',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
-                paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingLeft: '0px',
+                paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
               :id="ele.id"
               >
-                <component
-                  v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
-                  :is="ele.elName"
-                  :ele="ele"
-                ></component>
+                <div :style="{
+                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                }">
+                  <component
+                    v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                    :is="ele.elName"
+                    :ele="ele"
+                  ></component>
+                </div>
               </div>
             </template>
           </div>
@@ -95,20 +102,27 @@
                 'vertical-align': 'middle',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
-                paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingLeft: '0px',
+                paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
               :id="ele.id"
               v-if="ele.display !== false"
               >
-                <component
-                  v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
-                  :is="ele.elName"
-                  :ele="ele"
-                ></component>
+                <div :style="{
+                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                }">
+                  <component
+                    v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                    :is="ele.elName"
+                    :ele="ele"
+                  ></component>
+                </div>
               </div>
             </template>
           </div>
@@ -148,20 +162,27 @@
                   'vertical-align': 'middle',
                   'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                   float: 'left',
-                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : ele.elName === 'RadLine' ? '10px !important' : '2px !important',
-                  paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                  paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
+                  paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                  paddingLeft: '0px',
+                  paddingRight: '0px',
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"
                 v-if="ele.display !== false"
               >
-                <component
-                  v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
-                  :is="ele.elName"
-                  :ele="ele"
-                ></component>
+                <div :style="{
+                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                }">
+                  <component
+                    v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
+                    :is="ele.elName"
+                    :ele="ele"
+                  ></component>
+                </div>
               </div>
             </template>
           </div>
