@@ -143,7 +143,7 @@ export default defineComponent({
           if (toolbar) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
-            toolbar.style.top = top - (ele.label && !ele.inline ? 0 : 25) + 'px';
+            toolbar.style.top = top - (!props.ele.inline ? 0 : 25) + 'px';
           }
         };
         editor.config.onfocus = function () {
@@ -152,7 +152,7 @@ export default defineComponent({
           if (toolbar) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
-            toolbar.style.top = top - (ele.label && !ele.inline ? 0 : 25) + 'px';
+            toolbar.style.top = top - (!props.ele.inline ? 0 : 25) + 'px';
           }
         };
         editor.config.onblur = function () {
