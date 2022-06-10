@@ -602,12 +602,10 @@ export default defineComponent({
             line.forEach(ele => {
               console.log(ele.threshold, bind2Threshold)
               if (ele.threshold === bind2Threshold) {
-                console.log('------1');
-                ele.value = value
+                ele.value = value;
               }
             });
           });
-          console.log('-----')
           toSaveEditor(tempToAave, value, bind2Threshold);
           break;
         case 'saveEditor':
