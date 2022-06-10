@@ -27,7 +27,6 @@
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
         paddingLeft: ele.styleSheet.paddingLeft + 'px',
         paddingRight: ele.styleSheet.paddingRight + 'px',
-        display: ele.inline ? 'flex' : '',
         width: '100%'
       }">
       <div class="inherit">
