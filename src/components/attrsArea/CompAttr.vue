@@ -127,9 +127,9 @@ export default defineComponent({
               activeCompObj.value.label = newHtml;
             };
           }
-          if (activeCompObj.value.label) {
+          if (activeCompObj.value.label && editor.txt.html() !== activeCompObj.value.label) {
             editor.txt.html(activeCompObj.value.label);
-          } else {
+          } else if (!activeCompObj.value.label) {
             editor.txt.html('');
           }
         }
