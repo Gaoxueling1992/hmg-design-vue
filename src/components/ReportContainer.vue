@@ -903,7 +903,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .edit-canvas-preview {
-  position: fixed;
+  position: fixed !important;
   right: 280px;
   bottom: 30px;
 }
