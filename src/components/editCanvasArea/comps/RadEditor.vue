@@ -19,11 +19,6 @@
     @click="focusedEle = ele.id"
   >
     <div
-      :id="'toolbar' + ele.id"
-      class="editor-toolbar"
-      mode="default"
-    ></div>
-    <div
       class="container container-editor"
       :style="{
         fontSize: ele.fontSize + 'px',
@@ -72,19 +67,14 @@ import {
   onBeforeUnmount
 } from 'vue';
 import E from 'wangeditor';
-import {
-  editorMenus,
-  editorFontSizes,
-  editorColors
-} from '@/utils/config';
+import { editorMenus, editorFontSizes, editorColors } from '@/utils/config';
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const currentReport: Ref<string> = inject('currentReport');
     const splitField: Ref<string> = inject('splitField');
-    const splitRule: Ref<string> = inject('splitRule');
     const currentDec: Ref<string> = inject('currentDec');
     const focusedEle: Ref<string> = inject('focusedEle');
 
@@ -113,10 +103,130 @@ export default defineComponent({
     });
 
     let editor;
-    const { ele } = toRefs(props);
+    const { ele, lineId } = toRefs(props);
     onMounted(() => {
+      let toolbr = document.createElement('div');
+      toolbr.setAttribute('id', `toolbar${props.ele.id}`);
+      toolbr.setAttribute('class', 'editor-toolbar');
+      let container = document.getElementById(props.toolbarId);
+      container.appendChild(toolbr);
+
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
+      setTimeout(() => {
+        editor = new E(toolbarid, id);
+        console.log('editor', editor);
+        editor.config.mode = 'default';
+        editor.config.menus = editorMenus;
+        editor.config.fontSizes = editorFontSizes;
+        editor.config.colors = editorColors;
+        editor.config.fontNames = [
+          '宋体',
+          '新宋体',
+          '仿宋',
+          '楷体',
+          '微软雅黑',
+          'Times New Roman',
+          '隶书',
+          '幼圆'
+        ];
+        editor.create();
+
+        editor.config.onchange = (newHtml) => {
+          focusedEle.value = props.ele.id;
+          if (splitField.value) {
+            calValue(newHtml);
+          } else {
+            props.ele.value = newHtml;
+          }
+          let toolbar = document.getElementById(`toolbar${props.ele.id}`);
+          if (toolbar) {
+            toolbar.style.display = '';
+            let top = document.getElementById(lineId.value).offsetTop;
+            toolbar.style.top = top - (ele.label && !ele.inline ? 0 : 25) + 'px';
+          }
+        };
+        editor.config.onfocus = function () {
+          focusedEle.value = props.ele.id;
+          let toolbar = document.getElementById(`toolbar${props.ele.id}`);
+          if (toolbar) {
+            toolbar.style.display = '';
+            let top = document.getElementById(lineId.value).offsetTop;
+            toolbar.style.top = top - (ele.label && !ele.inline ? 0 : 25) + 'px';
+          }
+        };
+        editor.config.onblur = function () {
+          console.log(focusedEle.value, props.ele.id);
+          if (document.getElementById(`toolbar${props.ele.id}`)) {
+            document.getElementById(`toolbar${props.ele.id}`).style.display =
+              'none';
+          }
+        };
+        const inputCurReport = () => {
+          if (props.ele.value) {
+            let arr =
+              props.ele.value.split(
+                /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+              ) || [];
+            let hasStr = false;
+            for (let j = 0; j < arr.length; j++) {
+              if (arr[j]) {
+                if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                  let newVal = arr[j].replace(
+                    new RegExp(
+                      /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                      'gm'
+                    ),
+                    ''
+                  );
+                  if (newVal !== editor.txt.html()) {
+                    editor.txt.html(newVal);
+                  }
+                  hasStr = true;
+                  break;
+                }
+              }
+            }
+            if (!hasStr) {
+              editor.txt.html('');
+            }
+          }
+        };
+        if (splitField.value) {
+          inputCurReport();
+        } else if (editor && editor.txt) {
+          editor.txt.html(props.ele.value);
+        }
+
+        const calValue = (h) => {
+          if (props.ele.value) {
+            let arr =
+              props.ele.value.split(
+                /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+              ) || [];
+            let hasVal = false;
+            for (let j = 0; j < arr.length; j++) {
+              if (arr[j]) {
+                if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                  props.ele.value = props.ele.value.replace(
+                    arr[j],
+                    `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
+                  );
+                  hasVal = true;
+                  break;
+                }
+              }
+            }
+            if (!hasVal) {
+              props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
+            }
+          } else {
+            props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
+          }
+        };
+      });
+
+
       window.addEventListener('message', async (e) => {
         if (
           e.data.type === 'resetReporetDesc' &&
@@ -158,94 +268,15 @@ export default defineComponent({
           }
         }
       });
-      editor = new E(toolbarid, id);
-      console.log('editor', editor)
-      editor.config.mode = 'default';
-      editor.config.menus = editorMenus;
-      editor.config.fontSizes = editorFontSizes;
-      editor.config.colors = editorColors;
-      editor.config.fontNames = [
-        '宋体',
-        '新宋体',
-        '仿宋',
-        '楷体',
-        '微软雅黑',
-        'Times New Roman',
-        '隶书',
-        '幼圆'
-      ];
-      editor.create();
 
-      onBeforeUnmount(() => {
-        if (editor == null) {
-          return;
+      watch(focusedEle, () => {
+        if (focusedEle.value !== props.ele.value) {
+          if (document.getElementById(`toolbar${props.ele.id}`)) {
+            document.getElementById(`toolbar${props.ele.id}`).style.display =
+              'none';
+          }
         }
-        editor.destroy();
-        editor = null;
       });
-
-      const inputCurReport = () => {
-        if (props.ele.value) {
-          let arr =
-            props.ele.value.split(
-              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
-            ) || [];
-          let hasStr = false;
-          for (let j = 0; j < arr.length; j++) {
-            if (arr[j]) {
-              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                let newVal = arr[j].replace(
-                  new RegExp(
-                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
-                    'gm'
-                  ),
-                  ''
-                );
-                if (newVal !== editor.txt.html()) {
-                  editor.txt.html(newVal);
-                }
-                hasStr = true;
-                break;
-              }
-            }
-          }
-          if (!hasStr) {
-            editor.txt.html('');
-          }
-        }
-      };
-      if (splitField.value) {
-        inputCurReport();
-      } else {
-        editor.txt.html(props.ele.value);
-      }
-
-      const calValue = (h) => {
-        if (props.ele.value) {
-          let arr =
-            props.ele.value.split(
-              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
-            ) || [];
-          let hasVal = false;
-          for (let j = 0; j < arr.length; j++) {
-            if (arr[j]) {
-              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                props.ele.value = props.ele.value.replace(
-                  arr[j],
-                  `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
-                );
-                hasVal = true;
-                break;
-              }
-            }
-          }
-          if (!hasVal) {
-            props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
-          }
-        } else {
-          props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
-        }
-      };
 
       // 切换当前部位时，重算富文本内容
       watch(currentReport, () => {
@@ -263,35 +294,23 @@ export default defineComponent({
         { deep: true }
       );
 
-      editor.config.onchange = (newHtml) => {
-        focusedEle.value = props.ele.id;
-        if (splitField.value) {
-          calValue(newHtml);
-        } else {
-          props.ele.value = newHtml;
-        }
-        if (document.getElementById(`toolbar${props.ele.id}`)) {
-          document.getElementById(`toolbar${props.ele.id}`).style.display = '';
-        }
-      };
-      editor.config.onfocus = function () {
-        focusedEle.value = props.ele.id;
-        if (document.getElementById(`toolbar${props.ele.id}`)) {
-          document.getElementById(`toolbar${props.ele.id}`).style.display = '';
-        }
-      };
-      editor.config.onblur = function () {
-        console.log(focusedEle.value, props.ele.id);
-        if (document.getElementById(`toolbar${props.ele.id}`)) {
-          document.getElementById(`toolbar${props.ele.id}`).style.display =
-            'none';
-        }
-      };
       if (document.getElementById(`toolbar${props.ele.id}`)) {
         document.getElementById(`toolbar${props.ele.id}`).style.display =
           'none';
       }
     });
+
+    onBeforeUnmount(() => {
+      if (editor == null) {
+        return;
+      }
+      let container = document.getElementById(props.toolbarId);
+      let toolbar = document.getElementById(`toolbar${props.ele.id}`);
+      container.removeChild(toolbar);
+      editor.destroy();
+      editor = null;
+    });
+
     const clickEditor = (e) => {
       focusedEle.value = props.ele.id;
       if (e.target.classList && e.target.classList[0] === 'aspan') {
@@ -378,7 +397,6 @@ export default defineComponent({
   padding: 4px 0;
 }
 .w-e-toolbar .w-e-droplist {
-  max-height: 80px;
   overflow: auto;
   margin-top: 25px !important;
   border: 1px solid var(--border-color-light);
@@ -455,6 +473,8 @@ font[size='3'] {
 .editor-toolbar {
   z-index: 11 !important;
   background: #fff;
+  position: absolute;
+  right: 50px;
 }
 .w-e-toolbar .w-e-menu {
   height: 25px !important;

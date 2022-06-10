@@ -368,7 +368,6 @@ const handleCompsOper = (
     loading.value = true;
     pageData.lines = [];
     pageData.headerLine = -1;
-    item.pageFooterId = 9999;
     // 设计器在每行后面追加一行，方便拖拽
     if (pageId === 'designer') {
       let res = [[]];
@@ -386,6 +385,7 @@ const handleCompsOper = (
       }
       pageData.lines = [].concat(res);
     } else {
+      console.log(item.pageHeaderId, item.pageFooterId)
       if (item.pageFooterId || item.pageHeaderId) {
         for (let i = 0; i < item.lines.length; i++) {
           for (let j = 0; j < item.lines[i].length; j++) {

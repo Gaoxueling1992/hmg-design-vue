@@ -12,7 +12,7 @@
         <div
           v-for="(line, idx) in headerLines"
           :key="idx"
-          :id="'line' + String(idx)"
+          :id="'header-line' + String(idx)"
           :style="{
             'width': '100%',
             'padding': line.length > 0 ? '2px 0' : '0',
@@ -49,18 +49,22 @@
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
-              :id="ele.id"
+                :id="ele.id"
               >
                 <div :style="{
                   paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
                   paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                  display: ele.inline ? 'flex' : '',
+                  width: '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
                     :is="ele.elName"
                     :ele="ele"
+                    toolbarId="edit-canvas-header"
+                    :lineId="'header-line' + String(idx)"
                   ></component>
                 </div>
               </div>
@@ -72,7 +76,7 @@
         <div
           v-for="(line, idx) in bodyLines"
           :key="idx"
-          :id="'line' + String(idx)"
+          :id="'body-line' + String(idx)"
           :style="{
             'display': '',
             'width': '100%',
@@ -108,19 +112,23 @@
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
               }"
-              :id="ele.id"
-              v-if="ele.display !== false"
+                :id="ele.id"
+                v-if="ele.display !== false"
               >
                 <div :style="{
                   paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
                   paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                  display: ele.inline ? 'flex' : '',
+                  width: '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
                     :is="ele.elName"
                     :ele="ele"
+                    toolbarId="edit-canvas-body"
+                    :lineId="'body-line' + String(idx)"
                   ></component>
                 </div>
               </div>
@@ -132,7 +140,7 @@
         <div
           v-for="(line, idx) in footerLines"
           :key="idx"
-          :id="'line' + String(idx)"
+          :id="'footer-line' + String(idx)"
           :style="{
             'display': '',
             'width': '100%',
@@ -175,12 +183,16 @@
                   paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
                   paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
-                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px'
+                  paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
+                  display: ele.inline ? 'flex' : '',
+                  width: '100%'
                 }">
                   <component
                     v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
                     :is="ele.elName"
                     :ele="ele"
+                    toolbarId="edit-canvas-footer"
+                    :lineId="'footer-line' + String(idx)"
                   ></component>
                 </div>
               </div>
@@ -363,5 +375,8 @@ export default defineComponent({
     padding-top: 1px;
     padding-bottom: 1px;
   }
+}
+#edit-canvas-body, #edit-canvas-header, #edit-canvas-footer {
+  position: relative;
 }
 </style>
