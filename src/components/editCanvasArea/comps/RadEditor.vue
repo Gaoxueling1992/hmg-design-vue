@@ -143,7 +143,8 @@ export default defineComponent({
           if (toolbar) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
-            toolbar.style.top = top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
+            toolbar.style.top =
+              top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
           }
         };
         editor.config.onfocus = function () {
@@ -152,7 +153,8 @@ export default defineComponent({
           if (toolbar) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
-            toolbar.style.top = top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
+            toolbar.style.top =
+              top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
           }
         };
         editor.config.onblur = function () {
@@ -162,70 +164,70 @@ export default defineComponent({
               'none';
           }
         };
-        const inputCurReport = () => {
-          if (props.ele.value) {
-            let arr =
-              props.ele.value.split(
-                /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
-              ) || [];
-            let hasStr = false;
-            for (let j = 0; j < arr.length; j++) {
-              if (arr[j]) {
-                if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                  let newVal = arr[j].replace(
-                    new RegExp(
-                      /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
-                      'gm'
-                    ),
-                    ''
-                  );
-                  if (newVal !== editor.txt.html()) {
-                    editor.txt.html(newVal);
-                  }
-                  hasStr = true;
-                  break;
-                }
-              }
-            }
-            if (!hasStr) {
-              editor.txt.html('');
-            }
-          }
-        };
+
         if (splitField.value) {
           inputCurReport();
         } else if (editor && editor.txt) {
           editor.txt.html(props.ele.value);
         }
-
-        const calValue = (h) => {
-          if (props.ele.value) {
-            let arr =
-              props.ele.value.split(
-                /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
-              ) || [];
-            let hasVal = false;
-            for (let j = 0; j < arr.length; j++) {
-              if (arr[j]) {
-                if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
-                  props.ele.value = props.ele.value.replace(
-                    arr[j],
-                    `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
-                  );
-                  hasVal = true;
-                  break;
-                }
+      });
+      const calValue = (h) => {
+        if (props.ele.value) {
+          let arr =
+            props.ele.value.split(
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+            ) || [];
+          let hasVal = false;
+          for (let j = 0; j < arr.length; j++) {
+            if (arr[j]) {
+              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                props.ele.value = props.ele.value.replace(
+                  arr[j],
+                  `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
+                );
+                hasVal = true;
+                break;
               }
             }
-            if (!hasVal) {
-              props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
-            }
-          } else {
+          }
+          if (!hasVal) {
             props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
           }
-        };
-      });
+        } else {
+          props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
+        }
+      };
 
+      const inputCurReport = () => {
+        if (props.ele.value) {
+          let arr =
+            props.ele.value.split(
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+            ) || [];
+          let hasStr = false;
+          for (let j = 0; j < arr.length; j++) {
+            if (arr[j]) {
+              if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
+                let newVal = arr[j].replace(
+                  new RegExp(
+                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                    'gm'
+                  ),
+                  ''
+                );
+                if (newVal !== editor.txt.html()) {
+                  editor.txt.html(newVal);
+                }
+                hasStr = true;
+                break;
+              }
+            }
+          }
+          if (!hasStr) {
+            editor.txt.html('');
+          }
+        }
+      };
 
       window.addEventListener('message', async (e) => {
         if (
