@@ -328,7 +328,7 @@
             v-model:value="ruleObj.tipType"
             style="width: 50%"
           >
-            <a-select-option value="info">信息</a-select-option>
+            <a-select-option value="info">提示</a-select-option>
             <a-select-option value="error">错误</a-select-option>
             <a-select-option value="warning">警告</a-select-option>
             <a-select-option value="confirm">确认</a-select-option>
@@ -343,6 +343,14 @@
       >
         {{ruleObj.id === 8 ? '提示文案' : '值'}}
         <a-input v-model:value="ruleObj.content"></a-input>
+      </a-input-group>
+      <a-input-group
+        compact
+        class="marginT5"
+        v-if="ruleObj.id === 8 && ruleObj.tipType === 'confirm'"
+      >
+        提交绑定到
+        <a-input v-model:value="ruleObj.bind2Threshold"></a-input>
       </a-input-group>
       <!-- 7 选择表格 -->
       <a-select
@@ -435,7 +443,8 @@ export default defineComponent({
       label: '',
       moreIds: '',
       splitWords: '',
-      tipType: 'info'
+      tipType: 'info',
+      bind2Threshold: ''
     };
     const ruleObj: any = ref({
       ...initRule
@@ -536,6 +545,14 @@ export default defineComponent({
         });
         return;
       }
+      if (+ruleObj.value.id === 8 && ruleObj.value.tipType === 'confirm' && !ruleObj.value.bind2Threshold) {
+        Modal.warning({
+          title: '提示',
+          content: `请输入提交内容绑定的域值`,
+          okText: '知道了'
+        });
+        return;
+      }
       editingRule.value = false;
       if (editingIdx.value === -1) {
         if (!activeCompObj.value.rules[ruleObj.value.opportunity]) {
@@ -592,7 +609,8 @@ export default defineComponent({
         name: actionList[activeCompObj.value.elType][0].value,
         content: '',
         label: '',
-        tipType: 'info'
+        tipType: 'info',
+        bind2Threshold: ''
       };
     };
 
@@ -619,7 +637,8 @@ export default defineComponent({
         name: activeCompObj.value.elType === 'other' ? '' : actionList[activeCompObj.value.elType][0].value,
         content: '',
         label: '',
-        tipType: 'info'
+        tipType: 'info',
+        bind2Threshold: ''
       };
       editingIdx.value = -1;
       editingOp.value = '';
@@ -635,6 +654,7 @@ export default defineComponent({
       ruleObj.value.label = '';
       ruleObj.value.moreIds = '';
       ruleObj.value.splitWords = '';
+      ruleObj.value.bind2Threshold = '';
       if (ruleObj.value.current === 0) {
         ruleObj.value.elType = activeCompObj.value.elType;
         ruleObj.value.value =
@@ -675,6 +695,7 @@ export default defineComponent({
       ruleObj.value.prefix = '';
       ruleObj.value.suffix = '';
       ruleObj.value.tipType = 'info';
+      ruleObj.value.bind2Threshold = '';
     };
 
     const changeId = () => {
@@ -694,6 +715,7 @@ export default defineComponent({
       ruleObj.value.splitWords = '';
       ruleObj.value.suffix = '';
       ruleObj.value.tipType = 'info';
+      ruleObj.value.bind2Threshold = '';
     };
 
     const changeType = () => {
@@ -712,6 +734,7 @@ export default defineComponent({
       ruleObj.value.moreIds = '';
       ruleObj.value.splitWords = '';
       ruleObj.value.tipType = 'info';
+      ruleObj.value.bind2Threshold = '';
     };
 
     const closeDrawer = () => {

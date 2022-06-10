@@ -27,7 +27,8 @@ const dealWithRules = async (linesStr: any, checkInfo: any) => {
             value,
             prefix,
             suffix,
-            tipType
+            tipType,
+            bind2Threshold
           } = rule;
           switch (id) {
             case 1: // 执行脚本
@@ -48,29 +49,14 @@ const dealWithRules = async (linesStr: any, checkInfo: any) => {
                 }
               }
               break;
-            case 8: // 提示  
+            case 8: // 提示
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
-                await new Promise((resolve, reject) => {
-                  Modal[tipType]({
-                    content,
-                    okText: '确定',
-                    cancelText: '取消',
-                    onOk() { 
-                      Modal.destroyAll();
-                      resolve(tipType === 'submit' ? 'continue' : 'stop');
-                    },
-                    onCancel() {
-                      Modal.destroyAll();
-                      reject();
-                    }
-                  });
-                });
-
-                if (tipType !== 'submit') {
-                  return {
-                    result: false
-                  };
-                }
+                return {
+                  result: false,
+                  content,
+                  tipType,
+                  bind2Threshold
+                };
               }
               break;
             case 0: // 追加前后缀
