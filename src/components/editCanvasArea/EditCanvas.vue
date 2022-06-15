@@ -48,7 +48,7 @@
                 paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
                 paddingLeft: '0px',
                 paddingRight: '0px',
-                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
+                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
               }"
                 :id="ele.id"
               >
@@ -111,7 +111,7 @@
                 paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
                 paddingLeft: '0px',
                 paddingRight: '0px',
-                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
+                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
               }"
                 :id="ele.id"
                 v-if="ele.display !== false"
@@ -175,7 +175,7 @@
                   paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
                   paddingLeft: '0px',
                   paddingRight: '0px',
-                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ele.elName !== 'RadEditor' ?  ele.styleSheet.textDecoration : 'none'
+                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"
                 v-if="ele.display !== false"

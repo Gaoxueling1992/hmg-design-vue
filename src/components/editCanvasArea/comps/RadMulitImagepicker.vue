@@ -213,6 +213,9 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  font-size: initial;
+  color: var(--color-text-regular) !important;
+  font-style: normal;
 }
 .picker-flex-edit {
   .ant-image {
@@ -257,6 +260,9 @@ export default defineComponent({
 .picker-flex-text {
   border: 1px solid var(--border-color-lighter);
   padding: 20px;
+  font-size: initial;
+  color: var(--color-text-regular) !important;
+  font-style: normal;
 }
 .pic-uploader {
   float: right;

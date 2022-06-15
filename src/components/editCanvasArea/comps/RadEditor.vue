@@ -115,7 +115,6 @@ export default defineComponent({
       const toolbarid = `#toolbar${props.ele.id}`;
       setTimeout(() => {
         editor = new E(toolbarid, id);
-        console.log('editor', editor);
         editor.config.mode = 'default';
         editor.config.menus = editorMenus;
         editor.config.fontSizes = editorFontSizes;
@@ -133,7 +132,6 @@ export default defineComponent({
         editor.create();
 
         editor.config.onchange = (newHtml) => {
-          console.log('focus', props.ele.id);
           focusedEle.value = props.ele.id;
           if (splitField.value) {
             calValue(newHtml);
@@ -149,7 +147,6 @@ export default defineComponent({
           }
         };
         editor.config.onfocus = function () {
-          console.log('focus', props.ele.id);
           focusedEle.value = props.ele.id;
           let toolbar = document.getElementById(`toolbar${props.ele.id}`);
           if (toolbar) {
@@ -159,13 +156,6 @@ export default defineComponent({
               top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
           }
         };
-        // editor.config.onblur = function () {
-        //   console.log(focusedEle.value, props.ele.id);
-        //   if (document.getElementById(`toolbar${props.ele.id}`)) {
-        //     document.getElementById(`toolbar${props.ele.id}`).style.display =
-        //       'none';
-        //   }
-        // };
 
         if (splitField.value) {
           inputCurReport();
@@ -233,7 +223,7 @@ export default defineComponent({
 
       window.addEventListener('message', async (e) => {
         if (
-          e.data.type === 'resetReporetDesc' &&
+          e.data.type === 'resetReportDesc' &&
           e.data.currentDec &&
           e.data.oldDesc &&
           props.ele.value
@@ -274,7 +264,6 @@ export default defineComponent({
       });
 
       watch(focusedEle, () => {
-        console.log('focus watch', props.ele.id, focusedEle.value);
         if (focusedEle.value !== props.ele.id) {
           if (document.getElementById(`toolbar${props.ele.id}`)) {
             document.getElementById(`toolbar${props.ele.id}`).style.display =

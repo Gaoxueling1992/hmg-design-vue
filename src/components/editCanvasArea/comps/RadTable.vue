@@ -34,12 +34,12 @@
                   fontFamily: transFamily(vv.ff),
                   color: vv.fc,
                   fontWeight: !vv.bl || vv.bl === 0 ? 'normal' : 'bold',
-                  fontStyle: !vv.it || vv.it === 0 ? 'normal' : 'italic',
+                  fontStyle: ele.styleSheet.fontStyle === 'normal' && !vv.it || vv.it === 0 ? 'normal' : 'italic',
                   fontSize: vv.fs + 'px',
                   textDecoration:
                     !vv.cl || vv.cl === 0 ? '' : 'line-through',
                 }">
-                {{vv.v}}
+                {{vv.v}} {{ele.styleSheet}}
               </span>
             </span>
             <span v-else>
@@ -225,12 +225,12 @@ export default defineComponent({
 
     const tbList = computed(() => {
       let list = [];
-      console.log('tabel', tableTpl.value.content)
       if (tableTpl.value.list) {
         list = JSON.parse(JSON.stringify(tableTpl.value.list));
       } else {
         list = JSON.parse(tableTpl.value.content);
       }
+      console.log(tableTpl.value.content);
       tds.value = list['0'].length;
       for (let key in list) {
         const row = list[key];
@@ -263,7 +263,7 @@ export default defineComponent({
               fontFamily: transFamily(row[i].ff),
               color: row[i].fc,
               fontWeight: !row[i].bl || row[i].bl === 0 ? 'normal' : 'bold',
-              fontStyle: !row[i].it || row[i].it === 0 ? 'normal' : 'italic',
+              fontStyle: props.ele.styleSheet.fontStyle === 'normal' && !row[i].it || row[i].it === 0 ? 'normal' : 'italic',
               fontSize: row[i].fs + 'px',
               textDecoration:
                 !row[i].cl || row[i].cl === 0 ? '' : 'line-through',
@@ -318,6 +318,9 @@ export default defineComponent({
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    font-size: initial;
+    color: val(--color-text-regular) !important;
+    font-style: normal;
   }
   .op {
     overflow: hidden;
