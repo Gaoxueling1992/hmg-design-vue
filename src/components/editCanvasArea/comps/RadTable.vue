@@ -249,7 +249,8 @@ export default defineComponent({
               list[+key + index + ''].splice(i, row[i].mc.cs);
             }
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
-            row.splice(i + 1, row[i].mc.cs - 1);
+            console.log(+i + 1, row[i].mc.cs - 1)
+            row.splice(+i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
             for (let index = +key + 1; index <= row[i].mc.rs; index++) {
               if (list[index + '']) {
