@@ -6,7 +6,9 @@
       'border-color': 'inherit',
       color: 'inherit !important',
       'background-color': 'inherit',
-      'font-size': 'inherit'
+      'font-size': 'inherit',
+      textAlign: ele.styleSheet.justifyContent,
+      width: '100%'
     }"
     :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
     v-html="ele.label || '静态文本'"

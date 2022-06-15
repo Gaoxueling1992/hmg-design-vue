@@ -7,15 +7,6 @@
     <a-radio value="top">吸顶</a-radio>
     <a-radio value="middle">分散</a-radio>
   </a-radio-group>
-  <div class="title marginT10 marginB5 fontW500">对齐方式</div>
-  <a-radio-group
-    name="align"
-    v-model:value="activeCompObj.align"
-  >
-    <a-radio value="left">左对齐</a-radio>
-    <a-radio value="center">居中对齐</a-radio>
-    <a-radio value="right">右对齐</a-radio>
-  </a-radio-group>
   <div class="title marginT10 marginB5 fontW500">内部组件配置</div>
   <a-collapse v-model="activeTab">
     <a-collapse-panel

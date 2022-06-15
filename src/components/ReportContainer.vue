@@ -87,7 +87,6 @@ import {
   pageStrStyle
 } from '@/utils/tpl-config';
 import { getOneMmsPx, dealWithRules } from '@/utils/util';
-import { AnyARecord } from 'dns';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {

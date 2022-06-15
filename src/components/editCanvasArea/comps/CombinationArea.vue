@@ -2,7 +2,8 @@
   <div :style="{
       'text-align': ele.align,
       height: '100%',
-      width: '100%'
+      width: '100%',
+      textAlign: ele.styleSheet.justifyContent,
     }">
     <div
       v-for="item in ele.compsList"
@@ -26,20 +27,24 @@
           style="min-height: 20px"
           class="inherit"
           :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
+          :style="{
+            textAlign: ele.styleSheet.justifyContent,
+            width: '100%'
+          }"
         >{{ item.label || '静态文本' }}</div>
       </template>
       <template v-if="item.elName === 'RadInput'">
-        <div
-          class="inherit"
-          v-if="item.label"
-          :class="ele.inline ? 'ele-label' : ''"
-          :style="{
-              'padding-right': ele.inline ? '10px' : 0,
-              'display': ele.inline ? 'inline-block' : ''
-            }"
-          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
-        >{{ item.label }}</div>
         <template v-if="!isReadonlyStatus && !item.baseProps.readonly">
+          <div
+            class="inherit"
+            v-if="item.label"
+            :class="ele.inline ? 'ele-label' : ''"
+            :style="{
+                'padding-right': ele.inline ? '10px' : 0,
+                'display': ele.inline ? 'inline-block' : ''
+              }"
+            style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+          >{{ item.label }}</div>
           <a-input
             style="flex: 1"
             class="inherit"
@@ -69,15 +74,26 @@
             </template>
           </a-textarea>
         </template>
-        <div
-          v-else
-          style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
-    padding-top: 1px;
-    padding-bottom: 1px;"
-          class="inherit display-text"
-        >
-          {{ item.prefix }} {{ item.value }} {{ item.suffix }}&nbsp;
-        </div>
+        <template v-else>
+          <div
+            class="inherit"
+            v-if="item.label"
+            :class="ele.inline ? 'ele-label' : ''"
+            :style="{
+                'padding-right': ele.inline ? '10px' : 0,
+                'display': ele.inline ? 'inline-block' : ''
+              }"
+            style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
+          >{{ item.label }}</div>
+          <div
+            style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
+      padding-top: 1px;
+      padding-bottom: 1px;"
+            class="inherit display-text"
+          >
+            {{ item.prefix }} {{ item.value }} {{ item.suffix }}&nbsp;
+          </div>
+        </template>
       </template>
       <template v-if="item.elName === 'RadNumber'">
         <div

@@ -73,6 +73,9 @@
             <div
               v-if="item.elName === 'RadText'"
               style="min-height: 20px"
+              :style="{
+                textAlign: ele.styleSheet.justifyContent
+              }"
               :class="{'ellipsis': item.styleSheet.wrap === 'noWrap'}"
               v-html="item.label ||  '静态文本'"
             ></div>
@@ -132,7 +135,7 @@
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
         paddingLeft: ele.styleSheet.paddingLeft + 'px',
         paddingRight: ele.styleSheet.paddingRight + 'px',
-        display: ele.inline ? 'flex' : '',
+        display: ele.inline && ele.elName !== 'RadText' ? 'flex' : '',
         width: '100%'
       }">
       <div
@@ -140,6 +143,9 @@
         style="min-height: 20px"
         class="inherit"
         :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
+        :style="{
+          textAlign: ele.styleSheet.justifyContent
+        }"
         v-html="ele.label || '静态文本'"
       ></div>
       <a-divider
