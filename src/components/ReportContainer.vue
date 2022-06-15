@@ -217,9 +217,9 @@ const handleCompsOper = (
       baseProps: {
         ...ele.baseProps
       },
-      options: {
+      options: [
         ...ele.options
-      },
+      ],
       rules: ele.rules ? JSON.parse(JSON.stringify(ele.rules)) : [],
       compsList: ele.compsList ? JSON.parse(JSON.stringify(ele.compsList)) : []
     };
