@@ -230,10 +230,10 @@ export default defineComponent({
       } else {
         list = JSON.parse(tableTpl.value.content);
       }
-      console.log(tableTpl.value.content);
       tds.value = list['0'].length;
       for (let key in list) {
         const row = list[key];
+        console.log('row', row);
         for (let i in row) {
           // 处理合并单元格逻辑
           if (
@@ -245,14 +245,13 @@ export default defineComponent({
             row[i].mc.rs > 1
           ) {
             row.splice(+i + 1, row[i].mc.cs - 1);
-            for (let index = 1; index < row[i].mc.rs; index++) {
+            for (let index = row[i].mc.rs; index < i; index--) {
               list[+key + index + ''].splice(i, row[i].mc.cs);
             }
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
-            console.log(+i + 1, row[i].mc.cs - 1)
             row.splice(+i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
-            for (let index = +key + 1; index <= row[i].mc.rs; index++) {
+            for (let index = row[i].mc.rs; index >= +key + 1; index--) {
               if (list[index + '']) {
                 list[index + ''].splice(i, 1);
               }
@@ -275,11 +274,11 @@ export default defineComponent({
                   ? 'center'
                   : 'right',
               verticalAlign:
-                !row[i].vt || +row[i].vt === 0
-                  ? 'middle'
+                !row[i].vt || +row[i].vt === 2
+                  ? 'bottom'
                   : +row[i].vt === 1
                   ? 'top'
-                  : 'bottom',
+                  : 'middle',
               transform: `rotate(${row[i].rt}deg)`,
               writingMode: !row[i].rt || row[i].rt !== 3 ? '' : 'tb-rl',
               whiteSpace: !row[i].tb || +row[i].tb === 2 ? '' : 'nowrap',

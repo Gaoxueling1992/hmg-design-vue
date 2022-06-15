@@ -3,7 +3,7 @@
     class="edit-canvas"
     :style="{
       ...styleSheet,
-      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
+      backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
       padding: styleSheet.padding
     }"
     @click="clickCanvas"

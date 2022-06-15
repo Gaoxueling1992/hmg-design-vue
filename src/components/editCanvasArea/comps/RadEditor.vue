@@ -387,9 +387,11 @@ export default defineComponent({
     list-style: unset;
   }
 }
-.w-e-text-container,
-.w-e-text {
-  height: fit-content !important;
+.container-editor {
+  .w-e-text-container,
+  .w-e-text {
+    height: fit-content !important;
+  }
 }
 .w-e-text {
   min-height: 75px !important;
@@ -412,7 +414,7 @@ export default defineComponent({
 }
 .w-e-toolbar h1,
 .w-e-text-container h1,
-.w-e-menu-panel h1 {
+.container-editor .w-e-menu-panel h1 {
   font-size: inherit;
 }
 .w-e-text p,
@@ -459,15 +461,17 @@ font[size='3'] {
     white-space: nowrap;
   }
 }
-.w-e-text-container p,
-.w-e-menu-panel p {
-  font-size: unset !important;
-}
-.w-e-text p {
-  line-height: 1.2;
-}
-.w-e-text-container .placeholder {
-  top: 5px !important;
+.container-editor {
+  .w-e-text-container p,
+  .w-e-menu-panel p {
+    font-size: unset !important;
+  }
+  .w-e-text p {
+    line-height: 1.2;
+  }
+  .w-e-text-container .placeholder {
+    top: 5px !important;
+  }
 }
 .editor-toolbar {
   z-index: 11 !important;

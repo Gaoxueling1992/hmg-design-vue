@@ -25,6 +25,7 @@
     <a-input-number
       class="flex1 marginR5"
       :min="1"
+      :precision="0"
       v-model:value="activeCompObj.testTotalNum"
       @change="activeCompObj.testTotalNum = !activeCompObj.testTotalNum ? 1 : activeCompObj.testTotalNum"
     />
