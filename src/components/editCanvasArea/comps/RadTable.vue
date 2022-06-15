@@ -231,10 +231,9 @@ export default defineComponent({
         list = JSON.parse(tableTpl.value.content);
       }
       tds.value = list['0'].length;
-      for (let key in list) {
+      for (let key = list.length -1; key >= 0; key--) {
         const row = list[key];
-        console.log('row', row);
-        for (let i in row) {
+        for (let i = row.length - 1; i >= 0; i--) {
           // 处理合并单元格逻辑
           if (
             row[i] &&
@@ -244,13 +243,16 @@ export default defineComponent({
             row[i].mc.cs > 1 &&
             row[i].mc.rs > 1
           ) {
+            console.log(111, row[i]);
             row.splice(+i + 1, row[i].mc.cs - 1);
             for (let index = row[i].mc.rs; index < i; index--) {
               list[+key + index + ''].splice(i, row[i].mc.cs);
             }
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
+            console.log(222, row[i]);
             row.splice(+i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
+            console.log(333, row[i]);
             for (let index = row[i].mc.rs; index >= +key + 1; index--) {
               if (list[index + '']) {
                 list[index + ''].splice(i, 1);
