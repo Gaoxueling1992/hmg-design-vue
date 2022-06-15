@@ -6,6 +6,7 @@
       backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + styleSheet.minHeight + ', red ' + styleSheet.minHeight + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
       padding: styleSheet.padding
     }"
+    @click="clickCanvas"
   >
     <template v-if="!loading">
       <div id="edit-canvas-header">
@@ -336,6 +337,10 @@ export default defineComponent({
       }
     });
 
+    const clickCanvas = () => {
+      focusedEle.value = '';
+    }
+
     provide('focusedEle', focusedEle);
 
     return {
@@ -350,7 +355,8 @@ export default defineComponent({
       footerLines,
       bodyLines,
       loading,
-      focusedEle
+      focusedEle,
+      clickCanvas
     };
   }
 });
