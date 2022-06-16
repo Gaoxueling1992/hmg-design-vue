@@ -25,7 +25,8 @@
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
         paddingLeft: ele.styleSheet.paddingLeft + 'px',
         paddingRight: ele.styleSheet.paddingRight + 'px',
-        width: '100%'
+        width: '100%',
+        height: '100%'
       }">
       <div class="inherit" :class="'line' + String(idx)">
         <span :style="{

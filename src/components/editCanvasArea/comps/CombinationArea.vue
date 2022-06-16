@@ -108,7 +108,7 @@
           style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
         >{{ item.label }}&nbsp;</div>
         <template v-if="!isReadonlyStatus && !item.baseProps.readonly">
-          <span>{{item.prefix}}&nbsp;</span>
+          <span v-if="item.prefix">{{item.prefix}}&nbsp;</span>
           <a-input-number
             style="flex: 1"
             :min="item.min"
@@ -141,7 +141,7 @@
       'display': ele.inline ? 'inline-block' : ''
     }"
         >{{ item.label }} </div>
-        <span>{{item.prefix}}&nbsp;</span>
+        <span v-if="item.prefix">{{item.prefix}}&nbsp;</span>
         <a-date-picker
           v-if="!isReadonlyStatus && !item.baseProps.readonly"
           style="flex: 1"

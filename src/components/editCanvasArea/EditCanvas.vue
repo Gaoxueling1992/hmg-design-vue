@@ -58,7 +58,8 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline ? 'flex' : '',
-                  width: '100%'
+                  width: '100%',
+                  height: '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -122,7 +123,8 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline ? 'flex' : '',
-                  width: '100%'
+                  width: '100%',
+                  height: '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -186,7 +188,8 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline ? 'flex' : '',
-                  width: '100%'
+                  width: '100%',
+                  height: '100%'
                 }">
                   <component
                     v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
