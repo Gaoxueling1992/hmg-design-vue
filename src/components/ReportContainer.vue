@@ -338,9 +338,7 @@ const handleCompsOper = (
     activeCompId.value = '';
     pageHeaderId.value = '';
     pageFooterId.value = '';
-    setTimeout(() => {
-      loading.value = false;
-    }, 500);
+    loading.value = false;
   };
 
   // 新建模版
@@ -517,6 +515,8 @@ export default defineComponent({
           break;
         case 'newTpl':
           newTpl(1);
+          console.log('-----')
+          loading.value = false;
           break;
         case 'saveDesinger':
           if (visible.value) {
@@ -536,8 +536,6 @@ export default defineComponent({
           } else {
             zoom.value = '100';
           }
-          console.log('resetSplit')
-          console.log(e.data)
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
             currentDec.value = splitJson.calSplitField.filter(
@@ -840,10 +838,6 @@ export default defineComponent({
     provide('returnComp', returnComp);
     provide('pageId', pageId);
     provide('customComp', customComp);
-
-    setTimeout(function () {
-      loading.value = false;
-    }, 1000);
 
     let timer: any;
     watch(
