@@ -8,7 +8,7 @@
     :style="{
       'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ? ele.styleSheet.textDecoration : 'none',
       'margin-top': ele.inline ? 0 : '10px',
-      'float': ele.inline && !isReadonlyStatus && !ele.baseProps.readonly ? 'left': 'unset',
+      'float': ele.inline ? 'left': 'unset',
       'line-height': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ?  '1.2' : '1.5',
       'display': ele.inline ? 'table-cell' : 'unset'
     }"
