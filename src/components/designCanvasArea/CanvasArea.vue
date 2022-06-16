@@ -91,20 +91,15 @@ export default defineComponent({
       let classStr = originalEvent.target.getAttribute('class').split('line');
       console.log(classStr)
       let line = classStr[classStr.length - 1];
-      console.log('-----', 1111, line);
       // 如果拖动的是固定页头元素
       if (line && pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
-         console.log('-----', 2222, footerLine.value, line);
         if (footerLine.value <= line) {
-           console.log('-----', 3333);
           return false;
         }
       }
       // 是页脚
       if (line && pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
-         console.log('-----', 4444, headerLine.value, line);
         if (headerLine.value >= line) {
-           console.log('-----', 5555);
           return false;
         }
       }

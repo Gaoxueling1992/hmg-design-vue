@@ -58,7 +58,6 @@
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',
-            border: '1px solid',
             float: 'left',
             margin: '3px'
           }"
@@ -77,7 +76,6 @@
               alt="签名"
               :style="{
               lineHeight: ele.imgHeight+ 'px',
-              border: '1px solid',
               float: 'left',
               margin: '3px'
             }"
@@ -101,7 +99,6 @@
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',
-            border: '1px solid',
             float: 'left',
             margin: '3px'
           }"
@@ -120,7 +117,6 @@
               alt="签名"
               :style="{
               lineHeight: ele.imgHeight+ 'px',
-              border: '1px solid',
               float: 'left',
               margin: '3px'
             }"
