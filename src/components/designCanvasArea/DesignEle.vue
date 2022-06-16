@@ -15,13 +15,11 @@
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
-    :class="{
-      'disgn-ele-active': activeCompId === ele.id,
-      'paddingT10 paddingB10': ele.elName === 'RadLine'
-    }"
+    :class="'line' + String(idx) + (activeCompId === ele.id ? ' disgn-ele-active' : '') + (ele.elName === 'RadLine' ? ' paddingT10 paddingB10' : '')"
   >
     <!-- 复合组件 -->
     <div v-if="ele.type === 'comb'"
+      :class="'line' + String(idx)"
       :style="{
         paddingTop: ele.styleSheet.paddingTop + 'px',
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
@@ -29,7 +27,7 @@
         paddingRight: ele.styleSheet.paddingRight + 'px',
         width: '100%'
       }">
-      <div class="inherit">
+      <div class="inherit" :class="'line' + String(idx)">
         <span :style="{
           'text-decoration': 'none',
           'font-size': '18px',
@@ -49,6 +47,7 @@
       <div
         v-if="ele.compsList && ele.compsList.length"
         class="flex-row"
+        :class="'line' + String(idx)"
         :style="{
           'text-align': ele.align,
           height: 'calc(100% - 25px)',
@@ -103,6 +102,7 @@
       </div>
     </div>
     <div v-else-if="!ele.noLabel"
+      :class="'line' + String(idx)"
       :style="{
         paddingTop: ele.styleSheet.paddingTop + 'px',
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
@@ -113,7 +113,7 @@
       }">
       <div
         class="inherit"
-        :class="ele.inline ? 'ele-label' : ''"
+        :class="ele.inline ? 'ele-label' + ' line' + String(idx) : 'line' + String(idx)"
       >{{ ele.label || ele.name }}</div>
       <a-input
         style="flex: 1"
@@ -130,6 +130,7 @@
       </a-input>
     </div>
     <div v-else
+      :class="'line' + String(idx)"
       :style="{
         paddingTop: ele.styleSheet.paddingTop + 'px',
         paddingBottom: ele.styleSheet.paddingBottom + 'px',
@@ -142,7 +143,7 @@
         v-if="ele.elName === 'RadText'"
         style="min-height: 20px"
         class="inherit"
-        :class="{'ellipsis': ele.styleSheet.wrap === 'noWrap'}"
+        :class="ele.styleSheet.wrap === 'noWrap' ? ' ellipsis' + ' line' + String(idx) : 'line' + String(idx)"
         :style="{
           textAlign: ele.styleSheet.justifyContent
         }"
@@ -151,9 +152,9 @@
       <a-divider
         v-if="ele.elName === 'RadLine'"
         class="inherit"
-        
+        :class="'line' + String(idx)"
       >{{ele.label}}</a-divider>
-      <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'">
+      <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'" :class="'line' + String(idx)">
         <template v-if="(ele.elName === 'RadDrcode' && ele.img) || (ele.src && ele.elName !== 'RadDrcode') ">
           <a-image
             v-if="ele.elName === 'RadImage'"
@@ -165,9 +166,10 @@
               height: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px'
             }"
+            :class="'line' + String(idx)"
           />
           <template v-else-if="ele.elName === 'RadSignalcode'">
-            <div v-if="ele.displayValue && ele.textPosition === 'top'" style="text-align:center"
+            <div v-if="ele.displayValue && ele.textPosition === 'top'" style="text-align:center" :class="'line' + String(idx)"
               :style="{
                 'width': textWidth + 'px',
                 'text-align': ele.textAlign,
@@ -183,13 +185,15 @@
               :width="ele.codeWidth"
               :height="ele.codeHeight"
               :margin="0"
+              :class="'line' + String(idx)"
             />
             <div v-if="ele.displayValue && ele.textPosition === 'bottom'" style="text-align:center"
               :style="{
                 'width': textWidth + 'px',
                 'text-align': ele.textAlign,
                 'font-size': ele.textSize + 'px'
-              }">
+              }"
+              :class="'line' + String(idx)">
               {{ele.text}}
             </div>
           </template>
@@ -199,6 +203,7 @@
             :height="ele.imgHeight"
             :width="ele.imgWidth"
             :src="ele.img"
+            :class="'line' + String(idx)"
             :style="{
               height: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px'
@@ -206,6 +211,7 @@
           />
         </template>
         <div
+          :class="'line' + String(idx)"
           :style="{
             height: ele.imgHeight+ 'px'
           }"
@@ -218,6 +224,7 @@
           :style="{
             height: ele.imgHeight+ 'px'
           }"
+          :class="'line' + String(idx)"
         >
           <tr>
             <th>表头1</th>
@@ -232,6 +239,7 @@
       <div
         v-if="ele.elName === 'RadMulitImagepicker'"
         class="picker-flex"
+        :class="'line' + String(idx)"
       >
         <a-row :gutter="[ele.horSpacing, ele.verSpacing]">
           <a-col

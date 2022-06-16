@@ -57,11 +57,10 @@
           v-if="ele.src"
           alt="签名"
           :style="{
-            height: ele.imgHeight+ 'px',
             lineHeight: ele.imgHeight+ 'px',
-            width: ele.imgWidth + 'px',
             border: '1px solid',
-            float: 'left'
+            float: 'left',
+            margin: '3px'
           }"
         />
         <template v-if="ele.srcs">
@@ -77,11 +76,10 @@
               :src="src"
               alt="签名"
               :style="{
-              height: ele.imgHeight+ 'px',
               lineHeight: ele.imgHeight+ 'px',
-              width: ele.imgWidth + 'px',
               border: '1px solid',
               float: 'left',
+              margin: '3px'
             }"
             />
             <span v-if="idx < ele.srcs.length - 1" style="float: left">{{ele.splitWords}}</span>
@@ -102,11 +100,10 @@
           v-if="ele.src"
           alt="签名"
           :style="{
-            height: ele.imgHeight+ 'px',
             lineHeight: ele.imgHeight+ 'px',
-            width: ele.imgWidth + 'px',
             border: '1px solid',
-            float: 'left'
+            float: 'left',
+            margin: '3px'
           }"
         />
         <template v-if="ele.srcs">
@@ -122,11 +119,10 @@
               :src="src"
               alt="签名"
               :style="{
-              height: ele.imgHeight+ 'px',
               lineHeight: ele.imgHeight+ 'px',
-              width: ele.imgWidth + 'px',
               border: '1px solid',
-              float: 'left'
+              float: 'left',
+              margin: '3px'
             }"
             />
             <span v-if="idx < ele.srcs.length - 1" style="float: left">{{ele.splitWords}}</span>
