@@ -536,6 +536,8 @@ export default defineComponent({
           } else {
             zoom.value = '100';
           }
+          console.log('resetSplit')
+          console.log(e.data)
           if (e.data.splitJson) {
             let splitJson = JSON.parse(e.data.splitJson);
             currentDec.value = splitJson.calSplitField.filter(
