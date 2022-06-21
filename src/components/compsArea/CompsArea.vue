@@ -14,3 +14,8 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="scss" scoped>
+.comps-area {
+  padding-bottom: 10px;
+}
+</style>
