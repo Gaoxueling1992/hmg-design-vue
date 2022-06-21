@@ -264,7 +264,7 @@ export default defineComponent({
       });
 
       watch(focusedEle, () => {
-        let toolbar = document.getElementById(`toolbar${props.ele.id}`)
+        let toolbar = document.getElementById(`toolbar${props.ele.id}`);
         if (focusedEle.value !== props.ele.id) {
           if (toolbar) {
             toolbar.style.display =
@@ -284,6 +284,14 @@ export default defineComponent({
       // 切换当前部位时，重算富文本内容
       watch(currentReport, () => {
         inputCurReport();
+      });
+      watch(isReadonlyStatus, () => {
+        if (isReadonlyStatus.value) {
+          let toolbar = document.getElementById(`toolbar${props.ele.id}`);
+          if (toolbar) {
+            toolbar.style.display = 'none';
+          }
+        }
       });
       watch(
         ele,
