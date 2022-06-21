@@ -264,15 +264,19 @@ export default defineComponent({
       });
 
       watch(focusedEle, () => {
+        let toolbar = document.getElementById(`toolbar${props.ele.id}`)
         if (focusedEle.value !== props.ele.id) {
-          if (document.getElementById(`toolbar${props.ele.id}`)) {
-            document.getElementById(`toolbar${props.ele.id}`).style.display =
+          if (toolbar) {
+            toolbar.style.display =
               'none';
           }
         } else {
-          if (document.getElementById(`toolbar${props.ele.id}`)) {
-            document.getElementById(`toolbar${props.ele.id}`).style.display =
+          if (toolbar) {
+            toolbar.style.display =
               '';
+            let top = document.getElementById(lineId.value).offsetTop;
+            toolbar.style.top =
+              top - (props.ele.inline || !props.ele.label ? 25 : 0) + 'px';
           }
         }
       });

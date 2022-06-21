@@ -45,10 +45,8 @@
     background-color: inherit;
     font-size: inherit;
     display: inline-block;
-    line-height: 30px !important;
-    padding-top: 1px;
     flex: 1;
-    padding-bottom: 1px;word-break: break-all;
+    word-break: break-all;
     text-decoration: inherit;white-space:normal;" class="inherit display-text">
     {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}&nbsp;
   </div>
