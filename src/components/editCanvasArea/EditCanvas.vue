@@ -368,7 +368,7 @@ export default defineComponent({
 <style lang="scss">
 .edit-canvas {
   background-color: var(--color-white);
-  border: 1px dashed var(--color-primary);
+  border: 1px solid var(--border-color-light);
   width: calc(100% - 20px);
   .ql-container {
     height: auto;

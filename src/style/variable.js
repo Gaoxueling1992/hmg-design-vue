@@ -64,6 +64,7 @@ const defaultTheme = {
   '--color-tb': '#A5AFC7',
   //TableInterval 间隔行
   '--color-ti': '#DAE1EB',
+  '--color-shadow': '#ADB2BD',
   ...baseVariable
 };
 
@@ -122,6 +123,7 @@ const greenTheme = {
   '--color-tb': '#E9E9E9',
   //TableInterval 间隔行
   '--color-ti': '#DAE1EB',
+  '--color-shadow': '#ADB2BD',
   ...baseVariable
 };
 
