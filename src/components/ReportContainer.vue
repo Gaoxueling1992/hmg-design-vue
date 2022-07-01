@@ -897,6 +897,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.ant-layout {
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+}
 .edit-canvas-preview {
   position: fixed !important;
   right: 280px;

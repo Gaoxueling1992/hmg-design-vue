@@ -106,8 +106,8 @@ export default defineComponent({
 .cus-container-item {
   padding: 5px;
   .container-item-btn {
-    width: calc(50% - 10px) !important;
-    margin: 0 5px 5px 5px;
+    width: calc(50% - 6px) !important;
+    margin: 0 3px 5px 3px;
     border-color: var(--border-color-base) !important;
     color: var(--color-text-primary) !important;
     &:hover {

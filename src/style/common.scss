@@ -112,6 +112,30 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  
+}
+body::-moz-scrollbar-thumb {/*滚动条里面小方块*/
+  background: var(--color-text-placeholder) !important;
+  border-radius: 50px !important;
+}
+body::-moz-scrollbar-track {/*滚动条里面轨道*/
+  border-radius: 0;
+  background: rgba(3,10,28,0.6);
+}
+.iconclose-fill{
+  cursor: pointer;
+}
+body::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+  background: var(--color-white) !important;
+}
+body::-webkit-scrollbar-thumb {
+  background: var(--color-text-placeholder) !important;
+  border-radius: 50px !important;
+}
+body::-webkit-scrollbar-corner {
+  background: var(--color-white) !important;
 }
 
 p {
