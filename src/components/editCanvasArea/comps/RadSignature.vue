@@ -88,7 +88,7 @@
     <template v-else>
       <div
         v-if="ele.type !== 'input'"
-        :style="{float: ele.imagePosi === 'right' ? 'left' : '',display: 'block'}"
+        :style="{float: ele.imagePosi === 'left' ? 'left' : '',display: 'block'}"
       >
         <img
           class="img"
