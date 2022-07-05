@@ -165,7 +165,9 @@ const handleCompsOper = (
       baseProps: compBaseConfig[value].baseProps ? {
         ...compBaseConfig[value].baseProps
       } : null,
-      options: [],
+      options: compBaseConfig[value].options ? [
+        ...compBaseConfig[value].options
+      ] : [],
       rules: {}
     });
     activeCompObj.value = {

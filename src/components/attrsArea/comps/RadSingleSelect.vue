@@ -58,7 +58,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent, inject, watch } from 'vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { message } from 'ant-design-vue';
 
@@ -76,6 +76,18 @@ export default defineComponent({
       });
       activeCompObj.value.value = '选项1';
     }
+    watch(() => activeCompObj,
+      () => {
+        if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+          activeCompObj.value.options.push({
+            value: 1,
+            label: '选项1'
+          });
+          activeCompObj.value.value = '选项1';
+        }
+      },
+      { deep: true }
+    );
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       activeCompObj.value.options.push({
