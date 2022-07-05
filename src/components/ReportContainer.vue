@@ -128,12 +128,12 @@ const handleCompsOper = (
     const id: string = new Date().getTime() + '';
     const baseConfig = reactive({
       ...compBaseConfig[elName],
-      styleSheet: {
+      styleSheet: compBaseConfig[elName].styleSheet ? {
         ...compBaseConfig[elName].styleSheet
-      },
-      baseProps: {
+      } : null,
+      baseProps: compBaseConfig[elName].baseProps ? {
         ...compBaseConfig[elName].baseProps
-      },
+      } : null,
       rules: {}
     });
     activeCompObj.value = {
@@ -159,12 +159,12 @@ const handleCompsOper = (
     const id: string = new Date().getTime() + '';
     const baseConfig = reactive({
       ...compBaseConfig[value],
-      styleSheet: {
+      styleSheet: compBaseConfig[value].styleSheet ? {
         ...compBaseConfig[value].styleSheet
-      },
-      baseProps: {
+      } : null,
+      baseProps: compBaseConfig[value].baseProps ? {
         ...compBaseConfig[value].baseProps
-      },
+      } : null,
       options: [],
       rules: {}
     });
@@ -211,15 +211,15 @@ const handleCompsOper = (
     activeCompObj.value = {
       ...ele,
       id: id,
-      styleSheet: {
+      styleSheet: ele.styleSheet ? {
         ...ele.styleSheet
-      },
-      baseProps: {
+      } : null,
+      baseProps: ele.baseProps ? {
         ...ele.baseProps
-      },
-      options: [
+      } : null,
+      options: ele.options ? [
         ...ele.options
-      ],
+      ] : [],
       rules: ele.rules ? JSON.parse(JSON.stringify(ele.rules)) : [],
       compsList: ele.compsList ? JSON.parse(JSON.stringify(ele.compsList)) : []
     };
@@ -515,7 +515,6 @@ export default defineComponent({
           break;
         case 'newTpl':
           newTpl(1);
-          console.log('-----')
           loading.value = false;
           break;
         case 'saveDesinger':

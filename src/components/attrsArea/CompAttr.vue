@@ -34,9 +34,9 @@
         class="marginT10"
       >左侧标签</a-checkbox>
       <component :is="activeCompObj.elName"></component>
-      <Domain v-if="activeCompObj.domainType"></Domain>
-      <BaseProps v-if="activeCompObj.baseProps"></BaseProps>
-      <StyleSheet v-if="activeCompObj.styleSheet"></StyleSheet>
+      <Domain v-if="!!activeCompObj.domainType"></Domain>
+      <BaseProps v-if="!!activeCompObj.baseProps"></BaseProps>
+      <StyleSheet v-if="!!activeCompObj.styleSheet"></StyleSheet>
     </div>
   </div>
 </template>
