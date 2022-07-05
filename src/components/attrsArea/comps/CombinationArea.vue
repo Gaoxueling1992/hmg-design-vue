@@ -38,7 +38,7 @@
         :auto-size="{ minRows: 2, maxRows: 2 }"
       />
       <div
-        class="flex marginT10"
+        class="marginT10"
         v-if="comp.elName !== 'RadText'"
       >
         <a-input-group
