@@ -28,7 +28,7 @@
         width: '100%',
         height: '100%'
       }">
-      <div class="inherit" :class="'line' + String(idx)">
+      <div style="font-size:18px" :class="'line' + String(idx)">
         <span :style="{
           'text-decoration': 'none',
           'font-size': '18px',
@@ -51,7 +51,7 @@
         :class="'line' + String(idx)"
         :style="{
           'text-align': ele.align,
-          height: 'calc(100% - 25px)',
+          height: 'calc(100% - 30px)',
           'text-decoration': ele.styleSheet.textDecoration
         }"
       >
