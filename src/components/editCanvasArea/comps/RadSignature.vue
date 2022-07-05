@@ -5,8 +5,8 @@
     :class="ele.inline ? 'ele-label' : ''"
     style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
-      lineHeight: ele.imgHeight > 30 ? ele.imgHeight + 'px' : '30px',
-      height: ele.imgHeight > 30 ? ele.imgHeight+ 'px' : '30px',
+      lineHeight: ele.imgHeight > 30 && ele.type !== 'input' ? ele.imgHeight + 'px' : '30px',
+      height: ele.imgHeight > 30 && ele.type !== 'input' ? ele.imgHeight+ 'px' : '30px',
       'vertical-align': 'top',
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : ''
