@@ -42,7 +42,7 @@
         </template>
         <div
           class="marginT10"
-          v-if="comp.elName !== 'RadText'"
+          v-if="comp.elName !== 'RadText' && comp.elName !== 'RadSignature'"
         >
           <a-input-group
             compact
