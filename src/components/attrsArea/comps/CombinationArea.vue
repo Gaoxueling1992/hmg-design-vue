@@ -90,19 +90,17 @@
         </div>
         <template v-if="comp.elName === 'RadDatetime'">
           <div class="title marginT10 marginB5 fontW500">选择器类型</div>
-          <div class="flex">
-            <a-select
-              class="flex-picker"
-              v-model:value="comp.picker"
-              :options="pickerList"
-              @change="comp.format = pickerMap[comp.picker][0].value"
-            />
-            <a-select
-              class="flex1 flex-format"
-              v-model:value="comp.format"
-              :options="pickerMap[comp.picker]"
-            />
-          </div>
+          <a-select
+            class="flex-picker"
+            v-model:value="comp.picker"
+            :options="pickerList"
+            @change="comp.format = pickerMap[comp.picker][0].value"
+          />
+          <a-select
+            class="flex1 flex-format marginT5"
+            v-model:value="comp.format"
+            :options="pickerMap[comp.picker]"
+          />
         </template>
         <template v-if="comp.elName === 'RadSignature'">
           <div class="title marginT10 marginB5 fontW500">类型</div>
@@ -161,7 +159,7 @@
             <a-select-option value="nosubmit">仅绑定</a-select-option>
           </a-select>
         </div>
-        <div class="attr-group">
+        <div class="attr-group marginT5">
           <a-select
             v-if="comp.domainType === 'domain'"
             v-model:value="comp.threshold"
@@ -236,5 +234,8 @@ export default defineComponent({
 .ant-collapse,
 .ant-collapse-content {
   background-color: transparent !important;
+}
+.flex-format {
+  width: 100%;
 }
 </style>
