@@ -47,8 +47,8 @@ const config = {
     print: false, // '打印'
   },
   textWrap: {
-    overflow:"Overflow",
-    wrap:"Wrap",
+    overflow: 'Overflow',
+    wrap: 'Wrap',
   },
   functionButton: '<button id="" class="btn btn-primary" style="padding:3px 6px;font-size: 12px;margin-right: 10px;">download</button> <button id="" class="btn btn-primary btn-danger" style=" padding:3px 6px; font-size: 12px; margin-right: 10px;">share</button> <button id="luckysheet-share-btn-title" class="btn btn-primary btn-danger" style=" padding:3px 6px; font-size: 12px; margin-right: 10px;">show data</button>', //右上角按钮
   cellRightClickConfig: {
