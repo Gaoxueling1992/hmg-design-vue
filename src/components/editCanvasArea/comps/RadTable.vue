@@ -39,7 +39,7 @@
                   textDecoration:
                     !vv.cl || vv.cl === 0 ? '' : 'line-through',
                 }">
-                {{vv.v}} {{ele.styleSheet}}
+                {{vv.v}}
               </span>
             </span>
             <span v-else>
@@ -194,12 +194,173 @@ export default defineComponent({
     const pageId: any = inject('pageId');
     let tableList: any = inject('tableList');
 
+    let detail = `
+    [[{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"不同字体","m":"不同字体"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"不同字号","m":"不同字号"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"加粗","m":"加粗"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"斜体","m":"斜体"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"删除线","m":"删除线"},{"m":"文本颜色","ct":
+
+{"fa":"General","t":"g"}
+,"v":"文本颜色"},{"m":"单元格颜色","ct":
+
+{"fa":"General","t":"g"}
+,"v":"单元格颜色"},{"m":"垂直合并","ct":
+
+{"fa":"General","t":"g"}
+,"v":"垂直合并"},{"m":"水平合并","ct":
+
+{"fa":"General","t":"g"}
+,"v":"水平合并","mc":{"r":0,"c":8,"rs":1,"cs":2}},{"mc":{"r":0,"c":8}},{"mc":
+
+{"r":0,"c":10,"rs":1,"cs":2}
+,"v":"居中对齐","m":"居中对齐","ct":{"fa":"General","t":"g"}},{"mc":{"r":0,"c":10}},{"m":"右对齐","ct":
+
+{"fa":"General","t":"g"}
+,"v":"右对齐","mc":{"r":0,"c":12,"rs":1,"cs":2}},{"mc":{"r":0,"c":12}},{"m":"顶部对齐","ct":
+
+{"fa":"General","t":"g"}
+,"v":"顶部对齐","mc":{"r":0,"c":14,"rs":1,"cs":2}},{"mc":{"r":0,"c":14}},{"m":"居中对齐","ct":
+
+{"fa":"General","t":"g"}
+,"v":"居中对齐","mc":{"r":0,"c":16,"rs":1,"cs":2}},{"mc":{"r":0,"c":16}}],[{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"宋体","m":"宋体","ff":"宋体"},{"ct":
+
+{"fa":"General","t":"n"}
+,"v":10,"m":"10"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"j加粗","m":"j加粗","bl":1},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"斜体","m":"斜体"},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"删除线","m":"删除线","cl":1},{"m":"文本颜色","ct":
+
+{"fa":"General","t":"g"}
+,"v":"文本颜色","fc":"#00ff00"},{"m":"单元格颜色","ct":
+
+{"fa":"General","t":"g"}
+,"v":"单元格颜色","bg":"#00ffff"},{"mc":{"r":1,"c":7,"rs":2,"cs":1}},{"mc":{"r":1,"c":8,"rs":1,"cs":2}},{"mc":{"r":1,"c":8}},{"v":"居中对齐","m":"居中对齐","ct":
+
+{"fa":"General","t":"g"}
+,"vt":"0","mc":
+
+{"r":1,"c":10,"rs":2,"cs":2}
+,"ht":"0"},{"mc":
+
+{"r":1,"c":10}
+,"ht":"0"},{"mc":
+
+{"r":1,"c":12,"rs":2,"cs":2}
+,"v":"右对齐","m":"右对齐","ct":
+
+{"fa":"General","t":"g"}
+,"ht":"2"},{"mc":
+
+{"r":1,"c":12}
+,"ht":"2"},{"mc":
+
+{"r":1,"c":14,"rs":2,"cs":2}
+,"v":"顶部对齐","m":"顶部对齐","ct":
+
+{"fa":"General","t":"g"}
+,"vt":"1"},{"mc":
+
+{"r":1,"c":14}
+,"vt":"1"},{"mc":
+
+{"r":1,"c":16,"rs":2,"cs":2}
+,"v":"居中对齐","m":"居中对齐","ct":
+
+{"fa":"General","t":"g"}
+,"vt":"0"},{"mc":
+
+{"r":1,"c":16}
+,"vt":"0"}],[{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"黑体","m":"黑体","ff":"黑体"},{"ct":
+
+{"fa":"General","t":"n"}
+,"v":20,"m":"20","fs":"20"},{"ct":{"fa":"General","t":"n"}},{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"斜体","m":"斜体","it":1},{"ct":{"fa":"General","t":"n"}},null,null,{"mc":{"r":1,"c":7}},null,null,{"mc":
+
+{"r":1,"c":10}
+,"ht":"0"},{"mc":
+
+{"r":1,"c":10}
+,"ht":"0"},{"mc":
+
+{"r":1,"c":12}
+,"ht":"2"},{"mc":
+
+{"r":1,"c":12}
+,"ht":"2"},{"mc":
+
+{"r":1,"c":14}
+,"vt":"1"},{"mc":
+
+{"r":1,"c":14}
+,"vt":"1"},{"mc":
+
+{"r":1,"c":16}
+,"vt":"0"},{"mc":
+
+{"r":1,"c":16}
+,"vt":"0"}],[{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"楷体","m":"楷体","ff":"楷体"},{"ct":
+
+{"fa":"General","t":"n"}
+,"v":26,"m":"26","fs":"26"},{"ct":{"fa":"General","t":"n"}},{"ct":{"fa":"General","t":"n"}},{"ct":{"fa":"General","t":"n"}},null,null,null,null,null,null,null,null,null,null,null,null,null],[{"ct":
+
+{"fa":"General","t":"g"}
+,"v":"仿宋","m":"仿宋","ff":"仿宋"},{"ct":
+
+{"fa":"General","t":"n"}
+,"v":72,"m":"72","fs":"72"},{"ct":{"fa":"General","t":"n"}},{"ct":{"fa":"General","t":"n"}},{"ct":{"fa":"General","t":"n"}},null,null,null,null,
+
+{"v":null,"ht":"2"}
+,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,{"m":"单行显示","ct":
+
+{"fa":"General","t":"g"}
+,"v":"单行显示"},null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,{"v":"24243423423个梵蒂冈大哥大哥梵蒂冈是梵蒂冈地方噶非得","ct":
+
+{"fa":"General","t":"g"}
+,"m":"24243423423个梵蒂冈大哥大哥梵蒂冈是梵蒂冈地方噶非得","tb":"1"},null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,{"m":"自动换行","ct":
+
+{"fa":"General","t":"g"}
+,"v":"自动换行"},null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,{"v":"1111111111个鬼地方个辅导费 个梵蒂冈发","tb":"2","ct":
+
+{"fa":"General","t":"g"}
+,"m":"1111111111个鬼地方个辅导费 个梵蒂冈发"},null,null,null,null,null,null,null,null,null,null,null,null]]
+    `
+
     window.addEventListener('message', (e) => {
       if (e.data.type === 'tableDetail') {
         let data = JSON.parse(e.data.data);
         if (data.eleId === props.ele.id) {
-          tableTpl.value = JSON.parse(e.data.data);
-          props.ele.value = JSON.parse(e.data.data);
+          data.content = detail;
+          tableTpl.value = data;
+          props.ele.value = data;
         }
       }
     });
@@ -245,7 +406,7 @@ export default defineComponent({
           ) {
             console.log(111, row[i]);
             row.splice(+i + 1, row[i].mc.cs - 1);
-            for (let index = row[i].mc.rs; index < i; index--) {
+            for (let index = row[i].mc.rs; index > 1; index--) {
               list[+key + index + ''].splice(i, row[i].mc.cs);
             }
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
