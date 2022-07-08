@@ -389,7 +389,7 @@ const compBaseConfig = {
   'rad-editor': {
     elName: 'RadEditor',
     name: '富文本',
-    desc: '可控制文本样式，添加图片。',
+    desc: '可控制文本样式。',
     type: 'textarea',
     placeholder: '',
     label: '',
