@@ -177,7 +177,7 @@ export default defineComponent({
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                 props.ele.value = props.ele.value.replace(
                   arr[j],
-                  `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}`
+                  `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
                 );
                 hasVal = true;
                 break;
