@@ -409,6 +409,7 @@ const compBaseConfig = {
     elType: 'text',
     rules: {},
     display: true,
+    editingMinHeight: 75
   },
   'rad-signature': {
     elName: 'RadSignature',

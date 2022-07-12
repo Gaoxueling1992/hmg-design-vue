@@ -635,7 +635,7 @@ export default defineComponent({
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                         let txt = arr[j].replace(
                           new RegExp(
-                            /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                            /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;+%()（）\s]+start\s-->/g,
                             'gm'
                           ),
                           ''

@@ -26,7 +26,8 @@
         fontStyle: ele.fontStyle,
         textDecoration: ele.textDecoration,
         color: ele.fontColor,
-        'display': ele.inline ? 'grid' : 'block'
+        'display': ele.inline ? 'grid' : 'block',
+        height: ele.editingMinHeight || 75 + 'px'
       }"
       :id="'editor' + ele.id"
       @contextmenu.prevent="clickEditor"
@@ -406,8 +407,11 @@ export default defineComponent({
   }
 }
 .w-e-text {
-  min-height: 75px !important;
+  // min-height: 75px !important;
   padding: 4px 0;
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: bold !important;
+  }
 }
 .w-e-toolbar .w-e-droplist {
   overflow: auto;

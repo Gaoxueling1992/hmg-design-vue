@@ -1,6 +1,15 @@
 <template>
   <div class="title marginT10 marginB5 fontW500">预设富文本内部样式</div>
   <div class="flex marginT10">
+    <div class="flex-title3 marginR5">编辑时内容区域最小高度</div>
+    <a-input-number
+      class="flex1"
+      v-model:value="activeCompObj.editingMinHeight"
+      :min="50"
+      @change="activeCompObj.editingMinHeight = !activeCompObj.editingMinHeight ? 50 : activeCompObj.editingMinHeight"
+    />
+  </div>
+  <div class="flex marginT10">
     <div class="flex-title3 marginR5">打印时内容区域最小高度</div>
     <a-input-number
       class="flex1"
