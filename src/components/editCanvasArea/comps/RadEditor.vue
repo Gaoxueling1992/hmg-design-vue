@@ -141,7 +141,7 @@ export default defineComponent({
             props.ele.value = newHtml;
           }
           let toolbar = document.getElementById(`toolbar${props.ele.id}`);
-          if (toolbar) {
+          if (toolbar && !props.ele.baseProps.readonly) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
             toolbar.style.top =
@@ -151,7 +151,7 @@ export default defineComponent({
         editor.config.onfocus = function () {
           focusedEle.value = props.ele.id;
           let toolbar = document.getElementById(`toolbar${props.ele.id}`);
-          if (toolbar) {
+          if (toolbar && !props.ele.baseProps.readonly) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
             toolbar.style.top =
@@ -273,7 +273,7 @@ export default defineComponent({
               'none';
           }
         } else {
-          if (toolbar) {
+          if (toolbar && !props.ele.baseProps.readonly) {
             toolbar.style.display =
               '';
             let top = document.getElementById(lineId.value).offsetTop;
