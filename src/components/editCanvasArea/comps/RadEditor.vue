@@ -26,8 +26,7 @@
         fontStyle: ele.fontStyle,
         textDecoration: ele.textDecoration,
         color: ele.fontColor,
-        'display': ele.inline ? 'grid' : 'block',
-        minHeight: ele.editingMinHeight || 75 + 'px'
+        'display': ele.inline ? 'grid' : 'block'
       }"
       :id="'editor' + ele.id"
       @contextmenu.prevent="clickEditor"
@@ -131,6 +130,8 @@ export default defineComponent({
           '幼圆'
         ];
         editor.create();
+
+        document.getElementById('editor' + props.ele.id).style.minHeight = (props.ele.editingMinHeight || 75) + 'px';
 
         editor.config.onchange = (newHtml) => {
           focusedEle.value = props.ele.id;
@@ -407,7 +408,6 @@ export default defineComponent({
   }
 }
 .w-e-text {
-  // min-height: 75px !important;
   padding: 4px 0;
   h1,h2,h3,h4,h5,h6 {
     font-weight: bold !important;
