@@ -27,7 +27,7 @@
         textDecoration: ele.textDecoration,
         color: ele.fontColor,
         'display': ele.inline ? 'grid' : 'block',
-        height: ele.editingMinHeight || 75 + 'px'
+        minHeight: ele.editingMinHeight || 75 + 'px'
       }"
       :id="'editor' + ele.id"
       @contextmenu.prevent="clickEditor"
