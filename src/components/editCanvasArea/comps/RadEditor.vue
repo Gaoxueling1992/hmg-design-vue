@@ -412,6 +412,7 @@ font[color='rgba(0, 0, 0, 0)'] {
 }
 .w-e-text {
   padding: 0 !important;
+  overflow: hidden !important;
   h1,h2,h3,h4,h5,h6 {
     font-weight: bold !important;
   }
