@@ -39,7 +39,7 @@
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'right' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px' : '30px'
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px !important' : '30px'
           }"
         >
           {{ ele.value }}&nbsp;
@@ -141,7 +141,7 @@
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'left' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px' : '30px'
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px !important' : '30px'
           }"
         >
           {{ ele.value }}&nbsp;

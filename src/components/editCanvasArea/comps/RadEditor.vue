@@ -408,6 +408,7 @@ font[color='rgba(0, 0, 0, 0)'] {
   .w-e-text-container,
   .w-e-text {
     height: fit-content !important;
+    min-height: inherit !important;
   }
 }
 .w-e-text {

@@ -1,3 +1,11 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2022-01-24 11:00:44
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-07-13 15:01:28
+ * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadDatetime.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div
     class="inherit"
@@ -9,7 +17,7 @@
       'display': ele.inline ? 'inline-block' : ''
     }"
   >{{ ele.label }}</div>
-  <span>{{ele.prefix}} </span>
+  <span>{{ele.prefix}}&nbsp;</span>
   <a-date-picker
     v-if="!isReadonlyStatus && !ele.baseProps.readonly"
     style="flex: 1"
@@ -21,11 +29,11 @@
   />
   <div
     v-else
-    class="inherit display-text"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
+    class="inherit"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;
     padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
-  >{{ele.value ? moment(ele.value).format(ele.format) : ''}} </div>
+  >{{ele.value ? moment(ele.value).format(ele.format) : ''}}&nbsp;</div>
   {{ele.suffix}}
 </template>
 <script lang="ts">
