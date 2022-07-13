@@ -517,6 +517,9 @@ export default defineComponent({
           break;
         case 'newTpl':
           newTpl(1);
+          if (e.data.pageId) {
+            pageId.value = e.data.pageId;
+          }
           loading.value = false;
           break;
         case 'saveDesinger':

@@ -156,55 +156,14 @@
         :class="'line' + String(idx)"
       >{{ele.label}}</a-divider>
       <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'" :class="'line' + String(idx)">
-        <template v-if="(ele.elName === 'RadDrcode' && ele.img) || (ele.src && ele.elName !== 'RadDrcode') ">
+        <template v-if="(ele.elName !== 'RadImage' && ele.img) || (ele.src && ele.elName === 'RadImage') ">
           <a-image
-            v-if="ele.elName === 'RadImage'"
             class="img"
             :height="ele.imgHeight"
             :width="ele.imgWidth"
-            :src="ele.src"
-            :style="{
-              height: ele.imgHeight+ 'px',
-              width: ele.imgWidth + 'px'
-            }"
+            :src="ele.elName === 'RadImage' ? ele.src : ele.img"
             :class="'line' + String(idx)"
-          />
-          <template v-else-if="ele.elName === 'RadSignalcode'">
-            <div v-if="ele.displayValue && ele.textPosition === 'top'" style="text-align:center" :class="'line' + String(idx)"
-              :style="{
-                'width': textWidth + 'px',
-                'text-align': ele.textAlign,
-                'font-size': ele.textSize + 'px'
-              }">
-              {{ele.text}}
-            </div>
-            <Vue3Barcode    
-              :value="ele.src"
-              :background="ele.background"
-              :lineColor="ele.lineColor"
-              :displayValue="false"
-              :width="ele.codeWidth"
-              :height="ele.codeHeight"
-              :margin="0"
-              :class="'line' + String(idx)"
-            />
-            <div v-if="ele.displayValue && ele.textPosition === 'bottom'" style="text-align:center"
-              :style="{
-                'width': textWidth + 'px',
-                'text-align': ele.textAlign,
-                'font-size': ele.textSize + 'px'
-              }"
-              :class="'line' + String(idx)">
-              {{ele.text}}
-            </div>
-          </template>
-          <a-image
-            v-if="ele.img"
-            class="img"
-            :height="ele.imgHeight"
-            :width="ele.imgWidth"
-            :src="ele.img"
-            :class="'line' + String(idx)"
+            :preview="false"
             :style="{
               height: ele.imgHeight+ 'px',
               width: ele.imgWidth + 'px'
@@ -421,25 +380,6 @@ export default defineComponent({
     const pageHeaderId: Ref<string> = inject('pageHeaderId');
     const tempCompList: Ref<any> = ref<any>([]);
 
-    const textWidth: Ref = ref<number>(0);
-    onMounted(() => {
-      if (ele.elName === 'RadSignalcode' && ele.text && document.getElementById(ele.id) && document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')) {
-        textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
-      }
-    });
-    watch(
-      () => ele, 
-      () => {
-        if (ele.elName === 'RadSignalcode' && ele.text && document.getElementById(ele.id) && document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')) {
-          setTimeout(() => {
-            textWidth.value = document.getElementById(ele.id).getElementsByClassName('vue3-barcode-element')[0].getBoundingClientRect().width;
-            console.log('textWidth', textWidth.value);
-          });
-        }
-      },
-      { deep: true }
-    );
-
     const { deleteEle, copyEle, clickEle } = handleEleOperate(ele, props);
 
     const addComp2Comb = (item) => {
@@ -491,7 +431,6 @@ export default defineComponent({
       domainList,
       deleteIt,
       setFixedArea, pageFooterId, pageHeaderId,
-      textWidth,
       openAdd2Comp,
       tempCompList,
       confirm2Comp

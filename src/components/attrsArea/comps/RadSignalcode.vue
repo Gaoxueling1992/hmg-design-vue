@@ -14,7 +14,7 @@
       class="flex1 marginR5"
       v-model:value="activeCompObj.background"
     />
-    <div class="flex-title2 marginL5">码色</div>
+    <div class="flex-title3 marginL5">码色</div>
     <a-input
       class="flex1"
       v-model:value="activeCompObj.lineColor"
@@ -39,6 +39,7 @@
   <a-checkbox
     class="marginT10"
     v-model:checked="activeCompObj.displayValue"
+    v-if="activeCompObj.src"
   >展示码值</a-checkbox>
   <div
     class="flex marginT10"
@@ -48,6 +49,7 @@
     <a-input
       v-model:value="activeCompObj.text"
       :maxlength="30"
+      placeholder="为空时码值显示源值"
       @change="changeText"
     />
   </div>
@@ -83,37 +85,73 @@
       @change="activeCompObj.textSize = !activeCompObj.textSize ? 12 : activeCompObj.textSize"
     />
   </div>
+  <div class="title marginT10 marginB5 fontW500" v-if="activeCompObj.src">预览(码值过长可横向滚动查看)</div>
+  <div class="barcode-container">
+    <Vue3Barcode    
+      :value="activeCompObj.src"
+      :background="activeCompObj.background"
+      :lineColor="activeCompObj.lineColor"
+      :displayValue="activeCompObj.displayValue"
+      :textAlign="activeCompObj.textAlign"
+      :fontSize="activeCompObj.textSize"
+      :textPosition="activeCompObj.textPosition"
+      textFont="Microsoft YaHei"
+      :text="activeCompObj.text"
+      :width="activeCompObj.codeWidth"
+      :height="activeCompObj.codeHeight"
+      :margin="0"
+    />
+  </div>
+  <a-button
+    type="primary"
+    class="marginT5"
+    v-if="activeCompObj.src"
+    @click="applySc"
+  >{{activeCompObj.img ? '重新' : ''}}生成图片</a-button>
 </template>
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
+import Vue3Barcode from 'vue3-barcode';
 
 export default defineComponent({
   components: {
     LoadingOutlined,
-    PlusOutlined
+    PlusOutlined,
+    Vue3Barcode
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
-
     const changeSrc = () => {
       activeCompObj.value.src = activeCompObj.value.src.replace(
-        /[^A-Z|0-9]/g,
+        /[^A-Z|0-9|\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/g,
         ''
       );
     };
 
     const changeText = () => {
       activeCompObj.value.text = activeCompObj.value.text.replace(
-        /[^A-Z|0-9]/g,
+        /[^A-Z|0-9|\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/g,
         ''
       );
+    };
+
+    const applySc = () => {
+      const SVG = document.getElementsByClassName('vue3-barcode-element')[0];
+      const canvas = document.createElement('canvas');
+
+      const XML = new XMLSerializer().serializeToString(SVG);
+      const SVG64 = btoa(XML);
+      const image64 = 'data:image/svg+xml;base64,' + SVG64;
+
+      activeCompObj.value.img = image64;
     };
 
     return {
       activeCompObj,
       changeSrc,
-      changeText
+      changeText,
+      applySc
     };
   }
 });
@@ -127,5 +165,9 @@ export default defineComponent({
 }
 .flex-title2 {
   width: 80px;
+}
+.barcode-container {
+  width: 100%;
+  overflow-x: auto;
 }
 </style>

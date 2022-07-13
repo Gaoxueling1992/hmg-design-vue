@@ -182,4 +182,8 @@ export default defineComponent({
     padding: 4px 20px 4px 11px !important;
   }
 }
+.attr-body {
+  width: 100%;
+  overflow: hidden;
+}
 </style>

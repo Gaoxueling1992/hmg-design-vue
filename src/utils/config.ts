@@ -332,7 +332,7 @@ const compBaseConfig = {
   'rad-signalcode': {
     elName: 'RadSignalcode',
     name: '条形码',
-    desc: '根据输入自动生成条形码，每个页面仅可配置一个，配置规则：大小写字母+数字。',
+    desc: '根据输入自动生成条形码，配置规则：大写字母+数字+特殊字符，具体请了解Code128规则。',
     value: '',
     src: '',
     noLabel: true,
@@ -341,7 +341,12 @@ const compBaseConfig = {
     },
     threshold: '',
     domainType: '',
-    styleSheet: styleSheet,
+    styleSheet: {
+      width: '100%',
+      paddingTop: '0',
+      paddingBottom: '0',
+      paddingLeft: '0'
+    },
     background: 'transparent',
     lineColor: '#000000',
     displayValue: false,
@@ -354,6 +359,7 @@ const compBaseConfig = {
     elType: 'other',
     rules: {},
     display: true,
+    img: ''
   },
   'rad-drcode': {
     elName: 'RadDrcode',
