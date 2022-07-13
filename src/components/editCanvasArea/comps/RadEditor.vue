@@ -381,6 +381,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+font[color='rgba(0, 0, 0, 0)'] {
+  color: rgba(0, 0, 0, 0)
+}
 .ele-editor-label {
   padding-right: 10px;
   display: inline-block;
@@ -408,7 +411,7 @@ export default defineComponent({
   }
 }
 .w-e-text {
-  padding: 4px 0;
+  padding: 0 !important;
   h1,h2,h3,h4,h5,h6 {
     font-weight: bold !important;
   }
@@ -486,7 +489,8 @@ font[size='3'] {
     line-height: 1.2;
   }
   .w-e-text-container .placeholder {
-    top: 5px !important;
+    top: 0 !important;
+    left: 0 !important;
   }
 }
 .editor-toolbar {
