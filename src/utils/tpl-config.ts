@@ -75,7 +75,7 @@ const pageStr1 = `">
 </table>
 `
 
-const pageStr2 = `
+const pageStr2 = `">
   <tr>
     <td class="section"></td>
     <td>
