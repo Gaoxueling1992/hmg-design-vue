@@ -16,7 +16,6 @@
     class="inherit"
     v-model:value="ele.value"
     placeholder="请选择时间"
-    :locale="locale"
     :picker="ele.picker"
     :format="ele.format"
   />
