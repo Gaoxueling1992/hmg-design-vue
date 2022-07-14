@@ -25,7 +25,7 @@
 import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup (props) {
     const pageId: any = inject('pageId');
     return {

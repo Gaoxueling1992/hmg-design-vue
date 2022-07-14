@@ -100,7 +100,7 @@ function getBase64(img: Blob, callback: (base64Url: string) => void) {
 }
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   components: {
     draggable: VueDraggableNext
   },

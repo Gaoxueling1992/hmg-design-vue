@@ -267,7 +267,7 @@ const handleCompsOper = (
       return;
     }
     if (typeStr === 'header') {
-      if (ele.id !== pageData.pageHeaderId) {
+      if (+ele.id !== +pageData.pageHeaderId) {
         pageHeaderId.value = ele.id;
         pageData.pageHeaderId = ele.id;
         pageData.headerLine = idx;
@@ -277,7 +277,7 @@ const handleCompsOper = (
         pageData.headerLine = -1;
       }
     } else {
-      if (ele.id !== pageData.pageFooterId) {
+      if (+ele.id !== +pageData.pageFooterId) {
         pageFooterId.value = ele.id;
         pageData.pageFooterId = ele.id;
         pageData.footerLine = idx;
@@ -420,6 +420,7 @@ const handleCompsOper = (
     pageData.pageHeaderId = item.pageHeaderId;
     pageData.pageNumType = item.pageNumType;
     pageData.pageNumPosi = item.pageNumPosi;
+    console.log('----', item.pageFooterId, item.pageHeaderId, item.pageNumType);
     pageHeaderId.value = item.pageHeaderId;
     pageFooterId.value = item.pageFooterId;
     activePosi.value = 0;
@@ -580,13 +581,15 @@ export default defineComponent({
         case 'resetDomainList':
           if (e.data.data && JSON.parse(e.data.data)) {
             const data2 = JSON.parse(e.data.data);
-            domainList.length = 0;
-            data2.forEach((domain) => {
-              domainList.push({
-                value: domain.option,
-                label: domain.name + ' #' + domain.option
+            if (data2) {
+              domainList.length = 0;
+              data2.forEach((domain) => {
+                domainList.push({
+                  value: domain.option,
+                  label: domain.name + ' #' + domain.option
+                });
               });
-            });
+            }
           }
           break;
         case 'resetCustomComp':
@@ -769,7 +772,7 @@ export default defineComponent({
           pageData.headerHtml =
             openFixedAreaStr +
             (pageData.pageNumType && pageData.pageNumPosi <= 2
-              ? +pageData.pageNumType === 1
+              ? +pageData.pageNumType === 1 
                 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
                 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
               : '') +
@@ -778,26 +781,25 @@ export default defineComponent({
             '</div>' +
             footStr;
           pageData.headerHeight = pageData.pageHeaderId
-            ? (document.getElementById('edit-canvas-header').clientHeight -
-                (pageData.headerLine + 1) * 2) /
-              getOneMmsPx()
+            ? (document.getElementById('edit-canvas-header').clientHeight /
+              getOneMmsPx())
             : pageData.pageNumType && pageData.pageNumPosi <= 2
             ? 5
             : 0;
           pageData.footerHtml =
             openFixedAreaStr +
+            `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+            (pageData.pageFooterId ? footercanvas : '') +
+            '</div>' +
             (pageData.pageNumType && pageData.pageNumPosi > 2
               ? +pageData.pageNumType === 1
                 ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
                 : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
               : '') +
-            `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-            (pageData.pageFooterId ? footercanvas : '') +
-            '</div>' +
             footStr;
           pageData.footerHeight = pageData.pageFooterId
-            ? document.getElementById('edit-canvas-footer').clientHeight /
-              getOneMmsPx()
+            ? (document.getElementById('edit-canvas-footer').clientHeight /
+              getOneMmsPx())
             : pageData.pageNumType && pageData.pageNumPosi > 2
             ? 5
             : 0;

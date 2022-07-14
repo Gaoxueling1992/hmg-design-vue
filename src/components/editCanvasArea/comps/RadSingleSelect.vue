@@ -1,3 +1,11 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2022-01-24 14:03:26
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-07-14 14:06:03
+ * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadSingleSelect.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div
     class="inherit"
@@ -54,7 +62,7 @@
 import { defineComponent, Ref, inject, ref } from 'vue';
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const choosedValue: Ref<string> = ref<string>('');

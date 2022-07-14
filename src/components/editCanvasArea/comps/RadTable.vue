@@ -183,7 +183,7 @@ const dealWithKeyup = () => {
 };
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup(props) {
     const tableTpl: any = ref(props.ele.value);
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');

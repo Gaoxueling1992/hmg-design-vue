@@ -17,7 +17,7 @@
           v-show="activeCompObj.elName === 'RadText'"
         ></div>
         <div
-          class="container container-editor"
+          class="container container-editor-attr"
           id="editor-ct"
           v-show="activeCompObj.elName === 'RadText'"
         ></div>
@@ -185,5 +185,15 @@ export default defineComponent({
 .attr-body {
   width: 100%;
   overflow: hidden;
+}
+.container-editor-attr {
+  height: 75px !important;
+  z-index: 10 !important;
+  .w-e-text-container {
+    z-index: 0 !important;
+  }
+  .w-e-text {
+    padding: 10px !important;
+  }
 }
 </style>

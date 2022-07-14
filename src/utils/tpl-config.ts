@@ -1,9 +1,4 @@
-const headStr = `
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-  <style>
+const headStr = `<!DOCTYPE html><html><head><meta charset="utf-8"/><style>
     @font-face{font-family: "SimSun";src:url('{fontPath}/simsun.ttf') format('truetype');}
     @font-face{font-family: "NSimSun";src:url('{fontPath}/nsimsun.ttf') format('truetype');}
     @font-face{font-family: "FangSong";src:url('{fontPath}/simfang.ttf') format('truetype');}
@@ -14,19 +9,11 @@ const headStr = `
     @font-face{font-family: "LiSu";src:url('{fontPath}/simli.ttf') format('truetype');}
     @font-face{font-family: "YouYuan";src:url('{fontPath}/simyou.ttf') format('truetype');}
     .editor-display-text p{margin-top:0; margin-bottom:0;}
-  </style>
-</head>
-<body style="margin: 0">
-`
+  </style></head><body style="margin: 0">`
 
-const footStr = `
-</body></html>`
+const footStr = `</body></html>`
 
-const openFixedAreaStr = `
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+const openFixedAreaStr = `<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html;charset=utf-8">
   <style>
     @font-face{font-family: "SimSun";src:url('{fontPath}/simsun.ttf') format('truetype');}
     @font-face{font-family: "NSimSun";src:url('{fontPath}/nsimsun.ttf') format('truetype');}
@@ -60,30 +47,12 @@ const openFixedAreaStr = `
 				}
 			}
 		}
-	</script>
-</head>
-<body style="border:0; margin: 0;" onload="subst()">`
+	</script></head><body style="border:0; margin: 0;" onload="subst()">`
 
 const pageStrStyle = '<table style="'
-const pageStr1 = `">
-  <tr>
-    <td class="section"></td>
-    <td>
-      第 <span class="page"></span> 页
-    </td>
-  </tr>
-</table>
-`
+const pageStr1 = `"><tr><td class="section"></td><td>第 <span class="page"></span> 页</td></tr></table>`
 
-const pageStr2 = `">
-  <tr>
-    <td class="section"></td>
-    <td>
-      第 <span class="page"></span> / <span class="topage"></span> 页
-    </td>
-  </tr>
-</table>
-`
+const pageStr2 = `"><tr><td class="section"></td><td>第 <span class="page"></span> / <span class="topage"></span> 页</td></tr></table>`
 
 export {
   headStr,

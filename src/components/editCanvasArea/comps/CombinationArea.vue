@@ -340,7 +340,7 @@ import { defineComponent, inject, Ref } from 'vue';
 import moment from 'moment';
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup() {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {

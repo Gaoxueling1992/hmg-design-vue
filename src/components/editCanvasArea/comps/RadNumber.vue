@@ -33,7 +33,7 @@
 import { defineComponent, Ref, inject } from 'vue'
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup () {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {

@@ -60,7 +60,7 @@
 import { defineComponent, toRefs, Ref, inject, ref } from 'vue';
 
 export default defineComponent({
-  props: ['ele'],
+  props: ['ele', 'toolbarId', 'lineId'],
   setup(props) {
     const { ele } = toRefs(props);
     const choosedValue: Ref<any> = ref<any>([]);
