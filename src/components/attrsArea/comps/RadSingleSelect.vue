@@ -25,30 +25,32 @@
     group="line"
     v-if="activeCompObj.options && activeCompObj.options.length"
   >
-    <div
-      v-for="(option, index) in activeCompObj.options"
-      :key="option.value"
-      class="paddingT5"
-    >
-      <i class="iconfont icondrag"></i>
-      <a-input
-        size="small"
-        class="input-width"
-        v-model:value="option.label"
-        @click="clickIt(option)"
-        @change="changeDefault(option, 1)"
-      />
-      <div class="option-op">
-        <a-radio
-          @click="changeDefault(option, 0)"
-          :checked="option.label===activeCompObj.value"
-        ></a-radio>
-        <i
-          class="iconfont icondelete-border"
-          @click="deleteOption(index, option)"
-        ></i>
+    <template v-for="(option, index) in activeCompObj.options">
+      <div
+        v-if="option && option.value"
+        :key="option.value"
+        class="paddingT5"
+      >
+        <i class="iconfont icondrag"></i>
+        <a-input
+          size="small"
+          class="input-width"
+          v-model:value="option.label"
+          @click="clickIt(option)"
+          @change="changeDefault(option, 1)"
+        />
+        <div class="option-op">
+          <a-radio
+            @click="changeDefault(option, 0)"
+            :checked="option.label===activeCompObj.value"
+          ></a-radio>
+          <i
+            class="iconfont icondelete-border"
+            @click="deleteOption(index, option)"
+          ></i>
+        </div>
       </div>
-    </div>
+    </template>
   </draggable>
   <div
     class="op marginT10"
@@ -70,6 +72,7 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     let focusOption = '';
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+      activeCompObj.value.options = [];
       activeCompObj.value.options.push({
         value: 1,
         label: '选项1'
@@ -79,6 +82,7 @@ export default defineComponent({
     watch(() => activeCompObj,
       () => {
         if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+          activeCompObj.value.options= [];
           activeCompObj.value.options.push({
             value: 1,
             label: '选项1'
@@ -97,7 +101,7 @@ export default defineComponent({
           '选项' +
           (index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1)
       });
-      if (index === 0) {
+      if (index === 0 && activeCompObj.value.options && activeCompObj.value.options[0]) {
         activeCompObj.value.value = activeCompObj.value.options[0].label;
       }
     };
@@ -107,7 +111,7 @@ export default defineComponent({
         return;
       }
       activeCompObj.value.options.splice(index, 1);
-      if (option.label === activeCompObj.value.value) {
+      if (option.label === activeCompObj.value.value && activeCompObj.value.options && activeCompObj.value.options[0]) {
         activeCompObj.value.value = activeCompObj.value.options[0].label;
       }
     };
@@ -115,6 +119,7 @@ export default defineComponent({
       focusOption = option.label;
     };
     const changeDefault = (option: any, op = 0) => {
+      console.log('start-----')
       // 输入重复的选项，提示
       if (op === 1) {
         let cur = activeCompObj.value.options.filter(

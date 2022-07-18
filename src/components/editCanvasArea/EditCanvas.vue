@@ -58,7 +58,7 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
                   height: '100%'
                 }">
                   <component
@@ -123,7 +123,7 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
                   height: '100%'
                 }">
                   <component
@@ -188,7 +188,7 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
                   height: '100%'
                 }">
                   <component

@@ -41,7 +41,7 @@
       fontStyle: ele.fontStyle,
       textDecoration: ele.textDecoration,
       color: ele.fontColor,
-      'line-height': 1.2,
+      'line-height': '1.2 !important',
       'text-decoration': 'inherit',
       'white-space': 'normal',
       'word-break': 'break-all',
@@ -77,6 +77,7 @@ export default defineComponent({
     const splitField: Ref<string> = inject('splitField');
     const currentDec: Ref<string> = inject('currentDec');
     const focusedEle: Ref<string> = inject('focusedEle');
+    const pageData: any = inject('pageData');
 
     const readonlyValue = computed(() => {
       if (props.ele.value && splitField.value) {
@@ -375,7 +376,8 @@ export default defineComponent({
       isReadonlyStatus,
       clickEditor,
       readonlyValue,
-      focusedEle
+      focusedEle,
+      pageData
     };
   }
 });
