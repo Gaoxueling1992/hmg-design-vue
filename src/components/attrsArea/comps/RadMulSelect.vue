@@ -67,6 +67,7 @@ export default defineComponent({
     let focusOption = '';
     const checkedValue: Ref<any> = ref<any>([]);
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+      activeCompObj.value.options = [];
       activeCompObj.value.options.push({
         value: 1,
         label: '选项1'
@@ -80,6 +81,7 @@ export default defineComponent({
     watch(() => activeCompObj,
       () => {
         if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+          activeCompObj.value.options = [];
           activeCompObj.value.options.push({
             value: 1,
             label: '选项1'
@@ -90,6 +92,7 @@ export default defineComponent({
     );
     const addOption = () => {
       const index = activeCompObj.value.options.length;
+      console.log(activeCompObj.value.options, index)
       activeCompObj.value.options.push({
         value:
           index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1,

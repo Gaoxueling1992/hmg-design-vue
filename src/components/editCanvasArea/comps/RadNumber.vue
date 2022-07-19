@@ -1,3 +1,11 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2022-01-24 11:18:20
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-07-19 11:37:13
+ * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadNumber.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div
     class="inherit"
@@ -6,7 +14,7 @@
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : '',
-      'text-decoration': 'inherit'
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
@@ -23,9 +31,12 @@
     </a-input-number>
     <span>{{ele.suffix}}</span>
   </template>
-  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
+  <div v-else style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;white-space:normal;word-break: break-all;
-    padding-bottom: 1px;" class="inherit display-text">
+    padding-bottom: 1px;" class="inherit display-text"
+    :style="{
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+    }">
     {{ ele.prefix }} {{ ele.value }} {{ ele.suffix }}&nbsp;
   </div>
 </template>

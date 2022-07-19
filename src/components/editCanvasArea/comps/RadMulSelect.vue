@@ -6,12 +6,12 @@
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : '',
-      'text-decoration': 'inherit'
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
-    <span>{{ele.prefix}} </span>
+    <span>{{ele.prefix ? ele.prefix + ' ' : ''}}</span>
     <a-select
       style="flex: 1"
       :disabled="ele.baseProps.readonly"
@@ -40,7 +40,7 @@
         class="option"
       >{{item.label}}</a-checkbox>
     </div>
-    <span>{{ele.suffix}} </span>
+    <span>{{ele.suffix}}</span>
   </template>
   <div
     v-else
@@ -48,12 +48,15 @@
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;display: inline-block;line-height: 30px !important;
     padding-top: 1px;word-break: break-all;
     padding-bottom: 1px;white-space:normal;"
+    :style="{
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+    }"
   >
-    <span>{{ele.prefix}} </span>
+    <span>{{ele.prefix ? ele.prefix + ' ' : ''}}</span>
     <template v-for="item in ele.value">
       {{item}}&nbsp;
     </template>
-    <span>{{ele.suffix}} </span>
+    <span>{{ele.suffix}}</span>
   </div>
 </template>
 <script lang="ts">

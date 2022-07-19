@@ -6,10 +6,11 @@
     style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
   >{{ ele.label }}</div>
-  <span>{{ele.prefix}} </span>
+  <span>{{ele.prefix ? ele.prefix + ' ' : ''}}</span>
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <a-select
       style="flex: 1"
@@ -45,6 +46,9 @@
     padding-top: 1px;text-decoration: inherit;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
     class="inherit display-text"
+    :style="{
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+    }"
   >
     {{ele.value}}
   </div>

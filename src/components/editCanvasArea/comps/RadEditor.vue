@@ -42,7 +42,7 @@
       textDecoration: ele.textDecoration,
       color: ele.fontColor,
       'line-height': '1.2 !important',
-      'text-decoration': 'inherit',
+      'text-decoration': ele.textDecoration,
       'white-space': 'normal',
       'word-break': 'break-all',
       'word-wrap': 'break-word',

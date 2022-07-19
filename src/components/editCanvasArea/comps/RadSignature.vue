@@ -9,7 +9,8 @@
       height: ele.imgHeight > 30 && ele.type !== 'input' ? ele.imgHeight+ 'px' : '30px',
       'vertical-align': 'top',
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
   >{{ ele.label }}</div>
   <div
@@ -39,7 +40,8 @@
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'right' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px !important' : '30px'
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px !important' : '30px',
+            'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >
           {{ ele.value }}&nbsp;
@@ -141,7 +143,8 @@
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'left' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px !important' : '30px'
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px !important' : '30px',
+            'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >
           {{ ele.value }}&nbsp;

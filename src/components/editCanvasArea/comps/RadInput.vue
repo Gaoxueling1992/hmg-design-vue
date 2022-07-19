@@ -2,7 +2,7 @@
  * @Author: sunny gaoxl@hmgsoft.com
  * @Date: 2022-01-19 14:11:58
  * @LastEditors: sunny gaoxl@hmgsoft.com
- * @LastEditTime: 2022-07-14 14:05:29
+ * @LastEditTime: 2022-07-19 11:30:06
  * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadInput.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,9 +13,10 @@
     :class="ele.inline ? 'ele-label' : ''"
     :style="{
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
-    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;text-decoration: inherit;"
+    style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
   >{{ ele.label }}</div>
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <a-input
@@ -55,8 +56,12 @@
     display: inline-block;
     flex: 1;
     word-break: break-all;
-    text-decoration: inherit;white-space:normal;" class="inherit display-text">
-    {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}&nbsp;
+    white-space:normal;"
+    :style="{
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+    }"
+    class="inherit display-text">
+    {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}
   </div>
 </template>
 <script lang="ts">

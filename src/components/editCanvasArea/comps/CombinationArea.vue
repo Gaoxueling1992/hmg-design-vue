@@ -41,7 +41,8 @@
             :class="ele.inline ? 'ele-label' : ''"
             :style="{
                 'padding-right': ele.inline ? '10px' : 0,
-                'display': ele.inline ? 'inline-block' : ''
+                'display': ele.inline ? 'inline-block' : '',
+                'text-decoration': item.styleSheet && item.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
               }"
             style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
           >{{ item.label }}</div>
@@ -81,7 +82,8 @@
             :class="ele.inline ? 'ele-label' : ''"
             :style="{
                 'padding-right': ele.inline ? '10px' : 0,
-                'display': ele.inline ? 'inline-block' : ''
+                'display': ele.inline ? 'inline-block' : '',
+                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
               }"
             style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
           >{{ item.label }}</div>
@@ -89,9 +91,12 @@
             style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;
       padding-top: 1px;
       padding-bottom: 1px;"
+            :style="{
+               'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+            }"
             class="inherit display-text"
           >
-            {{ item.prefix }} {{ item.value }} {{ item.suffix }}&nbsp;
+            {{ item.prefix }} {{ item.value }} {{ item.suffix }}
           </div>
         </template>
       </template>
@@ -103,7 +108,7 @@
           :style="{
               'padding-right': ele.inline ? '10px' : 0,
               'display': ele.inline ? 'inline-block' : '',
-              'text-decoration': 'inherit'
+              'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
             }"
           style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
         >{{ item.label }}&nbsp;</div>
@@ -125,9 +130,12 @@
           style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
                   padding-top: 1px;white-space:normal;word-break: break-all;
                   padding-bottom: 1px;"
+          :style="{
+              'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+          }"
           class="inherit display-text"
         >
-          {{ item.prefix }} {{ item.value }} {{ item.suffix }}&nbsp;
+          {{ item.prefix }} {{ item.value }} {{ item.suffix }}
         </div>
       </template>
       <template v-if="item.elName === 'RadDatetime'">
@@ -138,7 +146,8 @@
           :class="ele.inline ? 'ele-label' : ''"
           :style="{
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
         >{{ item.label }} </div>
         <span v-if="item.prefix">{{item.prefix}}&nbsp;</span>
@@ -157,8 +166,11 @@
           style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;text-decoration: inherit;line-height: 30px !important;
     padding-top: 1px;white-space:normal;word-break: break-all;
     padding-bottom: 1px;"
-        >{{item.value ? moment(item.value).format(item.format) : ''}} </div>
-        {{item.suffix}}
+          :style="{
+            'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+          }"
+        >{{item.value ? moment(item.value).format(item.format) : ''}}</div>
+        {{item.suffix ? ' ' + item.suffix : ''}}
       </template>
       <template v-if="item.elName === 'RadSignature'">
         <div
@@ -171,7 +183,8 @@
       height: item.imgHeight > 30 ? item.imgHeight+ 'px' : '30px',
       'vertical-align': 'top',
       'padding-right': ele.inline ? '10px' : 0,
-      'display': ele.inline ? 'inline-block' : ''
+      'display': ele.inline ? 'inline-block' : '',
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
         >{{ item.label }}</div>
         <div
@@ -201,10 +214,11 @@
                 class="inherit display-text"
                 :style="{
             float: item.imagePosi === 'right' ? 'left' : '',
-            lineHeight: item.imgHeight > 30 && item.imagePosi === 'right' ? item.imgHeight + 'px' : '30px'
+            lineHeight: item.imgHeight > 30 && item.imagePosi === 'right' ? item.imgHeight + 'px' : '30px',
+            'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
               >
-                {{ item.value }}&nbsp;
+                {{ item.value }}
               </div>
             </template>
             <div
@@ -323,10 +337,11 @@
                 class="inherit display-text"
                 :style="{
             float: item.imagePosi === 'left' ? 'left' : '',
-            lineHeight: item.imgHeight > 30 && item.imagePosi === 'left' ? item.imgHeight + 'px' : '30px'
+            lineHeight: item.imgHeight > 30 && item.imagePosi === 'left' ? item.imgHeight + 'px' : '30px',
+            'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
               >
-                {{ item.value }}&nbsp;
+                {{ item.value }}
               </div>
             </template>
           </template>
