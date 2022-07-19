@@ -206,13 +206,19 @@
             v-for="item in +ele.testTotalNum"
             :key="item"
             :span="calSpan(ele)"
+            :style="{
+              width: calSpan(ele)/24*100 + '% !important',
+              float: 'left'
+            }"
           >
             <div :style="{
               width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
               height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
               border: '1px solid grey',
               margin: '0 auto',
-              textAlign: 'center'
+              textAlign: 'center',
+              marginTop: ele.verSpacing / 2 + 'px',
+              marginBottom: ele.verSpacing / 2 + 'px',
             }">图片
             </div>
           </a-col>

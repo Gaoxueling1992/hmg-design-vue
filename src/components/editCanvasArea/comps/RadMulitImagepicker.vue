@@ -22,7 +22,7 @@
           :style="{
               width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
               height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
-              margin: '0 auto',
+              margin: '0 auto', 
               textAlign: 'center',
               position: 'relative',
               marginTop: ele.verSpacing / 2 + 'px',
