@@ -56,6 +56,7 @@ import RadEditor from './comps/RadEditor.vue';
 import RadTable from './comps/RadTable.vue';
 import RadSignature from './comps/RadSignature.vue';
 import CombinationArea from './comps/CombinationArea.vue';
+import RadLine from './comps/RadLine.vue';
 import { editorFontSizes } from '@/utils/config';
 import E from 'wangeditor';
 
@@ -73,7 +74,8 @@ export default defineComponent({
     RadEditor: RadEditor,
     RadTable: RadTable,
     RadSignature: RadSignature,
-    CombinationArea: CombinationArea
+    CombinationArea: CombinationArea,
+    RadLine: RadLine
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');

@@ -150,11 +150,31 @@
         }"
         v-html="ele.label || '静态文本'"
       ></div>
-      <a-divider
-        v-if="ele.elName === 'RadLine'"
-        class="inherit"
-        :class="'line' + String(idx)"
-      >{{ele.label}}</a-divider>
+      <template v-if="ele.elName === 'RadLine'">
+        <div
+          :class="'line' + String(idx)"
+          :style="{
+            height: ele.styleSheet.fontSize / 2 + 'px',
+            'border-top': ele.lineSize + 'px solid ' + ele.styleSheet.color,
+            'text-align': 'center',
+            'color': ele.styleSheet.color,
+            'font-size': ele.styleSheet.fontSize + 'px',
+            'font-variant': 'tabular-nums',
+            'line-height': 1,
+            'list-style': 'none',
+            'font-feature-settings': 'tnum',
+          }"
+        >
+          <span :style="{
+            top: -ele.styleSheet.fontSize/2 + 'px',
+            padding: ele.label ? '0 5px' : '0'
+          }"
+          class="line-label"
+          :class="{
+            'line-label-actived': activeCompId === ele.id
+          }">{{ele.label}}</span>
+        </div>
+      </template>
       <div v-if="ele.elName === 'RadImage' || ele.elName === 'RadSignalcode' || ele.elName === 'RadDrcode'" :class="'line' + String(idx)">
         <template v-if="(ele.elName !== 'RadImage' && ele.img) || (ele.src && ele.elName === 'RadImage') ">
           <a-image
@@ -451,6 +471,9 @@ export default defineComponent({
 .disgn-ele {
   &:hover {
     background: var(--background-color-base);
+    .line-label {
+      background: var(--background-color-base) !important;
+    }
   }
   .ele-label {
     padding-right: 10px;
@@ -529,5 +552,16 @@ export default defineComponent({
     color: var(--color-text-regular) !important;
     padding-left: 5px;
   }
+}
+.line-label {
+  position: relative;
+  background: var(--background-color-main);
+  max-width: 80%;
+  white-space: nowrap;
+  overflow: 'hidden';
+  text-overflow: ellipsis;
+}
+.line-label-actived {
+  background: var(--color-btn-bglight);
 }
 </style>

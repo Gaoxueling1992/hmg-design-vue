@@ -196,4 +196,17 @@ export default defineComponent({
 .input-width {
   width: 160px;
 }
+.attr-body {
+  .op {
+    width: fit-content;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .icondrag, .icondelete-border {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
 </style>

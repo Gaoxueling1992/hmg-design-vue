@@ -248,6 +248,7 @@ const compBaseConfig = {
     elType: 'other',
     rules: {},
     display: true,
+    lineSize: 1
   },
   'rad-image': {
     elName: 'RadImage',
