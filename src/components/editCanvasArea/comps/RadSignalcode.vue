@@ -5,7 +5,7 @@
     lineHeight: ele.codeHeight + 'px',
     backgroundColor: ele.background,
     color: ele.lineColor,
-    textAlign: ele.textAlign,
+    textAlign: 'center',
     border: '1px solid ' + ele.lineColor
   }" v-if="!ele.img">未生成条形码</div>
   <a-image

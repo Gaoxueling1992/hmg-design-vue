@@ -66,6 +66,11 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     let focusOption = '';
     const checkedValue: Ref<any> = ref<any>([]);
+    if (activeCompObj.value.options && activeCompObj.value.options.length) {
+      activeCompObj.value.options = activeCompObj.value.options.filter(
+        (option) => option && option.label && option.value
+      );
+    }
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options = [];
       activeCompObj.value.options.push({
@@ -80,6 +85,11 @@ export default defineComponent({
     }
     watch(() => activeCompObj,
       () => {
+        if (activeCompObj.value.options && activeCompObj.value.options.length) {
+          activeCompObj.value.options = activeCompObj.value.options.filter(
+            (option) => option && option.label && option.value
+          );
+        }
         if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
           activeCompObj.value.options = [];
           activeCompObj.value.options.push({
@@ -125,7 +135,9 @@ export default defineComponent({
     const changeDefault = (option: any, op = 0) => {
       if (op === 1) {
         let cur = activeCompObj.value.options.filter(
-          (opt) => opt.label === option.label
+          (opt) => {
+            return opt && opt.label && option && option.label && opt.label === option.label
+          }
         );
         if (cur.length > 1) {
           message.warning('无法添加重复的选项');

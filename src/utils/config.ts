@@ -242,6 +242,9 @@ const compBaseConfig = {
       paddingTop: '0',
       paddingBottom: '0'
     },
+    baseProps: {
+      hideOnPrint: false
+    },
     elType: 'other',
     rules: {},
     display: true,

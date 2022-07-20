@@ -612,10 +612,16 @@ export default defineComponent({
               }
             });
           });
-          toSaveEditor(tempToAave, value, bind2Threshold);
+          let saveResult = toSaveEditor(tempToAave, value, bind2Threshold);
+          if (!saveResult) {
+            return;
+          }
           break;
         case 'saveEditor':
-          toSaveEditor(e.data);
+          let saveResult1 = toSaveEditor(e.data);
+          if (!saveResult1) {
+            return;
+          }
           break;
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
@@ -686,138 +692,138 @@ export default defineComponent({
       }
     });
 
-    const toSaveEditor = (data, value = '', bind2Threshold = '') => {
+    const toSaveEditor = async (data, value = '', bind2Threshold = '') => {
       const checkInfo = JSON.parse(data.checkData);
       if (value && bind2Threshold) {
         checkInfo[bind2Threshold] = value;
       }
       // 处理提交前控件脚本
-      dealWithRules(JSON.stringify(pageData.lines), checkInfo).then((res) => {
-        if (!res.result) {
-          tempToAave = JSON.parse(JSON.stringify(data));
-          isReadonlyStatus.value = false;
-          window.parent.postMessage(
-            {
-              type: 'saveStopTips',
-              content: res.content,
-              tipType: res.tipType,
-              pageId: pageId.value,
-              bind2Threshold: res.bind2Threshold
-            },
-            '*'
-          );
-          return;
-        }
+      let res = await dealWithRules(JSON.stringify(pageData.lines), checkInfo);
+      if (!res.result) {
+        tempToAave = JSON.parse(JSON.stringify(data));
+        isReadonlyStatus.value = false;
+        window.parent.postMessage(
+          {
+            type: 'saveStopTips',
+            content: res.content,
+            tipType: res.tipType,
+            pageId: pageId.value,
+            bind2Threshold: res.bind2Threshold
+          },
+          '*'
+        );
+        return false;
+      }
 
-        tempToAave = null;
+      tempToAave = null;
 
-        isReadonlyStatus.value = true;
-        nextTick(async () => {
-          let headercanvas =
-            document.getElementById('edit-canvas-header').innerHTML;
-          let footercanvas =
-            document.getElementById('edit-canvas-footer').innerHTML;
-          pageData.html = '';
-          if (splitField.value) {
-            let lastDec = currentDec.value;
-            let lastReport = currentReport.value;
-            // 拆分报告 生成多份报告
-            for (let i = 0; i < calSplitField.length; i++) {
-              currentDec.value = calSplitField[i].label;
-              currentReport.value = calSplitField[i].id;
-              let bodycanvas = await getDomHtml();
-              pageData.html +=
-                headStr +
-                `<div style="padding:${
-                  pageData.pageHeaderId ? '5px' : '10px'
-                } ${pageData.styleSheet.padding} ${
-                  pageData.pageFooterId ? 0 : '10px'
-                } ${pageData.styleSheet.padding};${
-                  i > 0 ? 'page-break-before: always;' : ''
-                }">` +
-                bodycanvas +
-                '</div>' +
-                footStr;
-            }
-            currentDec.value = lastDec;
-            currentReport.value = lastReport;
-          } else {
-            let bodycanvas =
-              document.getElementById('edit-canvas-body').innerHTML;
+      isReadonlyStatus.value = true;
+      nextTick(async () => {
+        let headercanvas =
+          document.getElementById('edit-canvas-header').innerHTML;
+        let footercanvas =
+          document.getElementById('edit-canvas-footer').innerHTML;
+        pageData.html = '';
+        if (splitField.value) {
+          let lastDec = currentDec.value;
+          let lastReport = currentReport.value;
+          // 拆分报告 生成多份报告
+          for (let i = 0; i < calSplitField.length; i++) {
+            currentDec.value = calSplitField[i].label;
+            currentReport.value = calSplitField[i].id;
+            let bodycanvas = await getDomHtml();
             pageData.html +=
               headStr +
               `<div style="padding:${
-                pageData.pageHeaderId ||
-                (pageData.pageNumType && pageData.pageNumPosi <= 1)
-                  ? '5px'
-                  : '10px'
+                pageData.pageHeaderId ? '5px' : '10px'
               } ${pageData.styleSheet.padding} ${
-                pageData.pageFooterId ||
-                (pageData.pageNumType && pageData.pageNumPosi > 1)
-                  ? 0
-                  : '10px'
-              } ${pageData.styleSheet.padding};">` +
+                pageData.pageFooterId ? 0 : '10px'
+              } ${pageData.styleSheet.padding};${
+                i > 0 ? 'page-break-before: always;' : ''
+              }">` +
               bodycanvas +
               '</div>' +
               footStr;
           }
-          const pagePosiMap = {
-            0: 'text-align: right; width: 100%',
-            1: 'text-align: left;',
-            2: 'text-align: center; width: 100%',
-            3: 'text-align: left;',
-            4: 'text-align: right; width: 100%',
-            5: 'text-align: center; width: 100%'
-          };
-          pageData.headerHtml =
-            openFixedAreaStr +
-            (pageData.pageNumType && pageData.pageNumPosi <= 2
-              ? +pageData.pageNumType === 1 
-                ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-                : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-              : '') +
-            `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-            (pageData.pageHeaderId ? headercanvas : '') +
+          currentDec.value = lastDec;
+          currentReport.value = lastReport;
+        } else {
+          let bodycanvas =
+            document.getElementById('edit-canvas-body').innerHTML;
+          pageData.html +=
+            headStr +
+            `<div style="padding:${
+              pageData.pageHeaderId ||
+              (pageData.pageNumType && pageData.pageNumPosi <= 1)
+                ? '5px'
+                : '10px'
+            } ${pageData.styleSheet.padding} ${
+              pageData.pageFooterId ||
+              (pageData.pageNumType && pageData.pageNumPosi > 1)
+                ? 0
+                : '10px'
+            } ${pageData.styleSheet.padding};">` +
+            bodycanvas +
             '</div>' +
             footStr;
-          pageData.headerHeight = pageData.pageHeaderId
-            ? (document.getElementById('edit-canvas-header').clientHeight /
-              getOneMmsPx())
-            : pageData.pageNumType && pageData.pageNumPosi <= 2
-            ? 5
-            : 0;
-          pageData.footerHtml =
-            openFixedAreaStr +
-            `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-            (pageData.pageFooterId ? footercanvas : '') +
-            '</div>' +
-            (pageData.pageNumType && pageData.pageNumPosi > 2
-              ? +pageData.pageNumType === 1
-                ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-                : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-              : '') +
-            footStr;
-          pageData.footerHeight = pageData.pageFooterId
-            ? (document.getElementById('edit-canvas-footer').clientHeight /
-              getOneMmsPx())
-            : pageData.pageNumType && pageData.pageNumPosi > 2
-            ? 5
-            : 0;
-          window.parent.postMessage(
-            {
-              type: 'saveEditor',
-              pageData: JSON.stringify(pageData),
-              isModified: isModified.value,
-              pageId: pageId.value
-            },
-            '*'
-          );
+        }
+        const pagePosiMap = {
+          0: 'text-align: right; width: 100%',
+          1: 'text-align: left;',
+          2: 'text-align: center; width: 100%',
+          3: 'text-align: left;',
+          4: 'text-align: right; width: 100%',
+          5: 'text-align: center; width: 100%'
+        };
+        pageData.headerHtml =
+          openFixedAreaStr +
+          (pageData.pageNumType && pageData.pageNumPosi <= 2
+            ? +pageData.pageNumType === 1 
+              ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
+              : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
+            : '') +
+          `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+          (pageData.pageHeaderId ? headercanvas : '') +
+          '</div>' +
+          footStr;
+        pageData.headerHeight = pageData.pageHeaderId
+          ? (document.getElementById('edit-canvas-header').clientHeight /
+            getOneMmsPx())
+          : pageData.pageNumType && pageData.pageNumPosi <= 2
+          ? 5
+          : 0;
+        pageData.footerHtml =
+          openFixedAreaStr +
+          `<div style="padding:0 ${pageData.styleSheet.padding};">` +
+          (pageData.pageFooterId ? footercanvas : '') +
+          '</div>' +
+          (pageData.pageNumType && pageData.pageNumPosi > 2
+            ? +pageData.pageNumType === 1
+              ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
+              : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
+            : '') +
+          footStr;
+        pageData.footerHeight = pageData.pageFooterId
+          ? (document.getElementById('edit-canvas-footer').clientHeight /
+            getOneMmsPx())
+          : pageData.pageNumType && pageData.pageNumPosi > 2
+          ? 5
+          : 0;
+        window.parent.postMessage(
+          {
+            type: 'saveEditor',
+            pageData: JSON.stringify(pageData),
+            isModified: isModified.value,
+            pageId: pageId.value
+          },
+          '*'
+        );
 
-          nextTick(() => {
-            isReadonlyStatus.value = false;
-          });
+        nextTick(() => {
+          isReadonlyStatus.value = false;
         });
       });
+      return true;
     };
 
     provide('changePageConfig', changePageConfig);

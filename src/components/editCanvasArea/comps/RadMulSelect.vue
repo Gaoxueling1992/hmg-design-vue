@@ -13,7 +13,7 @@
   <template v-if="!isReadonlyStatus && !ele.baseProps.readonly">
     <span>{{ele.prefix ? ele.prefix + ' ' : ''}}</span>
     <a-select
-      style="flex: 1"
+      style="flex: 1; width: 100%"
       :disabled="ele.baseProps.readonly"
       class="inherit"
       v-if="ele.type === 'select'"
@@ -67,6 +67,11 @@ export default defineComponent({
   setup(props) {
     const { ele } = toRefs(props);
     const choosedValue: Ref<any> = ref<any>([]);
+    if (props.ele.options && props.ele.options.length) {
+      props.ele.options = props.ele.options.filter(
+        (option) => option && option.label && option.value
+      );
+    }
     for (let i = 0; i < ele.value.options.length; i++) {
       if (ele.value.value.indexOf(ele.value.options[i].label) > -1) {
         choosedValue.value.push(ele.value.options[i].value);
