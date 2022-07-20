@@ -37,7 +37,7 @@
           class="input-width"
           v-model:value="option.label"
           @click="clickIt(option)"
-          @change="changeDefault(option, 1)"
+          @blur="changeDefault(option, 1)"
         />
         <div class="option-op">
           <a-radio
