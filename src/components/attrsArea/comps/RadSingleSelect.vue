@@ -94,12 +94,23 @@ export default defineComponent({
     );
     const addOption = () => {
       const index = activeCompObj.value.options.length;
+      let indexMax = index;
+      if (indexMax > 1) {
+        activeCompObj.value.options.forEach((option) => {
+          indexMax = option.value > indexMax ? option.value : indexMax;
+        });
+      }
+      activeCompObj.value.options.forEach((option) => {
+        if (option.label === ('选项' + (index === 0 ? 1 : (indexMax + 1)))) {
+          indexMax ++;
+        }
+      });
       activeCompObj.value.options.push({
         value:
-          index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1,
+          index === 0 ? 1 : (indexMax + 1),
         label:
           '选项' +
-          (index === 0 ? 1 : activeCompObj.value.options[index - 1].value + 1)
+          (index === 0 ? 1 : (indexMax + 1))
       });
       if (index === 0 && activeCompObj.value.options && activeCompObj.value.options[0]) {
         activeCompObj.value.value = activeCompObj.value.options[0].label;
