@@ -921,6 +921,11 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.ant-modal-close {
+  position: fixed;
+  right: 20px;
+  top: 10px;
+}
 .ant-layout {
   ::-webkit-scrollbar {
     width: 2px;
@@ -952,8 +957,9 @@ export default defineComponent({
     flex: 1;
   }
   .print-preview {
-    position: absolute;
+    position: fixed;
     right: 100px;
+    top: 20px;
   }
   .print-btn {
     position: absolute;

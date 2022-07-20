@@ -1,6 +1,14 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2021-12-29 16:28:36
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-07-20 17:02:20
+ * @FilePath: /hmg-design-vue/src/components/TableContainer.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div>提示：保存前请先选中需要保存的表格区域</div>
-  <div id="luckysheet"></div>
+  <div id="luckysheet" @workbookCreateAfter="workbookCreateAfter"></div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -56,7 +64,10 @@ export default defineComponent({
           break;
       }
     });
-    return { saveTpl, editTpl };
+    const workbookCreateAfter = () => {
+      console.log(11112222)
+    }
+    return { saveTpl, editTpl, workbookCreateAfter };
   },
   mounted() {
     this.$nextTick(() => {
