@@ -47,8 +47,8 @@
       'word-break': 'break-all',
       'word-wrap': 'break-word',
       'padding-left': ele.inline ? '5px': '0',
-      'display': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ? 'table-cell' : 'unset',
-      minHeight: (ele.containerMinHeight || (ele.inline ? ele.styleSheet.fontSize * 1.4 : 0)) + 'px',
+      'display': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ? 'table-cell' : '',
+      minHeight: (ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : ele.containerMinHeight) + 'px',
       'vertical-align': 'middle'
     }"
   >
@@ -142,7 +142,7 @@ export default defineComponent({
             props.ele.value = newHtml;
           }
           let toolbar = document.getElementById(`toolbar${props.ele.id}`);
-          if (toolbar && !props.ele.baseProps.readonly) {
+          if (toolbar && !props.ele.baseProps.readonly && !isReadonlyStatus.value) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
             toolbar.style.top =
@@ -152,7 +152,7 @@ export default defineComponent({
         editor.config.onfocus = function () {
           focusedEle.value = props.ele.id;
           let toolbar = document.getElementById(`toolbar${props.ele.id}`);
-          if (toolbar && !props.ele.baseProps.readonly) {
+          if (toolbar && !props.ele.baseProps.readonly && !isReadonlyStatus.value) {
             toolbar.style.display = '';
             let top = document.getElementById(lineId.value).offsetTop;
             toolbar.style.top =
@@ -274,7 +274,7 @@ export default defineComponent({
               'none';
           }
         } else {
-          if (toolbar && !props.ele.baseProps.readonly) {
+          if (toolbar && !props.ele.baseProps.readonly && !isReadonlyStatus.value) {
             toolbar.style.display =
               '';
             let top = document.getElementById(lineId.value).offsetTop;

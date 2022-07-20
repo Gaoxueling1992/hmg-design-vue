@@ -44,8 +44,8 @@
                 'vertical-align': 'middle',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingTop: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' :  '2px !important') : '0 !important',
+                paddingBottom: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' : '2px !important') : '0 !important',
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
@@ -53,13 +53,14 @@
                 :id="ele.id"
               >
                 <div :style="{
-                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
-                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: (ele.styleSheet && +ele.styleSheet.paddingBottom && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
                   width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
-                  height: '100%'
+                  height: '100%',
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -108,8 +109,8 @@
                 'vertical-align': 'middle',
                 'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                 float: 'left',
-                paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                paddingTop: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' :  '2px !important') : '0 !important',
+                paddingBottom: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' : '2px !important') : '0 !important',
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
@@ -118,13 +119,14 @@
                 v-if="ele.display !== false"
               >
                 <div :style="{
-                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
-                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: (ele.styleSheet && +ele.styleSheet.paddingBottom && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
                   width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
-                  height: '100%'
+                  height: '100%',
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -173,8 +175,8 @@
                   'vertical-align': 'middle',
                   'text-align': ele.styleSheet && ele.styleSheet.justifyContent === 'center' ? 'center' :  (ele.styleSheet && ele.styleSheet.justifyContent === 'right' ? 'end' : 'start'),
                   float: 'left',
-                  paddingTop: ele.elName === 'RadLine' ? '10px !important' :  '2px !important',
-                  paddingBottom: ele.elName === 'RadLine' ? '10px !important' : '2px !important',
+                  paddingTop: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' :  '2px !important') : '0 !important',
+                  paddingBottom: !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint) ? (ele.elName === 'RadLine' ? '10px !important' : '2px !important') : '0 !important',
                   paddingLeft: '0px',
                   paddingRight: '0px',
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
@@ -183,13 +185,14 @@
                 v-if="ele.display !== false"
               >
                 <div :style="{
-                  paddingTop: ele.styleSheet && +ele.styleSheet.paddingTop ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
-                  paddingBottom: ele.styleSheet && +ele.styleSheet.paddingBottom ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
+                  paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '0px',
+                  paddingBottom: (ele.styleSheet && +ele.styleSheet.paddingBottom && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingBottom + 'px !important') : '0px',
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
                   width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
-                  height: '100%'
+                  height: '100%',
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
                 }">
                   <component
                     v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
