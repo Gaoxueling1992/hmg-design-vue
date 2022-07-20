@@ -881,6 +881,12 @@ export default defineComponent({
       visible.value = true;
       isReadonlyStatus.value = false;
       clickCanvas();
+      window.parent.postMessage(
+        {
+          type: 'stopOptions'
+        },
+        '*'
+      );
     };
 
     const closePreview = () => {
@@ -888,6 +894,12 @@ export default defineComponent({
       setTimeout(() => {
         pageData.lines = JSON.parse(tempLines);
       });
+      window.parent.postMessage(
+        {
+          type: 'onOk'
+        },
+        '*'
+      );
     };
 
     return {
