@@ -11,7 +11,8 @@
       fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
       borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
       display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block',
-      'text-decoration': ele.type !== 'comb' ? ele.styleSheet.textDecoration : 'unset'
+      'text-decoration': ele.type !== 'comb' ? ele.styleSheet.textDecoration : 'unset',
+      border: 'none'
     }"
     @click.stop="clickEle"
     class="disgn-ele padding5"
@@ -21,12 +22,15 @@
     <div v-if="ele.type === 'comb'"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft + 'px',
-        paddingRight: ele.styleSheet.paddingRight + 'px',
+        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
+        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
         width: '100%',
-        height: '100%'
+        height: '100%',
+        borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+        borderColor: ele.styleSheet && ele.styleSheet.borderColor,
+        borderStyle: ele.styleSheet && ele.styleSheet.borderStyle
       }">
       <div style="font-size:18px" :class="'line' + String(idx)">
         <span :style="{
@@ -105,13 +109,16 @@
     <div v-else-if="!ele.noLabel"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft + 'px',
-        paddingRight: ele.styleSheet.paddingRight + 'px',
+        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
+        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
         display: ele.inline ? 'flex' : '',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+        borderColor: ele.styleSheet && ele.styleSheet.borderColor,
+        borderStyle: ele.styleSheet && ele.styleSheet.borderStyle
       }">
       <div
         class="inherit"
@@ -134,12 +141,15 @@
     <div v-else
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft + 'px',
-        paddingRight: ele.styleSheet.paddingRight + 'px',
+        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
+        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
+        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
+        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
         display: ele.inline && ele.elName !== 'RadText' ? 'flex' : '',
-        width: '100%'
+        width: '100%',
+        borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
+        borderColor: ele.styleSheet && ele.styleSheet.borderColor,
+        borderStyle: ele.styleSheet && ele.styleSheet.borderStyle
       }">
       <div
         v-if="ele.elName === 'RadText'"

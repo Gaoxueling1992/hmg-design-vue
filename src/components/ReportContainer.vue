@@ -721,6 +721,9 @@ export default defineComponent({
         );
         return false;
       }
+      if (res.result && res.lines) {
+        pageData.lines = JSON.parse(JSON.stringify(res.lines));
+      }
 
       tempToAave = null;
 
