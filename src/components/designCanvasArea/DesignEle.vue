@@ -110,7 +110,8 @@
         paddingLeft: ele.styleSheet.paddingLeft + 'px',
         paddingRight: ele.styleSheet.paddingRight + 'px',
         display: ele.inline ? 'flex' : '',
-        width: '100%'
+        width: '100%',
+        alignItems: 'center'
       }">
       <div
         class="inherit"

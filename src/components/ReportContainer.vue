@@ -190,6 +190,12 @@ const handleCompsOper = (
   };
   // 删除控件
   const deleteComp = (idx: any, id: any) => {
+    if (pageHeaderId.value === id) {
+      pageData.headerLine = -1;
+    }
+    if (pageFooterId.value === id) {
+      pageData.footerLine = 9999;
+    }
     for (
       let i = 0;
       i < pageData.lines[+idx.value > 0 ? idx.value : 0].length;

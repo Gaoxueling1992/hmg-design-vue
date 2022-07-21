@@ -58,9 +58,10 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ((ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth : 0) * 2 + ele.styleSheet.paddingLeft) + 'px)' : '100%',
                   height: '100%',
-                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%',
+                  alignItems: ele.elName === 'RadEditor' ? 'baseline' : 'center'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -124,9 +125,10 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ((ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth : 0) * 2 + ele.styleSheet.paddingLeft) + 'px)' : '100%',
                   height: '100%',
-                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%',
+                  alignItems: ele.elName === 'RadEditor' ? 'baseline' : 'center'
                 }">
                   <component
                     v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
@@ -190,9 +192,10 @@
                   paddingLeft: ele.styleSheet && +ele.styleSheet.paddingLeft ? (ele.styleSheet.paddingLeft  + 'px !important') : '0px',
                   paddingRight: ele.styleSheet && +ele.styleSheet.paddingRight ? (ele.styleSheet.paddingRight + 'px !important') : '0px',
                   display: ele.inline && !isReadonlyStatus && (ele.baseProps && !ele.baseProps.readonly) ? 'flex' : '',
-                  width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
+                  width: isReadonlyStatus ? 'calc(100% - ' + ((ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth : 0) * 2 + ele.styleSheet.paddingLeft) + 'px)' : '100%',
                   height: '100%',
-                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%'
+                  minHeight: (ele.elName === 'RadEditor' && (!ele.baseProps || !ele.baseProps.hideOnPrint) && isReadonlyStatus) ? ((ele.inline ? Math.max(ele.containerMinHeight, ele.styleSheet.fontSize * 1.4) : (ele.containerMinHeight + ele.styleSheet.fontSize * 1.4)) + 'px') : '100%',
+                  alignItems: ele.elName === 'RadEditor' ? 'baseline' : 'center'
                 }">
                   <component
                     v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"

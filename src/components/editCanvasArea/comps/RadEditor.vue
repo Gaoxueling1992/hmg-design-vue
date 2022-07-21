@@ -407,6 +407,9 @@ font[color='rgba(0, 0, 0, 0)'] {
   }
 }
 .container-editor {
+  .placeholder {
+    font-size: inherit !important;
+  }
   .w-e-text-container,
   .w-e-text {
     height: fit-content !important;
