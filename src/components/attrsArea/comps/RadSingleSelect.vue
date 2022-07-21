@@ -42,7 +42,7 @@
         <div class="option-op">
           <a-radio
             @click="changeDefault(option, 0)"
-            :checked="option.label===activeCompObj.value"
+            :checked="option.label===activeCompObj.value && checkedOption === option.value"
           ></a-radio>
           <i
             class="iconfont icondelete-border"
@@ -60,7 +60,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, inject, watch } from 'vue';
+import { defineComponent, inject, watch, ref, Ref } from 'vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { message } from 'ant-design-vue';
 
@@ -70,6 +70,7 @@ export default defineComponent({
   },
   setup() {
     const activeCompObj: any = inject('activeCompObj');
+    let checkedOption: Ref<number> = ref(-1);
     let focusOption = '';
     if (activeCompObj.value.options && activeCompObj.value.options.length) {
       activeCompObj.value.options = activeCompObj.value.options.filter(
@@ -83,6 +84,7 @@ export default defineComponent({
         label: '选项1'
       });
       activeCompObj.value.value = '选项1';
+      checkedOption.value = 1;
     }
     watch(() => activeCompObj,
       () => {
@@ -98,6 +100,7 @@ export default defineComponent({
             label: '选项1'
           });
           activeCompObj.value.value = '选项1';
+          checkedOption.value = 1;
         }
       },
       { deep: true }
@@ -124,6 +127,7 @@ export default defineComponent({
       });
       if (index === 0 && activeCompObj.value.options && activeCompObj.value.options[0]) {
         activeCompObj.value.value = activeCompObj.value.options[0].label;
+        checkedOption.value = activeCompObj.value.options[0].value;
       }
     };
     const deleteOption = (index: any, option: any) => {
@@ -134,6 +138,7 @@ export default defineComponent({
       activeCompObj.value.options.splice(index, 1);
       if (option.label === activeCompObj.value.value && activeCompObj.value.options && activeCompObj.value.options[0]) {
         activeCompObj.value.value = activeCompObj.value.options[0].label;
+        checkedOption.value = activeCompObj.value.options[0].value;
       }
     };
     const clickIt = (option: any) => {
@@ -157,6 +162,7 @@ export default defineComponent({
       // op 0 单选 1输入
       if (focusOption === activeCompObj.value.value || op === 0) {
         activeCompObj.value.value = option.label;
+        checkedOption.value = option.value;
         focusOption = option.label;
       }
     };
@@ -165,7 +171,8 @@ export default defineComponent({
       addOption,
       deleteOption,
       changeDefault,
-      clickIt
+      clickIt,
+      checkedOption
     };
   }
 });

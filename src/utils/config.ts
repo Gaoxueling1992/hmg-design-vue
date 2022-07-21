@@ -58,8 +58,7 @@ const compsList: Array<object> = [
   },
   {
     elName: 'rad-signature',
-    title: '操作人',
-    isForm: true
+    title: '操作人'
   }
 ]
 
