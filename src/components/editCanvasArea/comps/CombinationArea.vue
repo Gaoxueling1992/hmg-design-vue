@@ -231,21 +231,16 @@
                   :height="item.imgHeight"
                   :width="item.imgWidth"
                   :src="item.src"
-                  v-if="item.src"
+                  v-if="item.src && !item.srcs"
                   alt="签名"
                   :style="{
               height: item.imgHeight+ 'px',
               lineHeight: item.imgHeight+ 'px',
               width: item.imgWidth + 'px',
-              border: '1px solid',
               float: 'left'
             }"
                 />
                 <template v-if="item.srcs">
-                  <span
-                    v-if="item.src"
-                    style="float: left"
-                  >{{item.splitWords}}</span>
                   <template
                     v-for="(src, idx) in item.srcs"
                     :key="idx"

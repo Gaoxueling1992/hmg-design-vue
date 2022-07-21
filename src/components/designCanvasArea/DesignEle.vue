@@ -72,7 +72,8 @@
             display: ele.inline && item.elName !== 'RadText' ? 'flex' : 'inline-block',
             ...ele.styleSheet,
             fontSize: ele.styleSheet.fontSize + 'px',
-            border: 'none'
+            border: 'none',
+            alignItems: 'center'
           }">
             <div
               v-if="item.elName === 'RadText'"
