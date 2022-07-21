@@ -26,7 +26,6 @@
   >
     <draggable
       v-model="activeCompObj.options"
-      group="line"
       v-if="activeCompObj.options && activeCompObj.options.length"
     >
       <div

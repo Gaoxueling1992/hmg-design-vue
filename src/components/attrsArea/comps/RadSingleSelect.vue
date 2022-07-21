@@ -22,7 +22,7 @@
   <div class="title marginT10 fontW500">选项</div>
   <draggable
     v-model="activeCompObj.options"
-    group="line"
+    @end="dragEnd"
     v-if="activeCompObj.options && activeCompObj.options.length"
   >
     <template v-for="(option, index) in activeCompObj.options">
@@ -166,13 +166,18 @@ export default defineComponent({
         focusOption = option.label;
       }
     };
+
+    const dragEnd = () => {
+      console.log('end', activeCompObj.value.options);
+    };
     return {
       activeCompObj,
       addOption,
       deleteOption,
       changeDefault,
       clickIt,
-      checkedOption
+      checkedOption,
+      dragEnd
     };
   }
 });
