@@ -333,7 +333,7 @@ const handleCompsOper = (
     pageData.styleSheet = {
       minHeight: '297mm',
       width: '210mm',
-      padding: '10px'
+      padding: '5mm'
     };
     activePosi.value = 0;
     activeCompObj.value = {};
@@ -411,6 +411,7 @@ const handleCompsOper = (
     pageData.name = item.name;
     pageData.id = item.id;
     pageData.pageType = item.pageType;
+    console.log('stylesheet-----', item.styleSheet);
     pageData.styleSheet = {
       minHeight: item.styleSheet.minHeight,
       width: item.styleSheet.width,

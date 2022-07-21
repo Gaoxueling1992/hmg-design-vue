@@ -105,9 +105,10 @@ const pageDataEffet = () => {
       minHeight.value = '10';
       value = 10;
     } else if (key === 'padding' && !value) {
-      padding.value = '0';
-      value = 0;
+      padding.value = '5';
+      value = 5;
     }
+    console.log('key-value', key, value);
     changePageSize({ key, value });
   };
 
@@ -116,6 +117,7 @@ const pageDataEffet = () => {
       width.value = styleSheet.value.width;
       minHeight.value = styleSheet.value.minHeight;
     }
+    padding.value = styleSheet.value.padding;
   });
   return { name, pageType, width, minHeight, pageNumType, pageNumPosi, handlePageChange, handlePageSize, padding };
 };
