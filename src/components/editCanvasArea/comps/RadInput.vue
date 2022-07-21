@@ -2,7 +2,7 @@
  * @Author: sunny gaoxl@hmgsoft.com
  * @Date: 2022-01-19 14:11:58
  * @LastEditors: sunny gaoxl@hmgsoft.com
- * @LastEditTime: 2022-07-19 11:30:06
+ * @LastEditTime: 2022-07-21 18:06:08
  * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadInput.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -40,12 +40,6 @@
       class="inherit"
       v-else
     >
-      <template #prefix>
-        {{ ele.prefix }}
-      </template>
-      <template #suffix>
-        {{ ele.suffix }}
-      </template>
     </a-textarea>
   </template>
   <div v-else style="
@@ -61,7 +55,7 @@
       'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
     }"
     class="inherit display-text">
-    {{ ele.prefix }}{{ ele.value }}{{ ele.suffix }}
+    {{ ele.type === 'text' ? ele.prefix : '' }}{{ ele.value }}{{ ele.type === 'text' ? ele.suffix : '' }}
   </div>
 </template>
 <script lang="ts">

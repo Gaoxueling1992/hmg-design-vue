@@ -29,7 +29,7 @@
               :key="ele.id"
             >
               <div
-                v-if="ele.display !== false"
+                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
                 :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
@@ -122,7 +122,7 @@
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
               }"
                 :id="ele.id"
-                v-if="ele.display !== false"
+                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
               >
                 <div :style="{
                   paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '1px',
@@ -194,7 +194,7 @@
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"
-                v-if="ele.display !== false"
+                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
               >
                 <div :style="{
                   paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '1px',

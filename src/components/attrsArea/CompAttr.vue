@@ -85,7 +85,6 @@ export default defineComponent({
     let editorMenus: any = [
       'bold', // 粗体
       'fontSize', // 字号
-      'fontName', // 字体
       'lineHeight', //
       'foreColor' // 文字颜色
     ];

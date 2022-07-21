@@ -95,10 +95,10 @@
                 :placeholder="item.placeholder"
               >
                 <template #prefix>
-                  {{ item.prefix }}
+                  {{ item.type !== 'text' ? '' : item.prefix }}
                 </template>
                 <template #suffix>
-                  {{ item.suffix }}
+                  {{ item.type !== 'text' ? '' : item.suffix }}
                 </template>
               </a-input>
             </template>
@@ -131,10 +131,10 @@
         :placeholder="ele.placeholder"
       >
         <template #prefix>
-          {{ ele.prefix }}
+          {{ ele.type !== 'text' ? '' : ele.prefix }}
         </template>
         <template #suffix>
-          {{ ele.suffix }}
+          {{ ele.type !== 'text' ? '' : ele.suffix }}
         </template>
       </a-input>
     </div>

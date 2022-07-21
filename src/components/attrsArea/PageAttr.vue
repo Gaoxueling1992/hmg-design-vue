@@ -32,7 +32,8 @@
       </a-select>
     </div>
     <div class="container-item padding10" v-if="pageType==='custom'">
-      宽：<a-input-number
+      宽：
+      <a-input-number
         v-model:value="width"
         :keyboard="true"
         :min="10"
