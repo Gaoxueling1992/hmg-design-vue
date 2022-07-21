@@ -21,7 +21,7 @@
       class="flex1 marginR5"
       v-model:value="activeCompObj.background"
     />
-    <div class="flex-title2 marginL5">码色</div>
+    <div class="flex-title3 marginL5">码色</div>
     <a-input
       class="flex1"
       v-model:value="activeCompObj.lineColor"

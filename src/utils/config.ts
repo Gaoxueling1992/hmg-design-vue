@@ -390,6 +390,7 @@ const compBaseConfig = {
     textPosition: 'bottom',
     textSize: 20,
     imgHeight: '100',
+    lineColor: '#000000',
     imgWidth: '100',
     img: '',
     elType: 'other',
