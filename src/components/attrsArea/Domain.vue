@@ -540,7 +540,7 @@ export default defineComponent({
         }
         Modal.warning({
           title: '提示',
-          content: `请输入完整${value}内容`,
+          content: `请输入完整内容`,
           okText: '知道了'
         });
         return;
