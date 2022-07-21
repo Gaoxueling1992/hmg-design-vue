@@ -245,6 +245,12 @@ p {
     background: transparent !important;
   }
 }
+.inherit {
+  border-color: inherit;
+  color: inherit !important;
+  background-color: inherit;
+  font-size: inherit;
+}
 .ant-input-prefix, .ant-input, .ant-input-affix-wrapper, .ant-input-suffix {
   border-color: inherit;
   color: inherit !important;
