@@ -195,6 +195,7 @@ export default defineComponent({
   }
   .w-e-text {
     padding: 10px !important;
+    overflow-y: auto !important;
   }
 }
 </style>

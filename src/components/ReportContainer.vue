@@ -798,8 +798,7 @@ export default defineComponent({
           '</div>' +
           footStr;
         pageData.headerHeight = pageData.pageHeaderId
-          ? (document.getElementById('edit-canvas-header').clientHeight /
-            getOneMmsPx())
+          ? (document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx())
           : pageData.pageNumType && pageData.pageNumPosi <= 2
           ? 5
           : 0;
@@ -815,8 +814,7 @@ export default defineComponent({
             : '') +
           footStr;
         pageData.footerHeight = pageData.pageFooterId
-          ? (document.getElementById('edit-canvas-footer').clientHeight /
-            getOneMmsPx())
+          ? (document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx())
           : pageData.pageNumType && pageData.pageNumPosi > 2
           ? 5
           : 0;

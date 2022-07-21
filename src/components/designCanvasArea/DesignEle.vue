@@ -167,7 +167,7 @@
           :class="'line' + String(idx)"
           :style="{
             height: ele.styleSheet.fontSize / 2 + 'px',
-            'border-top': ele.lineSize + 'px solid ' + ele.styleSheet.color,
+            'border-top': (ele.lineSize || 1) + 'px solid ' + ele.styleSheet.color,
             'text-align': 'center',
             'color': ele.styleSheet.color,
             'font-size': ele.styleSheet.fontSize + 'px',
