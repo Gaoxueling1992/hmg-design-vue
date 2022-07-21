@@ -486,6 +486,7 @@ export default defineComponent({
     let customComp: Ref<string> = ref('');
     const zoom: Ref<string> = ref('100');
     let tempToAave: any = null;
+    let tipsIds: any = [];
 
     const {
       addComp,
@@ -610,10 +611,8 @@ export default defineComponent({
           break;
         case 'continueSaveEditor':
           const { value, bind2Threshold } = e.data;
-          console.log(tempToAave, value, bind2Threshold)
           pageData.lines.forEach(line => {
             line.forEach(ele => {
-              console.log(ele.threshold, bind2Threshold)
               if (ele.threshold === bind2Threshold) {
                 ele.value = value;
               }
@@ -705,11 +704,11 @@ export default defineComponent({
         checkInfo[bind2Threshold] = value;
       }
       // 处理提交前控件脚本
-      let res = await dealWithRules(JSON.stringify(pageData.lines), checkInfo);
+      let res = await dealWithRules(JSON.stringify(pageData.lines), checkInfo, tipsIds);
       if (!res.result) {
         tempToAave = JSON.parse(JSON.stringify(data));
         isReadonlyStatus.value = false;
-        console.log(res.content)
+        tipsIds = res.tipsIds;
         window.parent.postMessage(
           {
             type: 'saveStopTips',

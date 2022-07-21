@@ -548,7 +548,7 @@ export default defineComponent({
       if (+ruleObj.value.id === 8 && ruleObj.value.tipType === 'confirm' && !ruleObj.value.bind2Threshold) {
         Modal.warning({
           title: '提示',
-          content: `请输入提交内容绑定的域值`,
+          content: `请输入完整内容`,
           okText: '知道了'
         });
         return;

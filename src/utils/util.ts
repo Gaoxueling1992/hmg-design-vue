@@ -5,7 +5,7 @@ const styleSheet2obj = (styleSheet: Object) => {
 }
 
 // 处理提交脚本
-const dealWithRules = async (linesStr: any, checkInfo: any) => {
+const dealWithRules = async (linesStr: any, checkInfo: any, tipsIds: any) => {
   let lines = JSON.parse(linesStr);
   for (let i = 0; i < lines.length; i++) {
     for (let j = 0; j < lines[i].length; j++) {
@@ -51,12 +51,16 @@ const dealWithRules = async (linesStr: any, checkInfo: any) => {
               break;
             case 8: // 提示
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
-                return {
-                  result: false,
-                  content: transTplStr(content, ele.value, checkInfo),
-                  tipType,
-                  bind2Threshold
-                };
+                console.log(tipsIds, ele.id);
+                if (!tipsIds || tipsIds.indexOf(ele.id) === -1) {
+                  return {
+                    result: false,
+                    content: transTplStr(content, ele.value, checkInfo),
+                    tipType,
+                    bind2Threshold,
+                    tipsIds: tipsIds.concat(ele.id)
+                  };
+                }
               }
               break;
             case 0: // 追加前后缀
