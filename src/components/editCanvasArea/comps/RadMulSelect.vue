@@ -38,7 +38,7 @@
         :checked="choosedValue.indexOf(item.value) > -1"
         @change="changeStatus(item.label, item.value)"
         class="option"
-      >{{item.label}}</a-checkbox>
+      >{{item.label}}-{{item.value}}</a-checkbox>
     </div>
     <span>{{ele.suffix}}</span>
   </template>
@@ -72,12 +72,21 @@ export default defineComponent({
         (option) => option && option.label && option.value
       );
     }
+    if (!ele.value.value) {
+      ele.value.value = [];
+      choosedValue.value = [];
+    }
     for (let i = 0; i < ele.value.options.length; i++) {
       if (ele.value.value.indexOf(ele.value.options[i].label) > -1) {
         choosedValue.value.push(ele.value.options[i].value);
       }
     }
     const changeStatus = (label: any, value: any) => {
+      if (!ele.value.value) {
+        ele.value.value = [];
+        choosedValue.value = [];
+      }
+      console.log('111', label, value)
       if (ele.value.value.indexOf(label) > -1) {
         ele.value.value.splice(ele.value.value.indexOf(label), 1);
         choosedValue.value.splice(choosedValue.value.indexOf(value), 1);
@@ -85,6 +94,8 @@ export default defineComponent({
         ele.value.value.push(label);
         choosedValue.value.push(value);
       }
+      console.log(choosedValue.value);
+      console.log(ele.value.value)
     };
     const changeChecked = () => {
       ele.value.value = [];

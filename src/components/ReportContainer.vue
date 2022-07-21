@@ -229,7 +229,8 @@ const handleCompsOper = (
         ...ele.options
       ] : [],
       rules: ele.rules ? JSON.parse(JSON.stringify(ele.rules)) : [],
-      compsList: ele.compsList ? JSON.parse(JSON.stringify(ele.compsList)) : []
+      compsList: ele.compsList ? JSON.parse(JSON.stringify(ele.compsList)) : [],
+      value: typeof(ele.value) === 'object' ? JSON.parse(JSON.stringify(ele.value)) : ele.value
     };
     pageData.lines.push([activeCompObj.value]);
     pageData.lines.push([]);
