@@ -56,7 +56,7 @@
           :height="ele.imgHeight"
           :width="ele.imgWidth"
           :src="ele.src"
-          v-if="ele.src"
+          v-if="ele.src && !ele.srcs"
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',
@@ -65,7 +65,6 @@
           }"
         />
         <template v-if="ele.srcs">
-          <span v-if="ele.src" style="float: left">{{ele.splitWords}}</span>
           <template
             v-for="(src, idx) in ele.srcs"
             :key="idx"
@@ -97,7 +96,7 @@
           :height="ele.imgHeight"
           :width="ele.imgWidth"
           :src="ele.src"
-          v-if="ele.src"
+          v-if="ele.src && !ele.srcs"
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',
@@ -106,7 +105,6 @@
           }"
         />
         <template v-if="ele.srcs">
-          <span v-if="ele.src" style="float: left">{{ele.splitWords}}</span>
           <template
             v-for="(src, idx) in ele.srcs"
             :key="idx"

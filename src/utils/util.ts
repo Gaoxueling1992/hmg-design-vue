@@ -30,7 +30,6 @@ const dealWithRules = async (linesStr: any, checkInfo: any) => {
             tipType,
             bind2Threshold
           } = rule;
-          console.log(id, ele.elName)
           switch (id) {
             case 1: // 执行脚本
               break;
@@ -54,7 +53,7 @@ const dealWithRules = async (linesStr: any, checkInfo: any) => {
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
                 return {
                   result: false,
-                  content,
+                  content: transTplStr(content, ele.value, checkInfo),
                   tipType,
                   bind2Threshold
                 };

@@ -709,6 +709,7 @@ export default defineComponent({
       if (!res.result) {
         tempToAave = JSON.parse(JSON.stringify(data));
         isReadonlyStatus.value = false;
+        console.log(res.content)
         window.parent.postMessage(
           {
             type: 'saveStopTips',
