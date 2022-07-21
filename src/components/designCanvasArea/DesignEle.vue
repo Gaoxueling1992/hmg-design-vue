@@ -22,10 +22,10 @@
     <div v-if="ele.type === 'comb'"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
-        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
+        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
         width: '100%',
         height: '100%',
         borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
@@ -109,10 +109,10 @@
     <div v-else-if="!ele.noLabel"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
-        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
+        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
         display: ele.inline ? 'flex' : '',
         width: '100%',
         alignItems: 'center',
@@ -141,10 +141,10 @@
     <div v-else
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: ele.styleSheet.paddingTop || 1 + 'px',
-        paddingBottom: ele.styleSheet.paddingBottom || 1 + 'px',
-        paddingLeft: ele.styleSheet.paddingLeft || 1 + 'px',
-        paddingRight: ele.styleSheet.paddingRight || 1 + 'px',
+        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
         display: ele.inline && ele.elName !== 'RadText' ? 'flex' : '',
         width: '100%',
         borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,

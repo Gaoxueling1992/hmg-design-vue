@@ -1,3 +1,11 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2022-01-11 17:47:43
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-07-21 17:03:27
+ * @FilePath: /hmg-design-vue/src/components/attrsArea/comps/RadImage.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="title marginT10 marginB5 fontW500">上传图片</div>
   <a-upload
@@ -36,32 +44,6 @@
       v-model:value="activeCompObj.imgHeight"
       :min="5"
       @change="activeCompObj.imgHeight = !activeCompObj.imgHeight ? 5 : activeCompObj.imgHeight"
-    />
-  </div>
-  <div class="title marginT10 marginB5 fontW500">内边距</div>
-  <div class="flex marginT10">
-    <div class="flex-title">上</div>
-    <a-input-number
-      class="flex1 marginR5"
-      v-model:value="activeCompObj.styleSheet.paddingTop"
-      :min="0"
-      @change="activeCompObj.styleSheet.paddingTop = !activeCompObj.styleSheet.paddingTop ? 0 : activeCompObj.styleSheet.paddingTop"
-    />
-    <div class="flex-title marginL5">下</div>
-    <a-input-number
-      class="flex1"
-      v-model:value="activeCompObj.styleSheet.paddingBottom"
-      :min="0"
-      @change="activeCompObj.styleSheet.paddingBottom = !activeCompObj.styleSheet.paddingBottom ? 0 : activeCompObj.styleSheet.paddingBottom"
-    />
-  </div>
-  <div class="flex marginT10">
-    <div class="flex-title">左</div>
-    <a-input-number
-      class="flex1 marginR5"
-      v-model:value="activeCompObj.styleSheet.paddingLeft"
-      :min="0"
-      @change="activeCompObj.styleSheet.paddingLeft = !activeCompObj.styleSheet.paddingLeft ? 0 : activeCompObj.styleSheet.paddingLeft"
     />
   </div>
 </template>
