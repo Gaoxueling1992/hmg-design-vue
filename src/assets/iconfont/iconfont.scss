@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2984612 */
-  src: url('iconfont.woff2?t=1651043998217') format('woff2'),
-       url('iconfont.woff?t=1651043998217') format('woff'),
-       url('iconfont.ttf?t=1651043998217') format('truetype');
+  src: url('iconfont.woff2?t=1660026083774') format('woff2'),
+       url('iconfont.woff?t=1660026083774') format('woff'),
+       url('iconfont.ttf?t=1660026083774') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,98 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.iconro-clockwise:before {
+  content: "\e63e";
+}
+
+.iconro-counter:before {
+  content: "\e644";
+}
+
+.iconmove:before {
+  content: "\e650";
+}
+
+.iconunkonwn:before {
+  content: "\e715";
+}
+
+.iconothersex:before {
+  content: "\e714";
+}
+
+.iconassign-all:before {
+  content: "\e713";
+}
+
+.iconassign:before {
+  content: "\e711";
+}
+
+.iconschedule:before {
+  content: "\e712";
+}
+
+.iconbarcode:before {
+  content: "\e710";
+}
+
+.icona-bili11:before {
+  content: "\e60d";
+}
+
+.icona-bili12:before {
+  content: "\e60e";
+}
+
+.icona-bili21:before {
+  content: "\e60f";
+}
+
+.iconpopovers520:before {
+  content: "\e610";
+}
+
+.iconpopovers960:before {
+  content: "\e611";
+}
+
+.iconpopovers680:before {
+  content: "\e613";
+}
+
+.iconqiehuan:before {
+  content: "\e614";
+}
+
+.iconapply:before {
+  content: "\e70f";
+}
+
+.iconfocus_single:before {
+  content: "\e70a";
+}
+
+.iconstop:before {
+  content: "\e70b";
+}
+
+.iconh_diagnosis_border:before {
+  content: "\e70c";
+}
+
+.icontoggle1:before {
+  content: "\e70d";
+}
+
+.iconh_diagnosis_color:before {
+  content: "\e70e";
+}
+
+.iconauto_merge:before {
+  content: "\e709";
 }
 
 .iconbatch:before {
@@ -219,14 +311,6 @@
 
 .iconvideo_play:before {
   content: "\e6e0";
-}
-
-.iconfocus_single:before {
-  content: "\e6d5";
-}
-
-.iconfocus_double:before {
-  content: "\e6d6";
 }
 
 .iconsimplelist:before {

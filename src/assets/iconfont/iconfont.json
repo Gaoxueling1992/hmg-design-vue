@@ -6,6 +6,167 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13191683",
+      "name": "ro-clockwise",
+      "font_class": "ro-clockwise",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "13191686",
+      "name": "ro-counter",
+      "font_class": "ro-counter",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "13341275",
+      "name": "move",
+      "font_class": "move",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "31101848",
+      "name": "unkonwn",
+      "font_class": "unkonwn",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
+      "icon_id": "31101521",
+      "name": "othersex",
+      "font_class": "othersex",
+      "unicode": "e714",
+      "unicode_decimal": 59156
+    },
+    {
+      "icon_id": "31048009",
+      "name": "assign-all",
+      "font_class": "assign-all",
+      "unicode": "e713",
+      "unicode_decimal": 59155
+    },
+    {
+      "icon_id": "31019025",
+      "name": "assign",
+      "font_class": "assign",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "31019026",
+      "name": "schedule",
+      "font_class": "schedule",
+      "unicode": "e712",
+      "unicode_decimal": 59154
+    },
+    {
+      "icon_id": "30920837",
+      "name": "barcode",
+      "font_class": "barcode",
+      "unicode": "e710",
+      "unicode_decimal": 59152
+    },
+    {
+      "icon_id": "30509768",
+      "name": "比例1:1",
+      "font_class": "a-bili11",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "30509769",
+      "name": "比例1:2",
+      "font_class": "a-bili12",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "30509770",
+      "name": "比例2:1",
+      "font_class": "a-bili21",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "30509771",
+      "name": "popovers520",
+      "font_class": "popovers520",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "30509772",
+      "name": "popovers960",
+      "font_class": "popovers960",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "30509773",
+      "name": "popovers680",
+      "font_class": "popovers680",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "30509774",
+      "name": "切换",
+      "font_class": "qiehuan",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "30509343",
+      "name": "apply",
+      "font_class": "apply",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "30470129",
+      "name": "focus_single",
+      "font_class": "focus_single",
+      "unicode": "e70a",
+      "unicode_decimal": 59146
+    },
+    {
+      "icon_id": "30470130",
+      "name": "stop",
+      "font_class": "stop",
+      "unicode": "e70b",
+      "unicode_decimal": 59147
+    },
+    {
+      "icon_id": "30470131",
+      "name": "h_diagnosis_border",
+      "font_class": "h_diagnosis_border",
+      "unicode": "e70c",
+      "unicode_decimal": 59148
+    },
+    {
+      "icon_id": "30470132",
+      "name": "toggle",
+      "font_class": "toggle1",
+      "unicode": "e70d",
+      "unicode_decimal": 59149
+    },
+    {
+      "icon_id": "30470133",
+      "name": "h_diagnosis_color",
+      "font_class": "h_diagnosis_color",
+      "unicode": "e70e",
+      "unicode_decimal": 59150
+    },
+    {
+      "icon_id": "30234984",
+      "name": "auto_merge",
+      "font_class": "auto_merge",
+      "unicode": "e709",
+      "unicode_decimal": 59145
+    },
+    {
       "icon_id": "29347221",
       "name": "batch",
       "font_class": "batch",
@@ -368,20 +529,6 @@
       "font_class": "video_play",
       "unicode": "e6e0",
       "unicode_decimal": 59104
-    },
-    {
-      "icon_id": "27166024",
-      "name": "focus_single",
-      "font_class": "focus_single",
-      "unicode": "e6d5",
-      "unicode_decimal": 59093
-    },
-    {
-      "icon_id": "27166025",
-      "name": "focus_double",
-      "font_class": "focus_double",
-      "unicode": "e6d6",
-      "unicode_decimal": 59094
     },
     {
       "icon_id": "27166030",

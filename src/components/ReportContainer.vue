@@ -422,7 +422,7 @@ const handleCompsOper = (
     pageData.styleSheet = {
       minHeight: item.styleSheet.minHeight,
       width: item.styleSheet.width,
-      padding: item.styleSheet.padding
+      padding: item.styleSheet.padding.replace('px', 'mm')
     };
     pageData.pageFooterId = item.pageFooterId;
     pageData.pageHeaderId = item.pageHeaderId;

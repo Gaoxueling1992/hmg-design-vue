@@ -476,6 +476,9 @@ font[size='3'] {
   box-shadow: 0 1px 1px #888, 1px 0 1px #ccc;
   position: absolute; /*自定义菜单相对与body元素进行定位*/
   padding: 10px;
+  &:hover {
+    cursor: pointer;
+  }
   div {
     width: fit-content;
     max-width: 150px;

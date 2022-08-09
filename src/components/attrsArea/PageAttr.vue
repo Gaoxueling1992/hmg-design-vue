@@ -54,7 +54,7 @@
       <a-input-number
         v-model:value="padding"
         :keyboard="true"
-        :min="0"
+        :min="1"
         :max="Math.min(parseFloat(width), parseFloat(minHeight)) / 2"
         @change="handlePageSize('padding', padding)"
       />mm
