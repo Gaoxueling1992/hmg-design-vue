@@ -931,9 +931,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .ant-modal-close {
-  position: fixed;
-  right: 20px;
-  top: 10px;
+  position: fixed !important;
+  right: 20px !important;
+  top: 10px !important;
 }
 .ant-layout {
   ::-webkit-scrollbar {
