@@ -32,7 +32,7 @@
           <a-radio value="text">单行</a-radio>
           <a-radio value="textarea">多行</a-radio>
         </a-radio-group>
-        <template v-if="comp.elName !== 'RadText'">
+        <template v-if="comp.elName !== 'RadText' && comp.elName !== 'RadDatetime'">
           <div class="title marginT10 marginB5 fontW500">引导文字</div>
           <a-textarea
             v-model:value="comp.placeholder"
