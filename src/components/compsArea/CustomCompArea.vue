@@ -16,6 +16,7 @@
             v-model="cat.domains"
             :group="{ name: 'line', pull: 'clone', put: false }"
             :clone="cloneDog"
+            style="width:100%;display:flex;flex-wrap:wrap;row-gap:10px;column-gap:10px;"
             @end="dragEnd"
           >
             <a-button
@@ -106,8 +107,7 @@ export default defineComponent({
 .cus-container-item {
   padding: 5px;
   .container-item-btn {
-    width: calc(50% - 6px) !important;
-    margin: 0 3px 5px 3px;
+    width: calc(50% - 5px) !important;
     border-color: var(--border-color-base) !important;
     color: var(--color-text-primary) !important;
     &:hover {
