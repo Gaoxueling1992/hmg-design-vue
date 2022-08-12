@@ -29,7 +29,7 @@
               :key="ele.id"
             >
               <div
-                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
+                v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
                 :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
@@ -69,7 +69,7 @@
                   marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
                 }">
                   <component
-                    v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                    v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
                     :is="ele.elName"
                     :ele="ele"
                     toolbarId="edit-canvas-header"
@@ -122,7 +122,7 @@
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
               }"
                 :id="ele.id"
-                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
+                v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
               >
                 <div :style="{
                   paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '1px',
@@ -141,7 +141,7 @@
                   marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
                 }">
                   <component
-                    v-if="!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus"
+                    v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
                     :is="ele.elName"
                     :ele="ele"
                     toolbarId="edit-canvas-body"
@@ -194,7 +194,7 @@
                   'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"
-                v-if="ele.display !== false && (!ele.baseProps || !ele.baseProps.hideOnPrint)"
+                v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
               >
                 <div :style="{
                   paddingTop: (ele.styleSheet && +ele.styleSheet.paddingTop && !(isReadonlyStatus && ele.baseProps && ele.baseProps.hideOnPrint)) ? (ele.styleSheet.paddingTop + 'px !important') : '1px',
@@ -211,7 +211,7 @@
                   marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
                 }">
                   <component
-                    v-if="(!ele.baseProps || !ele.baseProps.hideOnPrint || !isReadonlyStatus)"
+                    v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
                     :is="ele.elName"
                     :ele="ele"
                     toolbarId="edit-canvas-footer"
