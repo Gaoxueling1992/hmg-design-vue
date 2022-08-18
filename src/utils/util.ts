@@ -235,11 +235,13 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
     if (curNodeInnter) {
       let { offsetTop, clientHeight } = curNodeInnter;
       if (offsetTop !== undefined && clientHeight !== undefined) {
-        if (offsetTop + top < curPage * pageHeight && offsetTop + top + clientHeight < pageHeight * curPage) {
+        if (offsetTop + top <= curPage * pageHeight && offsetTop + top + clientHeight <= pageHeight * curPage) {
           // 当前页
+          console.log('1111');
           lastNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
         } else {
-          if (offsetTop + top < (curPage + page) * pageHeight && offsetTop + top + clientHeight < pageHeight * (curPage + page)) {
+          console.log('222');
+          if (offsetTop + top <= (curPage + page) * pageHeight && offsetTop + top + clientHeight <= pageHeight * (curPage + page)) {
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
           } else {
             fragment.appendChild(page === 0 ? lastNode : nextNode);
@@ -254,7 +256,7 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       }
     }
   }
-  fragment.appendChild(nextNode);
+  fragment.appendChild(page === 0 ? lastNode : nextNode);
 
   return {
     res,
@@ -279,7 +281,8 @@ function calSplitPage (dom, pageHeight) {
       }
       break;
     }
-    if (offsetTop < curPage * pageHeight && offsetTop + clientHeight < pageHeight * curPage) {
+    console.log('------', offsetTop < curPage * pageHeight, offsetTop + clientHeight < pageHeight * curPage)
+    if (offsetTop <= curPage * pageHeight && offsetTop + clientHeight <= pageHeight * curPage) {
       fragment.appendChild(curNode.cloneNode(true));
     } else {
       // 如果当前元素 顶部在页面内部，底部超出一页

@@ -4,7 +4,7 @@
       height: '100%',
       width: '100%',
       textAlign: ele.styleSheet.justifyContent,
-    }">
+    }" class="inner-split">
     <template v-for="item in ele.compsList">
       <div
         v-if="!(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)"

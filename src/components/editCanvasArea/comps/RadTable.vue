@@ -5,8 +5,9 @@
   >
     <table
       border="1"
-      style="width: calc(100% - 1px);border-collapse: collapse !important;margin-top:5px;margin-bottom:5px;"
+      style="width: 100%;border-collapse: collapse !important;margin-top:5px;margin-bottom:5px;"
       @contextmenu.prevent.stop="chooseTable"
+      class="inner-split"
     >
       <tr
         v-for="(line, index) in tbList"

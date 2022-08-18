@@ -758,6 +758,7 @@ export default defineComponent({
         // 处理内容主体
         pageData.html = '';
         let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - headerHeight - footerHeight - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
+        pageBodyHeight = Math.floor(pageBodyHeight);
         if (splitField.value) {
           let lastDec = currentDec.value;
           let lastReport = currentReport.value;
@@ -766,6 +767,7 @@ export default defineComponent({
             currentDec.value = calSplitField[i].label;
             currentReport.value = calSplitField[i].id;
             await sleep(100).then(() => {
+              console.log('pageBodyHeight', pageBodyHeight);
               let resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
               for (let k = 0; k < resHtml.length; k++) {
                 let temphtml =
