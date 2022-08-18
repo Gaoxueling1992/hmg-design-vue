@@ -740,25 +740,32 @@ export default defineComponent({
         let pageWidth = mmConversionPx(parseInt(pageData.styleSheet.width));
   
           //pageData.pageNumType && pageData.pageNumPosi <= 2
-        let headerHtml = function (isBreak) {
+        let headerHtml = function (isBreak, cur, total) {
           return openFixedAreaStr(pageWidth) +
-          `<div style="padding:${pageData.styleSheet.padding} ${pageData.styleSheet.padding} 0 ${pageData.styleSheet.padding};${isBreak ? 'page-break-before: always;' : ''}">` +
+          (pageData.pageNumType > 0 && pageData.pageNumPosi <= 2 ? `<div style="height:18px;font-size:14px;padding:2px;${pagePosiMap[pageData.pageNumPosi]};${isBreak ? 'page-break-before: always;' : ''}">
+            第 ${pageData.pageNumType === 1 ? cur : cur + ' / ' + total} 页
+          </div>` : '') +
+          `<div style="padding:${pageData.styleSheet.padding} ${pageData.styleSheet.padding} 0 ${pageData.styleSheet.padding};${isBreak && !(pageData.pageNumType > 0 && pageData.pageNumPosi <= 2) ? 'page-break-before: always;' : ''}">` +
           (pageData.pageHeaderId ? headercanvas : '') +
           '</div>';
         }
-        let headerHeight = document.getElementById('edit-canvas-header').clientHeight;
-        let footerHtml =
-          `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
+        let headerHeight = document.getElementById('edit-canvas-header').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 25 : 0);
+        let footerHtml = function (cur, total) {
+          return `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
           (pageData.pageFooterId ? footercanvas : '') +
           '</div>' +
-          
-          footStr;
-        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight;
+          (pageData.pageNumType > 0 && pageData.pageNumPosi > 2 ? `<div style="height:18px;font-size:14px;padding:2px;${pagePosiMap[pageData.pageNumPosi]}">
+            第 ${pageData.pageNumType === 1 ? cur : cur + ' / ' + total} 页
+          </div>` : '') +
+          footStr
+        };
+        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi>2 ? 25 : 0);
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
         let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - headerHeight - footerHeight - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
         pageBodyHeight = Math.floor(pageBodyHeight);
+        let resHtml = [];
         if (splitField.value) {
           let lastDec = currentDec.value;
           let lastReport = currentReport.value;
@@ -768,38 +775,31 @@ export default defineComponent({
             currentReport.value = calSplitField[i].id;
             await sleep(100).then(() => {
               console.log('pageBodyHeight', pageBodyHeight);
-              let resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
-              for (let k = 0; k < resHtml.length; k++) {
-                let temphtml =
-                  `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
-                  resHtml[k] +
-                  '</div>';
-                htmls.push(headerHtml(!(k === 0 && i === 0)) + temphtml + footerHtml);
-              } 
-              console.log(htmls);
+              resHtml = resHtml.concat(calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight));
             });
           }
-          console.log(htmls);
-          for (let j = 0; j < htmls.length; j++) {
-            pageData.html += htmls[j];
+          for (let k = 0; k < resHtml.length; k++) {
+            let temphtml =
+              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
+              resHtml[k] +
+              '</div>';
+            htmls.push(headerHtml(k!==0, k + 1, resHtml.length) + temphtml + footerHtml(k + 1, resHtml.length));
+            pageData.html += htmls[k];
           }
           currentDec.value = lastDec;
           currentReport.value = lastReport;
         } else {
           // 先处理非拆分的场景   
           console.log('pageBodyHeight', mmConversionPx(parseInt(pageData.styleSheet.minHeight)), pageBodyHeight);
-          let resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
+          resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
           for (let i = 0; i < resHtml.length; i++) {
             let temphtml =
               `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
               resHtml[i] +
               '</div>';
-            htmls[i] = headerHtml(i !== 0) + temphtml + footerHtml;
+            htmls[i] = headerHtml(i !== 0, i + 1, resHtml.length) + temphtml + footerHtml(i + 1, resHtml.length);
+            pageData.html += htmls[i];
           } 
-          console.log(htmls);
-          for (let j = 0; j < htmls.length; j++) {
-            pageData.html += htmls[j];
-          }
         }
         if (isReadonlyStatus.value) {
           window.parent.postMessage(
