@@ -227,6 +227,10 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
   let splitItems = findInnerSplit[0].childNodes;
   let lastNode = curNode.cloneNode(true);
   let nextNode = curNode.cloneNode(true);
+  let minHeight = lastNode.getElementsByClassName('editor-display-text')[0].style.minHeight || '0';
+  minHeight = parseInt(minHeight);
+  lastNode.getElementsByClassName('editor-display-text')[0].style.minHeight = 'unset';
+  lastNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = 'unset';
   lastNode.getElementsByClassName('inner-split')[0].innerHTML = '';
   nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
   let page = 0;
@@ -237,10 +241,8 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       if (offsetTop !== undefined && clientHeight !== undefined) {
         if (offsetTop + top <= curPage * pageHeight && offsetTop + top + clientHeight <= pageHeight * curPage) {
           // 当前页
-          console.log('1111');
           lastNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
         } else {
-          console.log('222');
           if (offsetTop + top <= (curPage + page) * pageHeight && offsetTop + top + clientHeight <= pageHeight * (curPage + page)) {
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
           } else {
@@ -249,6 +251,11 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
             page++;
             fragment = null;
             fragment = document.createElement('div');
+            console.log(minHeight, offsetTop)
+            if (minHeight > 0 && minHeight - offsetTop > 0) {
+              nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
+              nextNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = minHeight - offsetTop + 'px';
+            }
             nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
           }

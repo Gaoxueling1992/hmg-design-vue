@@ -749,7 +749,7 @@ export default defineComponent({
           (pageData.pageHeaderId ? headercanvas : '') +
           '</div>';
         }
-        let headerHeight = document.getElementById('edit-canvas-header').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 25 : 0);
+        let headerHeight = document.getElementById('edit-canvas-header').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 30 : 0);
         let footerHtml = function (cur, total) {
           return `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
           (pageData.pageFooterId ? footercanvas : '') +
@@ -759,7 +759,8 @@ export default defineComponent({
           </div>` : '') +
           footStr
         };
-        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi>2 ? 25 : 0);
+        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi>2 ? 30 : 0);
+      
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
