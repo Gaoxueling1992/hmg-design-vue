@@ -21,6 +21,7 @@
     "@zougt/vite-plugin-theme-preprocessor": "^1.4.3",
     "ant-design-vue": "^2.2.8",
     "css-vars-ponyfill": "^2.4.7",
+    "html2canvas": "^1.4.1",
     "less": "^4.1.2",
     "luckyexcel": "^1.0.1",
     "moment": "^2.29.1",

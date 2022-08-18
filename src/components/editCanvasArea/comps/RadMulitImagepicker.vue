@@ -6,6 +6,7 @@
     <draggable
       v-model="ele.value"
       @end="consoleIt"
+      class="inner-split"
     >
       <div
         v-for="(item, index) in ele.value"
@@ -20,14 +21,14 @@
       >
         <div
           :style="{
-              width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
-              height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
-              margin: '0 auto', 
-              textAlign: 'center',
-              position: 'relative',
-              marginTop: ele.verSpacing / 2 + 'px',
-              marginBottom: ele.verSpacing / 2 + 'px',
-            }"
+            width: ele.layoutType === '3' ? 'auto' : ele.imgWidth + 'px',
+            height: ele.layoutType === '2' ? 'auto' : ele.imgHeight + 'px',
+            margin: '0 auto', 
+            textAlign: 'center',
+            position: 'relative',
+            marginTop: ele.verSpacing / 2 + 'px',
+            marginBottom: ele.verSpacing / 2 + 'px',
+          }"
         >
           <img
             style="height:100%;width:100%;"

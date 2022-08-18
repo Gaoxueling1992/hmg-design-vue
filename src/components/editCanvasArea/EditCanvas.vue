@@ -4,7 +4,9 @@
     :style="{
       ...styleSheet,
       backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
-      padding: styleSheet.padding
+      padding: mmConversionPx(parseInt(styleSheet.padding)) + 'px',
+      minHeight: mmConversionPx(parseInt(styleSheet.minHeight) - parseInt(styleSheet.padding)*2) + 'px',
+      width: mmConversionPx(parseInt(styleSheet.width) - parseInt(styleSheet.padding)*2) + 'px'
     }"
     @click="clickCanvas"
   >
@@ -256,6 +258,7 @@ import RadMulSelect from './comps/RadMulSelect.vue';
 import RadTable from './comps/RadTable.vue';
 import RadSignature from './comps/RadSignature.vue';
 import CombinationArea from './comps/CombinationArea.vue';
+import { mmConversionPx } from '@/utils/util';
 
 export default defineComponent({
   components: {
@@ -388,7 +391,8 @@ export default defineComponent({
       loading,
       focusedEle,
       clickCanvas,
-      eleWidthInner
+      eleWidthInner,
+      mmConversionPx
     };
   }
 });

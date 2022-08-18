@@ -4,7 +4,7 @@
       class="edit-canvas"
       id="editCanvas"
       :style="{
-        'backgroundColor': isReadonlyStatus ? 'transparent' : '#E4E7EE',
+        'backgroundColor': '#E4E7EE',
         zoom: zoom + '%'
       }"
     ></EditCanvas>
@@ -79,14 +79,10 @@ import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
 import {
-  headStr,
   footStr,
-  openFixedAreaStr,
-  pageStr1,
-  pageStr2,
-  pageStrStyle
+  openFixedAreaStr
 } from '@/utils/tpl-config';
-import { getOneMmsPx, dealWithRules } from '@/utils/util';
+import { mmConversionPx, dealWithRules, calSplitPage } from '@/utils/util';
 // 处理主体数据
 const handlePageData = (pageData: any) => {
   const changePageConfig = (e: { key: string; value: string }) => {
@@ -418,7 +414,6 @@ const handleCompsOper = (
     pageData.name = item.name;
     pageData.id = item.id;
     pageData.pageType = item.pageType;
-    console.log('stylesheet-----', item.styleSheet);
     pageData.styleSheet = {
       minHeight: item.styleSheet.minHeight,
       width: item.styleSheet.width,
@@ -428,7 +423,6 @@ const handleCompsOper = (
     pageData.pageHeaderId = item.pageHeaderId;
     pageData.pageNumType = item.pageNumType;
     pageData.pageNumPosi = item.pageNumPosi;
-    console.log('----', item.pageFooterId, item.pageHeaderId, item.pageNumType);
     pageHeaderId.value = item.pageHeaderId;
     pageFooterId.value = item.pageFooterId;
     activePosi.value = 0;
@@ -728,13 +722,42 @@ export default defineComponent({
 
       tempToAave = null;
 
-      isReadonlyStatus.value = true;
+      isReadonlyStatus.value = !isReadonlyStatus.value;
+      const pagePosiMap = {
+        0: 'text-align: right; width: 100%',
+        1: 'text-align: left;',
+        2: 'text-align: center; width: 100%',
+        3: 'text-align: left;',
+        4: 'text-align: right; width: 100%',
+        5: 'text-align: center; width: 100%'
+      };
       nextTick(async () => {
+        // 处理页眉页脚
         let headercanvas =
           document.getElementById('edit-canvas-header').innerHTML;
         let footercanvas =
           document.getElementById('edit-canvas-footer').innerHTML;
+        let pageWidth = mmConversionPx(parseInt(pageData.styleSheet.width));
+  
+          //pageData.pageNumType && pageData.pageNumPosi <= 2
+        let headerHtml = function (isBreak) {
+          return openFixedAreaStr(pageWidth) +
+          `<div style="padding:${pageData.styleSheet.padding} ${pageData.styleSheet.padding} 0 ${pageData.styleSheet.padding};${isBreak ? 'page-break-before: always;' : ''}">` +
+          (pageData.pageHeaderId ? headercanvas : '') +
+          '</div>';
+        }
+        let headerHeight = document.getElementById('edit-canvas-header').clientHeight;
+        let footerHtml =
+          `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
+          (pageData.pageFooterId ? footercanvas : '') +
+          '</div>' +
+          
+          footStr;
+        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight;
+        let htmls = [];
+        // 处理内容主体
         pageData.html = '';
+        let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - headerHeight - footerHeight - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
         if (splitField.value) {
           let lastDec = currentDec.value;
           let lastReport = currentReport.value;
@@ -742,95 +765,55 @@ export default defineComponent({
           for (let i = 0; i < calSplitField.length; i++) {
             currentDec.value = calSplitField[i].label;
             currentReport.value = calSplitField[i].id;
-            let bodycanvas = await getDomHtml();
-            pageData.html +=
-              headStr +
-              `<div style="padding:${
-                pageData.pageHeaderId ? '5px' : '10px'
-              } ${pageData.styleSheet.padding} ${
-                pageData.pageFooterId ? 0 : '10px'
-              } ${pageData.styleSheet.padding};${
-                i > 0 ? 'page-break-before: always;' : ''
-              }">` +
-              bodycanvas +
-              '</div>' +
-              footStr;
+            await sleep(100).then(() => {
+              let resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
+              for (let k = 0; k < resHtml.length; k++) {
+                let temphtml =
+                  `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
+                  resHtml[k] +
+                  '</div>';
+                htmls.push(headerHtml(!(k === 0 && i === 0)) + temphtml + footerHtml);
+              } 
+              console.log(htmls);
+            });
+          }
+          console.log(htmls);
+          for (let j = 0; j < htmls.length; j++) {
+            pageData.html += htmls[j];
           }
           currentDec.value = lastDec;
           currentReport.value = lastReport;
         } else {
-          let bodycanvas =
-            document.getElementById('edit-canvas-body').innerHTML;
-          pageData.html +=
-            headStr +
-            `<div style="padding:${
-              pageData.pageHeaderId ||
-              (pageData.pageNumType && pageData.pageNumPosi <= 1)
-                ? '5px'
-                : '10px'
-            } ${pageData.styleSheet.padding} ${
-              pageData.pageFooterId ||
-              (pageData.pageNumType && pageData.pageNumPosi > 1)
-                ? 0
-                : '10px'
-            } ${pageData.styleSheet.padding};">` +
-            bodycanvas +
-            '</div>' +
-            footStr;
+          // 先处理非拆分的场景   
+          console.log('pageBodyHeight', mmConversionPx(parseInt(pageData.styleSheet.minHeight)), pageBodyHeight);
+          let resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
+          for (let i = 0; i < resHtml.length; i++) {
+            let temphtml =
+              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
+              resHtml[i] +
+              '</div>';
+            htmls[i] = headerHtml(i !== 0) + temphtml + footerHtml;
+          } 
+          console.log(htmls);
+          for (let j = 0; j < htmls.length; j++) {
+            pageData.html += htmls[j];
+          }
         }
-        const pagePosiMap = {
-          0: 'text-align: right; width: 100%',
-          1: 'text-align: left;',
-          2: 'text-align: center; width: 100%',
-          3: 'text-align: left;',
-          4: 'text-align: right; width: 100%',
-          5: 'text-align: center; width: 100%'
-        };
-        pageData.headerHtml =
-          openFixedAreaStr +
-          (pageData.pageNumType && pageData.pageNumPosi <= 2
-            ? +pageData.pageNumType === 1 
-              ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-              : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-            : '') +
-          `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-          (pageData.pageHeaderId ? headercanvas : '') +
-          '</div>' +
-          footStr;
-        pageData.headerHeight = pageData.pageHeaderId
-          ? (document.getElementById('edit-canvas-header').clientHeight / getOneMmsPx())
-          : pageData.pageNumType && pageData.pageNumPosi <= 2
-          ? 5
-          : 0;
-        pageData.footerHtml =
-          openFixedAreaStr +
-          `<div style="padding:0 ${pageData.styleSheet.padding};">` +
-          (pageData.pageFooterId ? footercanvas : '') +
-          '</div>' +
-          (pageData.pageNumType && pageData.pageNumPosi > 2
-            ? +pageData.pageNumType === 1
-              ? pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr1
-              : pageStrStyle + pagePosiMap[pageData.pageNumPosi] + pageStr2
-            : '') +
-          footStr;
-        pageData.footerHeight = pageData.pageFooterId
-          ? (document.getElementById('edit-canvas-footer').clientHeight / getOneMmsPx())
-          : pageData.pageNumType && pageData.pageNumPosi > 2
-          ? 5
-          : 0;
-        window.parent.postMessage(
-          {
-            type: 'saveEditor',
-            pageData: JSON.stringify(pageData),
-            isModified: isModified.value,
-            pageId: pageId.value
-          },
-          '*'
-        );
+        if (isReadonlyStatus.value) {
+          window.parent.postMessage(
+            {
+              type: 'saveEditor',
+              pageData: JSON.stringify(pageData),
+              isModified: isModified.value,
+              pageId: pageId.value
+            },
+            '*'
+          );
+        }
 
-        nextTick(() => {
-          isReadonlyStatus.value = false;
-        });
+        // nextTick(() => {
+        //   isReadonlyStatus.value = false;
+        // });
       });
       return true;
     };

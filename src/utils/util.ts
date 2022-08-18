@@ -136,6 +136,34 @@ let getOneMmsPx = () => {
   return Math.round(mm1.width * 100) / 100;
 }
 
+const conversion_getDPI =function () {
+  var arrDPI = new Array;
+  if (window.screen.deviceXDPI) {
+      arrDPI[0] = window.screen.deviceXDPI;
+      arrDPI[1] = window.screen.deviceYDPI;
+  } else {
+      var tmpNode = document.createElement("DIV");
+      tmpNode.style.cssText = "width:1in;height:1in;position:absolute;left:0px;top:0px;z-index:99;visibility:hidden";
+      document.body.appendChild(tmpNode);
+      arrDPI[0] = parseInt(tmpNode.offsetWidth);
+      arrDPI[1] = parseInt(tmpNode.offsetHeight);
+      tmpNode.parentNode.removeChild(tmpNode);
+  }
+  return arrDPI;
+};
+
+const pxConversionMm = function (value) {
+  var inch = value / conversion_getDPI()[0];
+  var c_value = inch * 25.4;
+  return c_value;
+};
+
+const mmConversionPx = function (value) {
+  var inch = value / 25.4;
+  var c_value = inch * conversion_getDPI()[0];
+  return c_value;
+}
+
 // 提取字符串之间的变量
 const transTplStr = (val, eleValue = '', reportInfo) => {
   if (!val) {
@@ -195,9 +223,96 @@ function throttle(fn, delay) {
   };
 }
 
+function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageHeight, height, res) {
+  let splitItems = findInnerSplit[0].childNodes;
+  let lastNode = curNode.cloneNode(true);
+  let nextNode = curNode.cloneNode(true);
+  lastNode.getElementsByClassName('inner-split')[0].innerHTML = '';
+  nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
+  let page = 0;
+  for (let i = 0; i <= splitItems.length; i++) {
+    let curNodeInnter = splitItems[i];
+    if (curNodeInnter) {
+      let { offsetTop, clientHeight } = curNodeInnter;
+      if (offsetTop !== undefined && clientHeight !== undefined) {
+        if (offsetTop + top < curPage * pageHeight && offsetTop + top + clientHeight < pageHeight * curPage) {
+          // 当前页
+          lastNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
+        } else {
+          if (offsetTop + top < (curPage + page) * pageHeight && offsetTop + top + clientHeight < pageHeight * (curPage + page)) {
+            nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
+          } else {
+            fragment.appendChild(page === 0 ? lastNode : nextNode);
+            res.push(fragment.innerHTML);
+            page++;
+            fragment = null;
+            fragment = document.createElement('div');
+            nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
+            nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
+          }
+        }
+      }
+    }
+  }
+  fragment.appendChild(nextNode);
+
+  return {
+    res,
+    curPage: curPage + page,
+    fragment
+  }
+}
+
+// 拿到dom拆分成多页
+function calSplitPage (dom, pageHeight) {
+  let res = [];
+  let curPage = 1;
+  let fragment = document.createElement('div');
+  for (let i = 1; i < dom.childNodes.length; i++) {
+    let curNode = dom.childNodes[i];
+    let { offsetTop, clientHeight, id } = curNode;
+    if (!id || (id && id.indexOf('body-line') === -1)) {
+      if (fragment) {
+        res.push(fragment.innerHTML);
+        curPage++;
+        fragment = null;
+      }
+      break;
+    }
+    if (offsetTop < curPage * pageHeight && offsetTop + clientHeight < pageHeight * curPage) {
+      fragment.appendChild(curNode.cloneNode(true));
+    } else {
+      // 如果当前元素 顶部在页面内部，底部超出一页
+      let findInnerSplit = curNode.getElementsByClassName('inner-split');
+      // 找到内部可拆分元素，拆分到两页
+      if (findInnerSplit && findInnerSplit[0]) {
+        // 处理支持跨页展示的节点
+        let result = dealWithCurNode(fragment, curNode, findInnerSplit, offsetTop, curPage, pageHeight, clientHeight, res);
+        res = result.res;
+        curPage = result.curPage;
+        fragment = result.fragment;
+        continue;
+      }
+      res.push(fragment.innerHTML);
+      curPage++;
+      // 新启一个页面虚拟dom
+      fragment = null;
+      fragment = document.createElement('div');
+      // 找不到可拆分子元素，直接放到下一页
+      if (!findInnerSplit || !findInnerSplit[0]) {
+        fragment.appendChild(curNode.cloneNode(true));
+      }
+    }
+  }
+  return res;
+}
+
 export {
   styleSheet2obj,
   getOneMmsPx,
   debounce, throttle,
-  dealWithRules
+  dealWithRules,
+  calSplitPage,
+  pxConversionMm,
+  mmConversionPx
 }

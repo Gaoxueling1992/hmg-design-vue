@@ -51,7 +51,7 @@
       'vertical-align': 'middle'
     }"
   >
-    <div v-html="readonlyValue"></div>
+    <div class="inner-split" v-html="readonlyValue"></div>
   </div>
 </template>
 <script lang="ts">
@@ -460,6 +460,9 @@ font[size='3'] {
   padding: 4px 0;
   font-size: 16px;
   display: inline-block;
+  p {
+    display: block;
+  }
 }
 .container-editor {
   .aspan {
@@ -515,6 +518,11 @@ font[size='3'] {
   z-index: 10 !important;
   .w-e-text-container {
     z-index: 0 !important;
+  }
+}
+.inner-split {
+  p {
+    display: block;
   }
 }
 </style>
