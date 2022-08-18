@@ -764,7 +764,7 @@ export default defineComponent({
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
-        let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - headerHeight - footerHeight - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
+        let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight) - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
         pageBodyHeight = Math.floor(pageBodyHeight);
         let resHtml = [];
         if (splitField.value) {

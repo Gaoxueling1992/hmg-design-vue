@@ -225,14 +225,20 @@ function throttle(fn, delay) {
 
 function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageHeight, height, res) {
   let splitItems = findInnerSplit[0].childNodes;
+  let lineItemLength = findInnerSplit.length;
   let lastNode = curNode.cloneNode(true);
   let nextNode = curNode.cloneNode(true);
-  let minHeight = lastNode.getElementsByClassName('editor-display-text')[0].style.minHeight || '0';
-  minHeight = parseInt(minHeight);
-  lastNode.getElementsByClassName('editor-display-text')[0].style.minHeight = 'unset';
-  lastNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = 'unset';
-  lastNode.getElementsByClassName('inner-split')[0].innerHTML = '';
-  nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
+  let minHeight: any = '0';
+  for (let i = 0; i < lineItemLength; i++) {
+    minHeight = lastNode.getElementsByClassName('editor-display-text') && lastNode.getElementsByClassName('editor-display-text')[i] && lastNode.getElementsByClassName('editor-display-text')[i].style.minHeight || '0';
+    minHeight = parseInt(minHeight);
+    if (lastNode.getElementsByClassName('editor-display-text') && lastNode.getElementsByClassName('editor-display-text')[i]) {
+      lastNode.getElementsByClassName('editor-display-text')[i].style.minHeight = 'unset';
+      lastNode.getElementsByClassName('editor-display-text')[i].parentNode.style.minHeight = 'unset';
+    }
+    lastNode.getElementsByClassName('inner-split')[i].innerHTML = '';
+    nextNode.getElementsByClassName('inner-split')[i].innerHTML = '';
+  }
   let page = 0;
   for (let i = 0; i <= splitItems.length; i++) {
     let curNodeInnter = splitItems[i];
@@ -242,6 +248,16 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
         if (offsetTop + top <= curPage * pageHeight && offsetTop + top + clientHeight <= pageHeight * curPage) {
           // 当前页
           lastNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
+          for (let j = 1; j < lineItemLength; j++) {
+            for (let k = 0; k < findInnerSplit[j].childNodes.length; k++) {
+              let lineNode = findInnerSplit[j].childNodes[k];
+              if (lineNode) {
+                if (lineNode.offsetTop + top <= curPage * pageHeight && lineNode.offsetTop + top + lineNode.clientHeight <= pageHeight * curPage) {
+                  lastNode.getElementsByClassName('inner-split')[j].appendChild(lineNode.cloneNode(true));
+                }
+              }
+            }
+          }
         } else {
           if (offsetTop + top <= (curPage + page) * pageHeight && offsetTop + top + clientHeight <= pageHeight * (curPage + page)) {
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
@@ -253,11 +269,30 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
             fragment = document.createElement('div');
             console.log(minHeight, offsetTop)
             if (minHeight > 0 && minHeight - offsetTop > 0) {
-              nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
-              nextNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = minHeight - offsetTop + 'px';
+              if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[0]) {
+                nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
+                nextNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = minHeight - offsetTop + 'px';
+              }
             }
             nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
+            for (let j = 1; j < lineItemLength; j++) {
+              nextNode.getElementsByClassName('inner-split')[j].innerHTML = '';
+              for (let k = 0; k < findInnerSplit[j].childNodes.length; k++) {
+                let lineNode = findInnerSplit[j].childNodes[k];
+                if (lineNode) {
+                  if (!(lineNode.offsetTop + top <= curPage * pageHeight && lineNode.offsetTop + top + lineNode.clientHeight <= pageHeight * curPage)) {
+                    if (minHeight > 0 && minHeight - lineNode.offsetTop > 0) {
+                      if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[j]) {
+                        nextNode.getElementsByClassName('editor-display-text')[j].style.minHeight = minHeight - offsetTop + 'px';
+                        nextNode.getElementsByClassName('editor-display-text')[j].parentNode.style.minHeight = minHeight - offsetTop + 'px';
+                      }
+                    }
+                    nextNode.getElementsByClassName('inner-split')[j].appendChild(lineNode.cloneNode(true));
+                  }
+                }
+              }
+            }
           }
         }
       }
