@@ -2,7 +2,7 @@
  * @Author: sunny gaoxl@hmgsoft.com
  * @Date: 2021-12-29 16:28:36
  * @LastEditors: sunny gaoxl@hmgsoft.com
- * @LastEditTime: 2022-07-20 17:02:20
+ * @LastEditTime: 2022-08-19 16:16:20
  * @FilePath: /hmg-design-vue/src/components/TableContainer.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,6 +47,7 @@ export default defineComponent({
         departmentId: itmm.departmentId
       };
       let content = JSON.parse(itmm.content);
+      console.log('content', content);
       content.forEach((row, rowNum) => {
         row.forEach((cell, cellNum) => {
           luckysheet.setCellValue(rowNum, cellNum, cell);
