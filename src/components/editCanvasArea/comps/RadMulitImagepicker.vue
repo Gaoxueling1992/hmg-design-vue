@@ -18,6 +18,7 @@
         }"
         @mouseover.native="mouseEnter=+String(index)"
         @mouseleave.native="mouseEnter=-1"
+        @dblclick="onDblclick(index, item)"
       >
         <div
           :style="{
@@ -196,6 +197,23 @@ export default defineComponent({
       );
     });
 
+    const onDblclick = (index, item) => {
+      let newList = [];
+      for (let i = 0; i < ele.value.value.length; i++) {
+        ele.value.value[i].tempPrintFlag = i + 1;
+        newList.push(ele.value.value[i].imageInstanceUid);
+      }
+      window.parent.postMessage(
+        {
+          type: 'previewCheckedImgs',
+          pageId: pageId.value,
+          imageInstanceUid: item.imageInstanceUid,
+          newList: JSON.stringify(newList)
+        },
+        '*'
+      );
+    };
+
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     return {
       calSpan,
@@ -204,7 +222,8 @@ export default defineComponent({
       mouseEnter,
       deleteImg,
       isReadonlyStatus,
-      consoleIt
+      consoleIt,
+      onDblclick
     };
   }
 });

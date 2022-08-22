@@ -9,7 +9,8 @@
       'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ? ele.styleSheet.textDecoration : 'none',
       'margin-top': ele.inline ? 0 : '10px',
       'line-height': ele.inline && (isReadonlyStatus || ele.baseProps.readonly) ?  '1.2' : '1.5',
-      'display': ele.inline ? 'table-cell' : 'block'
+      'display': ele.inline ? 'table-cell' : 'block',
+      'white-space': 'nowrap'
     }"
   >{{ ele.label }}</div>
   <div
