@@ -83,14 +83,14 @@ export default defineComponent({
       if (props.ele.value && splitField.value) {
         let arr =
           props.ele.value.split(
-            /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+            /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
           ) || [];
         for (let j = 0; j < arr.length; j++) {
           if (arr[j]) {
             if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
               return arr[j].replace(
                 new RegExp(
-                  /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                  /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+start\s-->/g,
                   'gm'
                 ),
                 ''
@@ -170,14 +170,15 @@ export default defineComponent({
         if (props.ele.value) {
           let arr =
             props.ele.value.split(
-              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
             ) || [];
           let hasVal = false;
+          console.log(arr);
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                 props.ele.value = props.ele.value.replace(
-                  arr[j],
+                  `${arr[j]}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`,
                   `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`
                 );
                 hasVal = true;
@@ -186,9 +187,11 @@ export default defineComponent({
             }
           }
           if (!hasVal) {
+            console.log(1)
             props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
           }
         } else {
+          console.log(2)
           props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
         }
       };
@@ -197,7 +200,7 @@ export default defineComponent({
         if (props.ele.value) {
           let arr =
             props.ele.value.split(
-              /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+              /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
             ) || [];
           let hasStr = false;
           for (let j = 0; j < arr.length; j++) {
@@ -205,7 +208,7 @@ export default defineComponent({
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                 let newVal = arr[j].replace(
                   new RegExp(
-                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+start\s-->/g,
+                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+start\s-->/g,
                     'gm'
                   ),
                   ''
@@ -241,7 +244,7 @@ export default defineComponent({
               if (props.ele.value) {
                 let arr =
                   props.ele.value.split(
-                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+                    /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
                   ) || [];
                 let hasStr = false;
                 for (let j = 0; j < arr.length; j++) {

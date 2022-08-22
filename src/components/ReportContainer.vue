@@ -624,6 +624,10 @@ export default defineComponent({
             return;
           }
           break;
+        case 'startLoading':
+          console.log('loading');
+          loading.value = true;
+          break;
         case 'resetEditor':
           const data3 = JSON.parse(e.data.data);
           const { lines } = toRefs(pageData);
@@ -638,9 +642,10 @@ export default defineComponent({
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
                 if (line[j].elName === 'RadEditor') {
+                  console.log('111', value);
                   let arr =
                     value.split(
-                      /<!--[\u4E00-\u9FA5A-Za-z0-9_,;+%()（）\s]+end\s-->/
+                      /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
                     ) || [];
                   let hasVal = false;
                   for (let j = 0; j < arr.length; j++) {
@@ -648,7 +653,7 @@ export default defineComponent({
                       if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
                         let txt = arr[j].replace(
                           new RegExp(
-                            /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】\[\]\s]+start\s-->/g,
+                            /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+start\s-->/g,
                             'gm'
                           ),
                           ''
@@ -669,6 +674,7 @@ export default defineComponent({
                   if (!hasVal && !e.data.isAutoApply) {
                     value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
                   }
+                  console.log('222', value);
                 } else {
                   value = data3[line[j].threshold];
                 }
