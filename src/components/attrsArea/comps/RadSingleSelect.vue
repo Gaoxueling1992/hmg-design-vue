@@ -76,7 +76,6 @@ export default defineComponent({
       activeCompObj.value.options = activeCompObj.value.options.filter(
         (option) => option && option.label && option.value
       );
-      console.log(JSON.stringify(activeCompObj.value))
       
       checkedOption.value = activeCompObj.value.options.filter(
         (option) => option.label === activeCompObj.value.value
@@ -97,6 +96,9 @@ export default defineComponent({
           activeCompObj.value.options = activeCompObj.value.options.filter(
             (option) => option && option.label && option.value
           );
+          checkedOption.value = activeCompObj.value.options.filter(
+            (option) => option.label === activeCompObj.value.value
+          )[0].value;
         }
         if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
           activeCompObj.value.options= [];
