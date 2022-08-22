@@ -6,7 +6,7 @@
       backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
       padding: mmConversionPx(parseInt(styleSheet.padding)) + 'px',
       minHeight: mmConversionPx(parseInt(styleSheet.minHeight) - parseInt(styleSheet.padding)*2) + 'px',
-      width: mmConversionPx(parseInt(styleSheet.width) - parseInt(styleSheet.padding)*2) + 'px'
+      width: mmConversionPx(parseInt(styleSheet.width)) + 'px'
     }"
     @click="clickCanvas"
   >
@@ -25,6 +25,7 @@
           <div
             style="position:relative;width:100%;column-gap:2px;"
             :style="{display: isReadonlyStatus ? '' : 'flex'}"
+            class="line-for-after"
           >
             <template
               v-for="(ele, index) in line"
@@ -32,6 +33,7 @@
             >
               <div
                 v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
+                class="line-for-after-inner"
                 :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
@@ -420,5 +422,15 @@ export default defineComponent({
 }
 #edit-canvas-body, #edit-canvas-header, #edit-canvas-footer {
   position: relative;
+}
+.line-for-after {
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .line-for-after-inner {
+    
+  }
 }
 </style>

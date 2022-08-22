@@ -2,6 +2,7 @@
   <div
     v-if="tableTpl && tableTpl.id"
     class="rad-table"
+    style="padding: 0 2px"
   >
     <table
       border="1"
