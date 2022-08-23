@@ -16,7 +16,7 @@
             v-model="cat.domains"
             :group="{ name: 'line', pull: 'clone', put: false }"
             :clone="cloneDog"
-            style="width:100%;display:flex;flex-wrap:wrap;row-gap:10px;"
+            style="width:100%;display:flex;flex-wrap:wrap;"
             @end="dragEnd"
           >
             <a-button
@@ -27,7 +27,8 @@
               :ghost="true"
               :style="{
                 'margin-left': ix%2 === 0 ? 0 : '5px',
-                'margin-right': ix%2 === 0 ? '5px' : 0
+                'margin-right': ix%2 === 0 ? '5px' : 0,
+                'margin-bottom': '5px'
               }"
             >
               {{ domain.name }}
