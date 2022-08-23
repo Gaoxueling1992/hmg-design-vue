@@ -342,6 +342,7 @@ const handleCompsOper = (
     activeCompId.value = '';
     pageHeaderId.value = '';
     pageFooterId.value = '';
+    pageData.lines.push([]);
     loading.value = false;
   };
 

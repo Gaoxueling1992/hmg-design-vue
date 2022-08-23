@@ -1,3 +1,11 @@
+<!--
+ * @Author: sunny gaoxl@hmgsoft.com
+ * @Date: 2021-12-30 15:13:53
+ * @LastEditors: sunny gaoxl@hmgsoft.com
+ * @LastEditTime: 2022-08-23 14:23:35
+ * @FilePath: /hmg-design-vue/src/components/compsArea/BaseCompArea.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="container">
     <div class="container-item">
@@ -8,6 +16,7 @@
           v-model="list"
           :group="{ name: 'line', pull: 'clone', put: false }"
           :clone="cloneDog"
+          :sort="false"
           @end="dragEnd"
         >
           <a-button

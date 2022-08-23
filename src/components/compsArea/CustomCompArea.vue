@@ -18,6 +18,7 @@
             :clone="cloneDog"
             style="width:100%;display:flex;flex-wrap:wrap;"
             @end="dragEnd"
+            :sort="false"
           >
             <a-button
               v-for="(domain, ix) in cat.domains"

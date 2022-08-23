@@ -18,7 +18,7 @@
             v-model="lines[idx]"
             class="canvas-area-line"
             :class="'line' + String(idx)"
-            group="line"
+            :group="{ name: 'line', pull: true, put: true }"
             @end="dragEnd"
             :move="onMoveCallback"
           >
