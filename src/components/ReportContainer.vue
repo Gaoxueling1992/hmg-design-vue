@@ -4,7 +4,6 @@
       class="edit-canvas"
       id="editCanvas"
       :style="{
-        'backgroundColor': '#E4E7EE',
         zoom: zoom + '%'
       }"
     ></EditCanvas>
@@ -922,6 +921,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.edit-canvas {
+  background-color: var(--color-white);
+}
 .ant-modal-close {
   position: fixed !important;
   right: 20px !important;
