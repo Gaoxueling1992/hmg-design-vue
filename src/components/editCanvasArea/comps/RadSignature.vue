@@ -15,7 +15,7 @@
   >{{ ele.label }}</div>
   <div
     :class="{
-      'flex flex1': !isReadonlyStatus
+      'flex-inline flex1': !isReadonlyStatus
     }"
     :style="{
       flexDirection: (ele.imagePosi === 'right' || ele.imagePosi === 'left') ? 'row' : 'column',
@@ -176,5 +176,8 @@ export default defineComponent({
 }
 .display-text {
   display: inline-block;
+}
+.flex-inline {
+  display: inline-flex;
 }
 </style>
