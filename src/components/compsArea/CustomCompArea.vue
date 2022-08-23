@@ -16,15 +16,19 @@
             v-model="cat.domains"
             :group="{ name: 'line', pull: 'clone', put: false }"
             :clone="cloneDog"
-            style="width:100%;display:flex;flex-wrap:wrap;row-gap:10px;column-gap:10px;"
+            style="width:100%;display:flex;flex-wrap:wrap;row-gap:10px;"
             @end="dragEnd"
           >
             <a-button
-              v-for="domain in cat.domains"
+              v-for="(domain, ix) in cat.domains"
               :key="domain.option"
               @click="handleAddComp(domain)"
               class="container-item-btn ellipsis"
               :ghost="true"
+              :style="{
+                'margin-left': ix%2 === 0 ? 0 : '5px',
+                'margin-right': ix%2 === 0 ? '5px' : 0
+              }"
             >
               {{ domain.name }}
             </a-button>
