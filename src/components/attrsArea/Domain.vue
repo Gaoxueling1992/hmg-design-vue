@@ -284,7 +284,7 @@
           v-model:value="ruleObj.id"
           style="width: 40%"
           class="marginT5"
-          @change="changeId"
+          @change="changeId" 
         >
           <template
             v-for="value in actionList[ruleObj.current === 1 ? ruleObj.elType : activeCompObj.elType]"

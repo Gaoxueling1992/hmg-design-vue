@@ -721,8 +721,7 @@ const actionList: any = {
   'sig': [
     {
       key: 6,
-      value: '拼接',
-      disableOp: ['init']
+      value: '拼接'
     },
     {
       key: 2,
