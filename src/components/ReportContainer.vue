@@ -508,9 +508,9 @@ export default defineComponent({
     const sleep = (ms) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    const getDomHtml = () => {
+    const getDomHtml = (pageBodyHeight) => {
       return sleep(100).then(
-        (v) => document.getElementById('edit-canvas-body').innerHTML
+        (v) => calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight)
       );
     };
 
@@ -780,10 +780,8 @@ export default defineComponent({
           for (let i = 0; i < calSplitField.length; i++) {
             currentDec.value = calSplitField[i].label;
             currentReport.value = calSplitField[i].id;
-            await sleep(100).then(() => {
-              console.log('pageBodyHeight', pageBodyHeight);
-              resHtml = resHtml.concat(calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight));
-            });
+            let rr = await getDomHtml(pageBodyHeight);
+            resHtml = resHtml.concat(rr);
           }
           for (let k = 0; k < resHtml.length; k++) {
             let temphtml =
