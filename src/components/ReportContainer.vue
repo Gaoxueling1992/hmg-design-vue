@@ -390,7 +390,7 @@ const handleCompsOper = (
       }
       pageData.lines = [].concat(res);
     } else {
-      console.log(item.pageHeaderId, item.pageFooterId);
+      console.log(item);
       if (item.pageFooterId || item.pageHeaderId) {
         for (let i = 0; i < item.lines.length; i++) {
           for (let j = 0; j < item.lines[i].length; j++) {
@@ -745,8 +745,8 @@ export default defineComponent({
           document.getElementById('edit-canvas-footer').innerHTML;
         let pageWidth = mmConversionPx(parseInt(pageData.styleSheet.width));
   
-          //pageData.pageNumType && pageData.pageNumPosi <= 2
         let headerHtml = function (isBreak, cur, total) {
+          console.log('headerInfo', pageData.pageNumPosi)
           return openFixedAreaStr(pageWidth) +
           (pageData.pageNumType > 0 && pageData.pageNumPosi <= 2 ? `<div style="height:18px;font-size:14px;padding:2px;${pagePosiMap[pageData.pageNumPosi]};${isBreak ? 'page-break-before: always;' : ''}">
             第 ${pageData.pageNumType === 1 ? cur : cur + ' / ' + total} 页
@@ -795,7 +795,6 @@ export default defineComponent({
           currentReport.value = lastReport;
         } else {
           // 先处理非拆分的场景   
-          console.log('pageBodyHeight', mmConversionPx(parseInt(pageData.styleSheet.minHeight)), pageBodyHeight);
           resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
           for (let i = 0; i < resHtml.length; i++) {
             let temphtml =
