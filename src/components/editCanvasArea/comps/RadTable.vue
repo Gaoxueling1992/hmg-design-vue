@@ -235,7 +235,6 @@ export default defineComponent({
       tds.value = list['0'].length;
       for (let key = list.length -1; key >= 0; key--) {
         const row = list[key];
-        console.log('before', key, JSON.parse(JSON.stringify(row)));
         for (let i = row.length - 1; i >= 0; i--) {
           // 处理合并单元格逻辑
           if (
@@ -246,19 +245,14 @@ export default defineComponent({
             row[i].mc.cs > 1 &&
             row[i].mc.rs > 1
           ) {
-            console.log(111, JSON.parse(JSON.stringify(row)));
             row.splice(+i + 1, row[i].mc.cs - 1);
             for (let index = row[i].mc.rs - 1; index > 0; index--) {
               console.log(+key + index, i,  row[i].mc.cs)
               list[+key + index].splice(i, row[i].mc.cs);
             }
-            console.log(112, JSON.parse(JSON.stringify(row)));
-            console.log(113, JSON.parse(JSON.stringify(list[+key + 1])));
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
-            console.log(222, JSON.parse(JSON.stringify(row)));
             row.splice(+i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
-            console.log(333, JSON.parse(JSON.stringify(row)));
             for (let index = row[i].mc.rs; index >= +key + 1; index--) {
               if (list[index + '']) {
                 list[index + ''].splice(i, 1);
@@ -271,7 +265,7 @@ export default defineComponent({
               fontFamily: transFamily(row[i].ff),
               color: row[i].fc,
               fontWeight: !row[i].bl || row[i].bl === 0 ? 'normal' : 'bold',
-              fontStyle: props.ele.styleSheet.fontStyle === 'normal' && !row[i].it || row[i].it === 0 ? 'normal' : 'italic',
+              fontStyle: !row[i].it || row[i].it === 0 ? 'normal' : 'italic',
               fontSize: row[i].fs + 'px',
               textDecoration:
                 !row[i].cl || row[i].cl === 0 ? '' : 'line-through',
@@ -295,7 +289,6 @@ export default defineComponent({
             };
           }
         }
-        console.log(key, JSON.parse(JSON.stringify(row)));
       }
       console.log('result', list);
       return list;
