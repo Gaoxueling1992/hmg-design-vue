@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inherit"
+    class="inherit split-next-hidden"
     v-if="ele.label"
     :class="ele.inline ? 'ele-editor-label' : ''"
     @click="focusedEle = ele.id"
@@ -111,7 +111,7 @@ export default defineComponent({
       toolbr.setAttribute('class', 'editor-toolbar');
       let container = document.getElementById(props.toolbarId);
       container.appendChild(toolbr);
-
+  
       const id = `#editor${props.ele.id}`;
       const toolbarid = `#toolbar${props.ele.id}`;
       setTimeout(() => {

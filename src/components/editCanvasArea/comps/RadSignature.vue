@@ -56,7 +56,7 @@
           :height="ele.imgHeight"
           :width="ele.imgWidth"
           :src="ele.src"
-          v-if="ele.src && !ele.srcs.length"
+          v-if="ele.src && (!ele.srcs || !ele.srcs.length)"
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',
@@ -96,7 +96,7 @@
           :height="ele.imgHeight"
           :width="ele.imgWidth"
           :src="ele.src"
-          v-if="ele.src && !ele.srcs.length"
+          v-if="ele.src && (!ele.srcs || !ele.srcs.length)"
           alt="签名"
           :style="{
             lineHeight: ele.imgHeight+ 'px',

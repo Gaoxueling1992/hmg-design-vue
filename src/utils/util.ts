@@ -273,6 +273,11 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
                 nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
                 nextNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = minHeight - offsetTop + 'px';
               }
+            } else if (minHeight > 0){
+              if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[0]) {
+                nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = 'unset';
+                nextNode.getElementsByClassName('editor-display-text')[0].parentNode.style.minHeight = 'unset';
+              }
             }
             nextNode.getElementsByClassName('inner-split')[0].innerHTML = '';
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
@@ -283,6 +288,7 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
                 if (lineNode) {
                   if (!(lineNode.offsetTop + top <= curPage * pageHeight && lineNode.offsetTop + top + lineNode.clientHeight <= pageHeight * curPage)) {
                     if (minHeight > 0 && minHeight - lineNode.offsetTop > 0) {
+                      debugger
                       if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[j]) {
                         nextNode.getElementsByClassName('editor-display-text')[j].style.minHeight = minHeight - offsetTop + 'px';
                         nextNode.getElementsByClassName('editor-display-text')[j].parentNode.style.minHeight = minHeight - offsetTop + 'px';
