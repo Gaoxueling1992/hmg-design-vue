@@ -97,26 +97,28 @@ import { defineComponent, inject, computed, Ref, ref } from 'vue';
 
 // 字体转换方法
 const transFamily = (ff) => {
+  // ["Times New Roman","微软雅黑","宋体","黑体","楷体","仿宋","新宋体"]
   switch (ff) {
     case 0:
+    case 'Times New Roman':
       return 'Times New Roman';
-    case 1:
-      return 'Arial';
-    case 2:
-      return 'Tahoma';
-    case 3:
-      return 'Verdana';
     case 4:
+    case '微软雅黑':
       return 'Microsoft YaHei';
     case 5:
+    case '宋体':
       return 'SimSun';
     case 6:
+    case '黑体':
       return 'SimHei';
     case 7:
+    case '楷体':
       return 'KaiTi';
     case 8:
+    case '仿宋':
       return 'FangSong';
     case 9:
+    case '新宋体':
       return 'NSimSun';
   }
 };
@@ -253,9 +255,9 @@ export default defineComponent({
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
             row.splice(+i + 1, row[i].mc.cs - 1);
           } else if (row[i] && row[i].mc && row[i].mc.rs && row[i].mc.rs > 1) {
-            for (let index = row[i].mc.rs; index >= +key + 1; index--) {
-              if (list[index + '']) {
-                list[index + ''].splice(i, 1);
+            for (let index = row[i].mc.rs - 1; index > 0; index--) {
+              if (list[index]) {
+                list[+key + index].splice(i, 1);
               }
             }
           }
