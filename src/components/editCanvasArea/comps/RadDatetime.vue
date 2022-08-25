@@ -2,7 +2,7 @@
  * @Author: sunny gaoxl@hmgsoft.com
  * @Date: 2022-01-24 11:00:44
  * @LastEditors: sunny gaoxl@hmgsoft.com
- * @LastEditTime: 2022-07-21 10:52:40
+ * @LastEditTime: 2022-08-25 18:36:31
  * @FilePath: /hmg-design-vue/src/components/editCanvasArea/comps/RadDatetime.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -45,6 +45,8 @@
 import { defineComponent, inject, Ref } from 'vue';
 import moment from 'moment';
 import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
+import 'moment/dist/locale/zh-cn';
+// moment.locale('zh_cn');
 
 export default defineComponent({
   props: ['ele', 'toolbarId', 'lineId'],
