@@ -51,8 +51,8 @@ const dealWithRules = async (linesStr: any, checkInfo: any, tipsIds: any) => {
               break;
             case 8: // 提示
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
-                console.log(tipsIds, ele.id);
-                if (!tipsIds || tipsIds.indexOf(ele.id) === -1) {
+                console.log('lalal', tipsIds, ele.id);
+                if (!tipsIds || tipsIds.indexOf('' + ele.id) === -1) {
                   return {
                     result: false,
                     content: transTplStr(content, ele.value, checkInfo),
