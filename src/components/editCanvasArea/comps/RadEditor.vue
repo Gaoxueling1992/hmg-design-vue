@@ -130,6 +130,11 @@ export default defineComponent({
           '隶书',
           '幼圆'
         ];
+        editor.config.pasteTextHandle = function (content) {
+          // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+          content = content.replace(/<style>[\s\S]*?<\/style>/gi, '');
+          return content;
+        }
         editor.create();
 
         document.getElementById('editor' + props.ele.id).style.minHeight = (props.ele.editingMinHeight || 75) + 'px';

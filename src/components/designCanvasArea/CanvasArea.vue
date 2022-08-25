@@ -22,7 +22,7 @@
             @end="dragEnd"
             :move="onMoveCallback"
           >
-            <transition-group>
+            <!-- <transition-group> -->
               <DesignEle
                 v-for="(ele, index) in line"
                 :ele="ele"
@@ -31,7 +31,7 @@
                 :index="index"
                 :class="'line' + String(idx)"
               ></DesignEle>
-            </transition-group>
+            <!-- </transition-group> -->
           </draggable>
         </div>
       </draggable>
@@ -89,16 +89,19 @@ export default defineComponent({
 
     const onMoveCallback = (evt, originalEvent) => {
       let classStr = originalEvent.target.getAttribute('class').split('line');
-      console.log(classStr)
+      console.log('111', classStr);
       let line = classStr[classStr.length - 1];
+      console.log('line', line);
       // 如果拖动的是固定页头元素
       if (line && pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
+        console.log('拖动页眉', footerLine.value, line);
         if (footerLine.value <= line) {
           return false;
         }
       }
       // 是页脚
       if (line && pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
+        console.log('拖动页脚', headerLine.value, line);
         if (headerLine.value >= line) {
           return false;
         }

@@ -86,13 +86,13 @@
             ></div>
             <template v-else>
               <div
-                class="inherit"
-                :class="ele.inline ? 'ele-label' : ''"
+                class="'inherit"
+                :class="ele.inline ? ('ele-label line' + String(idx)) : ('line' + String(idx))"
               >{{ item.label || item.name }}</div>
               <a-input
                 style="flex: 1"
                 disabled
-                class="inherit"
+                :class="'inherit line' + String(idx)"
                 :placeholder="item.placeholder"
               >
                 <template #prefix>
@@ -122,13 +122,13 @@
         borderStyle: ele.styleSheet && ele.styleSheet.borderStyle
       }">
       <div
-        class="inherit"
+        class="'inherit"
         :class="ele.inline ? 'ele-label' + ' line' + String(idx) : 'line' + String(idx)"
       >{{ ele.label || ele.name }}</div>
       <a-input
         style="flex: 1"
         disabled
-        class="inherit"
+        :class="'inherit line' + String(idx)"
         :placeholder="ele.placeholder"
       >
         <template #prefix>
