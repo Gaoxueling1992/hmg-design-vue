@@ -315,7 +315,6 @@ export default defineComponent({
     const eleWidthInner = computed(() => {
       return (ele, elelength) => {
         if (document.getElementById(ele.id) && elelength > 1 && isReadonlyStatus) {
-          console.log(parseFloat(document.getElementById(ele.id).style.width)/100, parseFloat(styleSheet.value.width), parseFloat(styleSheet.value.padding), (parseFloat(document.getElementById(ele.id).style.width)/100 * (parseFloat(styleSheet.value.width) - parseFloat(styleSheet.value.padding) * 2)));
           return (parseFloat(document.getElementById(ele.id).style.width) * (parseFloat(styleSheet.value.width) - parseFloat(styleSheet.value.padding) * 2) / 100) - 2 + 'mm';
         }
         return '100%';

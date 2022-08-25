@@ -86,7 +86,6 @@ export default defineComponent({
         ele.value.value = [];
         choosedValue.value = [];
       }
-      console.log('111', label, value)
       if (ele.value.value.indexOf(label) > -1) {
         ele.value.value.splice(ele.value.value.indexOf(label), 1);
         choosedValue.value.splice(choosedValue.value.indexOf(value), 1);
@@ -94,8 +93,6 @@ export default defineComponent({
         ele.value.value.push(label);
         choosedValue.value.push(value);
       }
-      console.log(choosedValue.value);
-      console.log(ele.value.value)
     };
     const changeChecked = () => {
       ele.value.value = [];

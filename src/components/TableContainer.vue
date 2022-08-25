@@ -47,7 +47,6 @@ export default defineComponent({
         departmentId: itmm.departmentId
       };
       let content = JSON.parse(itmm.content);
-      console.log('content', content);
       content.forEach((row, rowNum) => {
         row.forEach((cell, cellNum) => {
           luckysheet.setCellValue(rowNum, cellNum, cell);
@@ -66,7 +65,6 @@ export default defineComponent({
       }
     });
     const workbookCreateAfter = () => {
-      console.log(11112222)
     }
     return { saveTpl, editTpl, workbookCreateAfter };
   },

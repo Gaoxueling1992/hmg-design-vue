@@ -47,11 +47,9 @@ export default defineComponent({
     const { rules, ruleType } = toRefs(props);
 
     const deleteIt = (idx) => {
-      console.log('delete', idx, ruleType.value);
       emit('deleteIt', idx, ruleType.value);
     };
     const editIt = (idx) => {
-      console.log('edit', idx, ruleType.value);
       emit('editIt', idx, ruleType.value);
     };
 

@@ -62,7 +62,6 @@ export default defineComponent({
   setup(props) {
     const isReadonlyStatus: Ref<boolean> = inject('isReadonlyStatus');
     const choosedValue: Ref<string> = ref<string>('');
-    console.log(JSON.stringify(props.ele.options))
    if (props.ele.options && props.ele.options.length) {
       props.ele.options = props.ele.options.filter(
         (option) => option && option.label && option.value

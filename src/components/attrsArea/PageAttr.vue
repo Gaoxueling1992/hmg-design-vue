@@ -109,7 +109,6 @@ const pageDataEffet = () => {
       padding.value = '5';
       value = 5;
     }
-    console.log('key-value', key, value);
     changePageSize({ key, value });
   };
 

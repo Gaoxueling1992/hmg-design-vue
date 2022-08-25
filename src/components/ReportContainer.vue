@@ -392,7 +392,6 @@ const handleCompsOper = (
       }
       pageData.lines = [].concat(res);
     } else {
-      console.log(item);
       if (item.pageFooterId || item.pageHeaderId) {
         for (let i = 0; i < item.lines.length; i++) {
           for (let j = 0; j < item.lines[i].length; j++) {
@@ -627,7 +626,6 @@ export default defineComponent({
           }
           break;
         case 'startLoading':
-          console.log('loading');
           loading.value = true;
           break;
         case 'resetEditor':
@@ -644,7 +642,6 @@ export default defineComponent({
                 let value = line[j].value;
                 let insertValue = data3[line[j].threshold];
                 if (line[j].elName === 'RadEditor') {
-                  console.log('111', value);
                   let arr =
                     value.split(
                       /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
@@ -676,7 +673,6 @@ export default defineComponent({
                   if (!hasVal && !e.data.isAutoApply) {
                     value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${insertValue}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
                   }
-                  console.log('222', value);
                 } else {
                   value = data3[line[j].threshold];
                 }
@@ -748,7 +744,6 @@ export default defineComponent({
         let pageWidth = mmConversionPx(parseInt(pageData.styleSheet.width));
   
         let headerHtml = function (isBreak, cur, total) {
-          console.log('headerInfo', pageData.pageNumPosi)
           return openFixedAreaStr(pageWidth) +
           (pageData.pageNumType > 0 && pageData.pageNumPosi <= 2 ? `<div style="height:18px;font-size:14px;padding:2px;${pagePosiMap[pageData.pageNumPosi]};${isBreak ? 'page-break-before: always;' : ''}">
             第 ${pageData.pageNumType === 1 ? cur : cur + ' / ' + total} 页
@@ -772,7 +767,7 @@ export default defineComponent({
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
-        console.log('headerHeight', headerHeight, 'footerHeight', footerHeight)
+        console.log('headerHeight', headerHeight, 'footerHeight', footerHeight);
         let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight);
         pageBodyHeight = Math.floor(pageBodyHeight) - 3;
         console.log('pageBodyHeight', pageBodyHeight);
@@ -865,6 +860,7 @@ export default defineComponent({
         }
         timer = setTimeout(function () {
           isModified.value = true;
+          console.log('tosaveinlocal');
           window.parent.postMessage(
             {
               type: 'saveInLocal',

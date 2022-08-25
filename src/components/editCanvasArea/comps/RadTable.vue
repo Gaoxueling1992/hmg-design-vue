@@ -249,7 +249,6 @@ export default defineComponent({
           ) {
             row.splice(+i + 1, row[i].mc.cs - 1);
             for (let index = row[i].mc.rs - 1; index > 0; index--) {
-              console.log(+key + index, i,  row[i].mc.cs)
               list[+key + index].splice(i, row[i].mc.cs);
             }
           } else if (row[i] && row[i].mc && row[i].mc.cs && row[i].mc.cs > 1) {
@@ -292,7 +291,6 @@ export default defineComponent({
           }
         }
       }
-      console.log('result', list);
       return list;
     });
 

@@ -75,11 +75,9 @@ export default defineComponent({
         if (pageData.lines[i].length) {
           for (let j = 0; j < pageData.lines[i].length; j++) {
             if (pageHeaderId.value === pageData.lines[i][j].id) {
-              console.log(i, j);
               headerLine.value = i;
             }
             if (pageFooterId.value === pageData.lines[i][j].id) {
-              console.log(i, j)
               footerLine.value = i;
             }
           }
@@ -89,19 +87,15 @@ export default defineComponent({
 
     const onMoveCallback = (evt, originalEvent) => {
       let classStr = originalEvent.target.getAttribute('class').split('line');
-      console.log('111', classStr);
       let line = classStr[classStr.length - 1];
-      console.log('line', line);
       // 如果拖动的是固定页头元素
       if (line && pageHeaderId.value && evt.draggedContext.element.id === pageHeaderId.value) {
-        console.log('拖动页眉', footerLine.value, line);
         if (footerLine.value <= line) {
           return false;
         }
       }
       // 是页脚
       if (line && pageFooterId.value && evt.draggedContext.element.id === pageFooterId.value) {
-        console.log('拖动页脚', headerLine.value, line);
         if (headerLine.value >= line) {
           return false;
         }

@@ -178,7 +178,6 @@ export default defineComponent({
               /<!--[\u4E00-\u9FA5A-Za-z0-9_,\/;%-+()（）【】？\?\[\]\s]+end\s-->/
             ) || [];
           let hasVal = false;
-          console.log(arr);
           for (let j = 0; j < arr.length; j++) {
             if (arr[j]) {
               if (arr[j].indexOf(`%%${currentReport.value}%%`) !== -1) {
@@ -192,11 +191,9 @@ export default defineComponent({
             }
           }
           if (!hasVal) {
-            console.log(1)
             props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
           }
         } else {
-          console.log(2)
           props.ele.value += `<!-- ${currentDec.value}%%${currentReport.value}%%start -->${h}<!-- ${currentDec.value}%%${currentReport.value}%%end -->`;
         }
       };

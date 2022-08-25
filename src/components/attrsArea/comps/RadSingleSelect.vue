@@ -152,7 +152,6 @@ export default defineComponent({
       focusOption = option.label;
     };
     const changeDefault = (option: any, op = 0) => {
-      console.log('start-----')
       // 输入重复的选项，提示
       if (op === 1) {
         let cur = activeCompObj.value.options.filter(
@@ -175,7 +174,6 @@ export default defineComponent({
     };
 
     const dragEnd = () => {
-      console.log('end', activeCompObj.value.options);
     };
     return {
       activeCompObj,

@@ -51,7 +51,6 @@ const dealWithRules = async (linesStr: any, checkInfo: any, tipsIds: any) => {
               break;
             case 8: // 提示
               if (judjeCondition(ruleType, (current === 0 || !threshold) ? ele.value : checkInfo[threshold], value, min, max)) {
-                console.log('lalal', tipsIds, ele.id);
                 if (!tipsIds || tipsIds.indexOf('' + ele.id) === -1) {
                   return {
                     result: false,
@@ -97,7 +96,6 @@ const judjeCondition = (ruleType, value, con, min, max) => {
     case 1: // 不包含
       return value.indexOf(con) === -1;
     case 2: // 等于
-      console.log('sel', value, con)
       return '' + value === '' + con;
     case 3: // 不等于
       return '' + value !== '' + con;
@@ -350,7 +348,6 @@ function calSplitPage (dom, pageHeight) {
       }
       break;
     }
-    console.log('------', offsetTop < curPage * pageHeight, offsetTop + clientHeight < pageHeight * curPage)
     if (offsetTop <= curPage * pageHeight && offsetTop + clientHeight <= pageHeight * curPage) {
       fragment.appendChild(curNode.cloneNode(true));
     } else {

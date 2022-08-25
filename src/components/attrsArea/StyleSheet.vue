@@ -44,7 +44,6 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     const changeStyleSheet = (key) => {
       if (activeCompObj.value.styleSheet && !activeCompObj.value.styleSheet[key]) {
-        console.log(key)
         switch (key) {
           case 'fontWeight':
             activeCompObj.value.styleSheet[key] = 300;
