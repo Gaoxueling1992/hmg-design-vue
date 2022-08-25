@@ -240,6 +240,8 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
     nextNode.getElementsByClassName('inner-split')[i].innerHTML = '';
   }
   let page = 0;
+  let lastInnerNull = true;
+  let lastHidden = false;
   for (let i = 0; i <= splitItems.length; i++) {
     let curNodeInnter = splitItems[i];
     if (curNodeInnter) {
@@ -247,6 +249,8 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       if (offsetTop !== undefined && clientHeight !== undefined) {
         if (offsetTop + top <= curPage * pageHeight && offsetTop + top + clientHeight <= pageHeight * curPage) {
           // 当前页
+          lastInnerNull = false;
+          lastHidden = false;
           lastNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
           for (let j = 1; j < lineItemLength; j++) {
             for (let k = 0; k < findInnerSplit[j].childNodes.length; k++) {
@@ -260,14 +264,26 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
           }
         } else {
           if (offsetTop + top <= (curPage + page) * pageHeight && offsetTop + top + clientHeight <= pageHeight * (curPage + page)) {
+            lastInnerNull = false;
             nextNode.getElementsByClassName('inner-split')[0].appendChild(curNodeInnter.cloneNode(true));
           } else {
+            if (lastInnerNull) {
+              if (page === 0 && lastNode.getElementsByClassName('split-next-hidden') && lastNode.getElementsByClassName('split-next-hidden')[0]) {
+                lastNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(lastNode.getElementsByClassName('split-next-hidden')[0]);
+                lastHidden = true;
+              } else if ( nextNode.getElementsByClassName('split-next-hidden') && nextNode.getElementsByClassName('split-next-hidden')[0]) {
+                if (!lastHidden) {
+                  nextNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(nextNode.getElementsByClassName('split-next-hidden')[0]);
+                  lastHidden = true;
+                }
+              }
+            }
+            lastInnerNull = true;
             fragment.appendChild(page === 0 ? lastNode : nextNode);
             res.push(fragment.innerHTML);
             page++;
             fragment = null;
             fragment = document.createElement('div');
-            console.log(minHeight, offsetTop)
             if (minHeight > 0 && minHeight - offsetTop > 0) {
               if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[0]) {
                 nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
@@ -288,7 +304,6 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
                 if (lineNode) {
                   if (!(lineNode.offsetTop + top <= curPage * pageHeight && lineNode.offsetTop + top + lineNode.clientHeight <= pageHeight * curPage)) {
                     if (minHeight > 0 && minHeight - lineNode.offsetTop > 0) {
-                      debugger
                       if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[j]) {
                         nextNode.getElementsByClassName('editor-display-text')[j].style.minHeight = minHeight - offsetTop + 'px';
                         nextNode.getElementsByClassName('editor-display-text')[j].parentNode.style.minHeight = minHeight - offsetTop + 'px';
@@ -304,6 +319,12 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       }
     }
   }
+  if (page !== 0) {
+    if (!lastHidden && nextNode.getElementsByClassName('split-next-hidden') && nextNode.getElementsByClassName('split-next-hidden')[0]) {
+      nextNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(nextNode.getElementsByClassName('split-next-hidden')[0]);
+    }
+  }
+  
   fragment.appendChild(page === 0 ? lastNode : nextNode);
 
   return {

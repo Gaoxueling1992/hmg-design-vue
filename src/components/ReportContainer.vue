@@ -41,6 +41,7 @@
     v-model:visible="visible"
     width="100%"
     wrap-class-name="full-modal"
+    class="design-preview-modal"
     :footer="null"
     destroyOnClose
     @cancel="closePreview"
@@ -756,7 +757,7 @@ export default defineComponent({
           (pageData.pageHeaderId ? headercanvas : '') +
           '</div>';
         }
-        let headerHeight = (document.getElementById('edit-canvas-header').clientHeight + mmConversionPx(parseInt(pageData.styleSheet.padding)))  + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 25 : 0);
+        let headerHeight = (document.getElementById('edit-canvas-header').clientHeight + mmConversionPx(parseInt(pageData.styleSheet.padding)))  + (pageData.pageNumType > 0 && pageData.pageNumPosi<=2 ? 25 : 0);
         let footerHtml = function (cur, total) {
           return `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
           (pageData.pageFooterId ? footercanvas : '') +
@@ -773,7 +774,7 @@ export default defineComponent({
         pageData.html = '';
         console.log('headerHeight', headerHeight, 'footerHeight', footerHeight)
         let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight);
-        pageBodyHeight = Math.floor(pageBodyHeight);
+        pageBodyHeight = Math.floor(pageBodyHeight) - 3;
         console.log('pageBodyHeight', pageBodyHeight);
         let resHtml = [];
         if (splitField.value) {
@@ -925,10 +926,12 @@ export default defineComponent({
 .edit-canvas {
   background-color: var(--color-white);
 }
-.ant-modal-close {
-  position: fixed !important;
-  right: 20px !important;
-  top: 10px !important;
+.design-preview-modal {
+  .ant-modal-close {
+    position: fixed !important;
+    right: 20px !important;
+    top: 10px !important;
+  }
 }
 .ant-layout {
   ::-webkit-scrollbar {
