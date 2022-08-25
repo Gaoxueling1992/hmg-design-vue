@@ -13,6 +13,10 @@ const openFixedAreaStr = function(pageWidth) {
     @font-face{font-family: "LiSu";src:url('{fontPath}/simli.ttf') format('truetype');}
     @font-face{font-family: "YouYuan";src:url('{fontPath}/simyou.ttf') format('truetype');}
     .editor-display-text p{margin-top:0; margin-bottom:0;}
+    .text-container p{margin-top:0; margin-bottom:0;}
+    body { line-height: 1.2;}
+    .editor-display-text {padding: 4px 0;}
+    .display-text {line-height: 30px;padding:1px 0;}
   </style></head>
   <body style="border:0; margin: 0;width: ${pageWidth}px;">`
 }

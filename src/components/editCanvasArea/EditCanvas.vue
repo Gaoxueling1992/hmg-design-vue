@@ -5,7 +5,7 @@
       ...styleSheet,
       backgroundImage: 'repeating-linear-gradient(transparent, transparent ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseFloat(styleSheet.minHeight) - 0.5) + 'mm' + ', red ' + (parseInt(styleSheet.minHeight) + 0.5) + 'mm)',
       padding: mmConversionPx(parseInt(styleSheet.padding)) + 'px',
-      minHeight: mmConversionPx(parseInt(styleSheet.minHeight) - parseInt(styleSheet.padding)*2) + 'px',
+      minHeight: mmConversionPx(parseInt(styleSheet.minHeight)) + 'px',
       width: mmConversionPx(parseInt(styleSheet.width)) + 'px'
     }"
     @click="clickCanvas"

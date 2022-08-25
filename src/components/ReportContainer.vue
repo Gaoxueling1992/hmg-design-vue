@@ -373,6 +373,7 @@ const handleCompsOper = (
     loading.value = true;
     pageData.lines = [];
     pageData.headerLine = -1;
+    pageData.footerLine = 9999;
     // 设计器在每行后面追加一行，方便拖拽
     if (pageId === 'designer') {
       let res = [[]];
@@ -755,7 +756,7 @@ export default defineComponent({
           (pageData.pageHeaderId ? headercanvas : '') +
           '</div>';
         }
-        let headerHeight = document.getElementById('edit-canvas-header').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 30 : 0);
+        let headerHeight = (document.getElementById('edit-canvas-header').clientHeight + mmConversionPx(parseInt(pageData.styleSheet.padding)))  + (pageData.pageNumType > 0 && pageData.pageNumPosi<2 ? 25 : 0);
         let footerHtml = function (cur, total) {
           return `<div style="padding:0 ${pageData.styleSheet.padding} ${pageData.styleSheet.padding} ${pageData.styleSheet.padding};">` +
           (pageData.pageFooterId ? footercanvas : '') +
@@ -765,13 +766,15 @@ export default defineComponent({
           </div>` : '') +
           footStr
         };
-        let footerHeight = document.getElementById('edit-canvas-footer').clientHeight + (pageData.pageNumType > 0 && pageData.pageNumPosi>2 ? 30 : 0);
+        let footerHeight = (document.getElementById('edit-canvas-footer').clientHeight +  mmConversionPx(parseInt(pageData.styleSheet.padding))) + (pageData.pageNumType > 0 && pageData.pageNumPosi>2 ? 25 : 0);
       
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
-        let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight) - mmConversionPx(parseInt(pageData.styleSheet.padding)) * 2;
+        console.log('headerHeight', headerHeight, 'footerHeight', footerHeight)
+        let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight);
         pageBodyHeight = Math.floor(pageBodyHeight);
+        console.log('pageBodyHeight', pageBodyHeight);
         let resHtml = [];
         if (splitField.value) {
           let lastDec = currentDec.value;
@@ -818,7 +821,7 @@ export default defineComponent({
         }
 
         nextTick(() => {
-          isReadonlyStatus.value = false;
+          // isReadonlyStatus.value = false;
         });
       });
       return true;
