@@ -5,12 +5,11 @@
     :class="ele.inline ? 'ele-label' : ''"
     style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{
-      lineHeight: ele.imgHeight > 30 && ele.type !== 'input' ? ele.imgHeight + 'px' : '30px',
-      height: ele.imgHeight > 30 && ele.type !== 'input' ? ele.imgHeight+ 'px' : '30px',
       'vertical-align': 'top',
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : '',
-      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
+      'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none',
+      lineHeight: ele.inline && ele.imgHeight > 30 && (ele.imagePosi === 'left' || ele.imagePosi === 'right') && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important'
     }"
   >{{ ele.label }}</div>
   <div
@@ -36,11 +35,11 @@
         </a-input>
         <div
           v-else
-          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'right' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' ? ele.imgHeight + 'px !important' : '30px',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' && (ele.src || (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important',
             'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >
@@ -137,11 +136,11 @@
         </a-input>
         <div
           v-else
-          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;line-height: 30px !important;padding-top: 1px;padding-bottom: 1px;"
+          style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
             float: ele.imagePosi === 'left' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' ? ele.imgHeight + 'px !important' : '30px',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important',
             'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >

@@ -18,12 +18,13 @@
           :id="'header-line' + String(idx)"
           :style="{
             'width': '100%',
-            'padding': line.length > 0 ? '2px 0' : '0',
-            'overflow': 'hidden'
+            'overflow': 'hidden',
+            'height': lineHeight('header-line' + String(idx)),
+            'line-height':lineHeight('header-line' + String(idx))
           }"
         >
           <div
-            style="position:relative;width:100%;column-gap:2px;"
+            style="position:relative;width:100%;column-gap:2px;height:100%"
             :style="{display: isReadonlyStatus ? '' : 'flex'}"
             class="line-for-after"
           >
@@ -52,7 +53,8 @@
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
-                border: 'none !important'
+                border: 'none !important',
+                height: '100%'
               }"
                 :id="ele.id"
               >
@@ -70,7 +72,8 @@
                   borderColor: ele.styleSheet && ele.styleSheet.borderColor,
                   borderStyle: ele.styleSheet && ele.styleSheet.borderStyle,
                   marginLeft: line.length > 1 && index!==0 ? '2px' : '0',
-                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
+                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0',
+                  height: '100%'
                 }">
                   <component
                     v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -93,11 +96,13 @@
           :style="{
             'display': '',
             'width': '100%',
-            'overflow': 'hidden'
+            'overflow': 'hidden',
+            'height': lineHeight('body-line' + String(idx)),
+            'line-height':lineHeight('body-line' + String(idx))
           }"
         >
           <div
-            style="position:relative;width:100%;column-gap:2px;"
+            style="position:relative;width:100%;column-gap:2px;height:100%"
             :style="{display: isReadonlyStatus ? '' : 'flex'}"
           >
             <template
@@ -105,6 +110,7 @@
               :key="ele.id"
             >
               <div
+                class="line-for-after-inner"
                 :style="{
                 'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                 'max-width': '100%',
@@ -123,7 +129,8 @@
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 border: 'none',
-                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
+                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
+                height: '100%'
               }"
                 :id="ele.id"
                 v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -142,7 +149,8 @@
                   borderStyle: ele.styleSheet && ele.styleSheet.borderStyle,
                   width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
                   marginLeft: line.length > 1 && index!==0 ? '2px' : '0',
-                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
+                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0',
+                  height: '100%'
                 }">
                   <component
                     v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -165,11 +173,13 @@
           :style="{
             'display': '',
             'width': '100%',
-            'overflow': 'hidden'
+            'overflow': 'hidden',
+            'height': lineHeight('footer-line' + String(idx)),
+            'line-height':lineHeight('footer-line' + String(idx))
           }"
         >
           <div
-            style="position:relative;width:100%;column-gap:2px;"
+            style="position:relative;width:100%;column-gap:2px;height:100%"
             :style="{'display': isReadonlyStatus ? '' : 'flex'}"
           >
             <template
@@ -177,6 +187,7 @@
               :key="ele.id"
             >
               <div
+                class="line-for-after-inner"
                 :style="{
                   'align-items': ele.inline && ele.elName !== 'RadEditor' ? 'center' : '',
                   'max-width': '100%',
@@ -195,7 +206,8 @@
                   paddingLeft: '0px',
                   paddingRight: '0px',
                   border: 'none',
-                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
+                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
+                  height: '100%'
                 }"
                 :id="ele.id"
                 v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -212,7 +224,8 @@
                   borderColor: ele.styleSheet && ele.styleSheet.borderColor,
                   borderStyle: ele.styleSheet && ele.styleSheet.borderStyle,
                   marginLeft: line.length > 1 && index!==0 ? '2px' : '0',
-                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0'
+                  marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0',
+                  height: '100%'
                 }">
                   <component
                     v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -320,6 +333,19 @@ export default defineComponent({
         return '100%';
       };
     });
+
+    const lineHeight = computed(() => {
+      return (id) => {
+        if (document.getElementById(id) && isReadonlyStatus) {
+          if (document.getElementById(id).clientHeight > 25) {
+            return document.getElementById(id).clientHeight + 'px';
+          } else {
+            return '25px';
+          }
+        }
+        return '100%';
+      }
+    });
     for (let i = 0; i < lines.value.length; i++) {
       for (let j = 0; j < lines.value[i].length; j++) {
         if (+pageHeaderId.value === +lines.value[i][j].id) {
@@ -393,7 +419,8 @@ export default defineComponent({
       focusedEle,
       clickCanvas,
       eleWidthInner,
-      mmConversionPx
+      mmConversionPx,
+      lineHeight
     };
   }
 });
@@ -429,7 +456,11 @@ export default defineComponent({
     clear: both;
   }
   .line-for-after-inner {
-    
+    &::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
   }
 }
 </style>

@@ -817,7 +817,7 @@ export default defineComponent({
         }
 
         nextTick(() => {
-          isReadonlyStatus.value = false;
+          // isReadonlyStatus.value = false;
         });
       });
       return true;
