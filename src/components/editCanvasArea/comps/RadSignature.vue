@@ -9,7 +9,7 @@
       'padding-right': ele.inline ? '10px' : 0,
       'display': ele.inline ? 'inline-block' : '',
       'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none',
-      lineHeight: ele.inline && ele.imgHeight > 30 && (ele.imagePosi === 'left' || ele.imagePosi === 'right') && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important'
+      lineHeight: ele.inline && ele.imgHeight > 30 && (ele.imagePosi === 'left' || ele.imagePosi === 'right') && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : '30px !important'
     }"
   >{{ ele.label }}</div>
   <div
@@ -19,7 +19,8 @@
     :style="{
       flexDirection: (ele.imagePosi === 'right' || ele.imagePosi === 'left') ? 'row' : 'column',
       display: isReadonlyStatus ? 'inline-block' : '',
-      'text-decoration': 'inherit'
+      'text-decoration': 'inherit',
+      height: '100%'
     }"
   >
     <template v-if="ele.imagePosi === 'right' || ele.imagePosi === 'bottom'">
@@ -38,8 +39,8 @@
           style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
-            float: ele.imagePosi === 'right' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' && (ele.src || (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important',
+            float: 'left',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'right' && (ele.src || (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : '30px !important',
             'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >
@@ -88,7 +89,11 @@
     <template v-else>
       <div
         v-if="ele.type !== 'input'"
-        :style="{float: ele.imagePosi === 'left' ? 'left' : '',display: 'block'}"
+        :style="{
+          float: ele.imagePosi === 'left' ? 'left' : '',
+          display: 'block',
+          height: ele.imgHeight+ 'px'
+        }"
       >
         <img
           class="img"
@@ -139,8 +144,8 @@
           style="border-color:inherit;text-decoration: inherit;color:inherit !important;background-color: inherit;font-size: inherit;display: inline-block;padding-top: 1px;padding-bottom: 1px;"
           class="inherit display-text"
           :style="{
-            float: ele.imagePosi === 'left' ? 'left' : '',
-            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : 'unset !important',
+            float: 'left',
+            lineHeight: ele.imgHeight > 30 && ele.imagePosi === 'left' && (ele.src ||  (ele.srcs && ele.srcs.length)) ? ele.imgHeight + 'px !important' : '30px !important',
             'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration ?  ele.styleSheet.textDecoration : 'none'
           }"
         >
