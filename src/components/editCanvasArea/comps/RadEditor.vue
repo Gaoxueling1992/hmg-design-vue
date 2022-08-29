@@ -1,8 +1,8 @@
 <template>
   <div
-    class="inherit split-next-hidden"
+    class="inherit"
     v-if="ele.label"
-    :class="ele.inline ? 'ele-editor-label' : ''"
+    :class="ele.inline ? 'ele-editor-label' : 'split-next-hidden'"
     @click="focusedEle = ele.id"
     style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
     :style="{

@@ -275,6 +275,11 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
                   lastHidden = true;
                 }
               }
+            } else {
+              if (nextNode.getElementsByClassName('split-next-hidden') && nextNode.getElementsByClassName('split-next-hidden')[0]) {
+                nextNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(nextNode.getElementsByClassName('split-next-hidden')[0]);
+                lastHidden = true;
+              }
             }
             lastInnerNull = true;
             fragment.appendChild(page === 0 ? lastNode : nextNode);
