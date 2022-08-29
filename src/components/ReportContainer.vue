@@ -778,10 +778,8 @@ export default defineComponent({
         let htmls = [];
         // 处理内容主体
         pageData.html = '';
-        console.log('headerHeight', headerHeight, 'footerHeight', footerHeight);
         let pageBodyHeight = mmConversionPx(parseInt(pageData.styleSheet.minHeight)) - Math.ceil(headerHeight) - Math.ceil(footerHeight);
         pageBodyHeight = Math.floor(pageBodyHeight) - 3;
-        console.log('pageBodyHeight', pageBodyHeight);
         let resHtml = [];
         if (splitField.value) {
           let lastDec = currentDec.value;
@@ -871,7 +869,6 @@ export default defineComponent({
         }
         timer = setTimeout(function () {
           isModified.value = true;
-          console.log('tosaveinlocal');
           window.parent.postMessage(
             {
               type: 'saveInLocal',

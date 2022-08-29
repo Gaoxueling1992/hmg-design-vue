@@ -282,11 +282,9 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
               }
             }
             lastInnerNull = true;
-            console.log('ddd', page, lastNode.clientHeight, nextNode.clientHeight)
             // if ((page === 0 && lastNode.clientHeight > 6) || nextNode.clientHeight >6) {
               fragment.appendChild(page === 0 ? lastNode : nextNode);
             // }
-            console.log('111', fragment, fragment.innerHTML)
             if (fragment.innerHTML) {
               res.push(fragment.innerHTML);
               page++;
@@ -333,7 +331,6 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       nextNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(nextNode.getElementsByClassName('split-next-hidden')[0]);
     }
   }
-  console.log('ccc')
   // if ((page === 0 && lastNode.clientHeight > 6) || nextNode.clientHeight >6) {
     fragment.appendChild(page === 0 ? lastNode : nextNode);
   // }
@@ -355,7 +352,6 @@ function calSplitPage (dom, pageHeight) {
     let { offsetTop, clientHeight, id } = curNode;
     if (!id || (id && id.indexOf('body-line') === -1)) {
       if (fragment) {
-        console.log('222', fragment, fragment.clientHeight);
         if (fragment.innerHTML) {
           res.push(fragment.innerHTML);
           curPage++;
@@ -365,7 +361,6 @@ function calSplitPage (dom, pageHeight) {
       break;
     }
     if (offsetTop <= curPage * pageHeight && offsetTop + clientHeight <= pageHeight * curPage) {
-      console.log('aaa')
       if (curNode.clientHeight > 6) {
         fragment.appendChild(curNode.cloneNode(true));
       }
@@ -381,7 +376,6 @@ function calSplitPage (dom, pageHeight) {
         fragment = result.fragment;
         continue;
       }
-      console.log('333', fragment, fragment.clientHeight)
       if (fragment.innerHTML) {
         res.push(fragment.innerHTML);
         curPage++;
@@ -392,7 +386,6 @@ function calSplitPage (dom, pageHeight) {
       
       // 找不到可拆分子元素，直接放到下一页
       if (!findInnerSplit || !findInnerSplit[0]) {
-        console.log('bbb', curNode.clientHeight);
         if (curNode.clientHeight > 6) {
           fragment.appendChild(curNode.cloneNode(true));
         }

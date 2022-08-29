@@ -71,7 +71,6 @@ export default defineComponent({
   setup() {
     const activeCompObj: any = inject('activeCompObj');
     let checkedOption: Ref<number> = ref(-1);
-    console.log(JSON.stringify(activeCompObj.value))
     let focusOption = '';
     if (activeCompObj.value.options && activeCompObj.value.options.length) {
       activeCompObj.value.options = activeCompObj.value.options.filter(
@@ -82,7 +81,6 @@ export default defineComponent({
         (option) => option.label === activeCompObj.value.value
       )[0].value;
     }
-    console.log(1111)
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options = [];
       activeCompObj.value.options.push({
