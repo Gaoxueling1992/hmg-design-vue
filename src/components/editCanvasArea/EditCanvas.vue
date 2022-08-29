@@ -334,7 +334,7 @@ export default defineComponent({
       return (id, line) => {
         console.log()
         let heightNotSure = line.filter((item) => {
-          return item.elName === 'RadTable' || item.elName === 'RadMulitImagepicker' || item.elName === 'RadEditor';
+          return item.elName === 'RadTable' || item.elName === 'RadMulitImagepicker' || item.elName === 'RadEditor' || item.elName === 'CombinationArea';
         })
         console.log('----', heightNotSure);
         if (heightNotSure && heightNotSure[0]) {
@@ -343,6 +343,8 @@ export default defineComponent({
         if (document.getElementById(id) && isReadonlyStatus) {
           if (document.getElementById(id).clientHeight > 25) {
             return document.getElementById(id).clientHeight + 'px';
+          } else if (document.getElementById(id).clientHeight === 0) {
+            return 0;
           } else {
             return '25px';
           }

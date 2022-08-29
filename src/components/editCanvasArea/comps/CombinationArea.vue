@@ -5,12 +5,10 @@
       width: '100%',
       textAlign: ele.styleSheet.justifyContent,
     }" class="inner-split">
-    <template v-for="item in ele.compsList">
+    <template v-for="item in ele.compsList" :key="item.id">
       <div
-        v-if="!(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)"
-        :key="item.id"
         :style="{
-            height: ele.layout === 'top' ? 'auto' : (100/ele.compsList.length + '%'),
+            height: ele.layout === 'top' ? '32px' : (100/ele.compsList.length + '%'),
             'align-items': ele.inline ? 'center' : '',
             'max-width': '100%',
             'overflow-x': 'hidden',
@@ -23,7 +21,7 @@
             padding: '2px 0'
           }"
       >
-        <template v-if="item.elName === 'RadText' && !(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)">
+        <template v-if="item.elName === 'RadText'">
           <div
             style="min-height: 20px"
             class="inherit"
@@ -34,8 +32,8 @@
             }"
           >{{ item.label || '静态文本' }}</div>
         </template>
-        <template v-if="item.elName === 'RadInput' && !(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)">
-          <template v-if="!isReadonlyStatus && !item.baseProps.readonly">
+        <template v-if="item.elName === 'RadInput'">
+          <template v-if="!isReadonlyStatus && (!item.baseProps || !item.baseProps.readonly)">
             <div
               class="inherit"
               v-if="item.label"
@@ -101,7 +99,7 @@
             </div>
           </template>
         </template>
-        <template v-if="item.elName === 'RadNumber' && !(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)">
+        <template v-if="item.elName === 'RadNumber'">
           <div
             class="inherit"
             v-if="item.label"
@@ -113,7 +111,7 @@
               }"
             style="border-color:inherit;color:inherit !important;background-color: inherit;font-size: inherit;"
           >{{ item.label }}&nbsp;</div>
-          <template v-if="!isReadonlyStatus && !item.baseProps.readonly">
+          <template v-if="!isReadonlyStatus && (!item.baseProps || !item.baseProps.readonly)">
             <span v-if="item.prefix">{{item.prefix}}&nbsp;</span>
             <a-input-number
               style="flex: 1"
@@ -173,7 +171,7 @@
           >{{item.value ? moment(item.value).format(item.format) : ''}}</div>
           {{item.suffix ? ' ' + item.suffix : ''}}
         </template>
-        <template v-if="item.elName === 'RadSignature' && !(isReadonlyStatus && item.baseProps && item.baseProps.hideOnPrint)">
+        <template v-if="item.elName === 'RadSignature'">
           <div
             class="inherit"
             v-if="item.label"
@@ -204,7 +202,7 @@
                   style="flex: 1"
                   :disabled="item.baseProps.readonly"
                   class="inherit"
-                  v-if="!isReadonlyStatus && !item.baseProps.readonly"
+                  v-if="!isReadonlyStatus && (!item.baseProps || !item.baseProps.readonly)"
                   v-model:value="item.value"
                   :placeholder="item.placeholder"
                 >
