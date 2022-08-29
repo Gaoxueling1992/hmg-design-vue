@@ -282,11 +282,17 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
               }
             }
             lastInnerNull = true;
-            fragment.appendChild(page === 0 ? lastNode : nextNode);
-            res.push(fragment.innerHTML);
-            page++;
-            fragment = null;
-            fragment = document.createElement('div');
+            console.log('ddd', page, lastNode.clientHeight, nextNode.clientHeight)
+            // if ((page === 0 && lastNode.clientHeight > 6) || nextNode.clientHeight >6) {
+              fragment.appendChild(page === 0 ? lastNode : nextNode);
+            // }
+            console.log('111', fragment, fragment.innerHTML)
+            if (fragment.innerHTML) {
+              res.push(fragment.innerHTML);
+              page++;
+              fragment = null;
+              fragment = document.createElement('div');
+            }
             if (minHeight > 0 && minHeight - offsetTop > 0) {
               if (nextNode.getElementsByClassName('editor-display-text') && nextNode.getElementsByClassName('editor-display-text')[0]) {
                 nextNode.getElementsByClassName('editor-display-text')[0].style.minHeight = minHeight - offsetTop + 'px';
@@ -327,8 +333,10 @@ function dealWithCurNode (fragment, curNode, findInnerSplit, top, curPage, pageH
       nextNode.getElementsByClassName('split-next-hidden')[0].parentNode.removeChild(nextNode.getElementsByClassName('split-next-hidden')[0]);
     }
   }
-  
-  fragment.appendChild(page === 0 ? lastNode : nextNode);
+  console.log('ccc')
+  // if ((page === 0 && lastNode.clientHeight > 6) || nextNode.clientHeight >6) {
+    fragment.appendChild(page === 0 ? lastNode : nextNode);
+  // }
 
   return {
     res,
@@ -347,14 +355,20 @@ function calSplitPage (dom, pageHeight) {
     let { offsetTop, clientHeight, id } = curNode;
     if (!id || (id && id.indexOf('body-line') === -1)) {
       if (fragment) {
-        res.push(fragment.innerHTML);
-        curPage++;
-        fragment = null;
+        console.log('222', fragment, fragment.clientHeight);
+        if (fragment.innerHTML) {
+          res.push(fragment.innerHTML);
+          curPage++;
+          fragment = null;
+        }
       }
       break;
     }
     if (offsetTop <= curPage * pageHeight && offsetTop + clientHeight <= pageHeight * curPage) {
-      fragment.appendChild(curNode.cloneNode(true));
+      console.log('aaa')
+      if (curNode.clientHeight > 6) {
+        fragment.appendChild(curNode.cloneNode(true));
+      }
     } else {
       // 如果当前元素 顶部在页面内部，底部超出一页
       let findInnerSplit = curNode.getElementsByClassName('inner-split');
@@ -367,14 +381,21 @@ function calSplitPage (dom, pageHeight) {
         fragment = result.fragment;
         continue;
       }
-      res.push(fragment.innerHTML);
-      curPage++;
-      // 新启一个页面虚拟dom
-      fragment = null;
-      fragment = document.createElement('div');
+      console.log('333', fragment, fragment.clientHeight)
+      if (fragment.innerHTML) {
+        res.push(fragment.innerHTML);
+        curPage++;
+        // 新启一个页面虚拟dom
+        fragment = null;
+        fragment = document.createElement('div');
+      }
+      
       // 找不到可拆分子元素，直接放到下一页
       if (!findInnerSplit || !findInnerSplit[0]) {
-        fragment.appendChild(curNode.cloneNode(true));
+        console.log('bbb', curNode.clientHeight);
+        if (curNode.clientHeight > 6) {
+          fragment.appendChild(curNode.cloneNode(true));
+        }
       }
     }
   }

@@ -795,7 +795,7 @@ export default defineComponent({
           }
           for (let k = 0; k < resHtml.length; k++) {
             let temphtml =
-              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
+              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px;height:${pageBodyHeight}px;">` +
               resHtml[k] +
               '</div>';
             htmls.push(headerHtml(k!==0, k + 1, resHtml.length) + temphtml + footerHtml(k + 1, resHtml.length));
@@ -808,7 +808,7 @@ export default defineComponent({
           resHtml = calSplitPage(document.getElementById('edit-canvas-body'), pageBodyHeight);
           for (let i = 0; i < resHtml.length; i++) {
             let temphtml =
-              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px">` +
+              `<div style="padding:0 ${pageData.styleSheet.padding};min-height:${pageBodyHeight}px;height:${pageBodyHeight}px;">` +
               resHtml[i] +
               '</div>';
             htmls[i] = headerHtml(i !== 0, i + 1, resHtml.length) + temphtml + footerHtml(i + 1, resHtml.length);
