@@ -8,7 +8,7 @@
     <template v-for="item in ele.compsList" :key="item.id">
       <div
         :style="{
-            height: ele.layout === 'top' ? '32px' : (100/ele.compsList.length + '%'),
+            height: ele.layout === 'top' ? 'unset' : (100/ele.compsList.length + '%'),
             'align-items': ele.inline ? 'center' : '',
             'max-width': '100%',
             'overflow-x': 'hidden',
