@@ -2,7 +2,7 @@
   <div
     v-if="tableTpl && tableTpl.id"
     class="rad-table"
-    style="padding: 0 2px"
+    style="padding: 0 2px;line-height:1 !important;"
   >
     <table
       border="1"
@@ -226,7 +226,6 @@ export default defineComponent({
       window.parent.postMessage({ type: 'fetchTableDetail', id: item.id, eleId: props.ele.id, pageId: pageId.value }, '*');
       chooseTableInner.value = false;
     };
-
     const tbList = computed(() => {
       let list = [];
       if (tableTpl.value.list) {

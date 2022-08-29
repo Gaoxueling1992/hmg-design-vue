@@ -19,8 +19,8 @@
           :style="{
             'width': '100%',
             'overflow': 'hidden',
-            'height': lineHeight('header-line' + String(idx)),
-            'line-height':lineHeight('header-line' + String(idx))
+            'height': lineHeight('header-line' + String(idx), line),
+            'line-height':lineHeight('header-line' + String(idx), line)
           }"
         >
           <div
@@ -53,8 +53,7 @@
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
-                border: 'none !important',
-                height: '100%'
+                border: 'none !important'
               }"
                 :id="ele.id"
               >
@@ -97,8 +96,8 @@
             'display': '',
             'width': '100%',
             'overflow': 'hidden',
-            'height': lineHeight('body-line' + String(idx)),
-            'line-height':lineHeight('body-line' + String(idx))
+            'height': lineHeight('body-line' + String(idx), line),
+            'line-height':lineHeight('body-line' + String(idx), line)
           }"
         >
           <div
@@ -129,8 +128,7 @@
                 paddingLeft: '0px',
                 paddingRight: '0px',
                 border: 'none',
-                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
-                height: '100%'
+                'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
               }"
                 :id="ele.id"
                 v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -150,7 +148,6 @@
                   width: isReadonlyStatus ? 'calc(100% - ' + ele.styleSheet.paddingLeft + 'px)' : '100%',
                   marginLeft: line.length > 1 && index!==0 ? '2px' : '0',
                   marginRight: lines.length > 1 && index !== lines.length -1 ? '2px' : '0',
-                  height: '100%'
                 }">
                   <component
                     v-if="!(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -174,8 +171,8 @@
             'display': '',
             'width': '100%',
             'overflow': 'hidden',
-            'height': lineHeight('footer-line' + String(idx)),
-            'line-height':lineHeight('footer-line' + String(idx))
+            'height': lineHeight('footer-line' + String(idx), line),
+            'line-height':lineHeight('footer-line' + String(idx), line)
           }"
         >
           <div
@@ -206,8 +203,7 @@
                   paddingLeft: '0px',
                   paddingRight: '0px',
                   border: 'none',
-                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none',
-                  height: '100%'
+                  'text-decoration': ele.styleSheet && ele.styleSheet.textDecoration && ['RadEditor', 'RadTable'].indexOf(ele.elName) === -1 ?  ele.styleSheet.textDecoration : 'none'
                 }"
                 :id="ele.id"
                 v-if="ele.display !== false && !(ele.baseProps && ele.baseProps.hideOnPrint && isReadonlyStatus)"
@@ -335,7 +331,15 @@ export default defineComponent({
     });
 
     const lineHeight = computed(() => {
-      return (id) => {
+      return (id, line) => {
+        console.log()
+        let heightNotSure = line.filter((item) => {
+          return item.elName === 'RadTable' || item.elName === 'RadMulitImagepicker' || item.elName === 'RadEditor';
+        })
+        console.log('----', heightNotSure);
+        if (heightNotSure && heightNotSure[0]) {
+          return 'unset';
+        }
         if (document.getElementById(id) && isReadonlyStatus) {
           if (document.getElementById(id).clientHeight > 25) {
             return document.getElementById(id).clientHeight + 'px';

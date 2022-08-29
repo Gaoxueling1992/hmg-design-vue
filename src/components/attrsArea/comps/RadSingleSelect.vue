@@ -71,6 +71,7 @@ export default defineComponent({
   setup() {
     const activeCompObj: any = inject('activeCompObj');
     let checkedOption: Ref<number> = ref(-1);
+    console.log(JSON.stringify(activeCompObj.value))
     let focusOption = '';
     if (activeCompObj.value.options && activeCompObj.value.options.length) {
       activeCompObj.value.options = activeCompObj.value.options.filter(
@@ -81,6 +82,7 @@ export default defineComponent({
         (option) => option.label === activeCompObj.value.value
       )[0].value;
     }
+    console.log(1111)
     if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options = [];
       activeCompObj.value.options.push({
@@ -90,28 +92,7 @@ export default defineComponent({
       activeCompObj.value.value = '选项1';
       checkedOption.value = 1;
     }
-    watch(() => activeCompObj,
-      () => {
-        if (activeCompObj.value.options && activeCompObj.value.options.length) {
-          activeCompObj.value.options = activeCompObj.value.options.filter(
-            (option) => option && option.label && option.value
-          );
-          checkedOption.value = activeCompObj.value.options.filter(
-            (option) => option.label === activeCompObj.value.value
-          )[0].value;
-        }
-        if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
-          activeCompObj.value.options= [];
-          activeCompObj.value.options.push({
-            value: 1,
-            label: '选项1'
-          });
-          activeCompObj.value.value = '选项1';
-          checkedOption.value = 1;
-        }
-      },
-      { deep: true }
-    );
+    
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       let indexMax = index;

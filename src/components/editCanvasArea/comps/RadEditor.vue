@@ -132,7 +132,9 @@ export default defineComponent({
         ];
         editor.config.pasteTextHandle = function (content) {
           // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+          console.log('paste bedore', content);
           content = content.replace(/<style>[\s\S]*?<\/style>/gi, '');
+          console.log('paste after', content);
           return content;
         }
         editor.create();

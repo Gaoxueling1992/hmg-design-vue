@@ -82,23 +82,6 @@ export default defineComponent({
         checkedValue.value.push(activeCompObj.value.options[i].value);
       }
     }
-    watch(() => activeCompObj,
-      () => {
-        if (activeCompObj.value.options && activeCompObj.value.options.length) {
-          activeCompObj.value.options = activeCompObj.value.options.filter(
-            (option) => option && option.label && option.value
-          );
-        }
-        if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
-          activeCompObj.value.options = [];
-          activeCompObj.value.options.push({
-            value: 1,
-            label: '选项1'
-          });
-        }
-      },
-      { deep: true }
-    );
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       let indexMax = index;

@@ -180,6 +180,17 @@ const handleCompsOper = (
     if (value === 'combination-area') {
       activeCompObj.value.compsList = [];
     }
+    if (value === 'rad-single-select' || value === 'rad-mul-select') {
+      if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+        activeCompObj.value.options.push({
+          value: 1,
+          label: '选项1'
+        });
+        if (value === 'rad-single-select') {
+          activeCompObj.value.value = '选项1';
+        }
+      }
+    }
     pageData.lines.push([activeCompObj.value]);
     pageData.lines.push([]);
     activeCompId.value = id;
