@@ -25,6 +25,7 @@
     <a-radio-group
       v-else-if="ele.layout === 'crosswise'"
       v-model:value="choosedValue"
+      class="inherit"
       :disabled="ele.baseProps.readonly"
       :options="ele.options"
       @change="changeValue"
@@ -90,7 +91,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .ele-label {
   padding-right: 10px;
   display: inline-block;
@@ -100,5 +101,13 @@ export default defineComponent({
 }
 .display-text {
   display: inline-block;
+}
+.inherit {
+  .ant-radio-wrapper, .ant-radio {
+    border-color: inherit;
+    color: inherit !important;
+    background-color: inherit;
+    font-size: inherit;
+  }
 }
 </style>

@@ -20,7 +20,7 @@
     </a-radio-group>
   </template>
   <div class="title marginT10 fontW500">选项</div>
-  <draggable
+  <!-- <draggable
     v-model="activeCompObj.options"
     @end="dragEnd"
     v-if="activeCompObj.options && activeCompObj.options.length"
@@ -51,7 +51,7 @@
         </div>
       </div>
     </template>
-  </draggable>
+  </draggable> -->
   <div
     class="op marginT10"
     @click="addOption"
@@ -90,6 +90,32 @@ export default defineComponent({
       activeCompObj.value.value = '选项1';
       checkedOption.value = 1;
     }
+
+    watch(() => activeCompObj,
+      () => {
+        if (!activeCompObj || !activeCompObj.value || !activeCompObj.value.id) {
+          return;
+        }
+        if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+          activeCompObj.value.options = [];
+          activeCompObj.value.options.push({
+            value: 1,
+            label: '选项1'
+          });
+          activeCompObj.value.value = '选项1';
+          checkedOption.value = 1;
+        } else if (activeCompObj.value.options && activeCompObj.value.options.length) {
+          activeCompObj.value.options = activeCompObj.value.options.filter(
+            (option) => option && option.label && option.value
+          );
+          checkedOption.value = activeCompObj.value.options.filter(
+            (option) => option.label === activeCompObj.value.value
+          )[0].value;
+          console.log(checkedOption.value);
+        }
+      },
+      { deep: true }
+    );
     
     const addOption = () => {
       const index = activeCompObj.value.options.length;

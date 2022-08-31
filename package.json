@@ -38,6 +38,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.184",
     "@types/node": "^17.0.5",
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",

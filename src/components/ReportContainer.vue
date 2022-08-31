@@ -78,6 +78,7 @@ import {
 import { pageConfig, styleSheetObj } from '@/utils/pageData';
 import { compBaseConfig } from '@/utils/config';
 import { Modal } from 'ant-design-vue';
+import * as _ from 'lodash'
 import {
   footStr,
   openFixedAreaStr
@@ -122,16 +123,7 @@ const handleCompsOper = (
   const returnComp = (elName: string, cusInfo = {}) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
-    const baseConfig = reactive({
-      ...compBaseConfig[elName],
-      styleSheet: compBaseConfig[elName].styleSheet ? {
-        ...compBaseConfig[elName].styleSheet
-      } : null,
-      baseProps: compBaseConfig[elName].baseProps ? {
-        ...compBaseConfig[elName].baseProps
-      } : null,
-      rules: {}
-    });
+    const baseConfig = _.cloneDeep(reactive(compBaseConfig[elName]));
     activeCompObj.value = {
       ...baseConfig,
       id: id
@@ -153,23 +145,8 @@ const handleCompsOper = (
   const addComp = (value: string, cusInfo = {}) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
-    const baseConfig = reactive({
-      ...compBaseConfig[value],
-      styleSheet: compBaseConfig[value].styleSheet ? {
-        ...compBaseConfig[value].styleSheet
-      } : null,
-      baseProps: compBaseConfig[value].baseProps ? {
-        ...compBaseConfig[value].baseProps
-      } : null,
-      options: compBaseConfig[value].options ? [
-        ...compBaseConfig[value].options
-      ] : [],
-      rules: {}
-    });
-    activeCompObj.value = {
-      ...baseConfig,
-      id: id
-    };
+    activeCompObj.value = _.cloneDeep(reactive(compBaseConfig[value]));
+    activeCompObj.value.id = id;
     if (cusInfo && cusInfo.threshold) {
       activeCompObj.value.label = cusInfo.label;
       activeCompObj.value.threshold = cusInfo.threshold;
@@ -179,17 +156,6 @@ const handleCompsOper = (
     }
     if (value === 'combination-area') {
       activeCompObj.value.compsList = [];
-    }
-    if (value === 'rad-single-select' || value === 'rad-mul-select') {
-      if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
-        activeCompObj.value.options.push({
-          value: 1,
-          label: '选项1'
-        });
-        if (value === 'rad-single-select') {
-          activeCompObj.value.value = '选项1';
-        }
-      }
     }
     pageData.lines.push([activeCompObj.value]);
     pageData.lines.push([]);
@@ -223,22 +189,8 @@ const handleCompsOper = (
   // 复制控件
   const copyComp = (ele: any) => {
     const id: string = new Date().getTime() + '';
-    activeCompObj.value = {
-      ...ele,
-      id: id,
-      styleSheet: ele.styleSheet ? {
-        ...ele.styleSheet
-      } : null,
-      baseProps: ele.baseProps ? {
-        ...ele.baseProps
-      } : null,
-      options: ele.options ? [
-        ...ele.options
-      ] : [],
-      rules: ele.rules ? JSON.parse(JSON.stringify(ele.rules)) : [],
-      compsList: ele.compsList ? JSON.parse(JSON.stringify(ele.compsList)) : [],
-      value: typeof(ele.value) === 'object' ? JSON.parse(JSON.stringify(ele.value)) : ele.value
-    };
+    activeCompObj.value = _.cloneDeep(reactive(ele));
+    activeCompObj.value.id = id;
     pageData.lines.push([activeCompObj.value]);
     pageData.lines.push([]);
     activeCompId.value = id;
@@ -246,8 +198,10 @@ const handleCompsOper = (
   };
   // 激活控件
   const activeComp = (ele: any) => {
+    console.log('activeComp', JSON.stringify(ele), ele.id);
     activePosi.value = 1;
     activeCompId.value = ele.id;
+    activeCompObj.value = {};
     activeCompObj.value = ele;
   };
   // 设置页眉页脚

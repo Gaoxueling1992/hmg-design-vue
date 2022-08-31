@@ -28,7 +28,8 @@
       v-model:value="choosedValue"
       :options="ele.options"
       :disabled="ele.baseProps.readonly"
-       @change="changeChecked"
+      @change="changeChecked"
+      class="inherit"
     />
     <div v-else>
       <a-checkbox
@@ -116,7 +117,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .ele-label {
   padding-right: 10px;
   display: inline-block;
@@ -127,5 +128,13 @@ export default defineComponent({
 }
 .display-text {
   display: inline-block;
+}
+.inherit {
+  .ant-checkbox-wrapper, .ant-checkbox-group {
+    border-color: inherit;
+    color: inherit !important;
+    background-color: inherit;
+    font-size: inherit;
+  }
 }
 </style>

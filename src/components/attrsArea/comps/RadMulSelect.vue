@@ -76,12 +76,38 @@ export default defineComponent({
         value: 1,
         label: '选项1'
       });
-    }
-    for (let i = 0; i < activeCompObj.value.options.length; i++) {
-      if (activeCompObj.value.value.indexOf(activeCompObj.value.options[i].label) > -1) {
-        checkedValue.value.push(activeCompObj.value.options[i].value);
+      checkedValue.value = []
+    } else {
+      for (let i = 0; i < activeCompObj.value.options.length; i++) {
+        if (activeCompObj.value.value.indexOf(activeCompObj.value.options[i].label) > -1) {
+          console.log('111', activeCompObj.value.value, activeCompObj.value.options[i].label)
+          checkedValue.value.push(activeCompObj.value.options[i].value);
+        }
       }
     }
+
+    watch(() => activeCompObj,
+      () => {
+        if (!activeCompObj || !activeCompObj.value || !activeCompObj.value.id) {
+          return;
+        }
+        if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+          activeCompObj.value.options = [];
+          activeCompObj.value.options.push({
+            value: 1,
+            label: '选项1'
+          });
+        } else if (activeCompObj.value.options && activeCompObj.value.options.length && activeCompObj.value.value) {
+          checkedValue.value = [];
+          for (let i = 0; i < activeCompObj.value.options.length; i++) {
+            if (activeCompObj.value.value.indexOf(activeCompObj.value.options[i].label) > -1) {
+              checkedValue.value.push(activeCompObj.value.options[i].value);
+            }
+          }
+        }
+      },
+      { deep: true }
+    );
     const addOption = () => {
       const index = activeCompObj.value.options.length;
       let indexMax = index;
