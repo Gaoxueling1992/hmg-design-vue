@@ -65,19 +65,19 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     let focusOption = '';
     const checkedValue: Ref<any> = ref<any>([]);
-    if (activeCompObj.value.options && activeCompObj.value.options.length) {
+    if (activeCompObj.value && activeCompObj.value.options && activeCompObj.value.options.length) {
       activeCompObj.value.options = activeCompObj.value.options.filter(
         (option) => option && option.label && option.value
       );
     }
-    if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+    if (activeCompObj.value && !activeCompObj.value.options || !activeCompObj.value.options.length) {
       activeCompObj.value.options = [];
       activeCompObj.value.options.push({
         value: 1,
         label: '选项1'
       });
       checkedValue.value = []
-    } else {
+    } else if (activeCompObj.value) {
       for (let i = 0; i < activeCompObj.value.options.length; i++) {
         if (activeCompObj.value.value.indexOf(activeCompObj.value.options[i].label) > -1) {
           console.log('111', activeCompObj.value.value, activeCompObj.value.options[i].label)

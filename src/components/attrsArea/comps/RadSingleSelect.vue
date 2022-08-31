@@ -20,7 +20,7 @@
     </a-radio-group>
   </template>
   <div class="title marginT10 fontW500">选项</div>
-  <!-- <draggable
+  <draggable
     v-model="activeCompObj.options"
     @end="dragEnd"
     v-if="activeCompObj.options && activeCompObj.options.length"
@@ -51,7 +51,7 @@
         </div>
       </div>
     </template>
-  </draggable> -->
+  </draggable>
   <div
     class="op marginT10"
     @click="addOption"
@@ -72,7 +72,7 @@ export default defineComponent({
     const activeCompObj: any = inject('activeCompObj');
     let checkedOption: Ref<number> = ref(-1);
     let focusOption = '';
-    if (activeCompObj.value.options && activeCompObj.value.options.length) {
+    if (activeCompObj && activeCompObj.value && activeCompObj.value.options && activeCompObj.value.options.length) {
       activeCompObj.value.options = activeCompObj.value.options.filter(
         (option) => option && option.label && option.value
       );
@@ -81,7 +81,9 @@ export default defineComponent({
         (option) => option.label === activeCompObj.value.value
       )[0].value;
     }
-    if (!activeCompObj.value.options || !activeCompObj.value.options.length) {
+    console.log(JSON.stringify(activeCompObj.value))
+    if (activeCompObj && activeCompObj.value && activeCompObj.value.id && (!activeCompObj.value.options || !activeCompObj.value.options.length)) {
+      console.log(JSON.stringify(activeCompObj.value))
       activeCompObj.value.options = [];
       activeCompObj.value.options.push({
         value: 1,
@@ -105,9 +107,6 @@ export default defineComponent({
           activeCompObj.value.value = '选项1';
           checkedOption.value = 1;
         } else if (activeCompObj.value.options && activeCompObj.value.options.length) {
-          activeCompObj.value.options = activeCompObj.value.options.filter(
-            (option) => option && option.label && option.value
-          );
           checkedOption.value = activeCompObj.value.options.filter(
             (option) => option.label === activeCompObj.value.value
           )[0].value;

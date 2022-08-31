@@ -67,7 +67,9 @@ const handleCompsOper = (
   const activeComp = (ele: any) => {
     activePosi.value = 1;
     activeCompId.value = ele.id;
-    activeCompObj.value = ele;
+    if (ele) {
+      activeCompObj.value = ele;
+    }
   };
 
   return { addComp, activeComp };

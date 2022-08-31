@@ -73,7 +73,7 @@ export default defineComponent({
         (option) => option && option.label && option.value
       );
     }
-    if (!ele.value.value) {
+    if (ele.value && !ele.value.value) {
       ele.value.value = [];
       choosedValue.value = [];
     }
@@ -87,10 +87,13 @@ export default defineComponent({
         ele.value.value = [];
         choosedValue.value = [];
       }
-      if (ele.value.value.indexOf(label) > -1) {
+      if (ele.value && ele.value.value && ele.value.value.indexOf(label) > -1) {
         ele.value.value.splice(ele.value.value.indexOf(label), 1);
         choosedValue.value.splice(choosedValue.value.indexOf(value), 1);
       } else {
+        if (!ele.value.value) {
+          ele.value.value = [];
+        }
         ele.value.value.push(label);
         choosedValue.value.push(value);
       }

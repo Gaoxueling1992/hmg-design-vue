@@ -143,23 +143,26 @@ const handleCompsOper = (
   };
   // 新增控件
   const addComp = (value: string, cusInfo = {}) => {
-    activePosi.value = 1;
-    const id: string = new Date().getTime() + '';
-    activeCompObj.value = _.cloneDeep(reactive(compBaseConfig[value]));
-    activeCompObj.value.id = id;
-    if (cusInfo && cusInfo.threshold) {
-      activeCompObj.value.label = cusInfo.label;
-      activeCompObj.value.threshold = cusInfo.threshold;
-      if (cusInfo.elValue) {
-        activeCompObj.value.value = cusInfo.elValue;
+    clickCanvas();
+    setTimeout(() => {
+      activePosi.value = 1;
+      const id: string = new Date().getTime() + '';
+      activeCompObj.value = {
+        ..._.cloneDeep(reactive(compBaseConfig[value])),
+        id: id
+      };
+      if (cusInfo && cusInfo.threshold) {
+        activeCompObj.value.label = cusInfo.label;
+        activeCompObj.value.threshold = cusInfo.threshold;
+        if (cusInfo.elValue) {
+          activeCompObj.value.value = cusInfo.elValue;
+        }
       }
-    }
-    if (value === 'combination-area') {
-      activeCompObj.value.compsList = [];
-    }
-    pageData.lines.push([activeCompObj.value]);
-    pageData.lines.push([]);
-    activeCompId.value = id;
+      pageData.lines.push([activeCompObj.value]);
+      pageData.lines.push([]);
+      console.log(JSON.stringify(activeCompObj.value))
+      activeCompId.value = id;
+    }, 300) 
   };
   // 删除控件
   const deleteComp = (idx: any, id: any) => {

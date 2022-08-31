@@ -391,6 +391,7 @@ const handleEleOperate = (ele: any, props: any) => {
     copyComp(ele);
   };
   const clickEle = () => {
+    console.log('-----', JSON.stringify(ele))
     activeComp(ele);
   };
   return {
