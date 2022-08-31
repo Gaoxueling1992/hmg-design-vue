@@ -2,7 +2,7 @@
  * @Author: sunny gaoxl@hmgsoft.com
  * @Date: 2021-12-30 15:13:53
  * @LastEditors: sunny gaoxl@hmgsoft.com
- * @LastEditTime: 2022-08-23 14:23:35
+ * @LastEditTime: 2022-08-31 15:32:20
  * @FilePath: /hmg-design-vue/src/components/compsArea/BaseCompArea.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -53,6 +53,7 @@ export default defineComponent({
     };
 
     const cloneDog = (value) => {
+      console.log(returnComp(value.elName))
       return returnComp(value.elName);
     };
 

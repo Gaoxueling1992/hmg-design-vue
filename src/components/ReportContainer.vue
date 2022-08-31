@@ -123,20 +123,15 @@ const handleCompsOper = (
   const returnComp = (elName: string, cusInfo = {}) => {
     activePosi.value = 1;
     const id: string = new Date().getTime() + '';
-    const baseConfig = _.cloneDeep(reactive(compBaseConfig[elName]));
-    activeCompObj.value = {
-      ...baseConfig,
-      id: id
-    };
+    console.log(elName)
+    activeCompObj.value = _.cloneDeep(compBaseConfig[elName]),
+    activeCompObj.value.id = id;
     if (cusInfo && cusInfo.threshold) {
       activeCompObj.value.label = cusInfo.label;
       activeCompObj.value.threshold = cusInfo.threshold;
       if (cusInfo.elValue) {
         activeCompObj.value.value = cusInfo.elValue;
       }
-    }
-    if (elName === 'combination-area') {
-      activeCompObj.value.compsList = [];
     }
     activeCompId.value = id;
     return activeCompObj.value;
@@ -162,7 +157,7 @@ const handleCompsOper = (
       pageData.lines.push([]);
       console.log(JSON.stringify(activeCompObj.value))
       activeCompId.value = id;
-    }, 300) 
+    }, 100) 
   };
   // 删除控件
   const deleteComp = (idx: any, id: any) => {
@@ -191,21 +186,27 @@ const handleCompsOper = (
   };
   // 复制控件
   const copyComp = (ele: any) => {
-    const id: string = new Date().getTime() + '';
-    activeCompObj.value = _.cloneDeep(reactive(ele));
-    activeCompObj.value.id = id;
-    pageData.lines.push([activeCompObj.value]);
-    pageData.lines.push([]);
-    activeCompId.value = id;
-    activePosi.value = 1;
+    clickCanvas();
+    setTimeout(() => {
+      const id: string = new Date().getTime() + '';
+      activeCompObj.value = _.cloneDeep(reactive(ele));
+      activeCompObj.value.id = id;
+      pageData.lines.push([activeCompObj.value]);
+      pageData.lines.push([]);
+      activeCompId.value = id;
+      activePosi.value = 1;
+    }, 100);
   };
   // 激活控件
   const activeComp = (ele: any) => {
-    console.log('activeComp', JSON.stringify(ele), ele.id);
-    activePosi.value = 1;
-    activeCompId.value = ele.id;
-    activeCompObj.value = {};
-    activeCompObj.value = ele;
+    clickCanvas();
+    setTimeout(() => {
+      console.log('activeComp', JSON.stringify(ele), ele.id);
+      activePosi.value = 1;
+      activeCompId.value = ele.id;
+      activeCompObj.value = {};
+      activeCompObj.value = ele;
+    }, 100);
   };
   // 设置页眉页脚
   const setFixedArea = (ele: any, typeStr: string, idx) => {

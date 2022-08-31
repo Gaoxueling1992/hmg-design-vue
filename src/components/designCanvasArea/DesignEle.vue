@@ -11,7 +11,7 @@
       fontSize: ele.styleSheet && ele.styleSheet.fontSize ? ele.styleSheet.fontSize + 'px' : 'inherit',
       borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
       display: ele.inline && ele.type !== 'comb' ? 'flex' : 'inline-block',
-      'text-decoration': ele.type !== 'comb' ? ele.styleSheet.textDecoration : 'unset',
+      'text-decoration': ele.type !== 'comb' && ele.styleSheet ? ele.styleSheet.textDecoration : 'unset',
       border: 'none'
     }"
     @click.stop="clickEle"
@@ -22,10 +22,10 @@
     <div v-if="ele.type === 'comb'"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
-        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
-        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
-        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
+        paddingTop: (ele.styleSheet && ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet && ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet && ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet && ele.styleSheet.paddingRight || 1) + 'px',
         width: '100%',
         height: '100%',
         borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
@@ -110,10 +110,10 @@
     <div v-else-if="!ele.noLabel"
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
-        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
-        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
-        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
+        paddingTop: (ele.styleSheet && ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet && ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet && ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet && ele.styleSheet.paddingRight || 1) + 'px',
         display: ele.inline ? 'flex' : '',
         width: '100%',
         alignItems: 'center',
@@ -142,10 +142,10 @@
     <div v-else
       :class="'line' + String(idx)"
       :style="{
-        paddingTop: (ele.styleSheet.paddingTop || 1) + 'px',
-        paddingBottom: (ele.styleSheet.paddingBottom || 1) + 'px',
-        paddingLeft: (ele.styleSheet.paddingLeft || 1) + 'px',
-        paddingRight: (ele.styleSheet.paddingRight || 1) + 'px',
+        paddingTop: (ele.styleSheet && ele.styleSheet.paddingTop || 1) + 'px',
+        paddingBottom: (ele.styleSheet && ele.styleSheet.paddingBottom || 1) + 'px',
+        paddingLeft: (ele.styleSheet && ele.styleSheet.paddingLeft || 1) + 'px',
+        paddingRight: (ele.styleSheet && ele.styleSheet.paddingRight || 1) + 'px',
         display: ele.inline && ele.elName !== 'RadText' ? 'flex' : '',
         width: '100%',
         borderWidth: ele.styleSheet && ele.styleSheet.borderWidth ? ele.styleSheet.borderWidth + 'px' : 0,
@@ -391,7 +391,6 @@ const handleEleOperate = (ele: any, props: any) => {
     copyComp(ele);
   };
   const clickEle = () => {
-    console.log('-----', JSON.stringify(ele))
     activeComp(ele);
   };
   return {
